@@ -157,8 +157,10 @@ export class Plot3D {
     const w = this.el.clientWidth || 300;
     const h = this.el.clientHeight || 300;
     this.renderer.setSize(w, h, false);
-    this.renderer.domElement.style.width = `${w}px`;
-    this.renderer.domElement.style.height = `${h}px`;
+    // Sized by its box, not in pixels: a pixel size would hold the box open when the box shrinks
+    // (leaving full screen, narrowing the window), so it would never get smaller again.
+    this.renderer.domElement.style.width = '100%';
+    this.renderer.domElement.style.height = '100%';
     this.labels.setSize(w, h);
     this.camera.aspect = w / h;
     // an overlay (the Teach panel) covers the bottom: shift the picture up so it centers in what is left
