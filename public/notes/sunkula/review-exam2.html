@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 26100 - Spring 2026                              Exam 2                              Test/Quiz #:... - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Review-Exam2.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+                    <li><a href="#page-section-12">Page 12</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">MA 26100 - Spring 2026                              Exam 2                              Test/Quiz #:...</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/29/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Review-Exam2.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <header>
+        <p>MA 26100 - Spring 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exam 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Test/Quiz #: 21</p>
+    </header>
+
+    <div class="example">
+        <p>1. Compute \( \int_{0}^{\pi} \int_{y}^{\pi} \sin(x^2) \, dx \, dy \). Hint: Change the order of integration.</p>
+        <ol type="A">
+            <li>1</li>
+            <li>\( \frac{1}{2} \)</li>
+            <li>0</li>
+            <li>\( \frac{1 + \cos \pi^2}{2} \)</li>
+            <li><strong>\( \frac{1 - \cos \pi^2}{2} \)</strong> (Circled)</li>
+        </ol>
+    </div>
+
+    <div class="solution">
+        <p>Handwritten notes for the region of integration:</p>
+        <p style="text-align: right; color: blue;">\( y \le x \le \pi, \quad 0 \le y \le \pi \)</p>
+
+        
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-1.webp" loading="lazy" decoding="async" alt="Hand-drawn 2D coordinate system showing the region of integration for the double integral. The axes are drawn in black. A diagonal line labeled 'y = x' in blue starts from the origin. A vertical line labeled 'x = \pi' in blue is drawn to the right. The region between the x-axis, the line y = x, and the line x = \pi is shaded with blue diagonal lines. A thick vertical black representative strip is drawn inside the shaded region, extending from the x-axis to the line y = x, with a mark 'x' on the horizontal axis below it. This visualizes the change in limits: when integrating with respect to y first, for a fixed x, y ranges from 0 to x, and the total range for x is from 0 to \pi." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Hand-drawn 2D coordinate system showing the region of integration for the double integral. The axes are drawn in black. A diagonal line labeled 'y = x' in blue starts from the origin. A vertical line labeled 'x = \pi' in blue is drawn to the right. The region between the x-axis, the line y = x, and the line x = \pi is shaded with blue diagonal lines. A thick vertical black representative strip is drawn inside the shaded region, extending from the x-axis to the line y = x, with a mark 'x' on the horizontal axis below it. This visualizes the change in limits: when integrating with respect to y first, for a fixed x, y ranges from 0 to x, and the total range for x is from 0 to \pi.</span>
+                      </div>
+                    </div>
+                  
+
+        <p>By changing the order of integration, the integral becomes:</p>
+        \[ \int_{0}^{\pi} \int_{0}^{x} \sin(x^2) \, dy \, dx = \int_{0}^{\pi} x \sin(x^2) \, dx = \left[ -\frac{1}{2} \cos(x^2) \right]_{0}^{\pi} \]
+        
+        <p>Evaluating at the limits:</p>
+        \[ \left( -\frac{1}{2} \cos(\pi^2) \right) - \left( -\frac{1}{2} \cos(0) \right) = -\frac{1}{2} \cos \pi^2 + \frac{1}{2} = \frac{1 - \cos \pi^2}{2} \]
+    </div>
+
+    <footer>
+        <center>2</center>
+    </footer>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="display: flex; justify-content: space-between; font-weight: bold;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 2</span>
+    <span>Test/Quiz #: 21</span>
+</p>
+
+<div class="example">
+    <h4>Question 2</h4>
+    <p>
+        The volume of the region inside \(x^2 + y^2 + z^2 = 25\) and outside \(x^2 + y^2 + z^2 = 4\) in the region \(y \ge 0\) and \(z \le 0\) is given as a triple integral using spherical coordinates as
+    </p>
+    \[ \int_C^D \int_A^B \int_2^5 \rho^2 \sin(\phi) \, d\rho \, d\phi \, d\theta. \]
+    <p>What are the values of \(A, B, C, D\)?</p>
+    <ol type="A" style="list-style-type: upper-alpha; line-height: 2;">
+        <li>\(A = \frac{\pi}{2}, B = \pi; C = 0, D = 2\pi\)</li>
+        <li>\(A = 0, B = \frac{\pi}{2}; C = 0, D = 2\pi\)</li>
+        <li>\(A = 0, B = \pi; C = 0, D = \pi\)</li>
+        <li><strong>\(A = \frac{\pi}{2}, B = \pi; C = 0, D = \pi\)</strong></li>
+        <li>\(A = 0, B = \frac{\pi}{2}; C = 0, D = \pi\)</li>
+    </ol>
+</div>
+
+<div class="solution">
+    <p>
+        <strong>Step 1: Determine the limits for \(\rho\).</strong><br>
+        From the equations of the bounding spheres:
+        \[ \left. \begin{aligned} x^2 + y^2 + z^2 &amp;= 25 \\ x^2 + y^2 + z^2 &amp;= 4 \end{aligned} \right\} \implies \begin{aligned} \rho &amp;= 5 \\ \rho &amp;= 2 \end{aligned} \]
+        This confirms the inner integral limits are from 2 to 5.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-2.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram defining the standard spherical coordinates. The x, y, and z axes are drawn. A vector with length rho (\(\rho\)) connects the origin to a point (x, y, z). The polar angle phi (\(\phi\)) is labeled between the positive z-axis and the vector. The projection of the point onto the xy-plane is marked as (x, y, 0), and the azimuthal angle theta (\(\theta\)) is shown in the xy-plane between the positive x-axis and this projection." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram defining the standard spherical coordinates. The x, y, and z axes are drawn. A vector with length rho (\(\rho\)) connects the origin to a point (x, y, z). The polar angle phi (\(\phi\)) is labeled between the positive z-axis and the vector. The projection of the point onto the xy-plane is marked as (x, y, 0), and the azimuthal angle theta (\(\theta\)) is shown in the xy-plane between the positive x-axis and this projection.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        <strong>Step 2: Determine the limits for \(\phi\) (values \(A\) and \(B\)).</strong><br>
+        The problem states the region is where \(z \le 0\). In spherical coordinates, \(\phi\) is measured from the positive \(z\)-axis (\(\phi = 0\)). The \(xy\)-plane corresponds to \(\phi = \frac{\pi}{2}\). Since the region is below the \(xy\)-plane (\(z \le 0\)), \(\phi\) ranges from the horizontal plane to the negative \(z\)-axis.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-3.webp" loading="lazy" decoding="async" alt="A 2D cross-sectional diagram focusing on the z-axis to find the range of the polar angle phi (\(\phi\)). The upper vertical axis is labeled z \(\ge\) 0 and the lower part is labeled z \(\le\) 0. A horizontal dashed line represents the xy-plane. A red arc shows the angle \(\phi\) sweeping from the horizontal plane (where \(\phi = \pi/2\)) down to the negative z-axis (where \(\phi = \pi\)). Below the diagram, the range is written as \(\pi/2 \le \phi \le \pi\)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D cross-sectional diagram focusing on the z-axis to find the range of the polar angle phi (\(\phi\)). The upper vertical axis is labeled z \(\ge\) 0 and the lower part is labeled z \(\le\) 0. A horizontal dashed line represents the xy-plane. A red arc shows the angle \(\phi\) sweeping from the horizontal plane (where \(\phi = \pi/2\)) down to the negative z-axis (where \(\phi = \pi\)). Below the diagram, the range is written as \(\pi/2 \le \phi \le \pi\).</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        Thus, \(A = \frac{\pi}{2}\) and \(B = \pi\).
+    </p>
+
+    <p>
+        <strong>Step 3: Determine the limits for \(\theta\) (values \(C\) and \(D\)).</strong><br>
+        The problem states the region is where \(y \ge 0\). We look at the projection of this region onto the \(xy\)-plane.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 78%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-4.webp" loading="lazy" decoding="async" alt="A 2D coordinate diagram of the xy-plane to determine the range of the azimuthal angle theta (\(\theta\)). The x-axis is horizontal and the y-axis is vertical. The region where y \(\ge\) 0 (the upper half-plane) is shaded with blue diagonal lines. A red arc labeled \(\theta\) starts at the positive x-axis (0) and sweeps counter-clockwise to the negative x-axis (\(\pi\)). To the right, the range is mathematically expressed as 0 \(\le \theta \le \pi\)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate diagram of the xy-plane to determine the range of the azimuthal angle theta (\(\theta\)). The x-axis is horizontal and the y-axis is vertical. The region where y \(\ge\) 0 (the upper half-plane) is shaded with blue diagonal lines. A red arc labeled \(\theta\) starts at the positive x-axis (0) and sweeps counter-clockwise to the negative x-axis (\(\pi\)). To the right, the range is mathematically expressed as 0 \(\le \theta \le \pi\).</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        Thus, \(C = 0\) and \(D = \pi\).
+    </p>
+
+    <p>
+        <strong>Conclusion:</strong><br>
+        Comparing these values to the given options:
+        \[ A = \frac{\pi}{2}, B = \pi; C = 0, D = \pi \]
+        This matches <strong>Choice D</strong>.
+    </p>
+</div>
+
+<p style="text-align: center; margin-top: 2em;">3</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="text-align: center;">MA 26100 - Spring 2026    Exam 2    Test/Quiz #: 21</p>
+
+<h4>Problem 3</h4>
+
+<div class="example">
+    <p>3. Find the surface area of the parametric surface</p>
+    <p>\[ \vec{r}(u,v) = \langle 6u + 7v, -u + v, 67 \rangle, -7 \le u \le -6, 6 \le v \le 7. \]</p>
+    <p>
+        A. 7<br>
+        B. 42<br>
+        C. 6<br>
+        D. 13<br>
+        E. 1
+    </p>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>
+            \[ S.A. = \iint_{S} 1 \, dA = \iint_{\substack{u, v \\ \text{Bounds}}} |\vec{r}_u \times \vec{r}_v| \, dA \]
+        </p>
+        <p>
+            Calculate the partial derivatives of \( \vec{r} \) with respect to \( u \) and \( v \):
+            \[ \vec{r}_u = \langle 6, -1, 0 \rangle \]
+            \[ \vec{r}_v = \langle 7, 1, 0 \rangle \]
+        </p>
+        <p>
+            Find the cross product and its magnitude:
+            \[ \vec{r}_u \times \vec{r}_v = \langle 0, 0, 13 \rangle \]
+            \[ |\vec{r}_u \times \vec{r}_v| = 13 \]
+        </p>
+        <p>
+            Set up and evaluate the integral using the provided bounds:
+            \[ = \int_{6}^{7} \int_{-7}^{-6} 13 \, du \, dv \]
+            \[ = \underline{13.} \]
+        </p>
+    </div>
+</div>
+
+<p style="text-align: center;">4</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <header>
+    <p>MA 26100 - Spring 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exam 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Test/Quiz #: 21</p>
+</header>
+
+<h4>Problem 4</h4>
+
+<div class="example">
+    <p>4. A solid \( E \) has density \( \rho(x,y,z) = \sin(z) \) and is bounded by \( x^2 + y^2 \le 1, z = 0 \) and \( z = \pi \). Find the mass of the solid.</p>
+    <p>
+        A. \( 2\pi - 1 \)<br>
+        B. \( 3\pi \)<br>
+        <strong>C. \( 2\pi \)</strong><br>
+        D. \( \pi - 1 \)<br>
+        E. \( \pi \)
+    </p>
+</div>
+
+<div class="solution">
+    <p>\[ M = \iiint_R \rho(x,y,z) \, dV = \iiint_R \sin z \, dV \]</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-5.webp" loading="lazy" decoding="async" alt="A hand-drawn 3D sketch depicting the solid region E as a cylinder centered on the vertical z-axis. The base of the cylinder is a circle in the xy-plane, and the cylinder extends upwards along the z-axis. The interior of the cylinder is shaded with diagonal blue hatch marks. The coordinate system includes a vertical line for the z-axis and horizontal lines representing the x and y axes extending from the origin at the center of the cylinder's base. This diagram illustrates the volume bounded by x^2 + y^2 <= 1, z = 0, and z = pi." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn 3D sketch depicting the solid region E as a cylinder centered on the vertical z-axis. The base of the cylinder is a circle in the xy-plane, and the cylinder extends upwards along the z-axis. The interior of the cylinder is shaded with diagonal blue hatch marks. The coordinate system includes a vertical line for the z-axis and horizontal lines representing the x and y axes extending from the origin at the center of the cylinder's base. This diagram illustrates the volume bounded by x^2 + y^2 <= 1, z = 0, and z = pi.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        use Cylindrical coordinates:<br>
+        \( dV = r \, dz \, dr \, d\theta \)<br>
+        \( 0 \le z \le \pi \)<br>
+        \( r, \theta \) is disk of Radius 1<br>
+        \( 0 \le r \le 1 \)<br>
+        \( 0 \le \theta \le 2\pi \)
+    </p>
+
+    <p>\[ M = \int_0^{2\pi} \int_0^1 \int_0^\pi \sin z \cdot r \, dz \, dr \, d\theta = \int_0^{2\pi} \int_0^1 2r \, dr \, d\theta = 2\pi \]</p>
+</div>
+
+<footer>
+    <p style="text-align: center;">5</p>
+</footer>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+  <div style="display: flex; justify-content: space-between; border-bottom: 1px solid black; margin-bottom: 20px; font-weight: bold;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 2</span>
+    <span>Test/Quiz #: 21</span>
+  </div>
+
+  <h4>Problem 5</h4>
+  <p>
+    5. Volume of the solid in the first octant bounded by the plane \( x + 2y + 3z = 12 \) is represented by
+  </p>
+  \[ \int_{0}^{A} \int_{0}^{B} \int_{0}^{\frac{12-x-2y}{3}} dz \, dx \, dy. \]
+
+  <p>Find the bounds A and B.</p>
+
+  <div class="solution">
+    <div style="display: flex; align-items: flex-start;">
+      <div style="flex: 1;">
+        <ol type="A" style="list-style-type: none;">
+          <li style="margin-bottom: 10px;"><strong>(A)</strong> \( A = 6, B = 12 - 2y \)</li>
+          <li style="margin-bottom: 10px;">B. \( A = 12, B = 12 - 2y \)</li>
+          <li style="margin-bottom: 10px;">C. \( A = 12, B = 6 - \frac{x}{2} \)</li>
+          <li style="margin-bottom: 10px;">D. \( A = 6, B = 6 - \frac{x}{2} \)</li>
+          <li style="margin-bottom: 10px;">E. \( A = 6, B = 12 \)</li>
+        </ol>
+      </div>
+      <div style="flex: 1; padding-left: 20px;">
+        \[ V = \iiint\limits_{R} 1 \, dV \]
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+      <div style="width: 45%;">
+        
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-6.webp" loading="lazy" decoding="async" alt="3D coordinate system diagram showing the solid in the first octant bounded by the plane x + 2y + 3z = 12. A triangular plane section connects the axes. A vertical red arrow points upward from the xy-plane to the surface of the plane. Handwritten text next to the diagram shows the equation rewritten as z = (12 - x - 2y)/3. Below the diagram, a note says 'fix x, y in shadow'." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">3D coordinate system diagram showing the solid in the first octant bounded by the plane x + 2y + 3z = 12. A triangular plane section connects the axes. A vertical red arrow points upward from the xy-plane to the surface of the plane. Handwritten text next to the diagram shows the equation rewritten as z = (12 - x - 2y)/3. Below the diagram, a note says 'fix x, y in shadow'.</span>
+                      </div>
+                    </div>
+                  
+      </div>
+      <div style="width: 45%;">
+        
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-7.webp" loading="lazy" decoding="async" alt="2D coordinate system diagram of the 'shadow' or projection of the solid onto the xy-plane. The region is a triangle bounded by the x-axis, y-axis, and the line x + 2y = 12. The y-intercept is labeled (0, 6) and the x-intercept is labeled (12, 0). The region is shaded with horizontal lines, and a horizontal pink arrow points from the y-axis to the boundary line, representing integration with respect to x first. Below the diagram, handwritten notes state 'fix y' and provide the resulting bounds: 0 ≤ x ≤ 12 - 2y and 0 ≤ y ≤ 6." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">2D coordinate system diagram of the 'shadow' or projection of the solid onto the xy-plane. The region is a triangle bounded by the x-axis, y-axis, and the line x + 2y = 12. The y-intercept is labeled (0, 6) and the x-intercept is labeled (12, 0). The region is shaded with horizontal lines, and a horizontal pink arrow points from the y-axis to the boundary line, representing integration with respect to x first. Below the diagram, handwritten notes state 'fix y' and provide the resulting bounds: 0 ≤ x ≤ 12 - 2y and 0 ≤ y ≤ 6.</span>
+                      </div>
+                    </div>
+                  
+      </div>
+    </div>
+
+    <div class="important" style="margin-top: 20px;">
+      <p><strong>Workings:</strong></p>
+      <p>To find the bounds for the integral set up as \( dy \, dx \, dz \), we first look at the inner integral for \( z \), which goes from \( 0 \) to the plane \( z = \frac{12-x-2y}{3} \).</p>
+      <p>Next, we project the solid into the \( xy \)-plane (the "shadow"). The boundary line is found by setting \( z = 0 \): \( x + 2y = 12 \).</p>
+      <p>Since the integration order is \( dz \, dx \, dy \), we treat \( y \) as the outermost variable and \( x \) as the middle variable:</p>
+      <ul>
+        <li>For a fixed \( y \), \( x \) varies from the \( y \)-axis (\( x = 0 \)) to the line \( x = 12 - 2y \). Thus, \( B = 12 - 2y \).</li>
+        <li>The range of \( y \) values for the entire region is from \( 0 \) to the \( y \)-intercept where \( x = 0 \): \( 2y = 12 \Rightarrow y = 6 \). Thus, \( A = 6 \).</li>
+      </ul>
+      <p>Therefore, <strong>A = 6</strong> and <strong>B = 12 - 2y</strong>, which matches option (A).</p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 50px;">
+    6
+  </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <p>6. Let \( C \) be the counterclockwise oriented boundary of the rectangle with vertices \( (0, 0), (1, 0), (1, 2) \), and \( (0, 2) \). Consider the vector field \( \vec{F}(x, y) = \langle y e^x, x^2 \rangle \). Compute \( \oint_C \vec{F} \cdot d\vec{r} \).</p>
+    
+    <p>A. \( 3e - 1 \)<br>
+    B. \( 4(1 - e) \)<br>
+    <strong>C. \( 4 - 2e \)</strong> (Circled)<br>
+    D. \( 3(e - 1) \)<br>
+    E. \( 2(1 - e) \)</p>
+</div>
+
+<div class="solution">
+    <p>Can we use Green's Theorem?</p>
+    
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-8.webp" loading="lazy" decoding="async" alt="Hand-drawn diagram of a rectangle in the first quadrant of an xy-coordinate plane. The rectangle has vertices at (0,0), (1,0), (1,2), and (0,2). The interior of the rectangle is shaded with diagonal lines and labeled 'R'. Arrows along the boundary indicate a counterclockwise orientation, and the boundary is labeled 'C'." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Hand-drawn diagram of a rectangle in the first quadrant of an xy-coordinate plane. The rectangle has vertices at (0,0), (1,0), (1,2), and (0,2). The interior of the rectangle is shaded with diagonal lines and labeled 'R'. Arrows along the boundary indicate a counterclockwise orientation, and the boundary is labeled 'C'.</span>
+                      </div>
+                    </div>
+                  
+
+    \[ \oint_C \vec{F} \cdot d\vec{r} = \iint_R 2D \text{ curl } dA \]
+
+    <p>Let \( \vec{F} = \langle f, g \rangle \), then \( 2D \text{ curl} = g_x - f_y \)</p>
+    
+    <p>For \( \vec{F} = \langle y e^x, x^2 \rangle \rightsquigarrow 2D \text{ curl} = 2x - e^x \)</p>
+
+    \[ = \int_0^2 \int_0^1 (2x - e^x) \, dx \, dy \]
+    \[ = 2 \left[ x^2 - e^x \right]_0^1 \]
+    \[ = 2 [ (1 - e) - (0 - 1) ] \]
+    \[ = 2 [ 2 - e ] \]
+    \[ = 4 - 2e \]
+</div>
+
+<p style="text-align: center;">7</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <header>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>MA 26100 - Spring 2026</span>
+        <span>Exam 2</span>
+        <span>Test/Quiz #: 21</span>
+    </div>
+</header>
+
+<div class="example">
+    <h4>7. Rewrite the following double integral using polar coordinates.</h4>
+    \[ \int_{-5}^{0} \int_{0}^{\sqrt{25-x^2}} e^{x^2+y^2} dy \, dx \]
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+            <ol type="A" style="list-style-type: none;">
+                <li>A. \( \int_{\frac{\pi}{2}}^{\pi} \int_{0}^{5} e^{r^2} dr \, d\theta \)</li>
+                <li style="border: 2px solid black; border-radius: 50%; width: fit-content; padding: 2px;">B. \( \int_{\frac{\pi}{2}}^{\pi} \int_{0}^{5} e^{r^2} r \, dr \, d\theta \)</li>
+                <li>C. \( \int_{0}^{2\pi} \int_{0}^{5} e^{r^2} r \, dr \, d\theta \)</li>
+                <li>D. \( \int_{0}^{\frac{\pi}{2}} \int_{0}^{5} e^{r^2} r \, dr \, d\theta \)</li>
+                <li>E. \( \int_{0}^{\pi} \int_{0}^{5} e^{r^2} dr \, d\theta \)</li>
+            </ol>
+        </div>
+        <div class="important" style="color: #0056b3; font-family: cursive;">
+            <p>\( 0 \le y \le \sqrt{25-x^2} \)</p>
+            <p>\( -5 \le x \le 0 \)</p>
+            <p style="border-left: 2px solid black; padding-left: 5px; margin-left: 20px;">Region in second quadrant</p>
+        </div>
+    </div>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-9.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate graph illustrating the region of integration. The graph shows a quarter-circle in the second quadrant. The boundary of the arc is labeled with the equation \( y = \sqrt{25-x^2} \). The area between this arc and the axes in the second quadrant is shaded with green diagonal lines. A red ray starts at the origin and extends into the second quadrant, and a red arc indicates the angle \(\theta\) measured counter-clockwise from the positive x-axis, showing it covers the range from \(\frac{\pi}{2}\) to \(\pi\). Points on the x and y axes indicate a radius of 5." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate graph illustrating the region of integration. The graph shows a quarter-circle in the second quadrant. The boundary of the arc is labeled with the equation \( y = \sqrt{25-x^2} \). The area between this arc and the axes in the second quadrant is shaded with green diagonal lines. A red ray starts at the origin and extends into the second quadrant, and a red arc indicates the angle \(\theta\) measured counter-clockwise from the positive x-axis, showing it covers the range from \(\frac{\pi}{2}\) to \(\pi\). Points on the x and y axes indicate a radius of 5.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution" style="color: #a00; font-family: cursive; margin-top: 20px; text-align: center;">
+    <p>\( 0 \le r \le 5 \)</p>
+    <p>\( \frac{\pi}{2} \le \theta \le \pi \)</p>
+</div>
+
+<footer style="text-align: center; margin-top: 50px;">
+    8
+</footer>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <header style="display: flex; justify-content: space-between; border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 20px;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 2</span>
+    <span>Test/Quiz #: 21</span>
+</header>
+
+<h4>Vector Fields and Divergence</h4>
+
+<p>8. Consider the vector field \(\vec{F} = \langle x^2 + y^2, 2xy, z^2 \rangle\). Compute the divergence of \(\vec{F}\).</p>
+
+<div style="margin-left: 20px;">
+    <p>A. \(2x + 4z\)</p>
+    <p>B. \(4x + 4y + 2z\)</p>
+    <p><strong>C. \(4x + 2z\)</strong></p>
+    <p>D. \(4x - 2z\)</p>
+    <p>E. \(2x + 2y + 2z\)</p>
+</div>
+
+<div class="solution">
+    <p><strong>Handwritten Solution:</strong></p>
+    \[ \vec{F} = \langle f, g, h \rangle \]
+    \[ \text{div} \vec{F} = f_x + g_y + h_z \]
+    \[ = \frac{\partial}{\partial x}(x^2 + y^2) + \frac{\partial}{\partial y}(2xy) + \frac{\partial}{\partial z}(z^2) \]
+    \[ = 2x + 2x + 2z \]
+    \[ = 4x + 2z \]
+</div>
+
+<footer style="text-align: center; margin-top: 100px;">
+    9
+</footer>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 20px;">
+  <span>MA 26100 - Spring 2026</span>
+  <span>Exam 2</span>
+  <span>Test/Quiz #: 21</span>
+</div>
+
+<h4>9. Minimize the function \( f(x, y) = -2xy \) subject to the constraint \( x^2 + xy + y^2 = 5 \).</h4>
+
+<ol type="A" style="list-style-position: inside; margin-bottom: 20px;">
+  <li>There is no minimum</li>
+  <li>10</li>
+  <li>-10</li>
+  <li><strong>D. \( -\frac{10}{3} \)</strong> (Selected answer)</li>
+  <li>\( \frac{10}{3} \)</li>
+</ol>
+
+<div class="solution">
+  <p><strong>use Lagrange Multipliers</strong></p>
+
+  <p>
+    \[ \vec{\nabla}f = \lambda \vec{\nabla}g \rightsquigarrow \langle -2y, -2x \rangle = \lambda \langle 2x + y, x + 2y \rangle \]
+  </p>
+
+  <p>From this vector equation, we set up the following system:</p>
+  <p>
+    ① \( -2y = \lambda(2x + y) \)<br>
+    ② \( -2x = \lambda(x + 2y) \)<br>
+    ③ \( x^2 + xy + y^2 = 5 \)
+  </p>
+
+  <p><strong>Divide</strong> equation ① by equation ②:</p>
+  <p>
+    \[ \frac{-2y}{-2x} = \frac{\lambda(2x + y)}{\lambda(x + 2y)} \]
+    \[ \frac{y}{x} = \frac{2x + y}{x + 2y} \]
+    \[ y(x + 2y) = x(2x + y) \]
+    \[ xy + 2y^2 = 2x^2 + xy \]
+    \[ 2y^2 = 2x^2 \implies x^2 = y^2 \]
+  </p>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 50px; margin-top: 20px;">
+    <!-- Case 1 -->
+    <div style="flex: 1; min-width: 200px;">
+      <p><strong>Case 1: \( y = x \) in ③</strong></p>
+      <p>
+        \[ x^2 + (x)(x) + x^2 = 5 \]
+        \[ 3x^2 = 5 \]
+        \[ x^2 = \frac{5}{3} \implies x = \pm \sqrt{\frac{5}{3}} \]
+      </p>
+      <p>
+        Points: \( \left( \sqrt{\frac{5}{3}}, \sqrt{\frac{5}{3}} \right), \left( -\sqrt{\frac{5}{3}}, -\sqrt{\frac{5}{3}} \right) \)
+      </p>
+      <p>
+        Objective function value:<br>
+        \( f = -2x^2 \)<br>
+        <strong>\( f = -\frac{10}{3} \)</strong>
+      </p>
+    </div>
+
+    <!-- Case 2 -->
+    <div style="flex: 1; min-width: 200px; color: #00008b;">
+      <p><strong>Case 2: \( y = -x \) in ③</strong></p>
+      <p>
+        \[ x^2 + (x)(-x) + (-x)^2 = 5 \]
+        \[ x^2 - x^2 + x^2 = 5 \]
+        \[ x^2 = 5 \implies x = \pm \sqrt{5} \]
+      </p>
+      <p>
+        Points: \( (\sqrt{5}, -\sqrt{5}), (-\sqrt{5}, \sqrt{5}) \)
+      </p>
+      <p>
+        Objective function value:<br>
+        \( f = 2x^2 \)<br>
+        <strong>\( f = 10 \)</strong>
+      </p>
+    </div>
+  </div>
+
+  <p style="margin-top: 20px;">The minimum value found is \( -\frac{10}{3} \).</p>
+</div>
+
+<div style="text-align: center; margin-top: 50px; font-size: 0.9em; color: #666;">10</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="text-align: center;">MA 26100 - Spring 2026     Exam 2     Test/Quiz #: 21</p>
+
+<h4>Question 10</h4>
+
+<div class="example">
+    <p><strong>10.</strong> Consider some vector field 
+    \[ \vec{F}(x,y) = \langle f(x,y), g(x,y) \rangle. \]
+    If \( f_y = g_x \) and \( f_x \neq g_y \), then which of the following best describes \( \vec{F} \)?</p>
+
+    <div style="margin-left: 20px;">
+        <p>(I) \( \vec{F} \) is conservative because \( f_y = g_x \). <span style="color: blue;">✓</span></p>
+        <p>(II) \( \vec{F} \) is not conservative because \( f_x \neq g_y \).</p>
+        <p>(III) There exists a simple closed curve \( C \) such that \( \oint_C \vec{F} \cdot d\vec{r} \neq 0 \).</p>
+        <p>(IV) For every simple closed curve \( C \), the line integral \( \oint_C \vec{F} \cdot d\vec{r} = 0 \). <span style="color: blue;">✓</span></p>
+    </div>
+
+    <p style="margin-top: 20px;">
+        A. I and III only<br>
+        B. II and III only<br>
+        C. I only<br>
+        <span style="border: 2px solid blue; border-radius: 50%; padding: 2px 10px; display: inline-block;"><strong>D. I and IV only</strong></span><br>
+        E. II only
+    </p>
+</div>
+
+<div class="solution">
+    <p style="color: blue;">
+        \( \vec{F} = \langle f, g \rangle = \nabla \phi = \langle \phi_x, \phi_y \rangle \)<br>
+        using mixed partials of \( \phi \)<br>
+        \( f_y = g_x \)
+    </p>
+    <p style="color: blue;">
+        \[ \oint_C \nabla \phi \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) = 0 \]
+    </p>
+</div>
+
+<p style="text-align: center; margin-top: 100px;">11</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <header style="text-align: center; margin-bottom: 20px;">
+    <p>MA 26100 - Spring 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exam 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Test/Quiz #: 21</p>
+</header>
+
+<section class="problem">
+    <h3>11. Compute the flux of the vector field \(\vec{F}(x,y) = \langle x, -y \rangle\) through the piece of the parabolic curve \(y = x^2\) that begins at \((0,0)\) and ends at \((2,4)\), using the unit normal vector that is \(90^\circ\) counterclockwise from the unit tangent vector.</h3>
+
+    <ol style="list-style-type: upper-alpha;">
+        <li>0</li>
+        <li>\(-8\)</li>
+        <li>\(\frac{8}{3}\)</li>
+        <li>8</li>
+        <li>\(-\frac{8}{3}\)</li>
+    </ol>
+
+    
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-10.webp" loading="lazy" decoding="async" alt="A coordinate geometry diagram on a 2D Cartesian plane showing a parabolic curve segment in the first quadrant starting from the origin (0,0). At a point on the curve, two vectors are drawn: a green arrow pointing tangent to the curve in the direction of motion, and a purple arrow pointing perpendicular to the curve, upwards and to the left. A small arc connects the tangent vector to the normal vector, labeled 'ccw 90 degrees', indicating the normal vector is oriented 90 degrees counterclockwise from the tangent vector." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate geometry diagram on a 2D Cartesian plane showing a parabolic curve segment in the first quadrant starting from the origin (0,0). At a point on the curve, two vectors are drawn: a green arrow pointing tangent to the curve in the direction of motion, and a purple arrow pointing perpendicular to the curve, upwards and to the left. A small arc connects the tangent vector to the normal vector, labeled 'ccw 90 degrees', indicating the normal vector is oriented 90 degrees counterclockwise from the tangent vector.</span>
+                      </div>
+                    </div>
+                  
+</section>
+
+<div class="solution">
+    <p><strong>Parametrization:</strong><br>
+    \[\vec{r}(t) = \langle t, t^2 \rangle, \quad 0 \le t \le 2\]</p>
+
+    <p><strong>Unit Tangent Vector:</strong><br>
+    \[\vec{T}(t) = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} = \frac{\langle 1, 2t \rangle}{|\vec{r}'(t)|}\]</p>
+
+    <p><strong>Unit Normal Vector:</strong><br>
+    The unit normal vector \(\vec{n}\) is \(90^\circ\) counterclockwise to the unit tangent. The two candidates are:<br>
+    \[\vec{n} = \frac{\langle 2t, -1 \rangle}{|\vec{r}'(t)|} \quad \text{or} \quad \vec{n} = \frac{\langle -2t, 1 \rangle}{|\vec{r}'(t)|}\]<br>
+    Based on the requirement for a \(90^\circ\) counterclockwise rotation and the diagram (where \(x < 0, y > 0\)), we select:<br>
+    \[\vec{n} = \frac{\langle -2t, 1 \rangle}{|\vec{r}'(t)|}\]</p>
+
+    <p><strong>Flux Calculation:</strong><br>
+    The formula for flux is:
+    \[\text{Flux} = \int_C \vec{F} \cdot \vec{n} \, ds\]
+    Where \(ds = |\vec{r}'(t)| \, dt\). Using the definition of the line integral:
+    \[\int_C f \, ds = \int_a^b f(\vec{r}(t)) |\vec{r}'(t)| \, dt\]</p>
+
+    <p>
+    \[\text{Flux} = \int_0^2 \vec{F}(\vec{r}(t)) \cdot \frac{\langle -2t, 1 \rangle}{|\vec{r}'(t)|} |\vec{r}'(t)| \, dt\]
+    \[\text{Flux} = \int_0^2 \vec{F}(\vec{r}(t)) \cdot \langle -2t, 1 \rangle \, dt\]
+    \[\text{Flux} = \int_0^2 \langle t, -t^2 \rangle \cdot \langle -2t, 1 \rangle \, dt\]
+    \[\text{Flux} = \int_0^2 (-2t^2 - t^2) \, dt\]
+    \[\text{Flux} = \int_0^2 -3t^2 \, dt\]
+    \[\text{Flux} = \left[ -t^3 \right]_0^2 = -8\]
+    </p>
+</div>
+
+<footer style="text-align: center; margin-top: 20px;">
+    <p>12</p>
+</footer>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-12" aria-labelledby="page-title-12">
+                    <h3 id="page-title-12">Page 12</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <!-- Header Information -->
+    <header style="display: flex; justify-content: space-between; font-family: sans-serif; font-size: 0.9em; margin-bottom: 20px;">
+        <span>MA 26100 - Spring 2026</span>
+        <span>Exam 2</span>
+        <span>Test/Quiz #: 21</span>
+    </header>
+
+    <article class="example">
+        <header>
+            <h4>12. Find the flux of \( \vec{F} = \langle x, y, z \rangle \) through the surface \( z = 4 - x - y \), in the first octant with upward orientation (normal pointing upward).</h4>
+        </header>
+
+        <!-- Multiple Choice Options -->
+        <div class="options" style="margin-left: 20px; margin-bottom: 20px;">
+            A. 0<br>
+            B. 4<br>
+            C. 16<br>
+            <strong>D. 32</strong><br>
+            E. 64
+        </div>
+
+        <section class="solution">
+            <p>
+                Surface integral = \( \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S} \vec{F} \cdot \vec{n} \, dS \)
+            </p>
+
+            <p>
+                \( \vec{r}(u,v) \) is your parametrization
+            </p>
+
+            <p>
+                Flux = \( \iint_{u,v \text{ Bounds}} \vec{F}(\vec{r}(u,v)) \cdot (\pm (\vec{r}_u \times \vec{r}_v)) \, dA \)
+            </p>
+
+            <div class="important" style="border-left: 3px solid #ccc; padding-left: 15px; margin: 15px 0;">
+                <p><strong>Note:</strong> chose upward pointing \( \Rightarrow z > 0 \)</p>
+            </div>
+
+            <div class="derivation">
+                <p>
+                    \( \vec{r}(u,v) = \langle u, v, 4 - u - v \rangle \)
+                </p>
+                <p>
+                    \[ 
+                    \left. 
+                    \begin{aligned} 
+                    \vec{r}_u &= \langle 1, 0, -1 \rangle \\ 
+                    \vec{r}_v &= \langle 0, 1, -1 \rangle 
+                    \end{aligned} 
+                    \right\} \vec{r}_u \times \vec{r}_v = \langle 1, 1, 1 \rangle 
+                    \]
+                </p>
+            </div>
+
+            
+                    <div class="inline-diagram-container" style="width: 35%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam2-11.webp" loading="lazy" decoding="async" alt="A sketch of the region of integration R in the uv-plane. The vertical axis is labeled 'v'. The region is a right triangle in the first quadrant bounded by the v-axis, the u-axis, and the line u + v = 4. The triangle has vertices at (0,0), (4,0) on the horizontal u-axis, and (0,4) on the vertical v-axis. The interior area of the triangle is shaded with horizontal lines and labeled 'R'." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A sketch of the region of integration R in the uv-plane. The vertical axis is labeled 'v'. The region is a right triangle in the first quadrant bounded by the v-axis, the u-axis, and the line u + v = 4. The triangle has vertices at (0,0), (4,0) on the horizontal u-axis, and (0,4) on the vertical v-axis. The interior area of the triangle is shaded with horizontal lines and labeled 'R'.</span>
+                      </div>
+                    </div>
+                  
+            </diagram-placeholder>
+
+            <div class="final-calculation">
+                \[ \text{Flux} = \iint_{R} \langle u, v, 4 - u - v \rangle \cdot \langle 1, 1, 1 \rangle \, dA \]
+                \[ = \iint_{R} (u + v + 4 - u - v) \, dA \]
+                \[ = 4 \iint_{R} 1 \, dA = 4 \times \text{Area of } R \]
+                \[ = 4 \times \frac{1}{2} (4 \times 4) \]
+                \[ = \underline{32} \]
+            </div>
+        </section>
+    </article>
+
+    <footer style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        13
+    </footer>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/29/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

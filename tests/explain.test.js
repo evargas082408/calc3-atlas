@@ -246,3 +246,53 @@ describe('lecture videos', async () => {
     expect(CHEN_REVIEWS.length).toBe(5);
   });
 });
+
+describe('copied notes', async () => {
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const { REVIEWS } = await import('../src/content/course.js');
+  const { CHEN_REVIEWS } = await import('../src/content/chenflix.js');
+  const { notesFor, localNotes, lecturePanel, openNotes } = await import('../src/views/media.js');
+  const { LOCAL_NOTES } = await import('../src/content/notes-local.js');
+  const file = (p) => path.join(process.cwd(), 'public', p);
+
+  it('every lesson, extra and review has a copy on this site, and the copy exists', () => {
+    const urls = [...LESSONS.flatMap((L) => notesFor(L).map((n) => n.url)), ...REVIEWS.map((r) => r.notes), ...CHEN_REVIEWS.map((r) => r.notes)];
+    expect(urls.length).toBe(86);
+    for (const u of urls) {
+      const p = localNotes(u);
+      expect(p, u).toMatch(/^notes\/(sunkula|chen)\/[a-z0-9-]+\.html$/);
+      expect(fs.existsSync(file(p)), p).toBe(true);
+    }
+  });
+
+  it('copies credit the original, carry no inline images, and only link images that exist', () => {
+    for (const [url, p] of Object.entries(LOCAL_NOTES)) {
+      const html = fs.readFileSync(file(p), 'utf8');
+      expect(html, p).toContain(`href="${url}"`);
+      expect(html, p).not.toMatch(/data:(image\/png|application\/pdf);base64/);
+      for (const [, img] of html.matchAll(/src="(img\/[^"]+)"/g)) expect(fs.existsSync(file(path.posix.join(path.posix.dirname(p), img))), img).toBe(true);
+    }
+  });
+
+  it('the Lecture tab shows the notes of the lecturer being watched, in a sandboxed frame', () => {
+    const host = document.createElement('div');
+    lecturePanel(host, LESSONS.find((l) => l.id === 20));
+    const frame = host.querySelector('.notes-frame');
+    expect(frame.getAttribute('src')).toBe(localNotes(LESSONS.find((l) => l.id === 20).notes));
+    expect(frame.getAttribute('sandbox')).not.toContain('allow-same-origin');
+    host.querySelector('[data-notes=chen]').click();
+    expect(host.querySelector('.notes-frame').getAttribute('src')).toBe('notes/chen/lesson-20.html');
+    // switching lecturer does not undo a notes choice
+    host.querySelector('[data-src=sunkula]').click();
+    expect(host.querySelector('.notes-frame').getAttribute('src')).toBe('notes/chen/lesson-20.html');
+  });
+
+  it('review notes open in a dialog that closes on Esc', () => {
+    const dlg = openNotes({ title: 'Exam 2 review', url: REVIEWS[1].notes });
+    expect(document.body.contains(dlg)).toBe(true);
+    expect(dlg.querySelector('.notes-frame').getAttribute('src')).toBe(localNotes(REVIEWS[1].notes));
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(document.body.contains(dlg)).toBe(false);
+  });
+});

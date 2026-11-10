@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 2: Lines and Planes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson2.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 2: Lines and Planes (Section 13.5)</h3>
+
+<div class="important">
+    <p><strong>Course Information:</strong></p>
+    <p>Date: January 14, 2026</p>
+    <p>Topics covered today: Lines and Planes (Section 13.5)</p>
+    <p>Next lesson: Quadric Surfaces (Section 13.6)</p>
+</div>
+
+<h3>Warm-Up: Finding the Equation of a Line in 2D</h3>
+
+<div class="example">
+    <h5>Warm-Up Problem</h5>
+    <p>Find the equation of a line through points \(P(-1, -1)\) and \(Q(1, 3)\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>First, we calculate the slope of the line:</p>
+        \[\text{Slope} = \frac{3 - (-1)}{1 - (-1)} = \frac{4}{2} = 2\]
+        
+        <p>Using point-slope form with point \(P(-1, -1)\):</p>
+        \[y - (-1) = 2(x - (-1))\]
+        \[\frac{y + 1}{x + 1} = 2\]
+        \[y + 1 = 2(x + 1)\]
+        \[y = 2x + 1\]
+        
+        <p>We can also express this line in parametric form. The direction vector is parallel to the line:</p>
+        \[\langle x, y \rangle = t\langle 1, 2 \rangle + \langle -1, -1 \rangle\]
+        
+        <p>This gives us the parametric equations:</p>
+        \[x = t - 1, \quad y = 2t - 1\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> The diagram shows a coordinate plane with the y-axis vertical and x-axis horizontal. Two points are marked: P at coordinates (-1, -1) and Q at coordinates (1, 3). A blue line passes through both points with positive slope. Red and purple arrows illustrate the direction vector and the concept that the line is parallel to its direction vector.</p>
+</div>
+
+<div class="important">
+    <p><strong>Key Concept:</strong> The direction vector \(\langle 1, 2 \rangle\) is parallel to the line and gives the "direction" of the line in space.</p>
+</div>
+
+<h3>Lines in 3D Space</h3>
+
+<p>To define a line in three-dimensional space, we need two pieces of information: a point on the line and a direction vector.</p>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A line in 3D space can be defined by:</p>
+    <ul>
+        <li>A point \(P(x_0, y_0, z_0)\) on the line</li>
+        <li>A direction vector \(\vec{v} = \langle a, b, c \rangle\)</li>
+    </ul>
+</div>
+
+<p>Let \(Q(x, y, z)\) be any point on the line. Then the vector \(\overrightarrow{PQ}\) is parallel to the direction vector \(\vec{v}\). This means:</p>
+\[\overrightarrow{PQ} = t\vec{v}\]
+
+<p>where \(t\) is a scalar parameter. Expanding this relationship:</p>
+\[\langle x - x_0, y - y_0, z - z_0 \rangle = t\langle a, b, c \rangle\]
+
+<div class="visual-desc">
+    <p><strong>3D Coordinate System Description:</strong> The diagram shows a three-dimensional coordinate system with x, y, and z axes. A point P is marked at coordinates (x₀, y₀, z₀), and a red vector extends from P in the direction of the line. A purple direction vector \(\vec{v}\) is shown, and another point Q(x, y, z) is marked on the line. Blue vectors illustrate the parallel relationship between \(\overrightarrow{PQ}\) and the direction vector.</p>
+</div>
+
+<h4>Vector Form of a Line</h4>
+
+<div class="theorem">
+    <p><strong>Vector Form:</strong> The vector form of a line through point \(P(x_0, y_0, z_0)\) with direction vector \(\vec{v} = \langle a, b, c \rangle\) is:</p>
+    \[\langle x, y, z \rangle = t\langle a, b, c \rangle + \langle x_0, y_0, z_0 \rangle\]
+    
+    <p>This can also be written as:</p>
+    \[\langle x, y, z \rangle = \langle ta + x_0, tb + y_0, tc + z_0 \rangle\]
+</div>
+
+<h4>Parametric Form of a Line</h4>
+
+<div class="theorem">
+    <p><strong>Parametric Form:</strong> By equating components from the vector form, we obtain the parametric equations:</p>
+    \[x = ta + x_0\]
+    \[y = tb + y_0\]
+    \[z = tc + z_0\]
+    
+    <p>where \(t\) is the parameter that varies over all real numbers.</p>
+</div>
+
+<h4>Symmetric Form of a Line</h4>
+
+<div class="theorem">
+    <p><strong>Symmetric Form:</strong> Solving each parametric equation for \(t\) and setting them equal gives the symmetric form:</p>
+    \[t = \frac{x - x_0}{a} = \frac{y - y_0}{b} = \frac{z - z_0}{c}\]
+    
+    <p>This is valid when \(a\), \(b\), and \(c\) are all nonzero.</p>
+</div>
+
+<div class="warning">
+    <p><strong>Warning:</strong> If any component of the direction vector is zero, we cannot use that ratio in the symmetric form. Instead, we set the corresponding coordinate equal to its value at the point on the line.</p>
+</div>
+
+<h3>Example: Finding the Equation of a Line Through Two Points</h3>
+
+<div class="example">
+    <h5>Example 1</h5>
+    <p>Find the equation of the line passing through points \(P(1, 0, 2)\) and \(Q(-2, 4, -3)\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>First, we find the direction vector \(\overrightarrow{PQ}\):</p>
+        \[\overrightarrow{PQ} = \langle -2 - 1, 4 - 0, -3 - 2 \rangle = \langle -3, 4, -5 \rangle\]
+        
+        <p>Alternatively, we could use \(\overrightarrow{QP} = \langle 3, -4, 5 \rangle\). Note that we can choose either of the two points as our reference point, and we can use either direction vector (they differ only by a factor of -1).</p>
+        
+        <p><strong>Vector Form:</strong> Using point \(P(1, 0, 2)\) and direction vector \(\langle -3, 4, -5 \rangle\):</p>
+        \[\langle x, y, z \rangle = t\langle -3, 4, -5 \rangle + \langle 1, 0, 2 \rangle\]
+        
+        <p>Or equivalently, using point \(Q(-2, 4, -3)\) and direction vector \(\langle 3, -4, 5 \rangle\):</p>
+        \[\langle x, y, z \rangle = t\langle 3, -4, 5 \rangle + \langle -2, 4, -3 \rangle\]
+        
+        <p><strong>Parametric Form:</strong> Using the first vector form:</p>
+        \[x = -3t + 1\]
+        \[y = 4t\]
+        \[z = -5t + 2\]
+        
+        <p>Or using the second vector form:</p>
+        \[x = 3t - 2\]
+        \[y = -4t + 4\]
+        \[z = 5t - 3\]
+        
+        <p><strong>Symmetric Form:</strong> From the first parametric form:</p>
+        \[\frac{x - 1}{-3} = \frac{y - 0}{4} = \frac{z - 2}{-5}\]
+        
+        <p>This can also be written as:</p>
+        \[\frac{x - 1}{-3} = \frac{y}{4} = \frac{z - 2}{-5}\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>3D Diagram Description:</strong> A three-dimensional coordinate system shows points P(1, 0, 2) and Q(-2, 4, -3) marked with dots. A blue line passes through both points. Red and purple vectors illustrate the direction vectors \(\overrightarrow{PQ}\) and \(\overrightarrow{QP}\), showing they point in opposite directions but define the same line.</p>
+</div>
+
+<div class="important">
+    <p><strong>Important Note:</strong> You can choose any of the two given points as your reference point, and you can use either direction vector. All forms will represent the same line, though they may look different algebraically.</p>
+</div>
+
+<h3>Relationships Between Lines in 3D</h3>
+
+<p>Two lines in three-dimensional space can have one of three relationships: they can be parallel, intersecting, or skew.</p>
+
+<h4>Parallel Lines</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> Two lines are parallel if their direction vectors are parallel (i.e., one is a scalar multiple of the other) and they have no points in common.</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Parallel Lines Diagram:</strong> Two blue parallel lines are shown in 3D space, both extending in the same direction. Purple arrows labeled \(\vec{n}_1\) and \(\vec{n}_2\) show that their direction vectors point in the same direction. The lines never meet.</p>
+</div>
+
+<h4>Intersecting Lines</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> Two lines are intersecting if they have exactly one point in common.</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Intersecting Lines Diagram:</strong> Two blue lines meet at a single point in 3D space. The lines cross each other at different angles, sharing one common point of intersection.</p>
+</div>
+
+<h4>Skew Lines</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> Two lines are skew if their direction vectors are not parallel and they have no points in common. Skew lines do not lie in the same plane.</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Skew Lines Diagram:</strong> Two lines are shown in 3D space: one blue line extends horizontally, and one teal line extends at an angle. A point (1, 0, 1) is marked. The lines do not intersect and are not parallel; they pass by each other in different planes. A purple dashed vertical line suggests the perpendicular distance between them.</p>
+</div>
+
+<div class="example">
+    <p>Consider two lines:</p>
+    <ul>
+        <li>\(\ell_1: t\langle 0, 1, 1 \rangle\)</li>
+        <li>\(\ell_2: t\langle 0, 1, 0 \rangle + \langle 1, 0, 0 \rangle\)</li>
+    </ul>
+    <p>These lines are skew because their direction vectors \(\langle 0, 1, 1 \rangle\) and \(\langle 0, 1, 0 \rangle\) are not parallel (one is not a scalar multiple of the other), and they have no common point.</p>
+</div>
+
+<h3>Planes in 3D Space</h3>
+
+<p>To define a plane in three-dimensional space, we need a point on the plane and a normal vector perpendicular to the plane.</p>
+
+<h4>Discussion Questions</h4>
+
+<div class="important">
+    <p><strong>Turn to your neighbor and discuss:</strong></p>
+    <ol>
+        <li>How do we find a vector orthogonal to vectors \(\vec{u}\) and \(\vec{v}\)?
+            <br>Answer: Use the cross product \(\vec{u} \times \vec{v}\)</li>
+        <li>How do we check if \(\vec{u}\) and \(\vec{v}\) are orthogonal?
+            <br>Answer: Compute the dot product \(\vec{u} \cdot \vec{v} = |\vec{u}||\vec{v}|\cos\theta = 0\), which means \(\theta = 90°\)</li>
+    </ol>
+</div>
+
+<h4>Equation of a Plane</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A plane in 3D space can be defined by:</p>
+    <ul>
+        <li>A point \(P(x_0, y_0, z_0)\) on the plane</li>
+        <li>A normal vector \(\vec{n} = \langle a, b, c \rangle\) perpendicular to the plane</li>
+    </ul>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Plane Diagram:</strong> A blue tilted plane is shown in 3D space with x, y, and z axes. A point P is marked on the plane at coordinates (x₀, y₀, z₀). A purple vector \(\vec{n}\) extends perpendicular to the plane from point P, representing the normal vector. Another point Q(x, y, z) is marked on the plane, and a red vector shows \(\overrightarrow{PQ}\) lying within the plane.</p>
+</div>
+
+<p>Let \(Q(x, y, z)\) be any point on the plane. The vector \(\overrightarrow{PQ}\) lies in the plane, so it must be perpendicular to the normal vector \(\vec{n}\). This gives us the fundamental equation:</p>
+\[\overrightarrow{PQ} \cdot \vec{n} = 0\]
+
+<p>Expanding this relationship:</p>
+\[\langle x - x_0, y - y_0, z - z_0 \rangle \cdot \langle a, b, c \rangle = 0\]
+
+<div class="theorem">
+    <p><strong>Equation of a Plane:</strong> The standard form of the equation of a plane through point \(P(x_0, y_0, z_0)\) with normal vector \(\vec{n} = \langle a, b, c \rangle\) is:</p>
+    \[a(x - x_0) + b(y - y_0) + c(z - z_0) = 0\]
+    
+    <p>This can be rearranged to the general form:</p>
+    \[ax + by + cz = ax_0 + by_0 + cz_0\]
+    
+    <p>or more simply:</p>
+    \[ax + by + cz = d\]
+    
+    <p>where \(d = ax_0 + by_0 + cz_0\).</p>
+</div>
+
+<h3>Example: Finding the Equation of a Plane Given a Point and Normal Vector</h3>
+
+<div class="example">
+    <h5>Example 2</h5>
+    <p>Find the equation of the plane passing through point \((1, -1, 1)\) with normal vector \(\langle 2, 3, -1 \rangle\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>We use the equation \(\overrightarrow{PQ} \cdot \vec{n} = 0\) where \(P(1, -1, 1)\) and \(\vec{n} = \langle 2, 3, -1 \rangle\):</p>
+        \[\langle x - 1, y + 1, z - 1 \rangle \cdot \langle 2, 3, -1 \rangle = 0\]
+        
+        <p>Expanding the dot product:</p>
+        \[2(x - 1) + 3(y + 1) - 1(z - 1) = 0\]
+        
+        <p>Simplifying:</p>
+        \[2x - 2 + 3y + 3 - z + 1 = 0\]
+        \[2x + 3y - z + 2 = 0\]
+        
+        <p>Therefore, the equation of the plane is:</p>
+        \[2x + 3y - z = -2\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Plane Diagram:</strong> A blue tilted plane is shown with point P(1, -1, 1) marked on it. A purple normal vector \(\langle 2, 3, -1 \rangle\) extends perpendicular to the plane from point P. The coordinate axes x, y, and z are shown for reference.</p>
+</div>
+
+<h3>Example: Finding the Equation of a Plane Through Three Points</h3>
+
+<div class="example">
+    <h5>Example 3</h5>
+    <p>Find the equation of the plane containing points \(P(2, 3, -1)\), \(Q(3, 5, -1)\), and \(R(6, 2, 0)\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>First, we need to find a normal vector to the plane. We can do this by taking the cross product of two vectors that lie in the plane.</p>
+        
+        <p>Let's find \(\overrightarrow{PQ}\) and \(\overrightarrow{PR}\):</p>
+        \[\overrightarrow{PQ} = \langle 3 - 2, 5 - 3, -1 - (-1) \rangle = \langle 1, 2, 0 \rangle\]
+        \[\overrightarrow{PR} = \langle 6 - 2, 2 - 3, 0 - (-1) \rangle = \langle 4, -1, 1 \rangle\]
+        
+        <p>The cross product \(\overrightarrow{PQ} \times \overrightarrow{PR}\) will be perpendicular to the plane:</p>
+        \[\vec{n} = \overrightarrow{PQ} \times \overrightarrow{PR} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & 2 & 0 \\ 4 & -1 & 1 \end{vmatrix}\]
+        
+        \[\vec{n} = \vec{i}(2 \cdot 1 - 0 \cdot (-1)) - \vec{j}(1 \cdot 1 - 0 \cdot 4) + \vec{k}(1 \cdot (-1) - 2 \cdot 4)\]
+        \[\vec{n} = \vec{i}(2) - \vec{j}(1) + \vec{k}(-9)\]
+        \[\vec{n} = \langle 2, -1, -9 \rangle\]
+        
+        <p>Now using point \(P(2, 3, -1)\) and normal vector \(\langle 2, -1, -9 \rangle\):</p>
+        \[\langle x - 2, y - 3, z + 1 \rangle \cdot \langle 2, -1, -9 \rangle = 0\]
+        
+        <p>Expanding:</p>
+        \[2(x - 2) - (y - 3) - 9(z + 1) = 0\]
+        \[2x - 4 - y + 3 - 9z - 9 = 0\]
+        \[2x - y - 9z - 10 = 0\]
+        
+        <p>Therefore, the equation of the plane is:</p>
+        \[2x - y - 9z = 10\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Three Points Diagram:</strong> A blue plane is shown with three points marked: P(2, 3, -1), Q(3, 5, -1), and R(6, 2, 0). Red and green vectors show \(\overrightarrow{PQ}\) and \(\overrightarrow{PR}\) lying in the plane. A purple vector perpendicular to the plane represents the normal vector obtained from the cross product.</p>
+</div>
+
+<div class="important">
+    <p><strong>Important Note:</strong> Instead of using point P, you could choose point Q or R as your reference point. All three will yield the same equation for the plane.</p>
+</div>
+
+<h3>Parallel and Orthogonal Planes</h3>
+
+<h4>Parallel Planes</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> Two planes are parallel if their normal vectors are parallel (i.e., one is a scalar multiple of the other).</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Parallel Planes Diagram:</strong> Two blue horizontal planes are shown stacked vertically in 3D space. Purple normal vectors \(\vec{n}_1\) and \(\vec{n}_2\) extend perpendicular to each plane, pointing in the same direction. A note indicates that the normal vectors are parallel, written as \(\vec{n}_1 \parallel \vec{n}_2\).</p>
+</div>
+
+<p>If two planes have equations \(a_1x + b_1y + c_1z = d_1\) and \(a_2x + b_2y + c_2z = d_2\), they are parallel if and only if:</p>
+\[\langle a_1, b_1, c_1 \rangle = k\langle a_2, b_2, c_2 \rangle\]
+for some scalar \(k\).
+
+<h4>Orthogonal Planes</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> Two planes are orthogonal (perpendicular) if their normal vectors are orthogonal.</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Orthogonal Planes Diagram:</strong> Two blue planes intersect at a right angle in 3D space, forming a cross-like configuration. Purple normal vectors \(\vec{n}_1\) and \(\vec{n}_2\) extend perpendicular to their respective planes. A note indicates that the normal vectors are perpendicular, written as \(\vec{n}_1 \perp \vec{n}_2\).</p>
+</div>
+
+<p>If two planes have equations \(a_1x + b_1y + c_1z = d_1\) and \(a_2x + b_2y + c_2z = d_2\), they are orthogonal if and only if:</p>
+\[\langle a_1, b_1, c_1 \rangle \cdot \langle a_2, b_2, c_2 \rangle = 0\]
+
+<h3>Additional Examples (Not Worked in Class)</h3>
+
+<div class="example">
+    <h5>Example 4: Finding Point of Intersection of Two Lines</h5>
+    <p>Find the point of intersection of the two lines:</p>
+    \[\vec{r}_1(t) = \langle 2t + 3, 4t + 2, 3t + 5 \rangle\]
+    \[\vec{r}_2(s) = \langle s + 2, 3s - 1, -5s + 10 \rangle\]
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>At the point of intersection, the coordinates must be equal. We set the corresponding components equal to each other:</p>
+        
+        <p>From the x-components:</p>
+        \[2t + 3 = s + 2\]
+        \[s = 2t + 1\]
+        
+        <p>From the y-components:</p>
+        \[4t + 2 = 3s - 1\]
+        
+        <p>Substituting \(s = 2t + 1\):</p>
+        \[4t + 2 = 3(2t + 1) - 1\]
+        \[4t + 2 = 6t + 3 - 1\]
+        \[4t + 2 = 6t + 2\]
+        \[0 = 2t\]
+        \[t = 0\]
+        
+        <p>Therefore, \(s = 2(0) + 1 = 1\).</p>
+        
+        <p>We should verify this using the z-components:</p>
+        <p>When \(t = 0\): \(z = 3(0) + 5 = 5\)</p>
+        <p>When \(s = 1\): \(z = -5(1) + 10 = 5\) ✓</p>
+        
+        <p>The point of intersection can be found by plugging \(t = 0\) into \(\vec{r}_1\) or \(s = 1\) into \(\vec{r}_2\):</p>
+        \[\text{Point of intersection} = (3, 2, 5)\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Intersection Diagram:</strong> The work shows two parametric line equations with specific components circled in different colors (blue for x-components, teal for y-components, purple for z-components). Arrows and calculations show how the parameters t and s are related and solved to find t = 0 and s = 1.</p>
+</div>
+
+<div class="example">
+    <h5>Example 5: Finding the Line of Intersection of Two Planes</h5>
+    <p>Find the equation of the line of intersection of the two planes:</p>
+    \[x + 3y - 2z = 1\]
+    \[x + y + z = 0\]
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>To find the line of intersection, we need to solve the system of two equations in three variables. We will express two variables in terms of the third variable.</p>
+        
+        <p>Let's solve for x and y in terms of z. From the system:</p>
+        \[x + 3y - 2z = 1\]
+        \[x + y + z = 0\]
+        
+        <p>From the second equation:</p>
+        \[x + y = -z\]
+        
+        <p>Subtracting the second equation from the first:</p>
+        \[(x + 3y - 2z) - (x + y + z) = 1 - 0\]
+        \[2y - 3z = 1\]
+        \[y = \frac{1 + 3z}{2}\]
+        
+        <p>Substituting back into \(x + y = -z\):</p>
+        \[x + \frac{1 + 3z}{2} = -z\]
+        \[x = -z - \frac{1 + 3z}{2}\]
+        \[x = \frac{-2z - 1 - 3z}{2}\]
+        \[x = \frac{-1 - 5z}{2}\]
+        
+        <p>We can write the parametric equations by letting \(z = t\):</p>
+        \[x = \frac{-1 - 5t}{2} = -\frac{1}{2} - \frac{5t}{2}\]
+        \[y = \frac{1 + 3t}{2} = \frac{1}{2} + \frac{3t}{2}\]
+        \[z = t\]
+        
+        <p>The vector form of the line of intersection is:</p>
+        \[\langle x, y, z \rangle = t\left\langle -\frac{5}{2}, \frac{3}{2}, 1 \right\rangle + \left\langle -\frac{1}{2}, \frac{1}{2}, 0 \right\rangle\]
+        
+        <p>Or equivalently, using \(t' = 2t\):</p>
+        \[\langle x, y, z \rangle = t'\langle -5, 3, 2 \rangle + \left\langle -\frac{1}{2}, \frac{1}{2}, 0 \right\rangle\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>System of Equations Diagram:</strong> The work shows the two plane equations at the top. Below, algebraic manipulations are shown to solve for x and y in terms of z. Arrows and boxes highlight key steps in the solution process, showing how the variables are expressed parametrically.</p>
+</div>
+
+<div class="important">
+    <p><strong>Important Concept:</strong> The line of intersection of two planes can be found by expressing two of the coordinates as functions of the third coordinate (which becomes the parameter). The direction vector of this line is perpendicular to both normal vectors of the planes.</p>
+</div>
+
+</body>
+</html>

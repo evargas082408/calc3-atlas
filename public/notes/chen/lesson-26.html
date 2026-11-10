@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.2 (part 1) Line Integrals of Functions - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2026%20%2817.2%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 26 (17.2).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8">17.2 (part 1) Line Integrals of Functions</h1><p class="text-lg mb-6"><span class="font-bold">Line integral:</span> evaluation / accumulation of a function along a curve.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm text-center">\[ \int_{C} f(x,y) \, ds \]</div><p class="mb-6">Where:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( C \): the curve</li><li>\( ds \): length of a small segment of curve</li></ul><div class="grid-layout flex flex-col md:flex-row items-center gap-8 my-10"><div class="flex-1"><p class="mb-4">\( ds \): we get from length:</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A sketch of a curve segment from t=a to t=b, with a small portion marked as ds.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-26-1.webp" loading="lazy" decoding="async" alt="A sketch of a curve segment from t=a to t=b, with a small portion marked as ds." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A sketch of a curve segment from t=a to t=b, with a small portion marked as ds.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm text-center">\[ \int_{a}^{b} |\vec{r}'(t)| \, dt \]</div><p class="text-center italic text-slate-700">length of small segment: \( ds = |\vec{r}'(t)| \, dt \)</p></div></div><p class="mb-6">In fact, length of curve is a special case of line integral with \( f(x,y) = 1 \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{C} ds = \int_{a}^{b} |\vec{r}'(t)| \, dt \]</div><p class="mt-10">In 3D, \[ \int_{C} f(x,y,z) \, ds \]</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="text-lg mb-4">The potentially complicated part is the <span class="underline decoration-indigo-500 decoration-2">parametrization of curve \( C \)</span>.</p><p class="italic text-slate-700 mb-8">\( \hookrightarrow \) write an equation for it</p><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example</h2><div class="grid-layout flex flex-col md:flex-row items-start gap-8 my-8"><div class="flex-1"><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{C} xe^y \, ds \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D Cartesian coordinate system showing a vector/line segment starting at the origin (0,0) and ending at (4,-1).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-26-2.webp" loading="lazy" decoding="async" alt="A 2D Cartesian coordinate system showing a vector/line segment starting at the origin (0,0) and ending at (4,-1)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D Cartesian coordinate system showing a vector/line segment starting at the origin (0,0) and ending at (4,-1).
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4">\( C \): line segment from \( (0,0) \) to \( (4,-1) \)</p><h3 class="text-xl font-bold mb-2">Parametrize the curve \( C \)</h3><p class="italic mb-4">\( \hookrightarrow \) write an equation for it (line here)</p><p class="mb-2">\( \vec{r}(t) = \vec{r}_0 + t\vec{v} \)</p><p class="mb-2">\( \vec{v} = \langle 4, -1 \rangle \quad \vec{r}_0 = \langle 0, 0 \rangle \)</p><p class="mb-4">\( \vec{r}(t) = \langle 0, 0 \rangle + t \langle 4, -1 \rangle \)</p><div class="border-2 border-green-600 p-4 rounded-lg mb-4"><p class="text-center font-mono">\( \vec{r}(t) = \langle 4t, -t \rangle \quad 0 \le t \le 1 \)</p></div><p class="text-sm">\( \vec{r}' = \langle 4, -1 \rangle \)</p></div></div><div class="border-l-4 border-indigo-500 pl-6 my-8 text-slate-800"><p class="mb-4">\( ds = |\vec{r}'(t)| \, dt = |\langle 4, -1 \rangle| \, dt = \sqrt{4^2 + (-1)^2} \, dt = \sqrt{17} \, dt \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{C} xe^y \, ds = \int_{0}^{1} (4t)e^{-t} \sqrt{17} \, dt = 4\sqrt{17} \int_{0}^{1} te^{-t} \, dt = \dots = \boxed{2\sqrt{17}(e-1)} \]</div><p class="text-xs text-slate-500 mt-2">Note: The final result is boxed in the original notes.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><section class="mb-10"><p class="mb-6"><span class="font-bold italic">note</span> \( \vec{r}(t) = \langle 4t, -t \rangle \quad 0 \le t \le 1 \) is not the only way to parametrize \( C \)</p><p class="mb-4">also correct:</p><ul class="list-none space-y-4 ml-8 mb-6"><li>\( \vec{r}(t) = \langle 8t, -2t \rangle \quad 0 \le t \le \frac{1}{2} \)</li><li><span class="italic">or</span> \( \vec{r}(t) = \langle 2t, -\frac{1}{2}t \rangle \quad 0 \le t \le 2 \)</li></ul></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">does \( \int_C f(x,y) ds \) depend on how we parametrize?</h2><p class="mb-6">let's check, using \( \vec{r}(t) = \langle \underbrace{8t}_{x}, \underbrace{-2t}_{y} \rangle \quad 0 \le t \le \frac{1}{2} \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-4">\( \vec{r}'(t) = \langle 8, -2 \rangle \quad ds = |\vec{r}'(t)| dt = \sqrt{68} dt \)</p>\[ \int_C x e^y ds = \int_0^{\frac{1}{2}} 8t e^{-2t} \sqrt{68} dt \]\[ = 8\sqrt{68} \int_0^{\frac{1}{2}} t e^{-2t} dt = \dots = \text{same} \]</div><p class="mt-10">we don't expect it to change: if \( f(x,y) = 1 \), then \( \int_C ds = \text{length} \) and should not be affected by choice of parametrization</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><section class="mb-10"><div class="grid-layout"><div class="mb-6"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-4">example</h1><p class="mb-4">\( \int_C (x + \sqrt{y}) ds \)</p><p class="mb-4">\( C \): from \( (0,0) \) to \( (1,1) \) along \( y = x^2 \)<br>then from \( (1,1) \) to \( (0,0) \) along \( y = x \)</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing path C1 along y=x^2 from (0,0) to (1,1) and path C2 along y=x from (1,1) back to (0,0).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-26-3.webp" loading="lazy" decoding="async" alt="Coordinate graph showing path C1 along y=x^2 from (0,0) to (1,1) and path C2 along y=x from (1,1) back to (0,0)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing path C1 along y=x^2 from (0,0) to (1,1) and path C2 along y=x from (1,1) back to (0,0).
+                  </figcaption>
+                </figure>
+              </div></section><section class="mb-10"><p class="mb-6">we need to parametrize the two portions separately</p><ul class="list-none space-y-2 ml-4 mb-6"><li>\( C_1: (0,0) \to (1,1) \) along \( y = x^2 \)</li><li>\( C_2: (1,1) \to (0,0) \) along \( y = x \)</li></ul></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">\( C_1 \): \( y = x^2 \)</h2><p class="mb-4">so if we let \( x = t, \quad 0 \le t \le 1 \)</p><p class="mb-4">then \( \vec{r}(t) = \langle t, t^2 \rangle \) describes \( C_1 \)</p><ul class="list-none space-y-4 ml-8 mb-6"><li><span class="italic">or</span> \( \vec{r}(t) = \langle \sqrt{t}, t \rangle \quad 0 \le t \le 1 \)</li><li><span class="italic">or</span> \( \vec{r}(t) = \langle 2t, 4t^2 \rangle \quad 0 \le t \le \frac{1}{2} \)</li></ul><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>for simplicity, let's choose \( \vec{r}(t) = \langle t, t^2 \rangle \quad 0 \le t \le 1 \) for \( C_1 \)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Line Integral Parameterization and Calculation</h1><section class="mb-10"><h2 class="text-xl font-bold mb-4">Parameterizing Curve \( C_2 \)</h2><p class="mb-4">\( C_2 \): from \( (1, 1) \) to \( (0, 0) \) along \( y = x \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-2">\( \vec{r}(t) = \langle -t, -t \rangle \quad t = 1 \text{ to } t = 0 \)</p><p class="text-red-700 font-semibold">doesn't work, because we don't start at \( (1, 1) \)</p></div><p class="mb-4">but \( \vec{r}(t) = \langle t, t \rangle \quad t = 1 \text{ to } t = 0 \) <strong>does</strong></p><p class="mb-4">how about \( \vec{r}(t) = \langle 1-t, 1-t \rangle \quad 0 \le t \le 1 \)</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>As long as \( y = x \) (curve), and start/end are right, the parametrization should work.</p></div><p class="mb-6">let's go with \( \vec{r}(t) = \langle 1-t, 1-t \rangle \quad 0 \le t \le 1 \) for \( C_2 \)</p></section><section class="mb-10"><h2 class="text-xl font-bold mb-4">Setting up the Line Integral</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_C (x + \sqrt{y}) \, ds = \int_{C_1} (x + \sqrt{y}) \, ds + \int_{C_2} (x + \sqrt{y}) \, ds \]</div><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="p-6 bg-white border border-slate-200 rounded-lg shadow-sm"><h3 class="font-bold mb-2">For \( C_1 \):</h3><p>\( \vec{r}(t) = \langle t, t^2 \rangle \quad 0 \le t \le 1 \)</p><p>\( \vec{r}' = \langle 1, 2t \rangle \)</p><p>\( ds = |\vec{r}'| \, dt = \sqrt{1 + 4t^2} \, dt \)</p></div><div class="p-6 bg-white border border-slate-200 rounded-lg shadow-sm"><h3 class="font-bold mb-2">For \( C_2 \):</h3><p>\( \vec{r}(t) = \langle 1-t, 1-t \rangle \quad 0 \le t \le 1 \)</p><p>\( \vec{r}' = \langle -1, -1 \rangle \)</p><p>\( ds = \sqrt{2} \, dt \)</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-xl font-bold mb-6">Integral Evaluation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \underbrace{\int_0^1 (t + \sqrt{t^2}) \sqrt{1 + 4t^2} \, dt}_{C_1} + \underbrace{\int_0^1 (1-t + \sqrt{1-t}) \sqrt{2} \, dt}_{C_2} \]</div><div class="notebox p-4 bg-slate-50 border-l-4 border-slate-400 mb-6"><p class="text-sm">Note for \( C_1 \): \( x = t \), \( y = t^2 \), and \( ds = \sqrt{1 + 4t^2} \, dt \).</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \dots = \frac{1}{6}(5\sqrt{5} - 1) + \frac{7}{3\sqrt{2}} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg font-sans text-slate-800"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Line Integral Example</h1><section class="mb-8"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_C (x + y + z) \, ds \]</div><p class="mb-4">Where \( C \) is the intersection of \( z = x^2 + y^2 \) (paraboloid) and \( x^2 + y^2 = 1 \) (cylinder) going counterclockwise when viewed from above.</p></section><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10"><div class="space-y-4"><p>The curve \( C \) is a circle of radius 1 (part of the cylinder \( x^2 + y^2 = 1 \)).</p><p>At \( z = 1 \) from \( z = x^2 + y^2 \), the circle is radius 1, so \( x^2 + y^2 = 1 \) and \( z = 1 \).</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot showing a paraboloid and cylinder intersecting at a circle at height z=1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-26-4.webp" loading="lazy" decoding="async" alt="3D plot showing a paraboloid and cylinder intersecting at a circle at height z=1." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot showing a paraboloid and cylinder intersecting at a circle at height z=1.
+                  </figcaption>
+                </figure>
+              </div><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D projection of the unit circle in the xy-plane with counterclockwise orientation arrows.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-26-5.webp" loading="lazy" decoding="async" alt="2D projection of the unit circle in the xy-plane with counterclockwise orientation arrows." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D projection of the unit circle in the xy-plane with counterclockwise orientation arrows.
+                  </figcaption>
+                </figure>
+              <div class="space-y-4"><p class="font-bold">Now we parametrize this:</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg font-sans text-slate-800"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Parametrization Options</h2><section class="space-y-6"><div class="flex flex-col space-y-2"><div class="my-4 overflow-x-auto py-2 bg-slate-50 rounded-lg px-4 border border-slate-100">\[ \vec{r}(t) = \langle \cos t, \sin t, t \rangle, \quad 0 \le t \le 1 \]</div><p class="italic text-red-600">Note: can't have changing z-level</p></div><div class="my-4 overflow-x-auto py-2 bg-slate-50 rounded-lg px-4 border border-slate-100">\[ \vec{r}(t) = \langle \cos t, \sin t, 1 \rangle, \quad 0 \le t \le 2\pi \]</div><div class="border-2 border-green-500 rounded-full px-6 py-2 my-4"><div class="overflow-x-auto">\[ \vec{r}(t) = \langle \cos(2\pi t), \sin(2\pi t), 1 \rangle, \quad 0 \le t \le 1 \]</div></div><div class="my-4 overflow-x-auto py-2 bg-slate-50 rounded-lg px-4 border border-slate-100">\[ \vec{r}(t) = \langle \cos(\pi t), \sin(\pi t), 1 \rangle, \quad 0 \le t \le 2 \]</div></section><section class="mt-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">Calculation</h2><p class="mb-4">Using the chosen parametrization:</p><ul class="list-none space-y-4"><li>\( x = \cos(2\pi t), \quad y = \sin(2\pi t), \quad z = 1 \)</li><li>\( \vec{r}' = \langle -2\pi \sin(2\pi t), 2\pi \cos(2\pi t), 0 \rangle \)</li><li>\( ds = |\vec{r}'| \, dt = \sqrt{4\pi^2 \sin^2(2\pi t) + 4\pi^2 \cos^2(2\pi t)} \, dt = \sqrt{4\pi^2} = 2\pi \, dt \)</li></ul><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_C (x + y + z) \, ds = \int_0^1 (\cos(2\pi t) + \sin(2\pi t) + 1)(2\pi) \, dt = \dots = \boxed{2\pi} \]</div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

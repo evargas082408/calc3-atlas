@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 27: Line integrals of Vectorfields (17.2- part II) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson27.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+                    <li><a href="#page-section-12">Page 12</a></li>
+                
+                    <li><a href="#page-section-13">Page 13</a></li>
+                
+                    <li><a href="#page-section-14">Page 14</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 27: Line integrals of Vectorfields (17.2- part II)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 3/27/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson27.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 27: Line integrals of Vectorfields (17.2- part II)</h4>
+
+<div class="important">
+    <p><strong>Review:</strong> Line integral of a function \(f\) over Curve \(C\): \(\vec{r}(t)\), \(a \le t \le b\)</p>
+
+    \[ \int_{C} f \, ds = \int_{a}^{b} f(\vec{r}(t)) |\vec{r}'(t)| \, dt \quad \rightsquigarrow \quad \text{Mass of curve with density } f \]
+
+    \[ \int_{C} 1 \, ds = \int_{a}^{b} |\vec{r}'(t)| \, dt \quad \rightsquigarrow \quad \text{Arc Length} \]
+</div>
+
+<p>Today: integrate / accumulate a component of vectorfield along a curve</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Example</h4>
+
+<div class="example">
+    <p>Evaluate \(\int_C xy^3 \, ds\)</p>
+    <p>\(C\) is the unit circle centered at the origin.</p>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-1.webp" loading="lazy" decoding="async" alt="A coordinate plane diagram showing the unit circle C. The circle is centered at the origin (0,0) of a standard Cartesian coordinate system, where the x and y axes intersect. An arrowhead is drawn on the upper-right portion of the circle, indicating a counter-clockwise orientation for the parameterization of the curve." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate plane diagram showing the unit circle C. The circle is centered at the origin (0,0) of a standard Cartesian coordinate system, where the x and y axes intersect. An arrowhead is drawn on the upper-right portion of the circle, indicating a counter-clockwise orientation for the parameterization of the curve.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    <p>
+        First, we parameterize the curve \(C\):
+        \[C: \vec{r}(t) = \langle x(t), y(t) \rangle\]
+        \[= \langle \cos t, \sin t \rangle, \quad 0 \leq t \leq 2\pi\]
+    </p>
+    
+    <p>
+        Next, we find the derivative of the position vector and its magnitude:
+        \[\vec{r}'(t) = \langle -\sin t, \cos t \rangle\]
+        \[|\vec{r}'(t)| = 1\]
+    </p>
+    
+    <p>
+        Now, we substitute these into the formula for the line integral with respect to arc length:
+        \[\int_C xy^3 \, ds = \int_0^{2\pi} x(t) (y(t))^3 |\vec{r}'(t)| \, dt\]
+        \[= \int_0^{2\pi} \cos t (\sin t)^3 \, dt\]
+        \[= \left. \frac{(\sin t)^4}{4} \right|_0^{2\pi} = 0\]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Scalar Projections</h4>
+
+<div class="definition">
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-2.webp" loading="lazy" decoding="async" alt="Geometric representation of a scalar projection. A vector \(\vec{u}\) with magnitude \(|u|\) is shown at an angle \(\theta\) relative to a horizontal vector \(\vec{v}\). A vertical dashed line is dropped from the terminal point of \(\vec{u}\) to meet the horizontal vector \(\vec{v}\) at a right angle. The horizontal segment along vector \(\vec{v}\) from the shared origin to the dashed line is labeled \(L\), representing the component of \(\vec{u}\) in the direction of \(\vec{v}\)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Geometric representation of a scalar projection. A vector \(\vec{u}\) with magnitude \(|u|\) is shown at an angle \(\theta\) relative to a horizontal vector \(\vec{v}\). A vertical dashed line is dropped from the terminal point of \(\vec{u}\) to meet the horizontal vector \(\vec{v}\) at a right angle. The horizontal segment along vector \(\vec{v}\) from the shared origin to the dashed line is labeled \(L\), representing the component of \(\vec{u}\) in the direction of \(\vec{v}\).</span>
+                      </div>
+                    </div>
+                  
+
+    \[ L = \text{Scal}_{\vec{v}} \vec{u} \]
+
+    \[ \frac{L}{|u|} = \cos \theta \implies L = |u| \cos \theta \]
+
+    \[ \vec{u} \cdot \vec{v} = |u| |v| \cos \theta \]
+
+    \[ \implies |u| \cos \theta = \frac{\vec{u} \cdot \vec{v}}{|v|} \]
+</div>
+
+<div class="important">
+    <h4>Today:</h4>
+    <p>Compute Line integrals of \(\text{Scal}_{\vec{T}} \vec{F}\), \(\text{Scal}_{\vec{N}} \vec{F}\)</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-3.webp" loading="lazy" decoding="async" alt="Illustration showing vector components along a curve \(C\). A green curve \(C\) originates at the bottom left and arcs toward the top right. At three discrete points along this path, three vectors are illustrated: a blue tangent vector \(\vec{T}\) pointing along the curve, a red normal vector \(\vec{N}\) pointing perpendicular to the curve, and a purple vector \(\vec{F}\) representing a vector field at that location. At the final point at the top right, the vectors are clearly labeled \(\vec{N}\) (red), \(\vec{F}\) (purple), and \(\vec{T}\) (blue)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Illustration showing vector components along a curve \(C\). A green curve \(C\) originates at the bottom left and arcs toward the top right. At three discrete points along this path, three vectors are illustrated: a blue tangent vector \(\vec{T}\) pointing along the curve, a red normal vector \(\vec{N}\) pointing perpendicular to the curve, and a purple vector \(\vec{F}\) representing a vector field at that location. At the final point at the top right, the vectors are clearly labeled \(\vec{N}\) (red), \(\vec{F}\) (purple), and \(\vec{T}\) (blue).</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Component of \(\vec{F}\) in \(\vec{T}\) direction</h4>
+
+<p>
+    Consider a curve \(C: \vec{r}(t)\) for \(a \le t \le b\), where \(\vec{T}\) is the <strong>unit tangent</strong> vector.
+</p>
+
+<p>
+    \[\vec{T} = \frac{\vec{r}'(t)}{|\vec{r}'(t)|}\]
+</p>
+
+
+                    <div class="inline-diagram-container" style="width: 61%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-4.webp" loading="lazy" decoding="async" alt="A technical diagram illustrating the geometric relationship between a vector field and a curve. A green line representing a curve C arcs from the bottom left toward the top right. At a specific point on the curve, two vectors are drawn. A blue vector labeled T is shown tangent to the curve at that point. A purple vector labeled F originates from the same point on the curve and points away from it at an angle. This visual aid demonstrates how vector F can be projected onto the unit tangent vector T." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram illustrating the geometric relationship between a vector field and a curve. A green line representing a curve C arcs from the bottom left toward the top right. At a specific point on the curve, two vectors are drawn. A blue vector labeled T is shown tangent to the curve at that point. A purple vector labeled F originates from the same point on the curve and points away from it at an angle. This visual aid demonstrates how vector F can be projected onto the unit tangent vector T.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="definition">
+    The <strong>scalar component</strong> of \(\vec{F}\) in the direction of \(\vec{T}\) is:
+    \[scal_{\vec{T}} \vec{F} = \frac{\vec{F} \cdot \vec{T}}{|\vec{T}|} = \vec{F} \cdot \vec{T}\]
+    Where the resulting value is a <strong>scalar</strong>.
+</div>
+
+<p>
+    <strong>Line integral:</strong> \[\int_C \vec{F} \cdot \vec{T} \, ds\]
+</p>
+
+<div class="important">
+    <strong>Physical Meaning:</strong>
+    <p>
+        If \(\vec{F} = \text{Force Field} \rightsquigarrow \text{Work} = \int_C \vec{F} \cdot \vec{T} \, ds\)
+    </p>
+    <p>
+        If \(\vec{F} = \text{Velocity} \rightsquigarrow \text{Flow} = \int_C \vec{F} \cdot \vec{T} \, ds\)
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Computing \(\int_C \vec{F} \cdot \vec{T} \, ds\)</h4>
+
+<p>\(C: r(t), \quad a \le t \le b\)</p>
+
+<div class="definition">
+    \[\vec{T}(t) = \frac{r'(t)}{|r'(t)|}\]
+</div>
+
+<p>By substituting the definition of the unit tangent vector and the differential arc length \(ds = |r'(t)| \, dt\), the line integral is expressed as:</p>
+
+\[\int_C \vec{F} \cdot \vec{T} \, ds = \int_a^b \left( \vec{F}(r(t)) \cdot \frac{r'(t)}{|r'(t)|} \right) |r'(t)| \, dt\]
+
+<p>Simplifying the expression leads to the formula for computing the line integral of a vector field along a curve:</p>
+
+<div class="important">
+    \[\int_C \vec{F} \cdot \vec{T} \, ds = \int_a^b \vec{F}(r(t)) \cdot r'(t) \, dt\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Other Notation!</h4>
+
+<div class="definition">
+    \[ \int_{C} \vec{F} \cdot \vec{T} \, ds = \int_{a}^{b} \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \, dt \]
+    \[ = \int_{C} \vec{F} \cdot d\vec{r} \]
+</div>
+
+<p>Suppose \(\vec{F} = \langle f, g, h \rangle\), \(\vec{r}(t) = \langle x(t), y(t), z(t) \rangle\)</p>
+
+<div class="definition">
+    \[ \int_{C} \vec{F} \cdot \vec{T} \, ds = \int_{a}^{b} (f x' + g y' + h z') \, dt \]
+    \[ = \int_{a}^{b} f x' \, dt + \int_{a}^{b} g y' \, dt + \int_{a}^{b} h z' \, dt \]
+    \[ = \int_{C} f \, dx + \int_{C} g \, dy + \int_{C} h \, dz = \int_{C} f \, dx + g \, dy + h \, dz \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Work Done in a Force Field</h3>
+
+<div class="example">
+    <p>
+        <strong>Eg:</strong> Find Work done in presence of Force Field \(\vec{F} = \langle x, -y \rangle\) moving along the Curve \(C\) given by \(\vec{r}(t) = \langle 2t, t^2 \rangle, 0 \le t \le 1\)
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-5.webp" loading="lazy" decoding="async" alt="Vector field plot representing the force field \(\vec{F} = \langle x, -y \rangle\) on a Cartesian grid ranging from approximately -3 to 3 on both axes. The vectors illustrate the field's behavior: in the first quadrant, vectors point down and to the right; in the second, down and to the left; in the third, up and to the left; and in the fourth, up and to the right. Overlaid on this field is a green parabolic curve representing the path \(C\) defined by \(\vec{r}(t) = \langle 2t, t^2 \rangle\). The curve starts at the origin (0, 0) and ends at the point (2, 1). A green arrow on the path indicates the direction of travel along the curve from the origin toward (2, 1)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Vector field plot representing the force field \(\vec{F} = \langle x, -y \rangle\) on a Cartesian grid ranging from approximately -3 to 3 on both axes. The vectors illustrate the field's behavior: in the first quadrant, vectors point down and to the right; in the second, down and to the left; in the third, up and to the left; and in the fourth, up and to the right. Overlaid on this field is a green parabolic curve representing the path \(C\) defined by \(\vec{r}(t) = \langle 2t, t^2 \rangle\). The curve starts at the origin (0, 0) and ends at the point (2, 1). A green arrow on the path indicates the direction of travel along the curve from the origin toward (2, 1).</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <p>\[ \text{Work} = \int_{C} \vec{F} \cdot \vec{T} \, ds \]</p>
+
+        <p>\[ = \int_{0}^{1} \left[ \vec{F}(\vec{r}(t)) \cdot \vec{T}(t) \right] |\vec{r}'(t)| \, dt \]</p>
+
+        <p>
+            Given:<br>
+            \(\vec{r}' = \langle 2, 2t \rangle\), \(|\vec{r}'| = \sqrt{4 + 4t^2}\)
+        </p>
+
+        <p>\[ \vec{T} = \frac{\vec{r}'}{|\vec{r}'|} = \frac{\langle 2, 2t \rangle}{\sqrt{4 + 4t^2}} \]</p>
+
+        <p>\[ \vec{F}(\vec{r}(t)) = \langle x(t), -y(t) \rangle = \langle 2t, -t^2 \rangle \]</p>
+
+        <p>Substituting into the work integral:</p>
+        
+        <p>\[ = \int_{0}^{1} \left( \langle 2t, -t^2 \rangle \cdot \frac{\langle 2, 2t \rangle}{\sqrt{4 + 4t^2}} \right) \sqrt{4 + 4t^2} \, dt \]</p>
+
+        <p>\[ = \int_{0}^{1} (4t - 2t^3) \, dt = \left[ 2t^2 - \frac{t^4}{2} \right]_{0}^{1} = \frac{3}{2} \]</p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Other ways of framing the same problem</h4>
+
+<p>
+    \(\vec{F} = \langle x, -y \rangle, \quad C: \vec{r}_(t) = \langle 2t, t^2 \rangle, \quad 0 \leq t \leq 1\)
+</p>
+
+<div class="important">
+    <ol>
+        <li>
+            Compute \(\int_{C} \vec{F} \cdot \vec{T} \, ds \quad \text{or} \quad \int_{C} \vec{F} \cdot d\vec{r}\)
+        </li>
+        <li>
+            Find \(\int_{C} x \, dx - y \, dy \quad \text{or} \quad \int_{C} x \, dx - \int_{C} y \, dy\)
+        </li>
+    </ol>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Circulation</h4>
+
+<div class="definition">
+    <p>Suppose \(C\) is a <strong>closed curve</strong> (where the start and end are the same points).</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-6.webp" loading="lazy" decoding="async" alt="A hand-drawn illustration of a closed curve labeled C. The curve is represented as an irregular green loop. Arrows are drawn on the curve indicating a counter-clockwise orientation, showing the path returns to its starting point." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn illustration of a closed curve labeled C. The curve is represented as an irregular green loop. Arrows are drawn on the curve indicating a counter-clockwise orientation, showing the path returns to its starting point.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>A line integral over such a curve is called <strong>CIRCULATION</strong>.</p>
+</div>
+
+<p><strong>Notation:</strong></p>
+
+\[ \oint_{C} \vec{F} \cdot \vec{T} \, ds = \oint_{C} \vec{F} \cdot d\vec{r} \]
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Example: Evaluating a Line Integral over a Closed Curve</h4>
+
+<div class="example">
+    <p><strong>eg:</strong> Evaluate \(\oint_C \vec{F} \cdot \vec{T} ds\), where \(\vec{F} = \langle x, -y \rangle\) and \(C\) is the Closed Curve Below.</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-7.webp" loading="lazy" decoding="async" alt="A vector field plot on a Cartesian coordinate plane illustrating a line integral over a closed triangular path C. The vector field \(\vec{F} = \langle x, -y \rangle\) is represented by a grid of blue arrows. In the first quadrant, where the path is located, the vectors generally point to the right and down. The closed path C is a triangle with vertices at the origin (0,0), (2,0), and (0,2). It is composed of three directed line segments: C1 is a horizontal path along the x-axis from (0,0) to (2,0); C2 is a diagonal path from (2,0) to (0,2); and C3 is a vertical path along the y-axis from (0,2) back to (0,0). The direction of travel indicated by arrows is counter-clockwise. The axes are labeled with integer units from -3 to 3." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field plot on a Cartesian coordinate plane illustrating a line integral over a closed triangular path C. The vector field \(\vec{F} = \langle x, -y \rangle\) is represented by a grid of blue arrows. In the first quadrant, where the path is located, the vectors generally point to the right and down. The closed path C is a triangle with vertices at the origin (0,0), (2,0), and (0,2). It is composed of three directed line segments: C1 is a horizontal path along the x-axis from (0,0) to (2,0); C2 is a diagonal path from (2,0) to (0,2); and C3 is a vertical path along the y-axis from (0,2) back to (0,0). The direction of travel indicated by arrows is counter-clockwise. The axes are labeled with integer units from -3 to 3.</span>
+                      </div>
+                    </div>
+                  
+    </diagram-placeholder>
+
+    <p>
+        \[ \oint_C \vec{F} \cdot \vec{T} ds = \int_{C_1} \vec{F} \cdot \vec{T} ds + \int_{C_2} \vec{F} \cdot \vec{T} ds + \int_{C_3} \vec{F} \cdot \vec{T} ds \]
+    </p>
+</div>
+
+<div class="solution">
+    <p><strong>\(C_1\):</strong></p>
+    <p>
+        \[ \vec{r}_1(t) = \vec{r}_0 + t \vec{v} \]
+        \[ = \langle 0,0 \rangle + t \langle 1,0 \rangle = \langle t, 0 \rangle \]
+        \[ 0 \leq t \leq 2 \]
+    </p>
+    <p>
+        \(\vec{r}_1'(t) = \langle 1, 0 \rangle\) <br>
+        \(\vec{F}(\vec{r}_1(t)) = \langle t, 0 \rangle\)
+    </p>
+    <p>
+        \[ \int_{C_1} \vec{F} \cdot \vec{T} dt = \int_0^2 \vec{F}(\vec{r}_1(t)) \cdot \vec{r}_1'(t) dt \]
+        \[ = \int_0^2 t dt = 2 \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <h4>Line Integral Calculation for Path \(C_2\)</h4>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-8.webp" loading="lazy" decoding="async" alt="A vector field plot on a Cartesian coordinate system ranging from -3 to 3 on both axes. The vector field is represented by blue arrows that point away from the y-axis and towards the x-axis, corresponding to the field \(\vec{F}(x, y) = \langle x, -y \rangle\). Superimposed on the field is a directed triangular path with vertices at (0,0), (2,0), and (0,2). Segment \(C_1\) is on the x-axis directed from (0,0) to (2,0). Segment \(C_2\) is a diagonal line from (2,0) to (0,2). Segment \(C_3\) is on the y-axis directed from (0,2) to (0,0). The points (2,0) and (0,2) are explicitly labeled on the axes." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field plot on a Cartesian coordinate system ranging from -3 to 3 on both axes. The vector field is represented by blue arrows that point away from the y-axis and towards the x-axis, corresponding to the field \(\vec{F}(x, y) = \langle x, -y \rangle\). Superimposed on the field is a directed triangular path with vertices at (0,0), (2,0), and (0,2). Segment \(C_1\) is on the x-axis directed from (0,0) to (2,0). Segment \(C_2\) is a diagonal line from (2,0) to (0,2). Segment \(C_3\) is on the y-axis directed from (0,2) to (0,0). The points (2,0) and (0,2) are explicitly labeled on the axes.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <p>
+            For the segment <strong>\(C_2\)</strong>, we define the parametrization \(r_2(t)\) starting from point \((2, 0)\) and moving towards point \((0, 2)\) using the vector equation \(r_2(t) = r_0 + t\vec{v}\):
+        </p>
+
+        \[
+        \begin{aligned}
+        r_2(t) &amp;= \langle 2, 0 \rangle + t \langle -2, 2 \rangle \\
+        &amp;= \langle -2t + 2, 2t \rangle, \quad 0 \leq t \leq 1
+        \end{aligned}
+        \]
+
+        <p>The derivative of the position vector is:</p>
+        \[ r_2'(t) = \langle -2, 2 \rangle \]
+
+        <p>Evaluating the vector field \(\vec{F}(x, y) = \langle x, -y \rangle\) along the path \(r_2(t)\):</p>
+        \[ \vec{F}(r_2(t)) = \langle -2t + 2, -2t \rangle \]
+
+        <p>The line integral over \(C_2\) is then calculated as follows:</p>
+        \[
+        \begin{aligned}
+        \int_{C_2} \vec{F} \cdot \vec{T} \, ds &amp;= \int_{0}^{1} \vec{F}(r_2(t)) \cdot r_2'(t) \, dt \\
+        &amp;= \int_{0}^{1} \langle -2t + 2, -2t \rangle \cdot \langle -2, 2 \rangle \, dt \\
+        &amp;= \int_{0}^{1} (4t - 4 - 4t) \, dt \\
+        &amp;= \int_{0}^{1} -4 \, dt \\
+        &amp;= -4
+        \end{aligned}
+        \]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-12" aria-labelledby="page-title-12">
+                    <h3 id="page-title-12">Page 12</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="solution">
+    <h4>Example: Line Integral over a Closed Triangular Path</h4>
+
+    <p>
+        \(C_3\): \(\vec{r}_3(t) = \vec{r}_0 + t \vec{v}\)<br>
+        \(\quad = \langle 0, 2 \rangle + t \langle 0, -1 \rangle\)<br>
+        \(\quad = \langle 0, 2 - t \rangle\)<br>
+        \(\quad 0 \le t \le 2\)
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-9.webp" loading="lazy" decoding="async" alt="A vector field plot in the Cartesian plane with a superimposed triangular path. The vector field \(\vec{F}(x,y) = \langle x, -y \rangle\) is represented by a grid of blue arrows. In the first quadrant, the arrows point towards the x-axis and away from the y-axis (downwards and to the right). A right-angled triangle path \(C\) is highlighted in green with its vertices at the origin \((0,0)\), \((2,0)\), and \((0,2)\). The path consists of three segments: \(C_1\) along the positive x-axis from 0 to 2, \(C_2\) along the hypotenuse from \((2,0)\) to \((0,2)\), and \(C_3\) along the positive y-axis from 2 back to 0. Small green arrowheads on these segments indicate a counter-clockwise orientation. The coordinates \((0,2)\) and \((2,0)\) are explicitly labeled on the graph, which ranges from -3 to 3 on both axes." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field plot in the Cartesian plane with a superimposed triangular path. The vector field \(\vec{F}(x,y) = \langle x, -y \rangle\) is represented by a grid of blue arrows. In the first quadrant, the arrows point towards the x-axis and away from the y-axis (downwards and to the right). A right-angled triangle path \(C\) is highlighted in green with its vertices at the origin \((0,0)\), \((2,0)\), and \((0,2)\). The path consists of three segments: \(C_1\) along the positive x-axis from 0 to 2, \(C_2\) along the hypotenuse from \((2,0)\) to \((0,2)\), and \(C_3\) along the positive y-axis from 2 back to 0. Small green arrowheads on these segments indicate a counter-clockwise orientation. The coordinates \((0,2)\) and \((2,0)\) are explicitly labeled on the graph, which ranges from -3 to 3 on both axes.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        \(\vec{r}_3'(t) = \langle 0, -1 \rangle\)<br>
+        \(\vec{F}(\vec{r}_3(t)) = \langle 0, t - 2 \rangle\)
+    </p>
+
+    <p>
+        \[ \int_{C_3} \vec{F} \cdot \vec{T} \, ds = \int_0^2 \vec{F}(\vec{r}_3(t)) \cdot \vec{r}_3'(t) \, dt = \int_0^2 (-t + 2) \, dt = \left[ -\frac{t^2}{2} + 2t \right]_0^2 = 2 \]
+    </p>
+
+    <p>
+        \[ \oint_C \vec{F} \cdot \vec{T} \, ds = \int_{C_1} \vec{F} \cdot \vec{T} \, ds + \int_{C_2} \vec{F} \cdot \vec{T} \, ds + \int_{C_3} \vec{F} \cdot \vec{T} \, ds = 2 - 4 + 2 = 0 \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-13" aria-labelledby="page-title-13">
+                    <h3 id="page-title-13">Page 13</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Flux</h4>
+
+\[ \int_C \vec{F} \cdot \vec{N} \, ds \]
+
+
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-10.webp" loading="lazy" decoding="async" alt="Diagram illustrating the relationship between a curve and its normal vector for flux calculation. A green curve flows from bottom-left to top-right. At a point on the curve, a blue arrow represents the tangent vector pointing in the direction of the path. A solid red arrow, representing the unit normal vector N, points perpendicular to the tangent vector towards the outside (right). A dashed red arrow points in the opposite direction, towards the inside. This illustrates the convention for a unit vector perpendicular to the curve going outwards." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram illustrating the relationship between a curve and its normal vector for flux calculation. A green curve flows from bottom-left to top-right. At a point on the curve, a blue arrow represents the tangent vector pointing in the direction of the path. A solid red arrow, representing the unit normal vector N, points perpendicular to the tangent vector towards the outside (right). A dashed red arrow points in the opposite direction, towards the inside. This illustrates the convention for a unit vector perpendicular to the curve going outwards.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="definition">
+    <p><strong>Definition:</strong></p>
+    \[ \vec{T} = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} \]
+    <p><strong>\(\vec{N}\)</strong> = unit vector perpendicular to \(T\) going outwards OR following Right hand Rule.</p>
+</div>
+
+<p>Suppose \(\vec{r}(t) = \langle x(t), y(t) \rangle\)</p>
+
+\[ T(t) = \frac{1}{|\vec{r}'(t)|} \langle x'(t), y'(t) \rangle \]
+
+<p>By convention:</p>
+
+\[ N(t) = \frac{1}{|\vec{r}'(t)|} \langle y'(t), -x'(t) \rangle \]
+
+<div class="important">
+    <p><strong>Flux Formula:</strong></p>
+    \[ \text{Flux} = \int_C \vec{F} \cdot \vec{N} \, ds = \int_a^b \vec{F}(\vec{r}(t)) \cdot \langle y', -x' \rangle \, dt \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-14" aria-labelledby="page-title-14">
+                    <h3 id="page-title-14">Page 14</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Example not worked out in class</h4>
+
+<div class="example">
+    <strong>Example:</strong> Given \(\vec{F} = \langle 2x, 2y \rangle\), find the flux across the unit circle \(C: \vec{r}(t) = \langle \cos t, \sin t \rangle, 0 \le t \le 2\pi\).
+
+    <div class="solution">
+        <p>
+            We start by defining the parametric components of the curve \(C\):
+            \[\vec{r}(t) = \langle x(t), y(t) \rangle = \langle \cos t, \sin t \rangle\]
+            The derivative of the position vector is:
+            \[\vec{r}'(t) = \langle x'(t), y'(t) \rangle = \langle -\sin t, \cos t \rangle\]
+            The magnitude of the velocity vector is:
+            \[|\vec{r}'(t)| = 1\]
+            The outward unit normal vector \(\vec{N}(t)\) is given by:
+            \[\vec{N}(t) = \frac{1}{|\vec{r}'(t)|} \langle y'(t), -x'(t) \rangle = \langle \cos t, \sin t \rangle\]
+            Evaluating the vector field \(\vec{F}\) along the curve:
+            \[\vec{F}(\vec{r}(t)) = \langle 2 \cos t, 2 \sin t \rangle\]
+        </p>
+
+        
+                    <div class="inline-diagram-container" style="width: 41%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-27-11.webp" loading="lazy" decoding="async" alt="Diagram showing a unit circle on a Cartesian coordinate plane centered at the origin. The circle has an arrow indicating a counter-clockwise orientation. At a point in the first quadrant, two vectors originate: a blue vector labeled 'T' pointing tangent to the circle in the direction of the orientation, and a red vector labeled 'N' pointing radially outward, representing the outward unit normal vector. A red dashed line extends from the point on the circle back towards the origin, aligned with the normal vector." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram showing a unit circle on a Cartesian coordinate plane centered at the origin. The circle has an arrow indicating a counter-clockwise orientation. At a point in the first quadrant, two vectors originate: a blue vector labeled 'T' pointing tangent to the circle in the direction of the orientation, and a red vector labeled 'N' pointing radially outward, representing the outward unit normal vector. A red dashed line extends from the point on the circle back towards the origin, aligned with the normal vector.</span>
+                      </div>
+                    </div>
+                  
+
+        <p>
+            The flux across the curve is calculated as the line integral:
+            \[\oint_C \vec{F} \cdot \vec{N} \, ds = \int_0^{2\pi} (\vec{F}(\vec{r}(t)) \cdot \vec{N}(t)) |\vec{r}'(t)| \, dt\]
+            Substituting the expressions we found:
+            \[= \int_0^{2\pi} (2 \cos^2 t + 2 \sin^2 t) \, dt = \int_0^{2\pi} 2 \, dt = 4\pi\]
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 3/27/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

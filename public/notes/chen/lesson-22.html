@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.5 Triple Integrals in Cylindrical Coordinates - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 22 (16.5)-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 22 (16.5).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-indigo-500 pb-2">16.5 Triple Integrals in Cylindrical Coordinates</h1><section class="mb-10"><p class="text-lg mb-4"><span class="font-bold text-indigo-700">cylindrical:</span> hybrid of polar and cartesian</p><ul class="list-none space-y-2 ml-4 mb-6"><li>plane of "floor" → <span class="font-semibold">polar</span></li><li>height → <span class="font-semibold">Cartesian</span></li></ul></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-900 mb-4">point in cylindrical: 
+<span class="inline-block ml-2">\( (r, \theta, z) \)</span></h2><p class="text-sm text-slate-600 italic mb-6">Note: \( r \) and \( \theta \) are polar components, while \( z \) is Cartesian.</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D Cartesian axes showing point (r, theta, z) with its vertical height z and polar projection on the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-1.webp" loading="lazy" decoding="async" alt="3D Cartesian axes showing point (r, theta, z) with its vertical height z and polar projection on the xy-plane." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D Cartesian axes showing point (r, theta, z) with its vertical height z and polar projection on the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div><p class="mb-4">The diagram illustrates a point in 3D space. The distance from the origin to the projection on the \( xy \)-plane is \( r \), the angle from the \( x \)-axis is \( \theta \), and the vertical distance is \( z \).</p><p class="italic text-slate-600">shadow of point on \( xy \)-plane</p></div></div></section><section class="mt-12"><h2 class="text-2xl font-bold text-slate-900 mb-6">Conversion Formulas</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="p-6 bg-slate-50 rounded-xl border border-slate-100 shadow-sm"><h3 class="text-lg font-bold mb-4 text-indigo-800">\( (x, y, z) \to (r, \theta, z) \)</h3><div class="space-y-2"><div>\[ r^2 = x^2 + y^2 \]</div><div>\[ \tan \theta = \frac{y}{x} \]</div><p class="text-sm font-semibold text-slate-500 mt-2">(polar components)</p><div>\[ z = z \]</div></div></div><div class="p-6 bg-slate-50 rounded-xl border border-slate-100 shadow-sm"><h3 class="text-lg font-bold mb-4 text-indigo-800">\( (r, \theta, z) \to (x, y, z) \)</h3><div class="space-y-2"><div>\[ x = r \cos \theta \]</div><div>\[ y = r \sin \theta \]</div><p class="text-sm font-semibold text-slate-500 mt-2">(polar components)</p><div>\[ z = z \]</div></div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><section class="mb-10"><p class="text-lg mb-4">cylindrical is good when volume is cylinder-like</p><p class="text-lg mb-6">cylinder-like volume looks simple in cylindrical</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-8 border border-slate-100 shadow-sm text-center"><span class="text-xl font-semibold">\( \{ (r, \theta, z) : 1 \le r \le 2, \quad 0 \le \theta \le \pi/2, \quad 3 \le z \le 4 \} \)</span></div><p class="text-center text-indigo-700 font-bold mb-8">"floor" in polar</p></section><section class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-12 items-center"><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D graph showing a shaded quarter-annulus in the first quadrant between radii 1 and 2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-2.webp" loading="lazy" decoding="async" alt="A 2D graph showing a shaded quarter-annulus in the first quadrant between radii 1 and 2." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D graph showing a shaded quarter-annulus in the first quadrant between radii 1 and 2.
+                  </figcaption>
+                </figure>
+              <p class="text-sm text-slate-600">The "floor" region in the \( xy \)-plane.</p></div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D sketch of a wedge-shaped volume element floating above the xy-plane, defined by cylindrical bounds.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-3.webp" loading="lazy" decoding="async" alt="A 3D sketch of a wedge-shaped volume element floating above the xy-plane, defined by cylindrical bounds." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D sketch of a wedge-shaped volume element floating above the xy-plane, defined by cylindrical bounds.
+                  </figcaption>
+                </figure>
+              <p class="text-sm text-slate-600">The resulting 3D volume in cylindrical coordinates.</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><section><h1 class="text-3xl font-black tracking-tight mb-8">Example: Triple Integral in Cartesian Coordinates</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{-3}^{3} \int_{0}^{\sqrt{9-x^2}} \int_{0}^{9-x^2-y^2} \sqrt{x^2+y^2} \, dz \, dy \, dx \]</div><p class="mb-6 text-lg">terrible in Cartesian</p><p class="mb-6">let's examine the volume we are integrating over</p><div class="grid-layout flex flex-col md:flex-row items-center gap-8 mb-10"><div class="flex-1"><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-2">\(-3 \leq x \leq 3\)</p><p class="mb-2">\(0 \leq y \leq \sqrt{9-x^2}\)</p><p class="font-bold">"floor"</p></div><p class="mb-4">upper half circle radius 3</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D graph showing a shaded semi-circle on the xy-plane with radius 3, centered at the origin, above the x-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-4.webp" loading="lazy" decoding="async" alt="A 2D graph showing a shaded semi-circle on the xy-plane with radius 3, centered at the origin, above the x-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D graph showing a shaded semi-circle on the xy-plane with radius 3, centered at the origin, above the x-axis.
+                  </figcaption>
+                </figure>
+              </div></div><div class="flex flex-col md:flex-row justify-between items-start gap-8"><div class="flex-1"><p class="mb-6 font-semibold">this is a region in which polar is good</p></div><div class="flex-1 bg-slate-50 p-6 rounded-xl border border-slate-200"><p class="mb-2">\(0 \leq \theta \leq \pi\)</p><p>\(0 \leq r \leq 3\)</p></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">now we look at \(z\)</h2></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><section><div class="grid-layout flex flex-col md:flex-row items-start gap-8 mb-10"><div class="flex-1"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 0 \leq z \leq 9-x^2-y^2 \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>xy-plane</li><li>paraboloid opening down vertex at \(z=9\)</li></ul></div><div class="flex-1"><p class="font-bold mb-4">in polar/cylindrical</p><div class="my-4">\[ 9-x^2-y^2 = 9-(x^2+y^2) \]\[ = 9-r^2 \]</div></div></div><div class="flex justify-center mb-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a shaded paraboloid volume opening downwards from z=9 to the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-5.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a shaded paraboloid volume opening downwards from z=9 to the xy-plane." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a shaded paraboloid volume opening downwards from z=9 to the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">now the bounds in cylindrical:</h2><div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mb-8"><p class="text-center text-lg font-mono">\(0 \leq r \leq 3\), \(0 \leq \theta \leq \pi\), \(0 \leq z \leq 9-r^2\)</p></div><p class="mb-4 font-bold">original integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{-3}^{3} \int_{0}^{\sqrt{9-x^2}} \int_{0}^{9-x^2-y^2} \sqrt{x^2+y^2} \, dz \, dy \, dx \]</div><p class="mb-6 italic">Conversion notes: bounds go into \(r, \theta\) bounds; integrand becomes \(r\); differential becomes \(r \, dz \, dr \, d\theta\).</p><p class="mb-4 font-bold">becomes</p><div class="my-8 overflow-x-auto py-4 bg-indigo-50 rounded-xl px-6 border border-indigo-100 shadow-md">\[ \int_{0}^{\pi} \int_{0}^{3} \int_{0}^{9-r^2} r \cdot r \, dz \, dr \, d\theta = \int_{0}^{\pi} \int_{0}^{3} \int_{0}^{9-r^2} r^2 \, dz \, dr \, d\theta \]\[ = \dots = \boxed{\frac{162\pi}{5}} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Triple Integral in Cylindrical Coordinates</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{4} \int_{0}^{1/\sqrt{2}} \int_{x}^{\sqrt{1-x^2}} e^{-x^2-y^2} \, dy \, dx \, dz \]</div><p class="mb-6">Can't even start in Cartesian. Convert to cylindrical.</p><div class="grid-layout"><div class="space-y-4"><h2 class="text-xl font-bold">Limits of Integration</h2><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>\( 0 \le x \le \frac{1}{\sqrt{2}} \)</p><p>\( x \le y \le \sqrt{1-x^2} \) (line \( y=x \) to upper circle radius 1)</p><p>\( 0 \le z \le 4 \)</p></div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D region in xy-plane bounded by y=x, the y-axis, and a circular arc y=sqrt(1-x^2).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-6.webp" loading="lazy" decoding="async" alt="2D region in xy-plane bounded by y=x, the y-axis, and a circular arc y=sqrt(1-x^2)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D region in xy-plane bounded by y=x, the y-axis, and a circular arc y=sqrt(1-x^2).
+                  </figcaption>
+                </figure>
+              </div><h2 class="text-xl font-bold mt-10 mb-4">The volume looks like</h2><div class="flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D sketch of a cylindrical wedge with height 4 and a base defined by the xy-region.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-7.webp" loading="lazy" decoding="async" alt="3D sketch of a cylindrical wedge with height 4 and a base defined by the xy-region." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D sketch of a cylindrical wedge with height 4 and a base defined by the xy-region.
+                  </figcaption>
+                </figure>
+              </div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Convert the "floor" to polar</h1><div class="grid-layout"><div class="space-y-4"><p class="mb-6">\( y=x \) slope 1</p><p class="mb-6">bisect first quadrant in two halves</p><p class="mb-6">so angle is \( 45^\circ = \frac{\pi}{4} \)</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Polar coordinate sketch showing a sector from pi/4 to pi/2 with radius r=1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-8.webp" loading="lazy" decoding="async" alt="Polar coordinate sketch showing a sector from pi/4 to pi/2 with radius r=1." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Polar coordinate sketch showing a sector from pi/4 to pi/2 with radius r=1.
+                  </figcaption>
+                </figure>
+              </div><h2 class="text-xl font-bold mt-10 mb-4">New Limits in Polar</h2><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>\( 0 \le r \le 1 \)</p><p>\( \frac{\pi}{4} \le \theta \le \frac{\pi}{2} \)</p></div><p class="mb-6">Convert the integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{4} \int_{0}^{1/\sqrt{2}} \int_{x}^{\sqrt{1-x^2}} e^{-x^2-y^2} \, dy \, dx \, dz \]</div><p class="mb-6">Using substitutions: \( e^{-x^2-y^2} \to e^{-r^2} \) and \( dy \, dx \to r \, dr \, d\theta \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \int_{0}^{4} \int_{\pi/4}^{\pi/2} \int_{0}^{1} r e^{-r^2} \, dr \, d\theta \, dz = \dots = \frac{\pi}{2}(1 - e^{-1}) \]</div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Example: Calculating Mass of a Solid</h1><p class="mb-6">Find mass of solid bounded above by <span class="font-semibold">sphere radius 2</span>: </p><div class="my-4">\[ x^2 + y^2 + z^2 = 4 \]</div> and bounded below by <span class="font-semibold">cone</span>: <div class="my-4">\[ z = \sqrt{x^2 + y^2} \]</div> with density \( \rho(x, y, z) = z \).<p></p><div class="grid-layout flex flex-wrap gap-8 items-center mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D diagram showing a cone inside a sphere, with the intersection forming an ice cream cone shape.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-9.webp" loading="lazy" decoding="async" alt="3D diagram showing a cone inside a sphere, with the intersection forming an ice cream cone shape." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D diagram showing a cone inside a sphere, with the intersection forming an ice cream cone shape.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 italic text-slate-700">The solid is made of material with density \( z \).</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A separate sketch of the cone portion of the solid, resembling an ice cream cone.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-10.webp" loading="lazy" decoding="async" alt="A separate sketch of the cone portion of the solid, resembling an ice cream cone." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A separate sketch of the cone portion of the solid, resembling an ice cream cone.
+                  </figcaption>
+                </figure>
+              </div></div><h2 class="text-2xl font-bold mt-10 mb-4">Finding the Region of Integration</h2><p class="mb-6">The shadow on the \( xy \)-plane is the "floor". It's a circle with a certain radius.</p><p class="mb-6">Substitute \( z = \sqrt{x^2 + y^2} \) into \( x^2 + y^2 + z^2 = 4 \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ x^2 + y^2 + x^2 + y^2 = 4 \rightarrow 2x^2 + 2y^2 = 4 \rightarrow x^2 + y^2 = 2 \]</div><p class="mb-6">This is a <span class="font-semibold">circle of radius \( \sqrt{2} \)</span>.</p><div class="grid-layout flex flex-wrap gap-8 items-center mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D graph of a circle on the xy-plane with radius square root of 2, shaded to show the region of integration.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-22-11.webp" loading="lazy" decoding="async" alt="2D graph of a circle on the xy-plane with radius square root of 2, shaded to show the region of integration." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D graph of a circle on the xy-plane with radius square root of 2, shaded to show the region of integration.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="text-lg font-mono">\[ 0 \le r \le \sqrt{2} \]\[ 0 \le \theta \le 2\pi \]</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h2 class="text-2xl font-bold mb-6">Setting up the Triple Integral</h2><p class="mb-6">Determining the bounds for \( z \):</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>Above cone: \( z = \sqrt{x^2 + y^2} \rightarrow z = r \)</li><li>Below sphere: \( z = \sqrt{4 - x^2 - y^2} \rightarrow z = \sqrt{4 - r^2} \)</li></ul><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ r \le z \le \sqrt{4 - r^2} \]</div><h2 class="text-2xl font-bold mt-10 mb-4">Calculation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \text{mass} = \int_{0}^{2\pi} \int_{0}^{\sqrt{2}} \int_{r}^{\sqrt{4-r^2}} z \cdot r \, dz \, dr \, d\theta = \dots = 2\pi \]</div><div class="notebox bg-indigo-50 p-4 rounded-lg border border-indigo-100 mb-6"><p class="text-slate-800">We accumulate this (density \( z \)) inside the ice cream cone. Note the Jacobian factor \( r \) is included in the differential \( r \, dz \, dr \, d\theta \).</p></div></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

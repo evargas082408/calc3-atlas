@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.5 Triple Integrals in Spherical Coordinates - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2023%20%2816.5%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 23 (16.5).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-indigo-500 pb-2">16.5 Triple Integrals in Spherical Coordinates</h1><p class="text-lg mb-6">In spherical, we locate a point by <span class="font-semibold">\((\rho, \phi, \theta)\)</span>.</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-start"><div class="space-y-6"><div><p class="font-bold text-indigo-700">Greek "rho" (\(\rho\))</p><p class="italic">distance from origin to point</p></div><div><p class="font-bold text-indigo-700">Greek "phi" (\(\phi\))</p><p class="italic">angle measured from z-axis down</p></div><div><p class="font-bold text-indigo-700">\(\theta\)</p><p class="italic">the same \(\theta\) as in polar or cylindrical</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a point (rho, phi, theta) with its projection on the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-1.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a point (rho, phi, theta) with its projection on the xy-plane." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a point (rho, phi, theta) with its projection on the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div class="space-y-6"><div class="notebox border-2 border-slate-300 p-6 rounded-xl bg-slate-50 shadow-inner"><div class="text-2xl font-mono space-y-4 text-center">\[ \rho \ge 0 \]\[ 0 \le \theta \le 2\pi \]\[ 0 \le \phi \le \pi \]</div><p class="text-red-600 font-bold mt-4 text-center">doesn't need to go to \(2\pi\)</p></div><p class="italic text-slate-600 mt-4">"shadow" on xy-plane</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-10">converting from/to Cartesian</h1><div class="grid-layout grid grid-cols-1 lg:grid-cols-2 gap-12"><div class="space-y-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D diagram decomposing spherical coordinates into vertical and horizontal triangles.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-2.webp" loading="lazy" decoding="async" alt="3D diagram decomposing spherical coordinates into vertical and horizontal triangles." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D diagram decomposing spherical coordinates into vertical and horizontal triangles.
+                  </figcaption>
+                </figure>
+              <div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="text-xl font-bold">note: <span class="notebox border border-slate-400 px-4 py-2 rounded inline-block ml-2">\(x^2 + y^2 + z^2 = \rho^2\)</span></p></div></div><div class="space-y-10"><section><h2 class="text-2xl font-bold text-slate-800 mb-4">top triangle</h2><div class="flex flex-col md:flex-row items-center gap-6">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Right triangle with hypotenuse rho, vertical side z, and angle phi.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-3.webp" loading="lazy" decoding="async" alt="Right triangle with hypotenuse rho, vertical side z, and angle phi." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Right triangle with hypotenuse rho, vertical side z, and angle phi.
+                  </figcaption>
+                </figure>
+              <div class="space-y-4"><p class="text-lg">\(\cos \phi = \frac{z}{\rho}\)</p><div class="notebox border-2 border-slate-900 p-4 rounded-lg bg-slate-50 font-bold text-xl">\[ z = \rho \cos \phi \]</div><p class="text-lg">\(\sin \phi = \frac{l}{\rho} \quad \text{so} \quad l = \rho \sin \phi \)</p></div></div></section><section><h2 class="text-2xl font-bold text-slate-800 mb-4">lower triangle</h2><div class="flex flex-col md:flex-row items-center gap-6">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Right triangle in the xy-plane with hypotenuse l, sides x and y, and angle theta.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-4.webp" loading="lazy" decoding="async" alt="Right triangle in the xy-plane with hypotenuse l, sides x and y, and angle theta." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Right triangle in the xy-plane with hypotenuse l, sides x and y, and angle theta.
+                  </figcaption>
+                </figure>
+              <div class="space-y-4"><div class="grid grid-cols-2 gap-4"><p>\(\cos \theta = \frac{x}{l}\)</p><p>\(x = l \cos \theta\)</p><p>\(\sin \theta = \frac{y}{l}\)</p><p>\(y = l \sin \theta\)</p></div><div class="space-y-4"><div class="notebox border-2 border-slate-900 p-4 rounded-lg bg-slate-50 font-bold text-xl">\[ x = \rho \sin \phi \cos \theta \]</div><div class="notebox border-2 border-slate-900 p-4 rounded-lg bg-slate-50 font-bold text-xl">\[ y = \rho \sin \phi \sin \theta \]</div></div></div></div></section></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><section><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Example (Cartesian → Spherical)</h1><div class="grid-layout"><div class="mb-6"><p class="text-xl mb-4">Given Cartesian coordinates 
+\( (x, y, z) = (1, -1, \sqrt{2}) \), find the spherical coordinates \( (\rho, \phi, \theta) = ? \)</p><p class="text-lg">From the position of the point, we can observe:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( \frac{3\pi}{2} \le \theta \le 2\pi \)</li><li>\( 0 \le \phi \le \frac{\pi}{2} \)</li></ul></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D Cartesian axes with a point plotted. Angle phi is from z-axis, theta is in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-5.webp" loading="lazy" decoding="async" alt="3D Cartesian axes with a point plotted. Angle phi is from z-axis, theta is in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D Cartesian axes with a point plotted. Angle phi is from z-axis, theta is in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div></section><section class="space-y-8"><div class="flex flex-col md:flex-row md:items-center gap-4"><div class="flex-1"><h2 class="text-xl font-bold mb-2">Calculating \( \rho \):</h2><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ x^2 + y^2 + z^2 = \rho^2 \]\[ 1 + 1 + 2 = \rho^2 \]</div></div><div class="notebox border-2 border-indigo-500 p-4 rounded-lg font-bold text-xl">\( \rho = 2 \)</div></div><div class="flex flex-col md:flex-row md:items-center gap-4"><div class="flex-1"><h2 class="text-xl font-bold mb-2">Calculating \( \phi \):</h2><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ z = \rho \cos \phi \]\[ \sqrt{2} = 2 \cos \phi \]\[ \cos \phi = \frac{\sqrt{2}}{2} \]</div></div><div class="notebox border-2 border-indigo-500 p-4 rounded-lg font-bold text-xl">\( \phi = \frac{\pi}{4} \)</div></div><div class="flex flex-col md:flex-row md:items-start gap-4"><div class="flex-1"><h2 class="text-xl font-bold mb-2">Calculating \( \theta \):</h2><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \begin{cases} x = \rho \sin \phi \cos \theta \\ y = \rho \sin \phi \sin \theta \end{cases} \]\[ \frac{y}{x} = \tan \theta = \frac{-1}{1} = -1 \]</div><p class="italic">In Quadrant IV, find \( \theta \) such that \( \tan \theta = -1 \):</p></div><div class="notebox border-2 border-indigo-500 p-4 rounded-lg font-bold text-xl mt-8">\( \theta = \frac{7\pi}{4} \)</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><section><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Volume Element in Triple Integrals</h1><p class="mb-4">In triple integrals, the volume element \( dV \) varies by coordinate system:</p><ul class="list-none space-y-2 mb-8"><li><strong>Cartesian:</strong> \( dV = dz \, dy \, dx \)</li><li><strong>Cylindrical:</strong> \( dV = r \, dz \, dr \, d\theta \)</li><li><strong>Spherical:</strong> \( dV = ? \)</li></ul></section><section><h2 class="text-2xl font-bold mb-4">Deriving the Spherical Volume Element</h2><p class="mb-6">Take a small spherical shell from small changes in \( \rho, \theta, \phi \).</p><div class="grid-layout"><div class="mb-6"><p>When \( d\rho, d\phi, d\theta \) are small, the shell is approximately a rectangular box.</p></div><div class="flex flex-wrap justify-around items-center gap-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D axes showing a spherical wedge element with arc lengths rho sin(phi) d-theta and rho d-phi.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-6.webp" loading="lazy" decoding="async" alt="3D axes showing a spherical wedge element with arc lengths rho sin(phi) d-theta and rho d-phi." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D axes showing a spherical wedge element with arc lengths rho sin(phi) d-theta and rho d-phi.
+                  </figcaption>
+                </figure>
+              
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Detailed view of the spherical shell element with dimensions d-rho, rho d-phi, and rho sin(phi) d-theta.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-7.webp" loading="lazy" decoding="async" alt="Detailed view of the spherical shell element with dimensions d-rho, rho d-phi, and rho sin(phi) d-theta." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Detailed view of the spherical shell element with dimensions d-rho, rho d-phi, and rho sin(phi) d-theta.
+                  </figcaption>
+                </figure>
+              </div></div><div class="grid-layout"><div class="mt-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Rectangular box representing the volume element dV with sides rho d-phi, d-rho, and rho sin(phi) d-theta.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-8.webp" loading="lazy" decoding="async" alt="Rectangular box representing the volume element dV with sides rho d-phi, d-rho, and rho sin(phi) d-theta." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Rectangular box representing the volume element dV with sides rho d-phi, d-rho, and rho sin(phi) d-theta.
+                  </figcaption>
+                </figure>
+              </div><div class="my-12 flex justify-center"><div class="notebox border-4 border-indigo-600 p-8 rounded-2xl bg-indigo-50 shadow-lg"><p class="text-3xl font-black text-indigo-900">\[ dV = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \]</p></div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Triple Integral in Cartesian Coordinates</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{6} \int_{0}^{\sqrt{36-x^2}} \int_{\sqrt{x^2+y^2}}^{\sqrt{72-x^2-y^2}} dz \, dy \, dx \]</div><p class="mb-6 text-lg font-semibold text-red-700">terrible in Cartesian</p><p class="mb-6">the upper bound of \( z \) is part of a sphere:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ z = \sqrt{72-x^2-y^2} \]\[ z^2 = 72-x^2-y^2 \]\[ x^2+y^2+z^2 = 72 \]</div><p class="mb-6">when dealing with spheres or spheres-like, spherical is good</p><p class="mb-6">so, go to spherical: bounds for \( \rho, \phi, \theta \)?</p><div class="grid-layout flex flex-col md:flex-row items-center gap-8"><div class="flex-1"><p class="mb-4 font-mono">\( 0 \le x \le 6 \)</p><p class="mb-4 font-mono">\( 0 \le y \le \sqrt{36-x^2} \)</p></div><div class="flex-1 text-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A quarter circle in the first quadrant of the xy-plane with radius 6, showing angle theta.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-9.webp" loading="lazy" decoding="async" alt="A quarter circle in the first quadrant of the xy-plane with radius 6, showing angle theta." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A quarter circle in the first quadrant of the xy-plane with radius 6, showing angle theta.
+                  </figcaption>
+                </figure>
+              <p class="text-sm italic">this is the shadow onto xy-plane</p></div><div class="flex-1"><div class="notebox border-2 border-slate-900 p-4 rounded-lg inline-block font-bold text-xl">\[ 0 \le \theta \le \frac{\pi}{2} \]</div></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \underbrace{\sqrt{x^2+y^2}}_{\text{cone}} \le z \le \underbrace{\sqrt{72-x^2-y^2}}_{\text{sphere radius } \sqrt{72}} \]</div><div class="grid-layout flex flex-col md:flex-row items-start gap-12"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D diagram showing a cone inside a sphere in the first octant.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-10.webp" loading="lazy" decoding="async" alt="3D diagram showing a cone inside a sphere in the first octant." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D diagram showing a cone inside a sphere in the first octant.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1 pt-10"><p class="mb-4">we want everything inside</p><p class="mb-4">we accumulate from origin \( (\rho = 0) \)</p><p class="mb-6">out to boundary \( (\rho = \sqrt{72}, \text{ sphere}) \)</p><div class="notebox border-2 border-slate-900 p-4 rounded-lg inline-block font-bold text-xl mb-10">\[ 0 \le \rho \le \sqrt{72} \]</div></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">onto the yz-plane</h2><div class="grid-layout flex flex-col md:flex-row items-center gap-12"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D projection onto the yz-plane showing a sector bounded by a vertical axis and a line at 45 degrees.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-11.webp" loading="lazy" decoding="async" alt="2D projection onto the yz-plane showing a sector bounded by a vertical axis and a line at 45 degrees." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D projection onto the yz-plane showing a sector bounded by a vertical axis and a line at 45 degrees.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4">\( \phi \) from 0 to where edge of cone is</p><p class="mb-4">cone: \( z = \sqrt{x^2+y^2} = \sqrt{y^2} = y \)</p><p class="mb-6">slope 1 \( \rightarrow \) angle is \( \frac{\pi}{4} \)</p><p class="mb-4">so,</p><div class="notebox border-2 border-slate-900 p-4 rounded-lg inline-block font-bold text-xl">\[ 0 \le \phi \le \frac{\pi}{4} \]</div></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Volume in Spherical Coordinates</h1><p class="mb-6">The volume is calculated using spherical coordinates as follows:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{\frac{\pi}{2}} \int_{0}^{\frac{\pi}{4}} \int_{0}^{\sqrt{72}} \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta = \dots = \boxed{12\sqrt{72} \pi \left( 1 - \frac{1}{\sqrt{2}} \right)} \]</div><p class="text-slate-700 italic">Note: The differential volume element is \( dV = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \). The integration limits are specified for \( \theta \), \( \phi \), and \( \rho \) respectively.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Volume of a Solid</h1><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Problem Statement</h2><p class="mb-6">Find the volume of the solid outside \( \rho = 1 \) and inside \( \rho = 2 \cos \phi \).</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700"><p class="mb-2"><strong>\( \rho = 1 \)</strong>: Sphere radius 1, center \( (0,0,0) \)</p><p><strong>\( \rho = 2 \cos \phi \)</strong>: What is this shape?</p></div></div></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Derivation</h2><p class="mb-4">Starting with \( \rho = 2 \cos \phi \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \sqrt{x^2 + y^2 + z^2} = 2 \cos \phi \cdot \frac{\rho}{\rho} = \frac{2 \rho \cos \phi}{\rho} = \frac{2z}{\sqrt{x^2 + y^2 + z^2}} \]</div><p class="mb-4">Multiplying through:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ x^2 + y^2 + z^2 = 2z \implies x^2 + y^2 + (z-1)^2 = 1 \]</div><p class="mb-6">This is a sphere with center \( (0,0,1) \) and radius 1.</p></section><div class="grid-layout flex flex-col md:flex-row items-center gap-8"><div class="flex-1"><h2 class="text-2xl font-bold mb-4">Visualizing "Toad's Hat"</h2><p class="mb-6">The intersection of these two spheres creates a shape referred to as "Toad's hat".</p><div class="notebox border-2 border-slate-900 p-4 rounded-lg inline-block mb-4"><p class="font-bold">\( 0 \le \theta \le 2\pi \)</p></div><p class="text-slate-700">This indicates the volume goes all the way around the z-axis.</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate graph showing two intersecting spheres on the z-axis, labeled as Toad's hat.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-12.webp" loading="lazy" decoding="async" alt="3D coordinate graph showing two intersecting spheres on the z-axis, labeled as Toad's hat." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate graph showing two intersecting spheres on the z-axis, labeled as Toad's hat.
+                  </figcaption>
+                </figure>
+              </div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">xz-plane projection</h1><div class="grid-layout"><div class="mb-6"><p class="mb-4">The projection in the xz-plane shows the region bounded by two spheres in spherical coordinates.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 1 \le \rho \le 2 \cos \phi \]</div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph in the xz-plane showing two overlapping circular regions labeled rho=2 cos phi and rho=1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-13.webp" loading="lazy" decoding="async" alt="Graph in the xz-plane showing two overlapping circular regions labeled rho=2 cos phi and rho=1." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph in the xz-plane showing two overlapping circular regions labeled rho=2 cos phi and rho=1.
+                  </figcaption>
+                </figure>
+              </div><div class="grid-layout"><div class="mb-6"><h2 class="text-2xl font-bold mb-4">Determining the angle \(\phi\)</h2><p class="mb-4">\(\phi\): from z-axis (\(\phi = 0\)) to intersection.</p><p class="mb-4">At the intersection:</p><div class="my-4">\[ \rho = 1, \quad \rho = 2 \cos \phi \]</div><div class="my-4">\[ 1 = 2 \cos \phi \implies \cos \phi = \frac{1}{2} \rightarrow \phi = \frac{\pi}{3} \]</div><div class="notebox border-2 border-indigo-500 p-4 rounded-lg inline-block my-4 font-bold">\[ 0 \le \phi \le \frac{\pi}{3} \]</div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram in the xz-plane showing the angle phi measured from the positive z-axis to the intersection of two curves.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-14.webp" loading="lazy" decoding="async" alt="Diagram in the xz-plane showing the angle phi measured from the positive z-axis to the intersection of two curves." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram in the xz-plane showing the angle phi measured from the positive z-axis to the intersection of two curves.
+                  </figcaption>
+                </figure>
+              </div><h2 class="text-2xl font-bold mt-10 mb-4">Volume Calculation</h2><p class="mb-6">The volume is calculated using a triple integral in spherical coordinates:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \text{volume} = \int_{0}^{2\pi} \int_{0}^{\pi/3} \int_{1}^{2 \cos \phi} \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta = \dots = \boxed{\frac{11\pi}{12}} \]</div></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans flex flex-col items-center justify-center min-h-screen"><div class="text-center mb-8"><p class="text-xl italic text-slate-700">the volume of my hat is \(\frac{11\pi}{12}\) !</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D render of the character Toad from the Mario franchise, standing and looking forward.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-23-15.webp" loading="lazy" decoding="async" alt="A 3D render of the character Toad from the Mario franchise, standing and looking forward." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D render of the character Toad from the Mario franchise, standing and looking forward.
+                  </figcaption>
+                </figure>
+              </article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

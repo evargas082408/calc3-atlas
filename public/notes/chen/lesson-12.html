@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.4 The Chain Rule - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2012%20%2815.4%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 12 (15.4).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight mb-8 border-b-2 border-slate-100 pb-4">15.4 The Chain Rule</h1><p class="mb-6 text-lg">if \( y = f(x) \) and \( x = g(t) \) then the Chain Rule is used to find the rate of change of \( y \) with respect to \( t \)</p><div class="my-8 overflow-x-auto py-8 bg-slate-50 rounded-xl px-10 border border-slate-100 shadow-sm flex flex-col items-center"><div class="flex items-center space-x-4 text-2xl font-serif">\[ \frac{dy}{dt} = \frac{dy}{dx} \frac{dx}{dt} \]</div><div class="grid grid-cols-3 gap-4 mt-4 text-sm text-slate-600 italic"><div class="text-center">how \( t \) affects \( y \)</div><div class="text-center">how \( y \) is affected by its own variable \( x \)</div><div class="text-center">how \( t \) affects \( x \)</div></div></div><h2 class="text-2xl font-bold mt-12 mb-6">a good way to track variable relationships is a tree diagram</h2><div class="flex flex-row items-center justify-center space-x-12 my-10"><div class="text-2xl font-serif">\( \frac{dy}{dt} \)</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A vertical tree diagram showing variable y at the top, connected to x, which is connected to t at the bottom.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-12-1.webp" loading="lazy" decoding="async" alt="A vertical tree diagram showing variable y at the top, connected to x, which is connected to t at the bottom." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A vertical tree diagram showing variable y at the top, connected to x, which is connected to t at the bottom.
+                  </figcaption>
+                </figure>
+              <div class="space-y-8"><div class="text-xl font-serif">\( \frac{dy}{dx} \)</div><div class="text-xl font-serif">\( \frac{dx}{dt} \)</div></div><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700">each step down is a derivative</div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><ul class="list-disc list-inside space-y-4 mb-10 text-lg"><li>partial derivative \( \rightarrow \) isolates effect from one variable</li><li>multiple variables: isolate effects, then combine</li></ul><section class="mb-12"><h2 class="text-2xl font-black tracking-tight mb-6 underline">example</h2><div class="space-y-4 text-xl font-serif mb-8"><div>\( z = f(x, y) = x^3 + y^2 \)</div><div>\( x = \cos(t) \quad y = \ln(t) \)</div></div><p class="text-xl mb-8">find \( \frac{dz}{dt} \)</p><div class="flex flex-row items-start space-x-16 my-10"><div class="flex flex-col items-center"><span class="font-bold mb-4">tree:</span><div class="flex items-center space-x-6"><div class="text-xl font-serif">\( \frac{dz}{dt} \)</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A branching tree diagram starting from z, splitting into two paths: one through x to t, and one through y to t.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-12-2.webp" loading="lazy" decoding="async" alt="A branching tree diagram starting from z, splitting into two paths: one through x to t, and one through y to t." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A branching tree diagram starting from z, splitting into two paths: one through x to t, and one through y to t.
+                  </figcaption>
+                </figure>
+              </div></div><div class="pt-12"><p class="text-slate-700 font-medium">find how \( z \) is affected by \( t \)</p><p class="text-slate-700 font-medium">one branch at a time</p></div></div></section><div class="grid grid-cols-2 gap-8 border-t border-slate-200 pt-8"><div class="pr-8 border-r border-slate-200"><div class="flex items-center space-x-2 mb-4"><span class="rounded-full bg-slate-900 text-white w-6 h-6 flex items-center justify-center text-xs">1</span><p class="font-medium">pretend \( y \) is not doing anything</p></div><div class="my-6 py-4 bg-slate-50 rounded-lg text-center text-2xl font-serif">\[ \frac{\partial z}{\partial x} \frac{dx}{dt} \]</div><p class="italic text-slate-600 text-sm">\( \swarrow \) partial down through a split</p></div><div><div class="flex items-center space-x-2 mb-4"><span class="rounded-full bg-slate-900 text-white w-6 h-6 flex items-center justify-center text-xs">2</span><p class="font-medium">pretend \( x \) is doing nothing</p></div><div class="my-6 py-4 bg-slate-50 rounded-lg text-center text-2xl font-serif">\[ \frac{\partial z}{\partial y} \frac{dy}{dt} \]</div></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Multivariable Chain Rule: Putting it Together</h1><section class="mb-10"><p class="text-lg font-bold mb-4">put them together</p><div class="flex flex-wrap gap-8 mb-6"><div class="text-red-700 font-semibold">partial : split</div><div class="text-red-700 font-semibold">regular : no split</div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{dz}{dt} = \frac{\partial z}{\partial x} \frac{dx}{dt} + \frac{\partial z}{\partial y} \frac{dy}{dt} \]</div><div class="notebox border-l-4 border-red-500 pl-4 my-4 italic text-slate-700">put answer in terms of this (t)</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = (3x^2)(-\sin t) + (2y)(\frac{1}{t}) \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm border-2 border-indigo-500">\[ = -3 \cos^2 t \sin t + 2 \frac{\ln t}{t} \]</div></section><hr class="my-12 border-slate-200"><section><h2 class="text-2xl font-black tracking-tight mb-6">Quick check: what if we sub in \(x, y\) as functions of \(t\) initially?</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"><div>\[ z = x^3 + y^2 \]</div><div>\[ x = \cos t \]</div><div>\[ y = \ln t \]</div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ z = (\cos t)^3 + (\ln t)^2 \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{dz}{dt} = 3 (\cos t)^2 \cdot (-\sin t) + 2 (\ln t) \cdot \frac{1}{t} \]</div><p class="text-right font-bold text-indigo-600">same</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Chain Rule with Multiple Independent Variables</h1><section class="mb-10"><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div><h2 class="text-xl font-bold mb-4">example</h2><div class="space-y-2 mb-6">\[ z = \sin(x + y) \]\[ x = u^2 + v \]\[ y = 1 - 2uv \]</div><p class="font-bold">find: \( \frac{\partial z}{\partial u} \) and \( \frac{\partial z}{\partial v} \)</p></div><div class="italic text-slate-700 pt-8"><p>ultimately \(z\) is a function of \(u\) and \(v\)</p><p class="ml-4">\( \rightarrow z = f(u, v) \)</p></div></div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-4">tree:</h2><div class="flex justify-center my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A partial derivative tree diagram showing variable z branching to x and y, which both branch down to u and v.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-12-3.webp" loading="lazy" decoding="async" alt="A partial derivative tree diagram showing variable z branching to x and y, which both branch down to u and v." class="max-w-full h-auto" data-figure-id="fig_tree_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A partial derivative tree diagram showing variable z branching to x and y, which both branch down to u and v.
+                  </figcaption>
+                </figure>
+              </div></section><section><div class="notebox border-l-4 border-indigo-500 pl-4 my-6 italic text-slate-700">use branches w/ u at bottom</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\partial z}{\partial u} = \underbrace{\frac{\partial z}{\partial x} \frac{\partial x}{\partial u}}_{(1)} + \underbrace{\frac{\partial z}{\partial y} \frac{\partial y}{\partial u}}_{(2)} \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \cos(x+y) \cdot 2u + \cos(x+y)(-2v) \]</div><div class="notebox text-right text-sm text-slate-600 mb-2">put everything in terms of u (and possibly v)</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \cos(u^2 + v + 1 - 2uv)(2u) + \cos(u^2 + v + 1 - 2uv)(-2v) \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\partial z}{\partial v} = \underbrace{\frac{\partial z}{\partial x} \frac{\partial x}{\partial v}}_{\text{①}} + \underbrace{\frac{\partial z}{\partial y} \frac{\partial y}{\partial v}}_{\text{②}} \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \cos(x+y) \cdot (1) + \cos(x+y) \cdot (-2u) \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \cos(x+y)(1-2u) = \boxed{\cos(u^2+v+1-2uv)(1-2u)} \]</div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4 border-b-2 border-slate-100 pb-2">Implicit Differentiation</h2><div class="my-6"><p class="mb-4">\( x^2 + 2y^2 = 4 \) <span class="ml-8">\( y \) is an implicit function of \( x \) (\( y = f(x) \))</span></p><p class="mb-4">find \( \frac{dy}{dx} \)</p></div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-2">from calc 1:</p><div class="my-4 overflow-x-auto">\[ \frac{d}{dx}(x^2 + 2y^2) = \frac{d}{dx}(4) \]</div><div class="my-4 overflow-x-auto">\[ 2x + 4y \cdot \frac{dy}{dx} = 0 \]</div></div><div class="mt-6"><p>solve for \( \frac{dy}{dx} \) : <span class="ml-4">\( \frac{dy}{dx} = -\frac{x}{2y} \)</span></p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><p class="mb-6">we can use the multivariable chain rule to find the same result</p><div class="my-6"><p class="mb-4">\( x^2 + 2y^2 = 4 \) <span class="ml-8">\( y \) is an implicit function of \( x \) (\( y = f(x) \))</span></p></div><p class="mb-6">create a new function: \( F(x,y) = x^2 + 2y^2 - 4 = 0 = g(x) \)</p><p class="text-sm text-slate-600 italic mb-6">because \( y = \text{some function of } x \)</p><p class="mb-6">tree: \( g(x) = F(x,y) = 0 \)</p></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">find \( \frac{dy}{dx} \) : Step down the tree</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \underbrace{\frac{dg}{dx}}_{\text{①}} = \frac{\partial F}{\partial x} + \underbrace{\frac{\partial F}{\partial y} \boxed{\frac{dy}{dx}}}_{\text{②}} = 0 \]</div><p class="text-sm text-slate-600 italic mb-6">because \( g = 0 \) so \( \frac{dg}{dx} = 0 \)</p><div class="mt-10"><p class="mb-4">solve for \( \frac{dy}{dx} \) :</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{dy}{dx} = -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}} = -\frac{F_x}{F_y} = -\frac{2x}{4y} = \boxed{-\frac{x}{2y}} \]</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><p class="mb-6 text-lg">can do this w/ more variables ("calc 1" way gets harder)</p><section><h2 class="text-2xl font-black tracking-tight mb-4">example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ xy + yz + xz = 3 \]</div><p class="mb-4">\( z \) is an implicit function of \( x \) and \( y \) \( \longrightarrow z = f(x, y) \)</p><p class="mb-6">and \( x \) and \( y \) don't depend on anything else</p><p class="mb-6">find \( \frac{\partial z}{\partial y} \)</p><p class="mb-6">define \( F(x, y, z) = xy + yz + xz - 3 = 0 = g(x, y) \)</p><p class="mb-6">\( g(x, y) = F(x, y, z) = 0 \)</p><div class="flex flex-col md:flex-row items-start gap-8 my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A tree diagram showing function F branching to x, y, and z. The z branch further splits into x and y.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-12-4.webp" loading="lazy" decoding="async" alt="A tree diagram showing function F branching to x, y, and z. The z branch further splits into x and y." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A tree diagram showing function F branching to x, y, and z. The z branch further splits into x and y.
+                  </figcaption>
+                </figure>
+              <div class="flex flex-col justify-center"><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\partial z}{\partial y} : \text{collect branches w/ } y \text{ at base} \]</div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><p class="mb-6">\( g(x, y) = F(x, y, z) = 0 \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\partial}{\partial y}(g) = \underbrace{\frac{\partial F}{\partial y}}_{\text{①}} + \underbrace{\frac{\partial F}{\partial z} \cdot \frac{\partial z}{\partial y}}_{\text{②}} = 0 \]</div><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Note: \( \frac{\partial z}{\partial y} \) is what we want this. The equation equals 0 because \( g \) is constant.</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\partial z}{\partial y} = - \frac{\frac{\partial F}{\partial y}}{\frac{\partial F}{\partial z}} = \boxed{-\frac{(x+z)}{y+x}} \]</div></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

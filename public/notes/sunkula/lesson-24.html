@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 24: Integrals in Mass Calculations (16.6) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #01090e;
+        --sidebar-bg: #0d0d0c;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson24.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 24: Integrals in Mass Calculations (16.6)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 3/13/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson24.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 24: Integrals in Mass Calculations (16.6)</h4>
+
+<p><strong>Warmup:</strong></p>
+<p>At what point do the objects balance?</p>
+
+<p>(1) 
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-1.webp" loading="lazy" decoding="async" alt="A schematic diagram labeled '(1)' illustrating a physics balance problem. A horizontal beam is balanced on a central triangular fulcrum. On the left end of the beam is a square weight labeled '10 LB'. On the right end is another square weight also labeled '10 LB'. The distance from the left weight to the fulcrum is denoted by a blue curly brace and the label 'x_1'. The distance from the right weight to the fulcrum is denoted by a similar blue curly brace and the label 'x_2'." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A schematic diagram labeled '(1)' illustrating a physics balance problem. A horizontal beam is balanced on a central triangular fulcrum. On the left end of the beam is a square weight labeled '10 LB'. On the right end is another square weight also labeled '10 LB'. The distance from the left weight to the fulcrum is denoted by a blue curly brace and the label 'x_1'. The distance from the right weight to the fulcrum is denoted by a similar blue curly brace and the label 'x_2'.</span>
+                      </div>
+                    </div>
+                   Guess: Center</p>
+
+<p>(2) 
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-2.webp" loading="lazy" decoding="async" alt="A schematic diagram labeled '(2)' illustrating a second balance problem. A horizontal beam is supported by a triangular fulcrum. On the left end is a square weight labeled '10 LB' at a distance 'x_1' from the fulcrum (indicated by a blue brace). On the right end is a larger square weight labeled '20 LB' at a distance 'x_2' from the fulcrum (indicated by a blue brace). The diagram shows the beam in a balanced state with the fulcrum positioned closer to the heavier weight, making 'x_1' appear longer than 'x_2'." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A schematic diagram labeled '(2)' illustrating a second balance problem. A horizontal beam is supported by a triangular fulcrum. On the left end is a square weight labeled '10 LB' at a distance 'x_1' from the fulcrum (indicated by a blue brace). On the right end is a larger square weight labeled '20 LB' at a distance 'x_2' from the fulcrum (indicated by a blue brace). The diagram shows the beam in a balanced state with the fulcrum positioned closer to the heavier weight, making 'x_1' appear longer than 'x_2'.</span>
+                      </div>
+                    </div>
+                   Guess: towards heavier weight</p>
+
+<div class="definition">
+    <strong>Moment</strong> = distance from reference point \(\times\) Mass
+</div>
+
+<div class="definition">
+    <strong>Center of Mass</strong> = Point where moments are same
+</div>
+
+<div class="solution">
+    <p>(1) \(x_1 \times 10 = x_2 \times 10 \rightarrow x_1 = x_2\)</p>
+    <p>(2) \(x_1 \times 10 = x_2 \times 20 \rightarrow x_1 = 2x_2\)</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Mass and Moment of a thin Plate</h4>
+
+<p>density = \(\rho(x,y)\)</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-3.webp" loading="lazy" decoding="async" alt="A coordinate geometry diagram showing an irregularly shaped thin plate region, labeled D, situated in the first quadrant of an xy-plane. The region is filled with diagonal hatching. A small rectangular differential area element within the region is highlighted and labeled \(\Delta A\). A horizontal blue double-headed arrow, labeled 'x', indicates the distance from the y-axis to the center of the area element. A vertical green double-headed arrow, labeled 'y', indicates the distance from the x-axis to the same area element. This diagram illustrates the geometric basis for calculating mass and moments using density and coordinates." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate geometry diagram showing an irregularly shaped thin plate region, labeled D, situated in the first quadrant of an xy-plane. The region is filled with diagonal hatching. A small rectangular differential area element within the region is highlighted and labeled \(\Delta A\). A horizontal blue double-headed arrow, labeled 'x', indicates the distance from the y-axis to the center of the area element. A vertical green double-headed arrow, labeled 'y', indicates the distance from the x-axis to the same area element. This diagram illustrates the geometric basis for calculating mass and moments using density and coordinates.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="definition">
+    <p>Mass of area element \(\Delta A = \rho(x,y) \Delta A\)</p>
+    <p>Mass of \(D = M = \iint_D \rho(x,y) dA\)</p>
+</div>
+
+<p>
+    \(M_y\) of \(\Delta A\) = Moment about \(y\)-axis<br>
+    = distance from \(y\)-axis \(\times\) Mass<br>
+    = \(x \cdot \rho(x,y) \Delta A\)
+</p>
+
+<div class="definition">
+    \[M_y \text{ for } D = \iint_D x \rho(x,y) dA\]
+</div>
+
+<p>
+    \(M_x\) of \(\Delta A\) = Moment about \(x\)-axis<br>
+    = distance from \(x\)-axis \(\times\) Mass<br>
+    = \(y \cdot \rho(x,y) \Delta A\)
+</p>
+
+<div class="definition">
+    \[M_x \text{ for } D = \iint_D y \rho(x,y) dA\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Center of Mass of a thin Plate</h4>
+
+<div class="definition">
+    The center of mass is the point \( (\bar{x}, \bar{y}) \) where you can think the entire plate is a point mass.
+</div>
+
+<div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-4.webp" loading="lazy" decoding="async" alt="A technical sketch on a 2D coordinate system (x and y axes). An irregularly shaped region, representing a thin plate with domain D, is drawn in the first quadrant and filled with diagonal hatching lines to indicate the distribution of mass." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical sketch on a 2D coordinate system (x and y axes). An irregularly shaped region, representing a thin plate with domain D, is drawn in the first quadrant and filled with diagonal hatching lines to indicate the distribution of mass.</span>
+                      </div>
+                    </div>
+                  
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-5.webp" loading="lazy" decoding="async" alt="A coordinate system diagram showing the concept of center of mass. A single point is plotted and labeled as (x-bar, y-bar), representing the concentration of the entire plate's mass. A blue horizontal bracket above the point indicates the distance x-bar from the y-axis, and a green vertical bracket to the right of the point indicates the distance y-bar from the x-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate system diagram showing the concept of center of mass. A single point is plotted and labeled as (x-bar, y-bar), representing the concentration of the entire plate's mass. A blue horizontal bracket above the point indicates the distance x-bar from the y-axis, and a green vertical bracket to the right of the point indicates the distance y-bar from the x-axis.</span>
+                      </div>
+                    </div>
+                  
+</div>
+
+<p>
+    \[ M_y = \iint_{D} x \rho(x, y) \, dA \quad \longleftrightarrow \quad \begin{matrix} M_y = \bar{x} M \\ \Rightarrow \bar{x} = \frac{1}{M} M_y \end{matrix} \]
+</p>
+
+<p>
+    \[ M_x = \iint_{D} y \rho(x, y) \, dA \quad \longleftrightarrow \quad \begin{matrix} M_x = \bar{y} M \\ \Rightarrow \bar{y} = \frac{1}{M} M_x \end{matrix} \]
+</p>
+
+<p>
+    <strong>Center of Mass</strong> \( = (\bar{x}, \bar{y}) = \left( \frac{1}{M} M_y, \frac{1}{M} M_x \right) \)
+</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+  <h4>Example 1</h4>
+  <p>
+    \(D\) is the region below with constant/uniform Density.
+  </p>
+
+  
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-6.webp" loading="lazy" decoding="async" alt="A 2D Cartesian coordinate graph illustrating a rectangular region D. The horizontal axis represents x and the vertical axis represents y. The region D is a shaded gray rectangle defined by the bounds x from 1 to 2 and y from 0 to pi. The four vertices of the rectangle are explicitly labeled with coordinates: bottom-left at (1, 0), bottom-right at (2, 0), top-left at (1, pi), and top-right at (2, pi). A solid red circle is located in the geometric center of the rectangle, marking the predicted center of mass." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D Cartesian coordinate graph illustrating a rectangular region D. The horizontal axis represents x and the vertical axis represents y. The region D is a shaded gray rectangle defined by the bounds x from 1 to 2 and y from 0 to pi. The four vertices of the rectangle are explicitly labeled with coordinates: bottom-left at (1, 0), bottom-right at (2, 0), top-left at (1, pi), and top-right at (2, pi). A solid red circle is located in the geometric center of the rectangle, marking the predicted center of mass.</span>
+                      </div>
+                    </div>
+                  
+
+  <p>
+    <u>Guess</u>: \(C.O.M = \left( \frac{1}{2}, \frac{\pi}{2} \right)\)
+  </p>
+
+  <div class="solution">
+    <p>
+      Let \(\rho(x, y) = k\)
+    </p>
+
+    \[ M = \iint_D \rho(x, y) \, dA = \int_0^\pi \int_1^2 k \, dx \, dy = k\pi \]
+
+    \[ M_y = \iint_D x \cdot \rho(x, y) \, dA = \int_0^\pi \int_1^2 kx \, dx \, dy = \frac{3k\pi}{2} \]
+
+    \[ M_x = \iint_D y \cdot \rho(x, y) \, dA = \int_0^\pi \int_1^2 ky \, dx \, dy = k \times 1 \times \frac{\pi^2}{2} = \frac{k\pi^2}{2} \]
+
+    \[ C.O.M = \left( \frac{1}{M} M_y, \frac{1}{M} M_x \right) = \left( \frac{1}{k\pi} \frac{3k\pi}{2}, \frac{1}{k\pi} \frac{k\pi^2}{2} \right) = \left( \frac{3}{2}, \frac{\pi}{2} \right) \]
+  </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        #### Example 2
+
+<div class="example">
+    \(D\) is the region below with Density \(\rho(x, y) = x \sin y\)
+
+    <p><strong>Guess:</strong> C.O.M tilted towards Right</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-7.webp" loading="lazy" decoding="async" alt="A 2D plot on a Cartesian coordinate system illustrating the region D. The region is a shaded grey rectangle bounded by the lines x = 1, x = 2, y = 0, and y = pi. The four vertices are labeled with their coordinates: (1, 0), (2, 0), (2, pi), and (1, pi). A single red dot is plotted within the shaded region, positioned slightly to the right of the horizontal center and exactly at the vertical center, representing the Center of Mass (C.O.M.). The horizontal axis represents x and the vertical axis represents y." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D plot on a Cartesian coordinate system illustrating the region D. The region is a shaded grey rectangle bounded by the lines x = 1, x = 2, y = 0, and y = pi. The four vertices are labeled with their coordinates: (1, 0), (2, 0), (2, pi), and (1, pi). A single red dot is plotted within the shaded region, positioned slightly to the right of the horizontal center and exactly at the vertical center, representing the Center of Mass (C.O.M.). The horizontal axis represents x and the vertical axis represents y.</span>
+                      </div>
+                    </div>
+                  
+</div>
+
+<div class="solution">
+    \[ M = \iint_D \rho(x,y) \, dA = \int_0^\pi \int_1^2 x \sin y \, dx \, dy = 3. \]
+
+    \[ M_y = \iint_D x \rho(x,y) \, dA = \int_0^\pi \int_1^2 x^2 \sin y \, dx \, dy = \frac{14}{3} \]
+
+    \[ M_x = \iint_D y \rho(x,y) \, dA = \int_0^\pi \int_1^2 x \cdot y \sin y \, dx \, dy = \frac{3}{2} \int_0^\pi y \sin y \, dy \]
+
+    <p style="text-align: right; margin-right: 10%;">\(\downarrow\) integrate by parts</p>
+
+    \[ = \frac{3\pi}{2} \]
+
+    \[ \text{C.O.M} = \left( \frac{1}{3} \cdot \frac{14}{3}, \frac{1}{3} \cdot \frac{3\pi}{2} \right) = \left( \frac{14}{9}, \frac{\pi}{2} \right) \approx \left( 1.6, \frac{\pi}{2} \right) \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Aside: integration by parts</h4>
+
+<div class="definition">
+    \[ \int u \, dv = uv - \int v \, du \]
+</div>
+
+<div class="solution">
+    Example calculation:
+    \[ \int y \sin y \, dy \quad \rightsquigarrow \quad u = y, \, du = dy \]
+    \[ \phantom{\int y \sin y \, dy} \quad dv = \sin y \, dy \rightsquigarrow v = -\cos y \]
+
+    Applying the formula to the definite integral:
+    \[ \int_{0}^{\pi} y \sin y \, dy = -y \cos y - \int (-\cos y) \, dy = \left. -y \cos y + \sin y \right|_{0}^{\pi} \]
+    \[ = (-\pi \cos \pi + \sin \pi) - (0 + 0) \]
+    \[ = \pi \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example 3</h4>
+    <p>
+        \(D\) is the region below with density proportional to distance from the \(y\)-axis.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-8.webp" loading="lazy" decoding="async" alt="A 2D coordinate graph illustrating the region D in the first quadrant of a Cartesian plane. The region is bounded above by the line y = x and below by the parabolic curve y = x^2. These two curves intersect at the origin (0,0) and at the point (1,1). The area between them is shaded grey to represent the region D. A red point is placed within the shaded area, and through it pass a horizontal green line and a vertical blue line. Annotations include a horizontal arrow labeled 'x' indicating the distance from the y-axis to the point, and a vertical arrow labeled 'y' indicating the distance from the x-axis. The axes and curves are clearly labeled." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate graph illustrating the region D in the first quadrant of a Cartesian plane. The region is bounded above by the line y = x and below by the parabolic curve y = x^2. These two curves intersect at the origin (0,0) and at the point (1,1). The area between them is shaded grey to represent the region D. A red point is placed within the shaded area, and through it pass a horizontal green line and a vertical blue line. Annotations include a horizontal arrow labeled 'x' indicating the distance from the y-axis to the point, and a vertical arrow labeled 'y' indicating the distance from the x-axis. The axes and curves are clearly labeled.</span>
+                      </div>
+                    </div>
+                  
+    </diagram-placeholder>
+
+    <div class="solution">
+        <p>
+            The density function is given by:
+            \[ \rho(x, y) = kx \]
+        </p>
+        <p>
+            The total mass \(M\) of the region is calculated as:
+            \[ M = \iint_D \rho \, dA = \int_0^1 \int_{x^2}^x k \cdot x \, dy \, dx \]
+            \[ = k \cdot \int_0^1 x(x - x^2) \, dx = k \left[ \frac{1}{3} - \frac{1}{4} \right] = k/12 \]
+        </p>
+        <p>
+            The moments about the \(y\)-axis and \(x\)-axis are calculated as follows:
+            \[ M_y = \int_0^1 \int_{x^2}^x x \cdot kx \, dy \, dx = k \cdot \int_0^1 x^2(x - x^2) \, dx = k \left( \frac{1}{4} - \frac{1}{5} \right) = k/20 \]
+            \[ M_x = \int_0^1 \int_{x^2}^x y \cdot kx \, dy \, dx = \frac{k}{2} \int_0^1 x(x^2 - x^4) \, dx = \frac{k}{2} \left( \frac{1}{4} - \frac{1}{6} \right) = k/24 \]
+        </p>
+        <p>
+            The center of mass (C.O.M) is then:
+            \[ \text{C.O.M} = \left( \frac{k/20}{k/12}, \frac{k/24}{k/12} \right) = (0.6, 0.5) \]
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Mass, Moment &amp; Center of Mass for 3D objects</h4>
+
+<div class="definition">
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-9.webp" loading="lazy" decoding="async" alt="A diagram showing a 3D Cartesian coordinate system with axes labeled x, y, and z. An irregularly shaped region, labeled D, is situated in the 3D space. A small rectangular prism, shaded in red, represents a volume element within D. Horizontal dashed lines divide the region D into thin horizontal slices, illustrating the conceptual setup for a triple integral over the volume." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A diagram showing a 3D Cartesian coordinate system with axes labeled x, y, and z. An irregularly shaped region, labeled D, is situated in the 3D space. A small rectangular prism, shaded in red, represents a volume element within D. Horizontal dashed lines divide the region D into thin horizontal slices, illustrating the conceptual setup for a triple integral over the volume.</span>
+                      </div>
+                    </div>
+                  
+
+    <p><strong>density</strong> \(= \rho(x, y, z)\)</p>
+
+    <p>Mass of 
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-10.webp" loading="lazy" decoding="async" alt="A small red sketch of a 3D rectangular prism, representing a differential volume element \(\Delta V\)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A small red sketch of a 3D rectangular prism, representing a differential volume element \(\Delta V\).</span>
+                      </div>
+                    </div>
+                   \(= \rho(x, y, z) \Delta V\)</p>
+
+    <p>Mass of \(D = \iiint_D \rho(x, y, z) \, dV\)</p>
+</div>
+
+<div class="definition">
+    <p>\(M_{xy}\) of; 
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-11.webp" loading="lazy" decoding="async" alt="A small red sketch of a 3D rectangular prism, representing a differential volume element." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A small red sketch of a 3D rectangular prism, representing a differential volume element.</span>
+                      </div>
+                    </div>
+                   \(=\) <strong>Moment about xy plane</strong> \(= z \cdot \rho(x, y, z) \Delta V\)</p>
+
+    <p>\(M_{xy} \text{ of } D = \iiint_D z \rho(x, y, z) \, dV\)</p>
+    <p>\(M_{yz} \text{ of } D = \iiint_D x \rho(x, y, z) \, dV\)</p>
+    <p>\(M_{xz} \text{ of } D = \iiint_D y \rho(x, y, z) \, dV\)</p>
+</div>
+
+<div class="important">
+    <p><strong>C.O.M.</strong> \(= \left( \frac{1}{M} M_{yz}, \frac{1}{M} M_{xz}, \frac{1}{M} M_{xy} \right)\)</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Second Moment / Moment of inertia about an axis</h4>
+
+<div class="definition">
+    <p>Moment = distance \(\times\) Mass</p>
+    <p>Second Moment = \((\text{distance})^2 \times \text{Mass}\)</p>
+</div>
+
+\[ I_{\text{axis}} = \iiint\limits_D d^2 \rho(x, y, z) \, dV \]
+
+<p>Where:</p>
+<ul>
+    <li>\(\rho(x, y, z)\) is the <strong>density</strong>.</li>
+    <li>\(d\) is the <strong>distance</strong> of a point in \(D\) to the <strong>given axis</strong>.</li>
+</ul>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-24-12.webp" loading="lazy" decoding="async" alt="A 3D Cartesian coordinate system illustrating the distance from a point to an axis. The z-axis is a vertical blue line. A point in space is labeled (x, y, z). A perpendicular line segment labeled 'd' connects the point (x, y, z) to the z-axis. The point of intersection on the z-axis is labeled (0, 0, z). The x and y axes are shown extending from the origin at the base of the z-axis, providing the 3D context." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D Cartesian coordinate system illustrating the distance from a point to an axis. The z-axis is a vertical blue line. A point in space is labeled (x, y, z). A perpendicular line segment labeled 'd' connects the point (x, y, z) to the z-axis. The point of intersection on the z-axis is labeled (0, 0, z). The x and y axes are shown extending from the origin at the base of the z-axis, providing the 3D context.</span>
+                      </div>
+                    </div>
+                  
+
+<p>distance of \((x, y, z)\) to z-axis = \(\sqrt{x^2 + y^2}\)</p>
+
+\[ I_z = \iiint\limits_D (x^2 + y^2) \rho(x, y, z) \, dV \]
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 3/13/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

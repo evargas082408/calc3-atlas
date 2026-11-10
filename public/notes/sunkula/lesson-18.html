@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converted Lecture Notes</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid #3498db; 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #007bff;
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid #3498db;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson18.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    
+        <h3>Page 1</h3>
+        <figure>
+            <img src="img/lesson-18-1.webp" loading="lazy" decoding="async" alt="Original handwritten page 1">
+            <figcaption><strong>Original handwritten page 1</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Lesson 18: Double Integrals over Rectangular Regions (Section 16.1)</h4>
+
+<h5>Warmup</h5>
+
+<p>The concept of a single integral is based on finding the area under a curve. For a continuous function \(y = f(x)\), the area under the curve between \(x = a\) and \(x = b\) is expressed as:</p>
+
+\[\int_{a}^{b} f(x) \, dx\]
+
+<div class="visual-desc">
+    <strong>Visual Description:</strong> A graph depicts a coordinate system with a function \(y = f(x)\) plotted in blue. The area under this curve from \(x = a\) to \(x = b\) is shaded in pink. To demonstrate the Riemann sum approximation, the total interval \([a, b]\) is divided into multiple sub-intervals along the x-axis, labeled \(a, x_1, x_2, x_3, x_4, \dots, x_n, b\). Vertical rectangles are drawn over these intervals with heights determined by the function's value, approximating the total shaded area.
+</div>
+
+<div class="important">
+    <strong>Process:</strong> To approximate the area under the curve, we follow these systematic steps:
+    <ul>
+        <li>Divide the interval \([a, b]\) into \(n\) small sub-intervals, each with a uniform width of \(\Delta x = \frac{b-a}{n}\).</li>
+        <li>Pick sample points within each of the sub-intervals.</li>
+        <li>Compute the area of each resulting rectangle (height times width) and add them together.</li>
+    </ul>
+</div>
+
+<p>The sum of the areas of these \(n\) rectangles is represented by the summation:</p>
+
+\[\sum_{i=1}^{n} f(x_i) \Delta x\]
+
+<p>By taking the limit as the number of sub-intervals \(n\) approaches infinity, we arrive at the formal definition of the definite integral:</p>
+
+\[\int_{a}^{b} f(x) \, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i) \Delta x\]
+        </div>
+        <hr>
+    
+        <h3>Page 2</h3>
+        <figure>
+            <img src="img/lesson-18-2.webp" loading="lazy" decoding="async" alt="Original handwritten page 2">
+            <figcaption><strong>Original handwritten page 2</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Double Integrals over Rectangular Regions</h4>
+
+<div class="definition">
+<strong>Definition:</strong> Consider a surface defined by the function \(z = f(x, y)\) over a closed rectangular region \(R\) in the \(xy\)-plane. This region is mathematically expressed as:
+\[R = [a, b] \times [c, d] = \{(x, y) \in \mathbb{R}^2 \mid a \leq x \leq b, c \leq y \leq d\}\]
+</div>
+
+<div class="visual-desc">
+ <strong>Visual Description:</strong> The diagram displays a three-dimensional coordinate system with \(x\), \(y\), and \(z\) axes. A pink-shaded surface \(z = f(x, y)\) is plotted above the \(xy\)-plane. On the plane, the rectangular region \(R\) is bounded by \(x = a\), \(x = b\), \(y = c\), and \(y = d\). The region \(R\) is partitioned into a grid of smaller sub-rectangles. A representative sub-rectangle is highlighted, from which a vertical rectangular prism (a "box") extends upward to meet the surface, illustrating the geometry used to approximate the volume.
+</div>
+
+<div class="theorem">
+<strong>Theorem:</strong> The volume under the surface \(z = f(x, y)\) and above the rectangular region \(R\) is given by the double integral of the function over that region:
+\[\text{Volume} = \iint_R f(x, y) \, dA\]
+</div>
+
+<h4>Riemann Sum Approximation</h4>
+
+To find the approximate volume under the surface, we employ a Riemann sum. This method involves the following systematic steps:
+
+First, divide the interval \([a, b]\) on the \(x\)-axis and the interval \([c, d]\) on the \(y\)-axis into smaller sub-intervals. This process partitions the region \(R\) into a grid of small rectangles.
+
+Next, select a sample point within each of these small rectangles. From each rectangle, form a vertical box whose height is determined by the value of the function \(f(x, y)\) at that specific sample point.
+
+Finally, compute the volume of each individual box and add them all together. The resulting sum provides an approximation of the total volume under the surface, which converges to the exact volume as the grid is refined.
+        </div>
+        <hr>
+    
+        <h3>Page 3</h3>
+        <figure>
+            <img src="img/lesson-18-3.webp" loading="lazy" decoding="async" alt="Original handwritten page 3">
+            <figcaption><strong>Original handwritten page 3</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Approximating Volume with Riemann Sums</h4>
+
+<p>To approximate the volume of a solid under a surface over a rectangular region, we begin by partitioning the domain into smaller sub-rectangles. In this instance, we are approximating by dividing the interval \([a, b]\) along the x-axis into 4 sub-intervals and the interval \([c, d]\) along the y-axis into 5 sub-intervals.</p>
+
+<div class="visual-desc">
+    The diagram illustrates a rectangular region in the xy-plane defined by the intervals \([a, b]\) on the x-axis and \([c, d]\) on the y-axis. The x-axis is partitioned into four sub-intervals by marks at \(a, x_1, x_2, x_3, x_4,\) and \(b\). The y-axis is partitioned into five sub-intervals by marks at \(c, y_1, y_2, y_3, y_4, y_5,\) and \(d\). This grid creates a total of 20 identical rectangles (4 columns and 5 rows). Inside each rectangle, a single black dot is placed to represent a chosen sample point \((x_i, y_j)\).
+</div>
+
+<div class="important">
+    <strong>Note:</strong> Dividing the rectangular domain into 4 horizontal and 5 vertical intervals results in a total of 20 sub-rectangles used for the approximation.
+</div>
+
+<div class="definition">
+    <strong>Definition:</strong> The width (\(\Delta x\)) and height (\(\Delta y\)) of each sub-rectangle are calculated as:
+    \[\Delta x = \frac{b - a}{4}\]
+    \[\Delta y = \frac{d - c}{5}\]
+</div>
+
+<div class="example">
+    <strong>Process:</strong>
+    To compute the total volume approximation, we pick a sample point \((x_i, y_j)\) within each of the 20 rectangles. For each rectangle, we form a three-dimensional box where the height is determined by the function value at that sample point. The volume of a single box is:
+    \[f(x_i, y_j) \Delta x \Delta y\]
+</div>
+
+<div class="theorem">
+    <strong>Riemann Sum:</strong> The approximate volume of the solid is the sum of the volumes of all 20 boxes, expressed as a double summation:
+    \[\text{Approx. Volume / Riemann Sum} = \sum_{j=1}^{5} \sum_{i=1}^{4} f(x_i, y_j) \Delta x \Delta y\]
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 4</h3>
+        <figure>
+            <img src="img/lesson-18-4.webp" loading="lazy" decoding="async" alt="Original handwritten page 4">
+            <figcaption><strong>Original handwritten page 4</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Approximate Volume and Riemann Sums</h4>
+
+<p>To approximate the volume under a surface, we partition the region into a grid using \(m\) intervals on the x-axis and \(n\) intervals on the y-axis. This process results in a total of \(mn\) rectangles within the region.</p>
+
+<div class="definition">
+    <p><b>Definition:</b> The dimensions of the sub-intervals are determined by:</p>
+    \[ \Delta x = \frac{b - a}{m} \quad \text{and} \quad \Delta y = \frac{d - c}{n} \]
+    <p>In this context, the functional value \(f(x_i, y_j)\) represents the height of the box in the \(ij\)-th rectangle.</p>
+</div>
+
+<div class="important">
+    <p><b>Riemann Sum:</b> The Riemann sum used to approximate volume with \(mn\) rectangles is expressed as:</p>
+    \[ \sum_{i=1}^{m} \sum_{j=1}^{n} f(x_i, y_j) \Delta x \Delta y \]
+</div>
+
+<div class="theorem">
+    <p><b>Definition of the Double Integral:</b> The exact volume under the surface \(f(x, y)\) over a region \(R\) is defined as the limit of the Riemann sum as the number of subdivisions approaches infinity:</p>
+    \[ \iint_R f(x, y) \, dA = \lim_{m \to \infty} \lim_{n \to \infty} \sum_{i=1}^{m} \sum_{j=1}^{n} f(x_i, y_j) \Delta y \Delta x \]
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 5</h3>
+        <figure>
+            <img src="img/lesson-18-5.webp" loading="lazy" decoding="async" alt="Original handwritten page 5">
+            <figcaption><strong>Original handwritten page 5</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Estimating Volume with Riemann Sums</h4>
+
+<div class="example">
+    <strong>Example:</strong> Given the function \( z = f(x, y) = 16 - x^2 - y^2 \) over the rectangular region \( R = [0, 2] \times [0, 3] \), estimate the volume under the surface using 6 sub-rectangles. For this estimation, use the bottom-left corner point of each sub-rectangle as the sample point.
+</div>
+
+<div class="visual-desc">
+    <strong>Visual Description:</strong> The diagram illustrates a grid on the xy-plane representing the region \( R \). The x-axis ranges from 0 to 2, and the y-axis ranges from 0 to 3. The region is divided into a 2-by-3 grid of 6 equal sub-rectangles. Vertical lines are drawn at \( x = 0, 1, \) and \( 2 \), and horizontal lines are drawn at \( y = 0, 1, 2, \) and \( 3 \). Points are marked at the bottom-left corner of each of the six cells: (0,0), (1,0), (0,1), (1,1), (0,2), and (1,2). Labels indicate that the width of each sub-rectangle is \( \Delta x = 1 \) and the height is \( \Delta y = 1 \).
+</div>
+
+<div class="solution">
+    <strong>Solution:</strong>
+    To estimate the volume using a Riemann sum, we first determine the dimensions of each sub-rectangle and identify the appropriate sample points.
+    
+    The width of each sub-rectangle along the x-axis is calculated as:
+    \[ \Delta x = \frac{2 - 0}{2} = 1 \]
+    
+    The height of each sub-rectangle along the y-axis is:
+    \[ \Delta y = \frac{3 - 0}{3} = 1 \]
+    
+    The area of each sub-rectangle is \( \Delta A = \Delta x \Delta y = 1 \times 1 = 1 \).
+    
+    Using the bottom-left corner points, our sample points \( (x_i, y_j) \) are:
+    \( (0,0), (1,0), (0,1), (1,1), (0,2), \) and \( (1,2) \).
+    
+    The volume \( V \) is approximated by the double sum:
+    \[ V \approx \sum_{j=1}^{3} \sum_{i=1}^{2} f(x_i, y_j) \Delta x \Delta y \]
+    
+    Expanding the summation and substituting \( \Delta x \Delta y = 1 \):
+    \[ V \approx \sum_{j=1}^{3} [f(x_1, y_j) + f(x_2, y_j)] \]
+    \[ V \approx f(0,0) + f(1,0) + f(0,1) + f(1,1) + f(0,2) + f(1,2) \]
+    
+    Evaluating the function \( f(x, y) = 16 - x^2 - y^2 \) at each sample point:
+    <ul>
+        <li>\( f(0,0) = 16 - 0^2 - 0^2 = 16 \)</li>
+        <li>\( f(1,0) = 16 - 1^2 - 0^2 = 15 \)</li>
+        <li>\( f(0,1) = 16 - 0^2 - 1^2 = 15 \)</li>
+        <li>\( f(1,1) = 16 - 1^2 - 1^2 = 14 \)</li>
+        <li>\( f(0,2) = 16 - 0^2 - 2^2 = 12 \)</li>
+        <li>\( f(1,2) = 16 - 1^2 - 2^2 = 11 \)</li>
+    </ul>
+    
+    Summing these values provides the final volume estimate:
+    \[ V \approx 16 + 15 + 15 + 14 + 12 + 11 = 83 \]
+</div>
+
+<div class="important">
+    <strong>Note:</strong> Choosing different sample points (such as midpoints or upper-right corners) would result in a different numerical approximation of the volume.
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 6</h3>
+        <figure>
+            <img src="img/lesson-18-6.webp" loading="lazy" decoding="async" alt="Original handwritten page 6">
+            <figcaption><strong>Original handwritten page 6</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Evaluating Double Integrals</h4>
+
+<div class="example">
+    <p><strong>Example:</strong> Evaluate the double integral of the function \(f(x, y) = 16 - x^2 - y^2\) over the rectangular region \(R = [0, 2] \times [0, 3]\). This is expressed as:</p>
+    \[\iint_R f(x, y) \, dA\]
+</div>
+
+<div class="solution">
+    <p><strong>Solution:</strong> To solve this iterated integral, we process the variables one at a time. We begin by fixing \(x\) and integrating the function with respect to \(y\) over the bounds defined for the region \(R\), which are \(0\) to \(3\).</p>
+    
+    \[\int_0^3 (16 - x^2 - y^2) \, dy\]
+    
+    <p>Integrating with respect to \(y\) while treating \(x\) as a constant, we obtain:</p>
+    
+    \[= \left[ 16y - x^2y - \frac{y^3}{3} \right]_0^3\]
+    
+    <p>Evaluating this expression at the upper and lower limits of integration:</p>
+    
+    \[= \left( 16(3) - x^2(3) - \frac{3^3}{3} \right) - (0)\]
+    \[= 48 - 3x^2 - 9\]
+    \[= 39 - 3x^2\]
+    
+    <p>Having reduced the inner integral to a function of \(x\), we now integrate this result with respect to \(x\) over the interval \([0, 2]\):</p>
+    
+    \[\int_0^2 (39 - 3x^2) \, dx\]
+    
+    <p>Performing the integration with respect to \(x\):</p>
+    
+    \[= \left[ 39x - x^3 \right]_0^2\]
+    
+    <p>Substituting the bounds for \(x\):</p>
+    
+    \[= (39(2) - 2^3) - (0)\]
+    \[= 78 - 8\]
+    \[= 70\]
+    
+    <p>The value of the double integral over the specified region is <strong>70</strong>.</p>
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 7</h3>
+        <figure>
+            <img src="img/lesson-18-7.webp" loading="lazy" decoding="async" alt="Original handwritten page 7">
+            <figcaption><strong>Original handwritten page 7</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Iterated Integrals over Rectangular Regions</h4>
+
+<div class="example">
+    <p><strong>Example:</strong> Evaluate the double integral of the function \(f(x, y) = 16 - x^2 - y^2\) over the rectangular region defined by the Cartesian product \([0, 2] \times [0, 3]\).</p>
+
+    <div class="solution">
+        <p>To evaluate the integral over the specified region, we use the method of iterated integration. We first fix \(y\) and integrate the function with respect to \(x\) over the interval \([0, 2]\):</p>
+        
+        \[\int_{0}^{2} (16 - x^2 - y^2) \, dx = \left[ 16x - \frac{x^3}{3} - xy^2 \right]_{0}^{2}\]
+        
+        <p>Applying the Fundamental Theorem of Calculus by substituting the upper and lower limits for \(x\), we get:</p>
+        
+        \[= \left( 16(2) - \frac{2^3}{3} - (2)y^2 \right) - 0 = 32 - \frac{8}{3} - 2y^2\]
+        
+        <p>Now, we integrate the resulting expression with respect to \(y\) over the interval \([0, 3]\):</p>
+        
+        \[\int_{0}^{3} \left( 32 - \frac{8}{3} - 2y^2 \right) \, dy = \left[ 32y - \frac{8y}{3} - \frac{2y^3}{3} \right]_{0}^{3}\]
+        
+        <p>Evaluating the expression at the limits for \(y\) yields the final numerical result:</p>
+        
+        \[= \left( 32(3) - \frac{8(3)}{3} - \frac{2(3)^3}{3} \right) - 0\]
+        \[= 96 - 8 - 18\]
+        \[= 70\]
+    </div>
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 8</h3>
+        <figure>
+            <img src="img/lesson-18-8.webp" loading="lazy" decoding="async" alt="Original handwritten page 8">
+            <figcaption><strong>Original handwritten page 8</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4 id="fubinis-theorem">Fubini's Theorem</h4>
+
+<div class="theorem">
+    <p><strong>Theorem:</strong> If \(f(x,y)\) is continuous on the rectangular region \(R = [a,b] \times [c,d]\), then the double integral of the function over that region can be expressed as an iterated integral:</p>
+    \[\iint_R f(x,y) \, dA = \int_c^d \int_a^b f(x,y) \, dx \, dy\]
+    <p>Furthermore, the order of integration does not affect the final value, allowing the integral to be calculated as:</p>
+    \[\iint_R f(x,y) \, dA = \int_a^b \int_c^d f(x,y) \, dy \, dx\]
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 9</h3>
+        <figure>
+            <img src="img/lesson-18-9.webp" loading="lazy" decoding="async" alt="Original handwritten page 9">
+            <figcaption><strong>Original handwritten page 9</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Average Value of a Function</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> For a single-variable function \(f(x)\) defined on a closed interval \([a,b]\), the average value of the function, denoted as \(f_{ave}\), is calculated by dividing the definite integral of the function by the length of the interval:</p>
+    \[f_{ave} = \frac{1}{b - a} \int_{a}^{b} f(x) \, dx\]
+    <p>In this formula, the denominator \(b - a\) represents the length of the interval.</p>
+</div>
+
+<div class="definition">
+    <p><strong>Definition:</strong> For a function of two variables \(f(x,y)\) defined over a region \(R\) in the Cartesian plane \(\mathbb{R}^2\), the average value \(f_{ave}\) is the double integral of the function over region \(R\) divided by the total area of the region:</p>
+    \[f_{ave} = \frac{1}{A} \iint_{R} f(x,y) \, dA\]
+    <p>In this context, \(A\) represents the area of the region \(R\).</p>
+</div>
+
+<div class="important">
+    <p>If the region \(R\) is a rectangle defined by the Cartesian product of two intervals, \(R = [a,b] \times [c,d]\), then the area \(A\) of the rectangle is simply the product of the lengths of its sides:</p>
+    \[\text{Area} = (b - a) \times (d - c)\]
+</div>
+        </div>
+        <hr>
+    
+        <h3>Page 10</h3>
+        <figure>
+            <img src="img/lesson-18-10.webp" loading="lazy" decoding="async" alt="Original handwritten page 10">
+            <figcaption><strong>Original handwritten page 10</strong></figcaption>
+        </figure>
+        <div class="page-content">
+            <h4>Average Value of a Function of Two Variables</h4>
+
+<div class="example">
+    <p><strong>Example:</strong> Given the function \(f(x, y) = x - 3y^2\) defined on the rectangular region \(R = [0, 2] \times [1, 2]\), find the average value \(f_{\text{ave}}\).</p>
+</div>
+
+<div class="solution">
+    <p><strong>Solution:</strong></p>
+    <p>To find the average value of a function over a region \(R\), we apply the following formula:</p>
+    \[f_{\text{ave}} = \frac{1}{\text{Area of } R} \iint_R f(x, y) \, dA\]
+    
+    <p>First, we calculate the area of the rectangular region \(R\). Based on the provided bounds \(0 \leq x \leq 2\) and \(1 \leq y \leq 2\), the area is determined by:</p>
+    \[\text{Area of } R = (2 - 0)(2 - 1) = 2 \times 1 = 2\]
+    
+    <p>We then substitute the area and the function into the average value formula. We set this up as an iterated integral, choosing to integrate with respect to \(x\) first and then with respect to \(y\):</p>
+    \[f_{\text{ave}} = \frac{1}{2} \iint_R (x - 3y^2) \, dA = \frac{1}{2} \int_1^2 \left( \int_0^2 (x - 3y^2) \, dx \right) dy\]
+    
+    <p>The first step in the evaluation is computing the inner integral with respect to \(x\):</p>
+    \[f_{\text{ave}} = \frac{1}{2} \int_1^2 \left[ \frac{x^2}{2} - 3y^2 x \right]_0^2 \, dy\]
+    \[f_{\text{ave}} = \frac{1}{2} \int_1^2 \left( (2 - 6y^2) - 0 \right) dy = \frac{1}{2} \int_1^2 (2 - 6y^2) \, dy\]
+    
+    <p>Finally, we evaluate the outer integral with respect to \(y\):</p>
+    \[f_{\text{ave}} = \frac{1}{2} \left[ 2y - 2y^3 \right]_1^2\]
+    
+    <p>Plugging in the upper and lower limits of integration:</p>
+    \[f_{\text{ave}} = \frac{1}{2} \left[ (2(2) - 2(2^3)) - (2(1) - 2(1^3)) \right]\]
+    \[f_{\text{ave}} = \frac{1}{2} \left[ (4 - 16) - (2 - 2) \right]\]
+    \[f_{\text{ave}} = \frac{1}{2} [-12 - 0] = -6\]
+    
+    <p>The average value of the function over the region \(R\) is \(-6\).</p>
+</div>
+        </div>
+        
+    
+</body>
+</html>

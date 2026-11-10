@@ -1,0 +1,130 @@
+"""Copy the professors' lecture notes into public/notes so the site can show them inside its own pages.
+
+www.math.purdue.edu forbids framing its pages on other sites, so the notes are copied, not embedded.
+Each page keeps its content; embedded PNGs become resized WebP files that load lazily, relative
+links point back at the original site, and a line at the top credits the original.
+
+Run from the repo root (needs Python 3, Pillow and Node):  python scripts/copy-notes.py
+"""
+import base64
+import io
+import json
+import re
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+from datetime import date
+from pathlib import Path
+
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / 'public' / 'notes'
+MANIFEST = ROOT / 'src' / 'content' / 'notes-local.js'
+MAX_W = 1400
+QUALITY = 72
+
+LIST_JS = """
+const m = await import('./src/content/meta-data.js');
+const c = await import('./src/content/chenflix.js');
+const out = [];
+for (const l of m.LECTURES) out.push({ who: 'sunkula', url: l.notes });
+for (const r of m.REVIEWS) out.push({ who: 'sunkula', url: r.notes });
+for (const l of c.CHEN_LESSONS) { out.push({ who: 'chen', url: l.notes }); for (const e of l.extras ?? []) if (e.url) out.push({ who: 'chen', url: e.url }); }
+for (const r of c.CHEN_REVIEWS) out.push({ who: 'chen', url: r.notes });
+console.log(JSON.stringify(out));
+"""
+
+NAMES = {'sunkula': 'Prof. Mahesh Sunkula', 'chen': 'Prof. Joseph Chen'}
+
+
+def slug(url):
+    name = urllib.parse.unquote(url.rstrip('/').rsplit('/', 1)[-1])
+    name = re.sub(r'\.html?$', '', name).replace('-acc', '')
+    m = re.match(r'Lesson\s*(\d+)\b', name, re.I)
+    if m and not re.search(r'addendum', name, re.I):
+        return f'lesson-{int(m.group(1)):02d}'
+    return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+
+
+def fetch(url):
+    url = urllib.parse.quote(url, safe=':/%?=&~#')  # some links have raw spaces
+    req = urllib.request.Request(url, headers={'User-Agent': 'calc3-atlas notes copier'})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return r.read().decode('utf-8', errors='replace')
+
+
+def webp(data):
+    im = Image.open(io.BytesIO(data))
+    if im.mode not in ('RGB', 'RGBA'):
+        im = im.convert('RGBA' if 'A' in im.mode or 'transparency' in im.info else 'RGB')
+    if im.width > MAX_W:
+        im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, 'WEBP', quality=QUALITY, method=6)
+    return buf.getvalue()
+
+
+def copy(who, url, today):
+    s = slug(url)
+    html = fetch(url)
+    imgdir = OUT / who / 'img'
+    imgdir.mkdir(parents=True, exist_ok=True)
+    n = 0
+
+    def img(m):
+        nonlocal n
+        n += 1
+        name = f'{s}-{n}.webp'
+        (imgdir / name).write_bytes(webp(base64.b64decode(m.group(2))))
+        return f'src="img/{name}" loading="lazy" decoding="async"'
+
+    html = re.sub(r'src="data:image/(png|jpe?g|gif);base64,([A-Za-z0-9+/=\s]+)"', img, html)
+    # Some pages carry the whole slide PDF inline (several MB); its button opens the original page instead.
+    html = re.sub(r'href="data:application/pdf;base64,[A-Za-z0-9+/=\s]+"(\s+download="[^"]*")?', f'href="{url}"', html)
+
+    # relative links (PDFs, other pages) go back to the original site
+    def absolute(m):
+        attr, val = m.group(1), m.group(2)
+        if re.match(r'(https?:|#|data:|mailto:|//|img/)', val):
+            return m.group(0)
+        return f'{attr}="{urllib.parse.urljoin(url, val)}"'
+
+    html = re.sub(r'\b(href|src)="([^"]*)"', absolute, html)
+
+    credit = (f'<div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;'
+              f'border-bottom:1px solid #ddd">{NAMES[who]}\'s notes, copied {today} from '
+              f'<a href="{url}" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>')
+    # links off the page open in a new tab; #page-N jumps stay inside the frame
+    html = re.sub(r'<a\s(?![^>]*\btarget=)([^>]*\bhref="https?:)', r'<a target="_blank" rel="noopener" \1', html)
+    html = re.sub(r'(<body[^>]*>)', lambda m: m.group(1) + credit, html, count=1, flags=re.I)
+    (OUT / who / f'{s}.html').write_text(html, encoding='utf-8')
+    return f'notes/{who}/{s}.html', n
+
+
+def main():
+    items = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', LIST_JS], cwd=ROOT, text=True))
+    today = date.today().isoformat()
+    manifest = {}
+    seen = set()
+    for it in items:
+        if it['url'] in seen:
+            continue
+        seen.add(it['url'])
+        try:
+            path, n = copy(it['who'], it['url'], today)
+        except Exception as e:  # keep going; the site falls back to the original link
+            print(f'FAILED {it["url"]}: {e}', file=sys.stderr)
+            continue
+        manifest[it['url']] = path
+        print(f'{path}  ({n} images)')
+    MANIFEST.write_text(
+        '// Generated by scripts/copy-notes.py: original notes URL -> copy served by this site.\n'
+        f'export const LOCAL_NOTES = {json.dumps(manifest, indent=2)};\n', encoding='utf-8')
+    size = sum(f.stat().st_size for f in OUT.rglob('*') if f.is_file())
+    print(f'{len(manifest)} pages, {size / 1e6:.1f} MB in {OUT}')
+
+
+if __name__ == '__main__':
+    main()

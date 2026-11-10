@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangent Plane to a Surface - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Final%20Review%201-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Final Review 1.pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Tangent Plane to a Surface</h1><section class="mb-10"><p class="text-lg mb-6">The equation of the tangent plane to the graph of the function \( f(x, y) = x - \frac{y^2}{2} \) at \( (1, 2, -1) \) is</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-4"><p class="font-bold text-blue-800">define \( F = x - \frac{1}{2}y^2 - z \)</p><p class="font-bold text-blue-800">\( \vec{\nabla}F = \langle 1, -y, -1 \rangle \)</p><p class="font-bold text-blue-800">at \( (1, 2, -1) \): \( \vec{\nabla}F = \langle 1, -2, -1 \rangle \)</p><p class="italic text-blue-700 ml-4">normal to surface</p><p class="italic text-blue-700 ml-4">so use as normal of tangent plane</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm"><ul class="space-y-2"><li>A. \( 2x + y + 4z = 0 \)</li><li>B. \( x + 4y = 9 \)</li><li>C. \( x - 2y - z = 2 \)</li><li class="font-bold text-blue-800">D. \( -x + 2y + z = 2 \)</li><li>E. \( x - y - 2z = 1 \)</li></ul></div></div></section><section class="mt-10"><h2 class="text-2xl font-black tracking-tight mb-6">Plane Equation Derivation</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-4"><p class="font-bold text-blue-800">plane: \( a(x - x_0) + b(y - y_0) + c(z - z_0) = 0 \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p>\( (1)(x - 1) - 2(y - 2) - (z + 1) = 0 \)</p><p>\( x - 1 - 2y + 4 - z - 1 = 0 \)</p><p>\( x - 2y - z = -2 \)</p><p class="text-xl font-bold">\( -x + 2y + z = 2 \)</p></div></div><div class="notebox border-l-4 border-slate-400 pl-6 italic text-slate-700"><p>\( \langle a, b, c \rangle \) : normal vector</p><p>\( (x_0, y_0, z_0) \) : point</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Line Integrals and Green's Theorem</h1><section class="mb-10"><p class="text-lg mb-6">If \( C \) goes from \( (1, 0) \) counterclockwise once around the circle \( x^2 + y^2 = 1 \), then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C (x^2 + 2xy)dx + (x^2 + 2x + y)dy = \]</div><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a unit circle centered at the origin with counterclockwise arrows and point (1,0).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/final-review-1-1.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a unit circle centered at the origin with counterclockwise arrows and point (1,0)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a unit circle centered at the origin with counterclockwise arrows and point (1,0).
+                  </figcaption>
+                </figure>
+              <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm"><ul class="space-y-2"><li>A. \( 4\pi \)</li><li>B. \( -4\pi \)</li><li>C. \( -2\pi \)</li><li>D. 0</li><li class="font-bold text-blue-800">E. \( 2\pi \)</li></ul></div></div></section><section class="mt-10 space-y-4"><div class="flex space-x-8 font-bold text-blue-800"><p>\( \vec{F} = \langle x^2 + 2xy, x^2 + 2x + y \rangle \)</p><p>\( d\vec{r} = \langle dx, dy \rangle \)</p></div><p class="italic text-blue-700">choices: parametrize \( C \), then compute \( \int_C \vec{F} \cdot d\vec{r} \)</p><p class="font-bold text-blue-800">Closed \( C \), so can use Green's Theorem</p><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>Green's: \( \int_C \vec{F} \cdot d\vec{r} = \iint_R (g_x - f_y) dA \)</p></div><div class="grid grid-cols-3 gap-4 font-bold text-blue-800 mb-6"><p>\( g_x = 2x + 2 \)</p><p>\( f_y = 2x \)</p><p>\( g_x - f_y = 2 \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot d\vec{r} = \iint_R 2 dA = 2 \iint_R dA = 2 \cdot \pi(1)^2 = 2\pi \]</div><p class="text-green-700 font-bold">area of \( R \): circle radius 1</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Surface Area of a Parametric Surface</h1><section class="mb-10"><p class="text-lg mb-6">Find the area of the parametric surface \( \vec{r}(u, v) = u \cos v \mathbf{i} + u \sin v \mathbf{j} + v \mathbf{k} \), \( 0 \le u \le \pi \), \( 0 \le v \le u \).</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-6"><p class="italic text-slate-700">Area formula:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \text{area: } \iint_R |\vec{r}_u \times \vec{r}_v| dA \]</div><p class="text-slate-600 text-sm mb-2">Note: \( dS = |\vec{r}_u \times \vec{r}_v| dA \)</p><div class="space-y-4">\[ \vec{r}_u = \langle \cos v, \sin v, 0 \rangle \]\[ \vec{r}_v = \langle -u \sin v, u \cos v, 1 \rangle \]\[ \vec{r}_u \times \vec{r}_v = \langle \sin v, -\cos v, u \rangle \]\[ |\vec{r}_u \times \vec{r}_v| = \sqrt{1 + u^2} \]</div><p class="mt-4">Limits: \( 0 \le u \le \pi, \quad 0 \le v \le u \)</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h2 class="text-xl font-bold mb-4">Multiple Choice Options</h2><ul class="list-none space-y-3"><li>A. \( \frac{2}{3}(1 + \pi^2)^{\frac{3}{2}} \)</li><li class="font-bold text-blue-700">B. \( \frac{1}{3}((1 + \pi^2)^{\frac{3}{2}} - 1) \) <span class="ml-2 text-xs bg-blue-100 px-2 py-1 rounded-full">Correct</span></li><li>C. \( \frac{1}{2}(\sqrt{1 + \pi^2} - 1) \)</li><li>D. \( \frac{1}{5}((1 + \pi^2)^{\frac{3}{2}} - 1) \)</li><li>E. \( \frac{1}{5}(1 + \pi^2)^{\frac{3}{2}} \)</li></ul></div></div></section><section class="mt-10"><h2 class="text-2xl font-black tracking-tight mb-6">Calculation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_0^\pi \int_0^u \sqrt{1 + u^2} \, dv \, du = \int_0^\pi u \sqrt{1 + u^2} \, du \]</div><div class="notebox border-l-4 border-slate-400 pl-6 my-6 italic text-slate-700"><p>Substitution: \( w = 1 + u^2 \)</p><p>\( dw = 2u \, du \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \int_1^{1+\pi^2} \frac{1}{2} w^{1/2} \, dw = \left. \frac{1}{3} w^{3/2} \right|_1^{1+\pi^2} \]\[ = \frac{1}{3} \left[ (1 + \pi^2)^{3/2} - 1 \right] \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Line Integral over a Curve</h1><section class="mb-10"><p class="text-lg mb-6">Let \( C \) be the curve \( y = \frac{1}{3}x^3 \), \( 0 \le x \le 1 \). Compute \( \int_C 12y \, ds \).</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-6"><p class="font-bold">Parametrize \( C \):</p><p>Let \( x = t \)</p><p>Then \( \vec{r}(t) = \langle t, \frac{1}{3}t^3 \rangle \), \( 0 \le t \le 1 \)</p><p class="mt-4">Then \( ds = |\vec{r}'| \, dt \)</p><div class="space-y-2">\[ \vec{r}' = \langle 1, t^2 \rangle \]\[ |\vec{r}'| = \sqrt{1 + t^4} \]</div></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h2 class="text-xl font-bold mb-4">Multiple Choice Options</h2><ul class="list-none space-y-3"><li>A. \( 8(2^{3/2} - 1) \)</li><li>B. \( 12(2^{3/2} - 1) \)</li><li class="font-bold text-blue-700">C. \( \frac{2}{3}(2^{3/2} - 1) \) <span class="ml-2 text-xs bg-blue-100 px-2 py-1 rounded-full">Correct</span></li><li>D. \( \frac{3}{2}(2^{3/2} - 1) \)</li><li>E. \( 2(2^{3/2} - 1) \)</li></ul></div></div></section><section class="mt-10"><h2 class="text-2xl font-black tracking-tight mb-6">Integration</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C 12y \, ds = \int_0^1 12 \left( \frac{1}{3}t^3 \right) \sqrt{1 + t^4} \, dt \]\[ = \int_0^1 4t^3 \sqrt{1 + t^4} \, dt \]</div><div class="notebox border-l-4 border-slate-400 pl-6 my-6 italic text-slate-700"><p>Substitution: \( u = 1 + t^4 \)</p><p>\( du = 4t^3 \, dt \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \int_1^2 u^{1/2} \, du = \left. \frac{2}{3} u^{3/2} \right|_1^2 \]\[ = \frac{2}{3} \left[ (2)^{3/2} - 1 \right] \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Tangent Line Intersection with the xy-plane</h1><section class="mb-8"><p class="mb-4">Let \( C \) be the curve given by \( \vec{r}(t) = \langle 4\sqrt{t}, t, 5 - t^2 \rangle \) for \( t &gt; 0 \). At what point does the tangent line to \( C \) at \( (4, 1, 4) \) intersect the \( xy \) plane?</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><ol class="list-none space-y-2 mb-6"><li>A. \( (0, 1, 0) \)</li><li>B. \( (4\sqrt{5}, \sqrt{5}, 0) \)</li><li>C. \( (2, 1, 0) \)</li><li class="font-bold text-blue-700">D. \( (8, 3, 0) \)</li><li>E. \( (0, -1, 0) \)</li></ol></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D sketch of a curve r(t) with a tangent line at point (4,1,4) passing through a rectangular xy-plane where z=0.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/final-review-1-2.webp" loading="lazy" decoding="async" alt="A 3D sketch of a curve r(t) with a tangent line at point (4,1,4) passing through a rectangular xy-plane where z=0." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D sketch of a curve r(t) with a tangent line at point (4,1,4) passing through a rectangular xy-plane where z=0.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="space-y-6"><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>Line: \( \vec{l}(t) = \vec{r}_0 + t \vec{v} \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}' = \langle \frac{2}{\sqrt{t}}, 1, -2t \rangle \]</div><p class="mb-4">Now need \( t \) so the point is \( \langle 4, 1, 4 \rangle \). Given \( \vec{r}(t) = \langle 4\sqrt{t}, t, 5 - t^2 \rangle \), we see \( t = 1 \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}'(1) = \langle 2, 1, -2 \rangle = \vec{v} \]</div><p class="mb-4">Tangent line:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{l}(t) = \langle 4, 1, 4 \rangle + t \langle 2, 1, -2 \rangle \]\[ = \langle 4 + 2t, 1 + t, 4 - 2t \rangle \]</div><div class="notebox p-4 bg-slate-100 rounded-lg border border-slate-300 mb-6"><p>\( z = 0 \) at intersection w/ \( xy \)-plane</p><p>\( t = 2 \)</p></div><p class="font-bold">Location at \( t = 2 \): \( \vec{l}(2) = \langle 8, 3, 0 \rangle \)</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Constrained Optimization: Lagrange Multipliers</h1><section class="mb-8"><p class="mb-4">Find the maximum value of \( x^2 + y^2 \) subject to the constraint \( x^2 - 2x + y^2 - 4y = 0 \).</p><div class="notebox p-4 bg-slate-100 rounded-lg border border-slate-300 mb-6 inline-block"><p class="text-green-800 font-semibold">Lagrange is usable</p></div><ol class="list-none space-y-2 mb-6"><li>A. 2</li><li>B. 4</li><li>C. 10</li><li>D. 16</li><li class="font-bold text-blue-700">E. 20</li></ol></section><section class="space-y-4"><p>\( f = x^2 + y^2 \)</p><p>\( g = x^2 - 2x + y^2 - 4y = 0 \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{\nabla} f = \lambda \vec{\nabla} g \quad \text{solve for } x, y \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \langle 2x, 2y \rangle = \lambda \langle 2x - 2, 2y - 4 \rangle \]</div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="space-y-2"><p>\( 2x = \lambda · (2x - 2) \rightarrow \lambda = \frac{2x}{2x - 2} = \frac{x}{x - 1} \)</p><p>\( 2y = \lambda · (2y - 4) \rightarrow \lambda = \frac{2y}{2y - 4} = \frac{y}{y - 2} \)</p></div><div class="flex items-center"><p class="text-2xl font-light">\( \} \frac{x}{x - 1} = \frac{y}{y - 2} \)</p></div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ x(y - 2) = y(x - 1) \]\[ xy - 2x = xy - y \rightarrow y = 2x \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white shadow-lg rounded-2xl border border-slate-200 font-sans text-slate-800"><section><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Substitution and Optimization</h1><p class="mb-6">Sub into <span class="inline-math">\(x^2 - 2x + y^2 - 4y = 0\)</span></p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[x^2 - 2x + (2x)^2 - 4(2x) = 0\]\[x^2 - 2x + 4x^2 - 8x = 0\]\[5x^2 - 10x = 0\]\[5x(x - 2) = 0 \rightarrow x = 0, \quad x = 2\]\[y = 0, \quad y = 4\]</div><p class="mb-6 font-bold">Points to check: <span class="inline-math">\((0, 0), (2, 4)\)</span></p><p class="mb-6">Compare <span class="inline-math">\(f = x^2 + y^2 \rightarrow\)</span> max at <span class="inline-math">\((2, 4), f = 20\)</span></p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white shadow-lg rounded-2xl border border-slate-200 font-sans text-slate-800"><section><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Triple Integral Conversion to Cylindrical Coordinates</h1><p class="mb-6">The triple integral <span class="inline-math">\(\int_{-2}^{2} \int_{0}^{\sqrt{4-x^2}} \int_{0}^{\sqrt{x^2+y^2}} (x^2+y^2) \, dz \, dy \, dx\)</span> when converted to cylindrical coordinates becomes:</p><div class="grid-layout"><div class="space-y-4"><h2 class="text-xl font-bold text-slate-900">Analysis of Limits</h2><p><span class="inline-math">\(dz \, dy \, dx\)</span></p><p class="italic text-slate-600">"floor" xy-plane</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li><span class="inline-math">\(-2 \le x \le 2\)</span></li><li><span class="inline-math">\(0 \le y \le \sqrt{4-x^2}\)</span></li></ul><p class="italic text-slate-600">top of circle radius 2</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A semi-circle on the xy-plane with radius 2, centered at the origin, spanning from x = -2 to 2 above the x-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/final-review-1-3.webp" loading="lazy" decoding="async" alt="A semi-circle on the xy-plane with radius 2, centered at the origin, spanning from x = -2 to 2 above the x-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A semi-circle on the xy-plane with radius 2, centered at the origin, spanning from x = -2 to 2 above the x-axis.
+                  </figcaption>
+                </figure>
+              </div><div class="my-8 border-l-4 border-slate-400 pl-6 italic text-slate-700"><p><span class="inline-math">\(0 \le r \le 2\)</span></p><p><span class="inline-math">\(0 \le \theta \le \pi\)</span></p></div><h2 class="text-xl font-bold text-slate-900 mt-10 mb-4">Z-Limit Analysis</h2><p><span class="inline-math">\(0 \le z \le \sqrt{x^2+y^2}\)</span></p><p class="italic text-slate-600">xy-plane to cone</p><p>In cylindrical, <span class="inline-math">\(z = r\)</span></p><h2 class="text-xl font-bold text-slate-900 mt-10 mb-4">Multiple Choice Options</h2><ul class="list-none space-y-2 mb-6"><li>A. <span class="inline-math">\(\int_{0}^{\pi} \int_{0}^{4} \int_{0}^{r} z^2 r \, dz \, dr \, d\theta\)</span></li><li>B. <span class="inline-math">\(\int_{0}^{\pi} \int_{0}^{2} \int_{0}^{r} z^2 r \, dz \, dr \, d\theta\)</span></li><li class="font-bold text-blue-800">C. <span class="inline-math">\(\int_{0}^{\pi} \int_{0}^{2} \int_{0}^{r} r^3 \, dz \, dr \, d\theta\)</span> (Correct)</li><li>D. <span class="inline-math">\(\int_{0}^{2\pi} \int_{0}^{2} \int_{0}^{r} r^3 \, dz \, dr \, d\theta\)</span></li><li>E. <span class="inline-math">\(\int_{0}^{2\pi} \int_{0}^{4} \int_{0}^{r} r^3 \, dz \, dr \, d\theta\)</span></li></ul><h2 class="text-xl font-bold text-slate-900 mt-10 mb-4">Final Conversion</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\int_{0}^{\pi} \int_{0}^{2} \int_{0}^{r} r^2 \cdot r \, dz \, dr \, d\theta\]\[= \int_{0}^{\pi} \int_{0}^{2} \int_{0}^{r} r^3 \, dz \, dr \, d\theta\]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-6">Line Integral of a Conservative Vector Field</h1><section class="mb-8"><p class="text-lg mb-4">Evaluate ∫<sub>C</sub> <strong>F</strong> ∙ d<strong>r</strong> where C is the line segment from P(1, 0) to Q(0, 2) and <strong>F</strong>(x, y) = ⟨ye<sup>xy</sup>, xe<sup>xy</sup> + cos y⟩ is a <strong>conservative vector field</strong>.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><ul class="list-none space-y-2 ml-4 mb-6"><li>A. 1 + sin 2</li><li class="font-bold"><span class="border-2 border-blue-600 rounded-full px-2 mr-2">B</span> sin 2</li><li>C. 1 − sin 2</li><li>D. −1 + sin 2</li><li>E. −1 − sin 2</li></ul><div class="notebox border-l-4 border-slate-400 pl-6 italic text-slate-700"><p class="mb-2">Note: conservative vector field → curl <strong>F</strong> = <strong>0</strong></p></div></div></section><section class="mt-10 mb-4"><h2 class="text-2xl font-black tracking-tight mb-4">Fundamental Theorem of Line Integrals</h2><div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700"><p>If \( \vec{F} = \vec{\nabla} \phi \) then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) \]</div></div></section><section class="mt-10 mb-4"><h2 class="text-2xl font-black tracking-tight mb-4">Finding the Potential Function \( \phi \)</h2><p class="mb-4">We are given \( \vec{F} = \langle ye^{xy}, xe^{xy} + \cos y \rangle = \vec{\nabla} \phi = \langle \phi_x, \phi_y \rangle \).</p><div class="space-y-4"><p>\( \phi_x = ye^{xy} \implies \phi = \int ye^{xy} dx = e^{xy} + h(y) \)</p><p>\( \phi_y = xe^{xy} + \cos y \)</p></div><p class="mt-4">Differentiating our expression for \( \phi \) with respect to \( y \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \phi_y = xe^{xy} + \frac{dh}{dy} \]</div><p class="mb-4">Comparing the two expressions for \( \phi_y \):</p><p class="mb-4">So, \( \frac{dh}{dy} = \cos y \implies h = \sin y + C \)</p><p class="mb-6">Thus, the potential function is: \( \phi = e^{xy} + \sin y + C \)</p></section><section class="mt-10 mb-4"><h2 class="text-2xl font-black tracking-tight mb-4">Final Calculation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) = \phi(0, 2) - \phi(1, 0) \]\[ = (1 + \sin 2 + C) - (1 + C) \]\[ = \sin 2 \]</div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

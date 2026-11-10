@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.6 Integrals for Mass Calculations - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2024%20%2816.6%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 24 (16.6).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8 border-b-2 border-slate-100 pb-2">16.6 Integrals for Mass Calculations</h1><section class="mb-10"><p class="mb-6">mass of shape in 2D: <span class="inline-block ml-2">\(\iint_{R} \rho(x,y) dA\)</span></p><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Note: \(\rho\) represents the <strong>density</strong>.</p></div><p class="mb-6">3D: <span class="inline-block ml-2">\(\iiint_{D} \rho(x,y,z) dV\)</span></p></section><section class="mb-10"><p class="mb-6">We will find the <strong>center of mass</strong> for 2D and 3D objects in this section.</p><p class="mb-6">We first need the <strong>mass moment</strong>.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-center">\(\text{mass moment} = \text{mass} \cdot \text{distance from the axis of rotation}\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><div class="grid-layout"><section class="mb-10"><p class="mb-6">The <strong>moment of the mass about the y-axis</strong> is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ M_y = \text{mass} \cdot \text{distance from y-axis} \]</div><p class="mb-6">where the distance from the y-axis is the \(x\)-coord of the point.</p></section>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a point with mass m at coordinates (x, y) relative to the origin.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-1.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a point with mass m at coordinates (x, y) relative to the origin." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a point with mass m at coordinates (x, y) relative to the origin.
+                  </figcaption>
+                </figure>
+              </div><section class="mb-10"><p class="mb-6">So,</p><div class="notebox border-2 border-indigo-500 p-4 rounded-lg inline-block mb-6">\[ M_y = m \cdot x \]</div><p class="mb-6">Similarly,</p><div class="notebox border-2 border-indigo-500 p-4 rounded-lg inline-block mb-6">\[ M_x = m \cdot y \]</div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">What about a 2D plate of certain shape?</h2><div class="grid-layout"><p class="mb-6">For a general 2D shape in the coordinate plane, we want to find:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(M_y = ?\)</li><li>\(M_x = ?\)</li></ul>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D coordinate system with an irregular closed loop representing a plate of a certain shape.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-2.webp" loading="lazy" decoding="async" alt="A 2D coordinate system with an irregular closed loop representing a plate of a certain shape." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D coordinate system with an irregular closed loop representing a plate of a certain shape.
+                  </figcaption>
+                </figure>
+              </div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Moments and Center of Mass for a Region</h1><p class="mb-6">Divide the region into small rectangles.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A region R in the xy-plane divided into a grid of small rectangles. One rectangle is highlighted.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-3.webp" loading="lazy" decoding="async" alt="A region R in the xy-plane divided into a grid of small rectangles. One rectangle is highlighted." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A region R in the xy-plane divided into a grid of small rectangles. One rectangle is highlighted.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4">Find \( M_y \) and \( M_x \) for one rectangle, then integrate to accumulate all.</p><div class="flex items-center gap-4 mb-6">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A small rectangle with width dx and height dy.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-4.webp" loading="lazy" decoding="async" alt="A small rectangle with width dx and height dy." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A small rectangle with width dx and height dy.
+                  </figcaption>
+                </figure>
+              <div class="text-slate-800">mass density \( \rho(x, y) \)</div></div><p class="mb-4">Then mass of this small piece is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ m = \rho(x, y) dA \]\[ = \rho(x, y) dy dx \]\[ = \rho(x, y) dx dy \]</div></div></div><p class="mb-6">The small piece is at distance \( x \) from y-axis.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ M_y = \underbrace{x}_{\text{dist}} \cdot \underbrace{\rho(x, y) dA}_{\text{mass}} \quad \text{and} \quad M_x = y \cdot \rho(x, y) dA \]</div><p class="mb-6">Then accumulate by double integral, so, for the entire plate:</p><div class="flex flex-wrap gap-6 justify-center"><div class="border-2 border-green-600 p-4 rounded-lg shadow-sm bg-white"><div class="text-xl font-bold">\[ M_y = \iint_R x \cdot \rho(x, y) dA \]</div></div><div class="border-2 border-green-600 p-4 rounded-lg shadow-sm bg-white"><div class="text-xl font-bold">\[ M_x = \iint_R y \cdot \rho(x, y) dA \]</div></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-6">Center of Mass</h2><p class="mb-6">If the entire plate is collapsed into a point w/ same mass, where should the point be placed to keep the same \( M_y \) and \( M_x \)?</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-center mb-10"><div class="flex-1 flex items-center gap-4">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A region R in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-5.webp" loading="lazy" decoding="async" alt="A region R in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A region R in the xy-plane.
+                  </figcaption>
+                </figure>
+              <span class="text-2xl">\( \rightarrow \)</span>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A single point at (x-bar, y-bar) in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-6.webp" loading="lazy" decoding="async" alt="A single point at (x-bar, y-bar) in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A single point at (x-bar, y-bar) in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">location: \( (\bar{x}, \bar{y}) \)<br>"x bar"<br>x-coord of center of mass</div></div></div><div class="grid grid-cols-2 gap-8 mb-10"><div class="space-y-4"><p>has</p><p>\( M_y = \iint_R x \rho dA \)</p><p>\( M_x = \iint_R y \rho dA \)</p></div><div class="space-y-4"><p>has</p><p>\( M_y = m \bar{x} \)</p><p>\( M_x = m \bar{y} \)</p></div></div><p class="mb-6">Equate them:</p><div class="space-y-6"><div class="flex items-center gap-4">\( m \bar{x} = \iint_R x \rho dA \) <span class="text-xl">\( \rightarrow \)</span> <div class="border-2 border-red-600 p-4 rounded-lg bg-white font-bold">\[ \bar{x} = \frac{1}{m} \iint_R x \rho dA \]</div></div><div class="flex items-center gap-4">\( m \bar{y} = \iint_R y \rho dA \) <span class="text-xl">\( \rightarrow \)</span> <div class="border-2 border-red-600 p-4 rounded-lg bg-white font-bold">\[ \bar{y} = \frac{1}{m} \iint_R y \rho dA \]</div></div><div class="border-2 border-red-600 p-4 rounded-lg bg-white font-bold w-fit">\[ m = \iint_R \rho dA \]</div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Center of Mass for a Rectangular Region</h1><section class="mb-10"><p class="mb-6">Consider a region $R$ defined by:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ R = \{ (x, y) : 0 \le x \le 1, \quad 0 \le y \le 5 \} \]</div><p class="mb-6">with density function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \rho(x, y) = 2e^{-\frac{1}{2}y} \]</div></section><div class="grid-layout"><div class="mb-10"><h2 class="text-2xl font-bold mb-4">Visual Representation</h2><p class="mb-6">The region is a vertical rectangle in the first quadrant. The center of mass is calculated to be at approximately $(\frac{1}{2}, 1.6)$.</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a rectangle from x=0 to 1 and y=0 to 5, with center of mass marked at (0.5, 1.6).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-7.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a rectangle from x=0 to 1 and y=0 to 5, with center of mass marked at (0.5, 1.6)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a rectangle from x=0 to 1 and y=0 to 5, with center of mass marked at (0.5, 1.6).
+                  </figcaption>
+                </figure>
+              </div><section class="mb-10"><h2 class="text-2xl font-bold mb-4">1. Calculate Total Mass ($m$)</h2><p class="mb-6">Start with mass:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ m = \iint_R \rho \, dA = \int_0^1 \int_0^5 2e^{-\frac{1}{2}y} \, dy \, dx = \dots = 4(1 - e^{-5/2}) \]</div></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">2. Calculate Center of Mass Coordinates</h2><p class="mb-6">The x-coordinate of the center of mass $\bar{x}$ is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \bar{x} = \frac{1}{m} \iint_R x \rho \, dA = \frac{1}{4(1 - e^{-5/2})} \int_0^1 \int_0^5 x \cdot 2e^{-\frac{1}{2}y} \, dy \, dx = \dots = \frac{1}{2} \]</div><p class="mb-6">The y-coordinate of the center of mass $\bar{y}$ is (using integration by parts):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \bar{y} = \frac{1}{m} \iint_R y \rho \, dA = \frac{1}{4(1 - e^{-5/2})} \int_0^1 \int_0^5 y \cdot 2e^{-\frac{1}{2}y} \, dy \, dx \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \dots = \frac{-14e^{-5/2} + 4}{2(1 - e^{-5/2})} \approx 1.6 \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Center of Mass in Polar Coordinates</h1><section class="mb-10"><p class="mb-6">Consider a region $R$ between circles of radii 1 and 2 centered at the origin in the first quadrant (QI) with density:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \rho(x, y) = \sqrt{x^2 + y^2} \]</div></section><div class="grid-layout"><div class="mb-10"><p class="mb-6">Since these are circles, let's set up the problem in polar coordinates:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ R = \{ (r, \theta) : 0 \le \theta \le \frac{\pi}{2}, \quad 1 \le r \le 2 \} \]</div><p class="mb-6">Density in polar coordinates: $\rho = r$.</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of a quarter-annulus in the first quadrant between r=1 and r=2, with center of mass marked.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-8.webp" loading="lazy" decoding="async" alt="Graph of a quarter-annulus in the first quadrant between r=1 and r=2, with center of mass marked." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of a quarter-annulus in the first quadrant between r=1 and r=2, with center of mass marked.
+                  </figcaption>
+                </figure>
+              </div><section class="mb-10"><h2 class="text-2xl font-bold mb-4">1. Calculate Total Mass ($m$)</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ m = \iint_R \rho \, dA = \int_0^{\pi/2} \int_1^2 r \cdot r \, dr \, d\theta = \int_0^{\pi/2} \int_1^2 r^2 \, dr \, d\theta = \dots = \frac{7\pi}{6} \]</div></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">2. Calculate Center of Mass Coordinates</h2><p class="mb-6">Using $x = r \cos \theta$ and $dA = r \, dr \, d\theta$:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \bar{x} = \frac{1}{m} \iint_R x \rho \, dA = \frac{1}{7\pi/6} \int_0^{\pi/2} \int_1^2 r \cos \theta \cdot r \cdot r \, dr \, d\theta = \dots = \frac{45}{14\pi} \approx 1.023 \]</div><p class="mb-6">Using $y = r \sin \theta$:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \bar{y} = \frac{1}{m} \iint_R y \rho \, dA = \frac{1}{7\pi/6} \int_0^{\pi/2} \int_1^2 r \sin \theta \cdot r \cdot r \, dr \, d\theta = \dots = \frac{45}{14\pi} \approx 1.023 \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white">
+  <header class="mb-10">
+    <h1 class="text-3xl font-black tracking-tight text-slate-900 mb-4">Transition from 2D to 3D</h1>
+    <p class="text-lg">
+      When moving from 2D to 3D, we transition from area elements to volume elements: 
+      <span class="font-semibold">\( dA \to dV \)</span> and density functions 
+      <span class="font-semibold">\( \rho(x, y) \to \rho(x, y, z) \)</span>.
+    </p>
+    <p class="text-lg mt-2">
+      Consequently, double integrals become triple integrals.
+    </p>
+  </header>
+
+  <section class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <h2 class="sr-only">Mass and Center of Mass Formulas in 3D</h2>
+    <div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-8 border border-slate-100 shadow-sm">
+      <div class="space-y-6">
+        <p class="text-xl">\[ m = \iiint_{D} \rho(x, y, z) \, dV \]</p>
+        <p class="text-xl">\[ \bar{x} = \frac{1}{m} \iiint_{D} x \rho(x, y, z) \, dV \]</p>
+        <p class="text-xl">\[ \bar{y} = \frac{1}{m} \iiint_{D} y \rho(x, y, z) \, dV \]</p>
+        <p class="text-xl">\[ \bar{z} = \frac{1}{m} \iiint_{D} z \rho(x, y, z) \, dV \]</p>
+      </div>
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white">
+  <section class="mb-10">
+    <h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Example: Center of Mass of a Solid</h1>
+    <p class="text-lg mb-4">
+      Find the center of mass of a solid bounded by \( 3x + 2y + z = 6 \) and the coordinate planes, with density 
+      \( \rho(x, y, z) = 1 + x \).
+    </p>
+    
+    <div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="mb-4">The bounding surface is a plane in the first octant.</p>
+        
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D graph of a tetrahedron in the first octant bounded by axes and a plane with intercepts (2,0,0), (0,3,0), (0,0,6).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-9.webp" loading="lazy" decoding="async" alt="3D graph of a tetrahedron in the first octant bounded by axes and a plane with intercepts (2,0,0), (0,3,0), (0,0,6)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D graph of a tetrahedron in the first octant bounded by axes and a plane with intercepts (2,0,0), (0,3,0), (0,0,6).
+                  </figcaption>
+                </figure>
+              
+      </div>
+      <div class="notebox bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+        <p class="font-bold text-indigo-900 mb-2">Plane Equation:</p>
+        <p>\( 3x + 2y + z = 6 \)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">Setting up the Integrals</h2>
+    <p class="mb-6">For the integrals, let's use the \( xy \)-plane as the "floor".</p>
+    
+    <div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D projection on the xy-plane showing a triangle with vertices at (0,0), (2,0), and (0,3).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-24-10.webp" loading="lazy" decoding="async" alt="2D projection on the xy-plane showing a triangle with vertices at (0,0), (2,0), and (0,3)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D projection on the xy-plane showing a triangle with vertices at (0,0), (2,0), and (0,3).
+                  </figcaption>
+                </figure>
+              
+      </div>
+      <div class="space-y-4">
+        <p class="font-semibold">Region in \( xy \)-plane:</p>
+        <p>\[ 0 \le x \le 2 \]</p>
+        <p>\[ 0 \le y \le 3 - \frac{3}{2}x \]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">Limits for \( z \)</h2>
+    <p class="mb-4">For \( z \), from the \( xy \)-plane to the bounding plane:</p>
+    <p class="text-xl font-mono bg-slate-50 p-4 rounded-lg border border-slate-100 inline-block">
+      \( 0 \le z \le 6 - 3x - 2y \)
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">Calculating Mass</h2>
+    <div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-8 border border-slate-100 shadow-sm">
+      <p class="text-xl">
+        \[ m = \int_{0}^{2} \int_{0}^{3-\frac{3}{2}x} \int_{0}^{6-3x-2y} (1+x) \, dz \, dy \, dx = \dots = 9 \]
+      </p>
+      <p class="text-sm text-slate-500 mt-4 italic">
+        Note: \( \rho = (1+x) \) and \( dV = dz \, dy \, dx \).
+      </p>
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><section class="mb-12"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \bar{x} = \frac{1}{m} \iiint_{D} x \rho dV \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \frac{1}{9} \int_{0}^{2} \int_{0}^{3-\frac{3}{2}x} \int_{0}^{6-3x-2y} x(1+x) dz dy dx = \dots = 3/5 \]</div><p class="text-lg font-medium mb-6">\( \bar{y}, \bar{z} \) same idea \( \dots \dots \bar{y} = 7/10, \bar{z} = 7/5 \)</p></section><hr class="border-t-2 border-slate-200 my-10"><section><div class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ M_y = \iint_{R} x \rho dA \]</div><p class="text-emerald-700 font-semibold italic">first power, so this is a first moment</p></div><div class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ I_y = \iint_{R} x^2 \rho dA \rightarrow \text{moment of inertia about } y\text{-axis} \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="text-emerald-700 font-semibold">second power</p><p class="text-emerald-700 font-semibold">this is a second moment</p></div></div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

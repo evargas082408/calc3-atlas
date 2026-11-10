@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 17: Lagrange Multipliers</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: { enableAssistiveMml: true }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #212529; }
+        h3 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 8px; margin-top: 30px; font-size: 1.5em; }
+        h4 { color: #34495e; border-left: 4px solid #3498db; padding-left: 15px; margin-top: 25px; font-size: 1.3em; }
+        h5 { color: #5a6c7d; font-size: 1.1em; margin-top: 20px; }
+        .definition { background-color: #e8f5e8; padding: 15px; border: 1px solid #28a745; border-radius: 8px; margin: 15px 0; border-left: 5px solid #28a745; }
+        .theorem { background-color: #fff3cd; padding: 15px; border: 1px solid #ffc107; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .example { background-color: #f8f9fa; padding: 15px; border: 1px solid #6c757d; border-radius: 8px; margin: 15px 0; border-left: 5px solid #007bff; }
+        .important { background-color: #d1ecf1; padding: 15px; border: 1px solid #17a2b8; border-radius: 8px; margin: 15px 0; border-left: 5px solid #17a2b8; }
+        .warning { background-color: #f8d7da; padding: 15px; border: 1px solid #dc3545; border-radius: 8px; margin: 15px 0; border-left: 5px solid #dc3545; }
+        .visual-desc { background-color: #e9ecef; padding: 12px; border-left: 4px solid #6c757d; font-style: italic; margin: 15px 0; border-radius: 0 5px 5px 0; }
+        .steps { background-color: #f1f3f4; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .solution { background-color: #f0f8f0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #28a745; }
+        .page-content { background-color: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        figure { margin: 20px 0; }
+        figure img { max-width: 100%; height: auto; border: 2px solid #dee2e6; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 4px; }
+        figcaption { text-align: center; color: #6c757d; margin-top: 8px; font-size: 0.9em; }
+        hr { margin: 40px 0; border: none; border-top: 2px solid #3498db; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 8px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #e9ecef; font-weight: bold; }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson17.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 &ndash; Lesson 17: Lagrange Multipliers (Section 15.8)</h3>
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-17-1.webp" loading="lazy" decoding="async" alt="Page 1: Title page for Lesson 17 on Lagrange Multipliers with course announcements." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+<div class="page-content">
+<h4>Announcements</h4>
+<p><strong>Note:</strong> Lagrange Multipliers (Section 15.8) is <em>not</em> included on Exam 1.</p>
+<p>Exam 1 is on Wednesday, February 25th, in ELLT 116 at 6:30 PM. The following are posted on Brightspace: exam instructions, seating chart, and study guide.</p>
+<p>Office hours before Exam 1: Today and Monday, 9:45 AM&ndash;11:15 AM; Tuesday and Wednesday, 2:45 PM&ndash;4:15 PM.</p>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-17-2.webp" loading="lazy" decoding="async" alt="Page 2: Warm-up example - find max/min of x^2+y^2 on xy=1 by substitution." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Warm-Up Example: Constrained Optimization</h5>
+<p>Find the maximum and minimum of the <strong>objective function</strong> \(x^2 + y^2\) on the <strong>constraint curve</strong> \(xy = 1\).</p>
+<div class="solution">
+<p><strong>Solution (by substitution):</strong></p>
+<p>From the constraint \(xy = 1\), write \(y = \frac{1}{x}\) for \(x \neq 0\). Substituting into the objective gives:</p>
+\[g(x) = x^2 + \frac{1}{x^2}, \quad x \neq 0\]
+<p>There is no maximum since \(g(x)\) grows without bound. Setting the derivative to zero:</p>
+\[g'(x) = 2x - \frac{2}{x^3} = 0 \implies x^4 = 1\]
+<p>So \(x = 1\) or \(x = -1\), giving points \((1, 1)\) and \((-1, -1)\). The minimum occurs at both points.</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-17-3.webp" loading="lazy" decoding="async" alt="Page 3: Geometric motivation for Lagrange Multipliers - level curves touching the constraint curve at optimal points." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+<div class="page-content">
+<h4>Lagrange Multipliers: Geometric Motivation</h4>
+<p>Revisiting: find the max/min of \(f(x,y) = x^2 + y^2\) on the constraint \(g(x,y) = xy = 1\) (a hyperbola).</p>
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> Concentric circles centered at the origin represent level curves of \(f(x,y) = x^2 + y^2\) at increasing radii. The hyperbola \(xy = 1\) passes through the first and third quadrants. Points \((1,1)\) and \((-1,-1)\) are marked where the smallest circle just touches the hyperbola. A line represents their shared tangent at these contact points.</p>
+</div>
+<p>Moving along the hyperbola away from \((1,1)\) or \((-1,-1)\) leads to larger circles, meaning larger \(f\)-values. So these are the minimum-distance points on the hyperbola from the origin.</p>
+<div class="important">
+<p><strong>Key Observation:</strong> At \((1,1)\) and \((-1,-1)\), the level curve of \(f\) and the constraint curve \(xy=1\) <em>touch</em> &mdash; their tangent lines are parallel. Since the gradient is always perpendicular to the tangent, parallel tangents mean <strong>parallel gradients</strong>:</p>
+\[\nabla f \parallel \nabla g \quad \text{at the minimum points.}\]
+</div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-17-4.webp" loading="lazy" decoding="async" alt="Page 4: Computing gradients and deriving the Lagrange condition grad f = lambda grad g." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+<div class="page-content">
+<h4>The Lagrange Condition</h4>
+<p>For \(f(x,y) = x^2 + y^2\) and \(g(x,y) = xy\):</p>
+\[\nabla f = \langle 2x,\, 2y \rangle, \qquad \nabla g = \langle y,\, x \rangle\]
+<p>At the critical points the gradients are scalar multiples of each other:</p>
+<ul>
+<li>At \((1,1)\): \(\nabla f(1,1) = \langle 2, 2 \rangle = 2\langle 1, 1 \rangle = 2\,\nabla g(1,1)\).</li>
+<li>At \((-1,-1)\): \(\nabla f(-1,-1) = \langle -2, -2 \rangle = 2\langle -1, -1 \rangle = 2\,\nabla g(-1,-1)\).</li>
+</ul>
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A circle (level curve) is tangent to a hyperbola (constraint) at a point. Two arrows show \(\nabla f\) and \(\nabla g\) both pointing outward in the same direction, confirming they are parallel.</p>
+</div>
+<div class="theorem">
+<p><strong>Lagrange Condition:</strong> At every point of max/min on the constraint \(g = k\):</p>
+\[\nabla f = \lambda\, \nabla g\]
+<p>where \(\lambda\) is a scalar called the <em>Lagrange multiplier</em>.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-17-5.webp" loading="lazy" decoding="async" alt="Page 5: The formal Method of Lagrange Multipliers - two steps." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="theorem">
+<h5>Method of Lagrange Multipliers</h5>
+<p>To find the max/min of \(f(x,y,z)\) subject to \(g(x,y,z) = k\):</p>
+</div>
+<div class="steps">
+<h5>Procedure:</h5>
+<ol>
+<li><strong>Solve the system</strong> from \(\nabla f = \lambda\,\nabla g\) plus the constraint:
+\[\begin{cases} f_x = \lambda\, g_x \\ f_y = \lambda\, g_y \\ f_z = \lambda\, g_z \\ g(x,y,z) = k \end{cases}\]
+Find all \((x,y,z)\) and \(\lambda\) satisfying all four equations simultaneously.</li>
+<li><strong>Evaluate \(f(x,y,z)\)</strong> at each solution. The highest value is the <strong>Maximum</strong>; the lowest is the <strong>Minimum</strong>.</li>
+</ol>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-17-6.webp" loading="lazy" decoding="async" alt="Page 6: Setting up verification of max/min of x^2-y^2 on the unit circle using Lagrange Multipliers." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Example: Verifying with Lagrange Multipliers</h5>
+<p>Find the max/min of \(f(x,y) = x^2 - y^2\) subject to \(x^2 + y^2 = 1\).</p>
+<p>Previously solved by substitution: setting \(y^2 = 1 - x^2\) and solving yields candidate points \((-1,0)\), \((1,0)\), \((0,1)\), \((0,-1)\).</p>
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> The unit circle \(x^2 + y^2 = 1\) is drawn centered at the origin. Four red points mark the axis intercepts: \((1,0)\), \((-1,0)\), \((0,1)\), \((0,-1)\) &mdash; the candidate extrema.</p>
+</div>
+<p>We now verify using Lagrange Multipliers.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-17-7.webp" loading="lazy" decoding="async" alt="Page 7: Full Lagrange Multiplier solution for x^2-y^2 on the unit circle - max 1 at (+-1,0), min -1 at (0,+-1)." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Example (continued): Lagrange Multiplier Solution</h5>
+<p>For \(f(x,y) = x^2 - y^2\) and \(g(x,y) = x^2 + y^2\): \(\nabla f = \langle 2x, -2y \rangle\) and \(\nabla g = \langle 2x, 2y \rangle\).</p>
+<div class="solution">
+<p><strong>System \(\nabla f = \lambda\,\nabla g\):</strong></p>
+\[\begin{cases} 2x = \lambda(2x) & \text{(I)} \\ -2y = \lambda(2y) & \text{(II)} \\ x^2 + y^2 = 1 & \text{(III)} \end{cases}\]
+<p>From (I): \((\lambda - 1)(2x) = 0\), so \(\lambda = 1\) or \(x = 0\).</p>
+<p><strong>Case 1 (\(\lambda = 1\)):</strong> From (II): \(-2y = 2y \implies y = 0\). Then (III) gives \(x = \pm 1\). Points: \((1,0)\) and \((-1,0)\).</p>
+<p><strong>Case 2 (\(x = 0\)):</strong> From (III): \(y^2 = 1 \implies y = \pm 1\). Points: \((0,1)\) and \((0,-1)\).</p>
+<p><strong>Evaluate \(f\) at all candidates:</strong></p>
+\[f(1,0) = 1 \quad \textbf{(Max)}, \qquad f(-1,0) = 1 \quad \textbf{(Max)}\]
+\[f(0,1) = -1 \quad \textbf{(Min)}, \qquad f(0,-1) = -1 \quad \textbf{(Min)}\]
+<p>Maximum value is \(1\), minimum value is \(-1\). This confirms the substitution result.</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-17-8.webp" loading="lazy" decoding="async" alt="Page 8: Lagrange Multipliers for f(x,y)=xy subject to x^2+xy+y^2=1, setting up the system." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Example: A More Complex Constraint</h5>
+<p>Find the max/min of \(f(x,y) = xy\) subject to \(g(x,y) = x^2 + xy + y^2 = 1\).</p>
+<p>The gradients are \(\nabla f = \langle y, x \rangle\) and \(\nabla g = \langle 2x+y,\; x+2y \rangle\).</p>
+<div class="solution">
+<p><strong>System \(\nabla f = \lambda\,\nabla g\):</strong></p>
+\[\begin{cases} y = \lambda(2x+y) & \text{(I)} \\ x = \lambda(x+2y) & \text{(II)} \\ x^2 + xy + y^2 = 1 & \text{(III)} \end{cases}\]
+<p>Assuming \(2x + y \neq 0\), from (I): \(\lambda = \dfrac{y}{2x+y}\). Substituting into (II):</p>
+\[x = \frac{y}{2x+y}(x+2y) \implies x(2x+y) = y(x+2y)\]
+\[2x^2 + xy = xy + 2y^2 \implies x^2 = y^2\]
+<p>This means \(y = x\) or \(y = -x\).</p>
+<p><strong>Special case \(2x + y = 0\):</strong> Then \(y = -2x\) and from (I): \(x = 0, y = 0\). Substituting into (III) gives \(0 = 1\), a contradiction. No solutions from this case.</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-17-9.webp" loading="lazy" decoding="async" alt="Page 9: Completing the example - sub-case y=x gives max 1/3, sub-case y=-x gives min -1." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Example (continued): Solving the Two Sub-Cases</h5>
+<p>From the previous page, \(x^2 = y^2\) gives \(y = x\) or \(y = -x\).</p>
+<div class="solution">
+<p><strong>Sub-case A: \(y = x\).</strong> Substituting into (III):</p>
+\[x^2 + x^2 + x^2 = 1 \implies 3x^2 = 1 \implies x = \pm\frac{1}{\sqrt{3}}\]
+<p>Points: \(\left(\tfrac{1}{\sqrt{3}}, \tfrac{1}{\sqrt{3}}\right)\) and \(\left(-\tfrac{1}{\sqrt{3}}, -\tfrac{1}{\sqrt{3}}\right)\).</p>
+\[f\!\left(\tfrac{1}{\sqrt{3}}, \tfrac{1}{\sqrt{3}}\right) = f\!\left(-\tfrac{1}{\sqrt{3}}, -\tfrac{1}{\sqrt{3}}\right) = \frac{1}{3} \quad \textbf{(MAX)}\]
+<p><strong>Sub-case B: \(y = -x\).</strong> Substituting into (III):</p>
+\[x^2 - x^2 + x^2 = 1 \implies x^2 = 1 \implies x = \pm 1\]
+<p>Points: \((1,-1)\) and \((-1,1)\).</p>
+\[f(1,-1) = -1 = f(-1,1) \quad \textbf{(MIN)}\]
+<p><strong>Conclusion:</strong> The maximum of \(f(x,y) = xy\) on \(x^2 + xy + y^2 = 1\) is \(\dfrac{1}{3}\) and the minimum is \(-1\).</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-17-10.webp" loading="lazy" decoding="async" alt="Page 10: Three-variable example - max/min of x+5y+3z on the unit sphere, maximum sqrt(35) and minimum -sqrt(35)." style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+<div class="page-content">
+<div class="example">
+<h5>Example: Three Variables on the Unit Sphere</h5>
+<p>Find the max/min of \(f(x,y,z) = x + 5y + 3z\) subject to \(g(x,y,z) = x^2 + y^2 + z^2 = 1\).</p>
+<p>The gradients are \(\nabla f = \langle 1, 5, 3 \rangle\) and \(\nabla g = \langle 2x, 2y, 2z \rangle\).</p>
+<div class="solution">
+<p><strong>System \(\nabla f = \lambda\,\nabla g\):</strong></p>
+\[\begin{cases} 1 = \lambda(2x) & \text{(I)} \\ 5 = \lambda(2y) & \text{(II)} \\ 3 = \lambda(2z) & \text{(III)} \\ x^2 + y^2 + z^2 = 1 & \text{(IV)} \end{cases}\]
+<p>Since \(\lambda = 0\) would give \(1 = 0\) from (I), we have \(\lambda \neq 0\). Solving for each variable:</p>
+\[x = \frac{1}{2\lambda}, \qquad y = \frac{5}{2\lambda}, \qquad z = \frac{3}{2\lambda}\]
+<p>Substituting into (IV):</p>
+\[\frac{1}{4\lambda^2} + \frac{25}{4\lambda^2} + \frac{9}{4\lambda^2} = 1 \implies \frac{35}{4\lambda^2} = 1 \implies \lambda = \pm\frac{\sqrt{35}}{2}\]
+<p><strong>For \(\lambda = \dfrac{\sqrt{35}}{2}\):</strong></p>
+\[(x,y,z) = \left(\frac{1}{\sqrt{35}},\; \frac{5}{\sqrt{35}},\; \frac{3}{\sqrt{35}}\right)\]
+\[f = \frac{1 + 25 + 9}{\sqrt{35}} = \sqrt{35} \quad \textbf{(MAX)}\]
+<p><strong>For \(\lambda = -\dfrac{\sqrt{35}}{2}\):</strong></p>
+\[(x,y,z) = \left(-\frac{1}{\sqrt{35}},\; -\frac{5}{\sqrt{35}},\; -\frac{3}{\sqrt{35}}\right), \qquad f = -\sqrt{35} \quad \textbf{(MIN)}\]
+</div>
+</div>
+</div>
+
+</body>
+</html>

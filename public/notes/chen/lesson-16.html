@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.7 Max/min problems (part 2) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2016%20%2815.7-2%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                    <li><a href="#page-11">Page 11</a></li>
+                    
+                    <li><a href="#page-12">Page 12</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 16 (15.7-2).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight mb-8 border-b-4 border-slate-900 pb-2">15.7 Max/min problems (part 2)</h1><section class="mb-10"><p class="text-lg mb-6">If \( y = f(x) \), \( a \leq x \leq b \) then the absolute max/min of \( f(x) \) can be at the ends of the interval or at critical pts inside the interval.</p><div class="flex flex-col md:flex-row items-center gap-8 my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D plot of f(x) from x=a to x=b with labeled absolute minimum at a valley and absolute maximum at endpoint b.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-1.webp" loading="lazy" decoding="async" alt="2D plot of f(x) from x=a to x=b with labeled absolute minimum at a valley and absolute maximum at endpoint b." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D plot of f(x) from x=a to x=b with labeled absolute minimum at a valley and absolute maximum at endpoint b.
+                  </figcaption>
+                </figure>
+              <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 shadow-sm w-full md:w-1/2"><h2 class="text-xl font-bold mb-4">Procedure:</h2><ul class="list-disc list-inside space-y-2 ml-4"><li>Find all interior critical pts</li><li>Compare \( f(x) \) at the critical pts and at ends to find max/min</li></ul></div></div></section><section class="mb-10"><p class="text-lg mb-6">\( z = f(x, y) \) is a surface and domain is a region in xy-plane and the boundaries are curves.</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-4">The basic idea is the same:</p><ol class="list-decimal list-inside space-y-4 ml-4"><li>Find all interior critical pts</li><li>Then find all possible locations of max/min on the boundaries</li><li>Then compare \( f(x, y) \)</li></ol></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-6">Example Problem</h2><div class="bg-slate-50 p-6 rounded-xl border border-slate-100 shadow-sm mb-8"><p class="text-lg">Find max/min of</p><div class="my-4 overflow-x-auto py-4 px-6">\[ z = f(x, y) = (x-1)^2 + (y-2)^2 \]</div><p class="text-lg">on the region defined by:</p><ul class="list-none space-y-1 ml-4"><li>\( 0 \leq x \leq 3 \)</li><li>\( 0 \leq y \leq 3 \)</li></ul></div><div class="my-10 flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot of a paraboloid surface opening upwards, centered at (1, 2), restricted to a rectangular domain.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-2.webp" loading="lazy" decoding="async" alt="3D plot of a paraboloid surface opening upwards, centered at (1, 2), restricted to a rectangular domain." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot of a paraboloid surface opening upwards, centered at (1, 2), restricted to a rectangular domain.
+                  </figcaption>
+                </figure>
+              </div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-6">Contour Map Analysis</h2><div class="bg-slate-50 p-6 rounded-xl border border-slate-100 shadow-sm mb-8"><p class="text-lg">Find max/min of</p><div class="my-4 overflow-x-auto py-4 px-6">\[ z = f(x, y) = (x-1)^2 + (y-2)^2 \text{ on } 0 \leq x \leq 3, 0 \leq y \leq 3 \]</div></div><div class="my-10 flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Contour map with circular level curves z=2, 6, 8 and a central point z=0, overlaid with a rectangular boundary.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-3.webp" loading="lazy" decoding="async" alt="Contour map with circular level curves z=2, 6, 8 and a central point z=0, overlaid with a rectangular boundary." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Contour map with circular level curves z=2, 6, 8 and a central point z=0, overlaid with a rectangular boundary.
+                  </figcaption>
+                </figure>
+              </div><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8"><div class="notebox p-4 border border-slate-200 rounded-lg bg-white shadow-sm"><p class="font-bold">Boundary Point:</p>\( x=0, y=3 \) (Level 2)</div><div class="notebox p-4 border border-slate-200 rounded-lg bg-white shadow-sm"><p class="font-bold">Boundary Point:</p>\( x=3, y=3 \)</div><div class="notebox p-4 border border-slate-200 rounded-lg bg-white shadow-sm"><p class="font-bold">Boundary Point:</p>\( x=0, y=0 \)</div><div class="notebox p-4 border border-slate-200 rounded-lg bg-white shadow-sm"><p class="font-bold">Boundary Point:</p>\( x=3, y=0 \)</div><div class="notebox p-4 border border-indigo-200 rounded-lg bg-indigo-50 shadow-sm col-span-full text-center"><p class="font-bold">Interior Critical Point:</p>\( z=0 \) at \( (1, 2) \)</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans max-w-4xl mx-auto"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example: Finding Extrema on a Triangular Region</h1><p class="mb-6">Given the function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ z = f(x,y) = x^2 + y^2 - 2x - 4y + 10 \]</div><p class="mb-6">Find the max/min above the triangle with vertices \((0,0)\), \((0,4)\), and \((4,0)\).</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Paraboloid: \[ z = f(x,y) = (x-1)^2 + (y-2)^2 + 5 \]</p></div><p class="mb-6">Find the max/min of \(f(x,y)\) inside the triangle and on the boundary of the triangle.</p><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Boundary Analysis</h2><p class="mb-6">Notice the triangle can be broken down into 3 parts:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Right triangle on x-y axes with vertices (0,0), (4,0), and (0,4). Edges are numbered 1, 2, and 3.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-4.webp" loading="lazy" decoding="async" alt="Right triangle on x-y axes with vertices (0,0), (4,0), and (0,4). Edges are numbered 1, 2, and 3." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Right triangle on x-y axes with vertices (0,0), (4,0), and (0,4). Edges are numbered 1, 2, and 3.
+                  </figcaption>
+                </figure>
+              <div><ul class="list-none space-y-2 mb-6"><li><strong>On ①:</strong> \(0 \le x \le 4, y = 0\)</li><li><strong>On ②:</strong> \(y = 4 - x, 0 \le x \le 4\)</li><li><strong>On ③:</strong> \(0 \le y \le 4, x = 0\)</li></ul></div></div><p class="mb-6"><strong>Strategy:</strong></p><ol class="list-decimal list-inside space-y-2 ml-4 mb-6"><li>Find critical pts inside triangle</li><li>Then locations of max/min on each edge</li><li>Then compare</li></ol></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans max-w-4xl mx-auto"><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Step 1: Find Interior Critical Points</h2><p class="mb-6">Set partial derivatives to zero: \(f_x = 0, f_y = 0\)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \begin{cases} f_x = 2x - 2 = 0 \\ f_y = 2y - 4 = 0 \end{cases} \]</div><div class="notebox border border-slate-200 p-4 rounded-lg bg-white shadow-sm inline-block mb-6"><p class="font-bold">CP: \((1, 2)\)</p></div><p class="inline-block ml-4 text-slate-700">Is this inside the triangle? <strong>Yes</strong>, so we keep it.</p></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Step 2: Analyze Boundary ①</h2><p class="mb-6">Now we look at ①: \(y = 0, 0 \le x \le 4\)</p><p class="mb-6">\(f(x,y) = x^2 + y^2 - 2x - 4y + 10\) becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x) = x^2 - 2x + 10, \quad 0 \le x \le 4 \]</div><p class="italic text-slate-600 mb-6">Notice this is reduced to a one-variable absolute max/min problem.</p><p class="mb-4"><strong>Critical pts:</strong> \(f'(x) = 2x - 2 = 0 \rightarrow x = 1, y = 0 \rightarrow\) <span class="notebox border border-slate-200 px-2 py-1 rounded bg-white">\((1, 0)\)</span></p><p class="mb-2"><strong>Ends:</strong></p><ul class="list-none space-y-2 ml-4"><li>\(x = 0, y = 0 \rightarrow\) <span class="notebox border border-slate-200 px-2 py-1 rounded bg-white">\((0, 0)\)</span></li><li>\(x = 4, y = 0 \rightarrow\) <span class="notebox border border-slate-200 px-2 py-1 rounded bg-white">\((4, 0)\)</span></li></ul></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans max-w-4xl mx-auto"><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Step 3: Analyze Boundary ②</h2><p class="mb-6">On ②: \(y = 4 - x, 0 \le x \le 4\)</p><p class="mb-6">\(f(x,y) = x^2 + y^2 - 2x - 4y + 10\) becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x) = 2x^2 - 6x + 10, \quad 0 \le x \le 4 \]</div><p class="italic text-slate-600 mb-6">Again, a one-variable absolute max/min.</p><p class="mb-6">\(f'(x) = 4x - 6 = 0 \rightarrow x = 3/2, y = 4 - x = 4 - 3/2 = 5/2\)</p><div class="notebox border border-slate-200 p-4 rounded-lg bg-white shadow-sm inline-block mb-6"><p class="font-bold">\((3/2, 5/2)\)</p></div><p class="mb-2"><strong>Ends:</strong></p><ul class="list-none space-y-2 ml-4 mb-10"><li>\(x = 0, y = 4 - x \rightarrow\) <span class="notebox border border-slate-200 px-2 py-1 rounded bg-white">\((0, 4)\)</span></li><li>\(x = 4, y = 4 - x \rightarrow\) <span class="notebox border border-slate-200 px-2 py-1 rounded bg-white">\((4, 0)\)</span></li></ul></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Step 4: Analyze Boundary ③</h2><p class="mb-6">On ③: \(x = 0, 0 \le y \le 4\)</p><p class="mb-6">\(f(x,y) = x^2 + y^2 - 2x - 4y + 10\) becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(y) = y^2 - 4y + 10, \quad 0 \le y \le 4 \]</div><p class="mb-6">Following the same procedure as on ① and ② we get the following points of interest:</p><div class="notebox border border-indigo-500 p-4 rounded-lg bg-indigo-50 shadow-sm inline-block"><p class="font-bold text-indigo-900">\((0, 2), (0, 0), (0, 4)\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section><p class="mb-6">Now we compare \( f(x,y) = x^2 + y^2 - 2x - 4y + 10 \) at each of those points of interest:</p><ul class="list-none space-y-4 ml-4 mb-6"><li>\( f(1,2) = 5 \) → abs. min at \( x=1, y=2, z=5 \) (vertex)</li><li>\( f(0,0) = 10 \)</li><li>\( f(4,0) = 18 \) → abs. max at \( x=4, y=0, f(x,y) = 18 \)</li><li>\( f(0,4) = 10 \)</li><li>\( f(3/2, 5/2) = 11/2 \)</li><li>\( f(0,2) = 6 \)</li><li>\( f(1,0) = 9 \)</li></ul></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section><h1 class="text-2xl font-black tracking-tight mb-6">Contour Plot of \( z = f(x,y) = x^2 + y^2 - 2x - 4y + 10 \)</h1><div class="my-8 flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Contour plot of z=f(x,y) with concentric circles and a triangle with vertices (0,0), (4,0), and (0,4).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-5.webp" loading="lazy" decoding="async" alt="Contour plot of z=f(x,y) with concentric circles and a triangle with vertices (0,0), (4,0), and (0,4)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Contour plot of z=f(x,y) with concentric circles and a triangle with vertices (0,0), (4,0), and (0,4).
+                  </figcaption>
+                </figure>
+              </div><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>The plot displays level curves for \( z=5, z=6, z=8, \) and \( z=10 \). A triangle with vertices at \( (0,0), (4,0), \) and \( (0,4) \) is shown, representing the domain of interest.</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example</h1><p class="mb-6">Find abs max/min of \( f(x,y) = x^2 + y^2 - 6x + 9 \) → paraboloid above the region \( x^2 + y^2 \le 25 \) → circle.</p><p class="mb-6">Find highest/lowest on the paraboloid above the circle.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10"><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D diagram showing a paraboloid and its projection onto a circular region in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-6.webp" loading="lazy" decoding="async" alt="3D diagram showing a paraboloid and its projection onto a circular region in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D diagram showing a paraboloid and its projection onto a circular region in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D plot of a circle with radius 5 centered at the origin in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-7.webp" loading="lazy" decoding="async" alt="2D plot of a circle with radius 5 centered at the origin in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D plot of a circle with radius 5 centered at the origin in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\( x^2 + y^2 = 25 \)</p><p>\( y = \sqrt{25 - x^2} \) (upper)</p><p>\( y = -\sqrt{25 - x^2} \) (lower)</p></div><div class="mt-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x,y) = x^2 + y^2 - 6x + 9 \]\[ f_x = 2x - 6 = 0 \]\[ f_y = 2y = 0 \]</div><div class="flex items-center space-x-4"><div class="border-2 border-green-600 p-4 rounded-lg font-bold">cp: (3, 0)</div><p class="text-slate-700">is this inside the restricted area? yes, so we keep it</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white shadow-lg rounded-lg max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Contour Plot Analysis</h1><p class="mb-6">The following graph shows the level curves for the function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ t = f(x,y) = x^2 + y^2 - 6x + 9 \]</div><p class="mb-6">The plot displays concentric circles representing different values of \( t \), specifically labeled for \( t=10 \), \( t=20 \), and \( t=30 \). A large black circle centered at the origin with radius 5 is also shown, representing the boundary of the domain.</p><figure class="my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Contour plot of f(x,y) with level curves t=10, 20, 30 and a boundary circle of radius 5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-8.webp" loading="lazy" decoding="async" alt="Contour plot of f(x,y) with level curves t=10, 20, 30 and a boundary circle of radius 5." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Contour plot of f(x,y) with level curves t=10, 20, 30 and a boundary circle of radius 5.
+                  </figcaption>
+                </figure>
+              <figcaption class="text-center text-sm text-slate-500 mt-4">Figure 1: Level curves and boundary circle on the xy-plane.</figcaption></figure></article>
+                    </div>
+                </article>
+
+                <article id="page-11" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 11</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white shadow-lg rounded-lg max-w-4xl mx-auto"><p class="mb-6">Now let's travel along \( y = \sqrt{25 - x^2} \) and \( y = -\sqrt{25 - x^2} \), for \( -5 \le x \le 5 \). This corresponds to the boundary curve:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ x^2 + y^2 = 25 \]</div><p class="mb-6">Substituting this into our function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x,y) = x^2 + y^2 - 6x + 9 \]</div><p class="mb-6">Since \( x^2 + y^2 = 25 \), we have:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x) = 25 - 6x + 9 = 34 - 6x \quad \text{for } -5 \le x \le 5 \]</div><p class="mb-6">Taking the derivative:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f' = -6 \]</div><p class="mb-6">There are no critical points. Checking the endpoints:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>At \( x = -5, y = 0 \)</li><li>At \( x = 5, y = 0 \)</li></ul><div class="flex flex-col space-y-2 mb-8"><div class="notebox border border-slate-300 p-2 w-fit">(-5, 0)</div><div class="notebox border border-slate-300 p-2 w-fit">(5, 0)</div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Comparison of Values</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><ul class="space-y-4"><li>\( f(3, 0) = 0 \) — <strong>abs. min</strong></li><li>\( f(-5, 0) = 64 \) — <strong>abs. max</strong></li><li>\( f(5, 0) = 4 \)</li></ul></div></article>
+                    </div>
+                </article>
+
+                <article id="page-12" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 12</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white shadow-lg rounded-lg max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Optimization on a Plane</h1><p class="mb-6">What point on the plane \( 3x + 2y + z = 6 \) is closest to the origin?</p><figure class="my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-16-9.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6).
+                  </figcaption>
+                </figure>
+              <figcaption class="text-center text-sm text-slate-500 mt-4">Figure 2: Visualization of the plane in the first octant.</figcaption></figure><p class="mb-6">To find the point closest to the origin, we must minimize the distance \( d \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ d = \sqrt{(x-0)^2 + (y-0)^2 + (z-0)^2} = \sqrt{x^2 + y^2 + z^2} \]</div><p class="mb-6">We minimize this subject to the constraint:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ 3x + 2y + z = 6 \quad \text{or} \quad z = 6 - 3x - 2y \]</div><p class="mb-6">Substituting \( z \) into the distance formula:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ d = \sqrt{x^2 + y^2 + (6 - 3x - 2y)^2} \]</div><p class="mb-6">Since distance \( d \ge 0 \), minimizing \( d \) is equivalent to minimizing \( d^2 \). Let:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x,y) = d^2 = x^2 + y^2 + (6 - 3x - 2y)^2 \]</div><p class="mb-6">To find the critical points, set the partial derivatives to zero: \( f_x = 0 \) and \( f_y = 0 \), then use the Second Derivative Test.</p></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

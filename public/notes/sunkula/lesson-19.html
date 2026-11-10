@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 19: Double Integrals over General Regions (16.2)</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        figcaption {
+            margin-top: 8px;
+            color: #6c757d;
+        }
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 8px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #e9ecef; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .mjx-chtml { font-size: 1.1em !important; }
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        @media print {
+            body { background-color: white; color: black; }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000; background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson19.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 19: Double Integrals over General Regions (Section 16.2)</h3>
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-19-1.webp" loading="lazy" decoding="async" alt="Page 1: Review of double integrals over rectangular regions, showing the rectangle R = [a,b] x [c,d] with two methods of iterated integration">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Review: Double Integrals over Rectangular Regions</h4>
+
+<p>Last time we studied \(\displaystyle \iint_R f(x,y)\,dA\), where \(\displaystyle R\) is a rectangular region \(\displaystyle R = [a, b] \times [c, d]\).</p>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A rectangular region \(\displaystyle R\) is shown in the \(\displaystyle xy\)-plane. The rectangle has corners at \(\displaystyle (a, c)\), \(\displaystyle (b, c)\), \(\displaystyle (b, d)\), and \(\displaystyle (a, d)\). A vertical green line at a fixed \(\displaystyle x\)-value shows a cross-section from \(\displaystyle y = c\) to \(\displaystyle y = d\), illustrating integration with respect to \(\displaystyle y\) first. A horizontal blue line at a fixed \(\displaystyle y\)-value shows a cross-section from \(\displaystyle x = a\) to \(\displaystyle x = b\), illustrating integration with respect to \(\displaystyle x\) first.</p>
+</div>
+
+<p>There are two ways to evaluate this integral using iterated integrals:</p>
+
+<div class="important">
+    <p><strong>Method 1:</strong> Fix \(\displaystyle x\), integrate with respect to \(\displaystyle y\) first on \(\displaystyle c \leq y \leq d\):</p>
+    \[\iint_R f(x,y)\,dA = \int_a^b \int_c^d f(x,y)\,dy\,dx\]
+</div>
+
+<div class="important">
+    <p><strong>Method 2:</strong> Fix \(\displaystyle y\), integrate with respect to \(\displaystyle x\) first on \(\displaystyle a \leq x \leq b\):</p>
+    \[\iint_R f(x,y)\,dA = \int_c^d \int_a^b f(x,y)\,dx\,dy\]
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-19-2.webp" loading="lazy" decoding="async" alt="Page 2: Review example evaluating the double integral of y sin(xy) over R = [1,2] x [0,pi], showing two approaches with the right-hand side computed step by step">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Review Example</h4>
+
+<div class="example">
+    <h5>Example: Evaluate \(\displaystyle \iint_R y\sin(xy)\,dA\), where \(\displaystyle R = [1, 2] \times [0, \pi]\)</h5>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>We can set up this integral two ways. The left-hand approach, \(\displaystyle \int_1^2 \int_0^\pi y\sin(xy)\,dy\,dx\), would require integration by parts and is more difficult.</p>
+
+        <p>Instead, consider integrating with respect to \(\displaystyle x\) first:</p>
+
+        \[\iint_R y\sin(xy)\,dA = \int_0^\pi \int_1^2 y\sin(xy)\,dx\,dy\]
+
+        <p>Evaluating the inner integral with respect to \(\displaystyle x\). Since \(\displaystyle \int y\sin(xy)\,dx = -\cos(xy)\) (treating \(\displaystyle y\) as constant):</p>
+
+        \[= \int_0^\pi \left[-\cos(xy)\right]_{x=1}^{x=2}\,dy = \int_0^\pi \left[-\cos(2y) + \cos(y)\right]\,dy\]
+
+        <p>Now integrating with respect to \(\displaystyle y\):</p>
+
+        \[= \left[-\frac{\sin(2y)}{2} + \sin(y)\right]_0^\pi\]
+
+        \[= \left(-\frac{\sin(2\pi)}{2} + \sin(\pi)\right) - \left(-\frac{\sin(0)}{2} + \sin(0)\right) = 0\]
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-19-3.webp" loading="lazy" decoding="async" alt="Page 3: Type I Regions definition with three diagrams showing regions bounded by top curve y=g2(x) and bottom curve y=g1(x), with vertical cross-sections illustrated">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Type I Regions (Top and Bottom Curve)</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A <strong>Type I region</strong> is a region \(\displaystyle D\) in the \(\displaystyle xy\)-plane that lies between two continuous curves \(\displaystyle y = g_1(x)\) (bottom) and \(\displaystyle y = g_2(x)\) (top), for \(\displaystyle a \leq x \leq b\):</p>
+    \[D = \{(x, y) \mid a \leq x \leq b,\; g_1(x) \leq y \leq g_2(x)\}\]
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> Three examples of Type I regions are shown. In each case, the region is bounded above by a curve \(\displaystyle y = g_2(x)\) and below by a curve \(\displaystyle y = g_1(x)\), with vertical boundaries at \(\displaystyle x = a\) and \(\displaystyle x = b\). Green vertical lines at various \(\displaystyle x\)-values show cross-sections from the bottom curve to the top curve. The first example shows a region with smooth concave curves, the second shows an irregular region where the curves dip and rise, and the third shows a region where the boundary has more complex oscillating shapes. In all cases, every vertical line between \(\displaystyle x = a\) and \(\displaystyle x = b\) enters the region through the bottom curve and exits through the top curve.</p>
+</div>
+
+<p>To evaluate the double integral over a Type I region, fix \(\displaystyle x\) and integrate with respect to \(\displaystyle y\) on \(\displaystyle g_1(x) \leq y \leq g_2(x)\), then integrate with respect to \(\displaystyle x\) on \(\displaystyle a \leq x \leq b\):</p>
+
+<div class="theorem">
+    <p><strong>Theorem (Double Integral over Type I Region):</strong></p>
+    \[\iint_D f(x,y)\,dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\,dx\]
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-19-4.webp" loading="lazy" decoding="async" alt="Page 4: Type II Regions definition with three diagrams showing regions bounded by left curve x=g1(y) and right curve x=g2(y), with horizontal cross-sections illustrated">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Type II Regions (Right and Left Curve)</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A <strong>Type II region</strong> is a region \(\displaystyle D\) in the \(\displaystyle xy\)-plane that lies between two continuous curves \(\displaystyle x = g_1(y)\) (left) and \(\displaystyle x = g_2(y)\) (right), for \(\displaystyle c \leq y \leq d\):</p>
+    \[D = \{(x, y) \mid c \leq y \leq d,\; g_1(y) \leq x \leq g_2(y)\}\]
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> Three examples of Type II regions are shown. In each case, the region is bounded on the left by a curve \(\displaystyle x = g_1(y)\) and on the right by a curve \(\displaystyle x = g_2(y)\), with horizontal boundaries at \(\displaystyle y = c\) and \(\displaystyle y = d\). Blue horizontal lines at various \(\displaystyle y\)-values show cross-sections from the left curve to the right curve. The first example shows an hourglass-shaped region with diagonal hatching, the second shows a figure-eight-like region, and the third shows a twisted region. In all cases, every horizontal line between \(\displaystyle y = c\) and \(\displaystyle y = d\) enters the region through the left curve and exits through the right curve.</p>
+</div>
+
+<p>To evaluate the double integral over a Type II region, fix \(\displaystyle y\) and integrate with respect to \(\displaystyle x\) first on \(\displaystyle g_1(y) \leq x \leq g_2(y)\), then integrate with respect to \(\displaystyle y\) on \(\displaystyle c \leq y \leq d\):</p>
+
+<div class="theorem">
+    <p><strong>Theorem (Double Integral over Type II Region):</strong></p>
+    \[\iint_D f(x,y)\,dA = \int_c^d \int_{g_1(y)}^{g_2(y)} f(x,y)\,dx\,dy\]
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-19-5.webp" loading="lazy" decoding="async" alt="Page 5: Example evaluating the double integral of (x+2y) over D bounded by y=2x^2 and y=1+x^2, with graph showing the two parabolas intersecting at x=-1 and x=1">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Example: Type I Region</h4>
+
+<div class="example">
+    <h5>Example: Evaluate \(\displaystyle \iint_D (x + 2y)\,dA\), where \(\displaystyle D\) is bounded by \(\displaystyle y = 2x^2\) and \(\displaystyle y = 1 + x^2\)</h5>
+
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The region \(\displaystyle D\) is shown in the \(\displaystyle xy\)-plane. The lower boundary is the parabola \(\displaystyle y = 2x^2\) and the upper boundary is the parabola \(\displaystyle y = 1 + x^2\). These two curves intersect where \(\displaystyle 2x^2 = 1 + x^2\), giving \(\displaystyle x^2 = 1\), so at \(\displaystyle x = -1\) and \(\displaystyle x = 1\). The shaded region between the curves has a lens-like shape. A small blue vertical strip is shown at a representative \(\displaystyle x\)-value, running from the bottom curve \(\displaystyle y = 2x^2\) to the top curve \(\displaystyle y = 1 + x^2\).</p>
+    </div>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>This is a Type I region. Fix \(\displaystyle x\): the bounds on \(\displaystyle y\) are \(\displaystyle 2x^2 \leq y \leq 1 + x^2\).</p>
+
+        <p>Find the \(\displaystyle x\)-bounds by finding the points of intersection of the two curves:</p>
+        \[2x^2 = 1 + x^2 \implies x^2 = 1 \implies x = -1 \text{ or } x = 1\]
+
+        <p>Set up the iterated integral:</p>
+
+        \[\iint_D (x + 2y)\,dA = \int_{-1}^{1} \int_{2x^2}^{1+x^2} (x + 2y)\,dy\,dx\]
+
+        <p>Evaluating the inner integral:</p>
+
+        \[= \int_{-1}^{1} \left[xy + y^2\right]_{y=2x^2}^{y=1+x^2}\,dx\]
+
+        \[= \int_{-1}^{1} \left[\left(x(1+x^2) + (1+x^2)^2\right) - \left(x(2x^2) + (2x^2)^2\right)\right]\,dx\]
+
+        <p>This simplifies to:</p>
+
+        \[= \int_{-1}^{1} \left[-3x^4 - x^3 + 2x^2 + x + 1\right]\,dx\]
+
+        <p>Since \(\displaystyle -x^3\) and \(\displaystyle x\) are odd functions, they integrate to zero on \(\displaystyle [-1, 1]\). The remaining even function terms give:</p>
+
+        \[= 2\int_0^1 \left(-3x^4 + 2x^2 + 1\right)\,dx = 2\left[-\frac{3x^5}{5} + \frac{2x^3}{3} + x\right]_0^1 = 2\left(-\frac{3}{5} + \frac{2}{3} + 1\right) = 2 \cdot \frac{16}{15} = \frac{32}{15}\]
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-19-6.webp" loading="lazy" decoding="async" alt="Page 6: Example evaluating the double integral of xy over D bounded by y=x-1 and y^2=2x+6, with graph showing the line and parabola intersecting at y=-2 and y=4">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Example: Type II Region</h4>
+
+<div class="example">
+    <h5>Example: Evaluate \(\displaystyle \iint_D xy\,dA\), where \(\displaystyle D\) is bounded by \(\displaystyle y = x - 1\) and \(\displaystyle y^2 = 2x + 6\)</h5>
+
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The region \(\displaystyle D\) is shown in the \(\displaystyle xy\)-plane. The boundary consists of the line \(\displaystyle y = x - 1\) (equivalently \(\displaystyle x = y + 1\)) and the parabola \(\displaystyle y^2 = 2x + 6\) (equivalently \(\displaystyle x = \frac{y^2 - 6}{2}\)). The parabola opens to the right and the line rises with slope 1. They intersect at the points where \(\displaystyle y = -2\) and \(\displaystyle y = 4\). Blue horizontal lines show cross-sections from the left boundary (parabola) to the right boundary (line). The region is enclosed between these two curves, with diagonal hatching indicating the area of integration.</p>
+    </div>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>This region is best described as a Type II region. Fix \(\displaystyle y\): the left boundary is \(\displaystyle x = \frac{y^2 - 6}{2}\) (from the parabola) and the right boundary is \(\displaystyle x = y + 1\) (from the line).</p>
+
+        <p>Find the bounds for \(\displaystyle y\) by finding the points of intersection. Setting \(\displaystyle y + 1 = \frac{y^2 - 6}{2}\):</p>
+
+        \[2(y + 1) = y^2 - 6 \implies y^2 - 2y - 8 = 0 \implies (y - 4)(y + 2) = 0\]
+
+        <p>So \(\displaystyle y = -2\) and \(\displaystyle y = 4\).</p>
+
+        <p>Set up the iterated integral:</p>
+
+        \[\iint_D xy\,dA = \int_{-2}^{4} \int_{\frac{y^2-6}{2}}^{y+1} xy\,dx\,dy\]
+
+        <p>Evaluating the inner integral with respect to \(\displaystyle x\):</p>
+
+        \[= \int_{-2}^{4} \left[\frac{x^2}{2} \cdot y\right]_{x=\frac{y^2-6}{2}}^{x=y+1}\,dy = \int_{-2}^{4} \left[\frac{(y+1)^2 y}{2} - \frac{(y^2-6)^2 y}{8}\right]\,dy\]
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-19-7.webp" loading="lazy" decoding="async" alt="Page 7: Example of switching order of integration for the integral of sin(y^2), with diagram showing the triangular region bounded by y=x, y=1, x=0">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Switching the Order of Integration</h4>
+
+<div class="example">
+    <h5>Example: Switch the order of integration and evaluate \(\displaystyle \int_0^1 \int_x^1 \sin(y^2)\,dy\,dx\)</h5>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>First, sketch the region using the bounds given. From the original integral, fix \(\displaystyle x\): we have \(\displaystyle x \leq y \leq 1\) and \(\displaystyle 0 \leq x \leq 1\).</p>
+
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The region of integration is a triangle in the \(\displaystyle xy\)-plane with vertices at \(\displaystyle (0, 0)\), \(\displaystyle (1, 1)\), and \(\displaystyle (0, 1)\). The line \(\displaystyle y = x\) forms the hypotenuse running from the origin to \(\displaystyle (1,1)\), and the horizontal line \(\displaystyle y = 1\) forms the top edge. The region lies above the line \(\displaystyle y = x\) and below \(\displaystyle y = 1\), for \(\displaystyle 0 \leq x \leq 1\). The region is shaded with diagonal hatching. A green vertical line shows the original order of integration (from \(\displaystyle y = x\) up to \(\displaystyle y = 1\)), while a blue horizontal line shows the new order (from \(\displaystyle x = 0\) to \(\displaystyle x = y\)).</p>
+        </div>
+
+        <p>To switch the order, fix \(\displaystyle y\) instead. Reading from the diagram: \(\displaystyle 0 \leq x \leq y\) and \(\displaystyle 0 \leq y \leq 1\).</p>
+
+        <div class="important">
+            <p><strong>Important:</strong> We switch the order because \(\displaystyle \sin(y^2)\) does not have an elementary antiderivative with respect to \(\displaystyle y\), making the original integral impossible to evaluate directly.</p>
+        </div>
+
+        <p>The switched integral becomes:</p>
+
+        \[\int_0^1 \int_0^y \sin(y^2)\,dx\,dy\]
+
+        <p>Evaluating the inner integral with respect to \(\displaystyle x\):</p>
+
+        \[= \int_0^1 \left[x\sin(y^2)\right]_{x=0}^{x=y}\,dy = \int_0^1 y\sin(y^2)\,dy\]
+
+        <p>Now use the substitution \(\displaystyle u = y^2\), \(\displaystyle du = 2y\,dy\):</p>
+
+        \[= \left[-\frac{\cos(y^2)}{2}\right]_0^1 = -\frac{\cos(1)}{2} + \frac{1}{2} = \frac{1 - \cos(1)}{2}\]
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-19-8.webp" loading="lazy" decoding="async" alt="Page 8: Example setting up bounds for D bounded by y=-ln(x), y=ln(x), and y=3, showing the region split into two parts for the dy dx order of integration">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Example: Setting Up Bounds for a Complex Region</h4>
+
+<div class="example">
+    <h5>Example: \(\displaystyle D\) is bounded by \(\displaystyle y = -\ln x\), \(\displaystyle y = \ln x\), and \(\displaystyle y = 3\). Find the bounds to write \(\displaystyle \iint_D f(x,y)\,dy\,dx\).</h5>
+
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The region \(\displaystyle D\) is shown in the \(\displaystyle xy\)-plane bounded by three curves: \(\displaystyle y = \ln x\) rising from the point \(\displaystyle (1, 0)\) upward to the right, \(\displaystyle y = -\ln x\) rising from the point \(\displaystyle (1, 0)\) upward to the left (this curve goes through points like \(\displaystyle (e^{-3}, 3)\)), and the horizontal line \(\displaystyle y = 3\) forming the top boundary. The two logarithmic curves meet at the point \(\displaystyle (1, 0)\). The region extends from \(\displaystyle x = e^{-3}\) on the left to \(\displaystyle x = e^3\) on the right. Blue vertical lines show that the region must be split into two parts at \(\displaystyle x = 1\) because the bottom boundary changes: on the left part (red hatching), the bottom is \(\displaystyle y = -\ln x\); on the right part (pink highlighting), the bottom is \(\displaystyle y = \ln x\).</p>
+    </div>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>To write \(\displaystyle \iint_D f(x,y)\,dy\,dx\), we fix \(\displaystyle x\) and integrate with respect to \(\displaystyle y\) first. The region requires two separate integrals because the lower boundary changes at \(\displaystyle x = 1\).</p>
+
+        <p><strong>Left part</strong> (\(\displaystyle e^{-3} \leq x \leq 1\)): The bottom curve is \(\displaystyle y = -\ln x\) and the top is \(\displaystyle y = 3\). Note that \(\displaystyle 3 = -\ln x\) gives \(\displaystyle x = e^{-3}\).</p>
+
+        <p><strong>Right part</strong> (\(\displaystyle 1 \leq x \leq e^3\)): The bottom curve is \(\displaystyle y = \ln x\) and the top is \(\displaystyle y = 3\). Note that \(\displaystyle 3 = \ln x\) gives \(\displaystyle x = e^3\).</p>
+
+        <p>Therefore:</p>
+
+        \[\iint_D f(x,y)\,dy\,dx = \int_{e^{-3}}^{1} \int_{-\ln x}^{3} f(x,y)\,dy\,dx + \int_{1}^{e^3} \int_{\ln x}^{3} f(x,y)\,dy\,dx\]
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-19-9.webp" loading="lazy" decoding="async" alt="Page 9: Continuation showing the same region D with the dx dy order of integration, where fixing y gives a single integral with bounds from x=e^(-y) to x=e^y for 0 <= y <= 3">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+
+<h4>Continued: Switching to \(\displaystyle dx\,dy\) Order</h4>
+
+<div class="example">
+    <h5>Example (continued): How about \(\displaystyle \iint_D f(x,y)\,dx\,dy\)?</h5>
+
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The same region \(\displaystyle D\) from the previous page is shown, now analyzed with horizontal cross-sections (blue lines) instead of vertical ones. For a fixed \(\displaystyle y\)-value between 0 and 3, the horizontal line enters the region through the left boundary at \(\displaystyle x = e^{-y}\) (obtained from \(\displaystyle y = -\ln x\), so \(\displaystyle x = e^{-y}\)) and exits through the right boundary at \(\displaystyle x = e^y\) (obtained from \(\displaystyle y = \ln x\), so \(\displaystyle x = e^y\)). The shaded region has a funnel-like shape that narrows to a cusp at the point \(\displaystyle (1, 0)\) and widens as \(\displaystyle y\) increases toward 3.</p>
+    </div>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+
+        <p>Fix \(\displaystyle y\) and integrate with respect to \(\displaystyle x\) first. From the boundary curves, we solve for \(\displaystyle x\) in terms of \(\displaystyle y\):</p>
+
+        <p>From \(\displaystyle y = \ln x\): \(\displaystyle x = e^y\). From \(\displaystyle y = -\ln x\): \(\displaystyle x = e^{-y}\).</p>
+
+        <p>For a fixed \(\displaystyle y\) with \(\displaystyle 0 \leq y \leq 3\), the left boundary is \(\displaystyle x = e^{-y}\) and the right boundary is \(\displaystyle x = e^y\).</p>
+
+        <div class="important">
+            <p><strong>Important:</strong> Notice that switching to the \(\displaystyle dx\,dy\) order gives a single integral, which is much simpler than the two-part integral needed for the \(\displaystyle dy\,dx\) order. This illustrates the advantage of choosing the right order of integration.</p>
+        </div>
+
+        \[\iint_D f(x,y)\,dA = \int_0^3 \int_{e^{-y}}^{e^y} f(x,y)\,dx\,dy\]
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

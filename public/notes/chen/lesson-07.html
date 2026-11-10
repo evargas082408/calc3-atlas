@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.3 Motions in space (continued) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%207%20%2814.3-2%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 7 (14.3-2).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">14.3 Motions in space (continued)</h1>
+  <p>\(\vec{r}_1(t) = \langle \cos t, \sin t \rangle \quad 0 \le t \le 2\pi\)</p>
+  <p>\(\vec{r}_2(t) = \langle \sin t, \cos t \rangle \quad 0 \le t \le 2\pi\)</p>
+  <p><strong>shape?</strong> circle</p>
+  <p>note for \(\vec{r}_1\), \(x(t) = \cos t\), \(y(t) = \sin t\) \(\cos^2 t + \sin^2 t = 1 \rightarrow x^2 + y^2 = 1\) (circle radius 1)</p>
+  <p>note for \(\vec{r}_2\), \(x(t) = \sin t\), \(y(t) = \cos t\) \(\cos^2 t + \sin^2 t = 1 \rightarrow y^2 + x^2 = 1\)</p>
+  <div class="flex flex-wrap gap-8">
+    <figure class="my-8">
+      
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate plane showing a circle centered at the origin with radius 1. The path is traced counter-clockwise, starting at t=0, 2pi on the positive x-axis, moving through t=pi/2 on the positive y-axis, t=pi on the negative x-axis, and t=3pi/2 on the negative y-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-1.webp" loading="lazy" decoding="async" alt="A coordinate plane showing a circle centered at the origin with radius 1. The path is traced counter-clockwise, starting at t=0, 2pi on the positive x-axis, moving through t=pi/2 on the positive y-axis, t=pi on the negative x-axis, and t=3pi/2 on the negative y-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate plane showing a circle centered at the origin with radius 1. The path is traced counter-clockwise, starting at t=0, 2pi on the positive x-axis, moving through t=pi/2 on the positive y-axis, t=pi on the negative x-axis, and t=3pi/2 on the negative y-axis.
+                  </figcaption>
+                </figure>
+              
+    </figure>
+    <figure class="my-8">
+      
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate plane showing a circle centered at the origin with radius 1. The path is traced clockwise, starting at t=0, 2pi on the positive y-axis, moving through t=pi/2 on the positive x-axis, t=pi on the negative y-axis, and t=3pi/2 on the negative x-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-2.webp" loading="lazy" decoding="async" alt="A coordinate plane showing a circle centered at the origin with radius 1. The path is traced clockwise, starting at t=0, 2pi on the positive y-axis, moving through t=pi/2 on the positive x-axis, t=pi on the negative y-axis, and t=3pi/2 on the negative x-axis." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate plane showing a circle centered at the origin with radius 1. The path is traced clockwise, starting at t=0, 2pi on the positive y-axis, moving through t=pi/2 on the positive x-axis, t=pi on the negative y-axis, and t=3pi/2 on the negative x-axis.
+                  </figcaption>
+                </figure>
+              
+    </figure>
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <p>we can also find direction from velocity</p>
+  <p>\(\vec{r}_1 = \langle \cos t, \sin t \rangle \quad 0 \le t \le 2\pi\)</p>
+  <p>\(\vec{r}_1' = \vec{v}_1 = \langle -\sin t, \cos t \rangle \quad 0 \le t \le 2\pi\)</p>
+  <p>\(\vec{v}_1(0) = \langle 0, 1 \rangle\) vector pointing "up"</p>
+  <p>\(\vec{v}_1(\frac{\pi}{2}) = \langle -1, 0 \rangle\) vector pointing "left"</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    <p>note \(\vec{r}_1 \cdot \vec{v}_1 = \langle \cos t, \sin t \rangle \cdot \langle -\sin t, \cos t \rangle = 0\)</p>
+    <p>so position and velocity vectors are orthogonal for all \(t\)</p>
+    <p><strong>this is true for all circles</strong></p>
+  </div>
+  <p>in general, if \(\vec{r}(t)\) is a circle, \(\vec{r}(t) = \langle x(t), y(t) \rangle\)</p>
+  <p>then \(x^2 + y^2 = R^2\) (R: some constant (radius))</p>
+  <p>and \(\vec{r} \cdot \vec{r}' = 0\)</p>
+  <figure class="my-8">
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate plane showing a circle with two tangent vectors: one pointing up at the top of the circle and one pointing left at the right side of the circle.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-3.webp" loading="lazy" decoding="async" alt="A coordinate plane showing a circle with two tangent vectors: one pointing up at the top of the circle and one pointing left at the right side of the circle." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate plane showing a circle with two tangent vectors: one pointing up at the top of the circle and one pointing left at the right side of the circle.
+                  </figcaption>
+                </figure>
+              
+  </figure>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Vector Analysis of Circular Motion</h1>
+  <p>Given the vector function:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}_3(t) = \langle \sin t + 2\sqrt{6} \cos t, \quad 2\sqrt{6} \sin t - \cos t \rangle, \quad 0 \le t \le 2\pi \]
+  </div>
+  <p>We analyze the components:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ x^2 = \sin^2 t + 4\sqrt{6} \sin t \cos t + 24 \cos^2 t \]
+    \[ y^2 = 24 \sin^2 t - 4\sqrt{6} \sin t \cos t + \cos^2 t \]
+    \[ x^2 + y^2 = 25 \cos^2 t + 25 \sin^2 t = 25 \]
+  </div>
+  <p>This represents a circle with radius 5.</p>
+  <p>Calculating the derivative:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}_3' = \langle \cos t - 2\sqrt{6} \sin t, \quad 2\sqrt{6} \cos t + \sin t \rangle \]
+  </div>
+  <p>Note that the dot product is zero:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}_3 \cdot \vec{r}_3' = 0 \]
+  </div>
+  <p>This is a circle with a shifted starting location, because:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \cos(\alpha + \beta) = \cos \alpha \cos \beta - \sin \alpha \sin \beta \]
+  </div>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate plane showing a circle of radius 5 centered at the origin, with a point marked at t=0 at an angle of -11.5 degrees.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-4.webp" loading="lazy" decoding="async" alt="A coordinate plane showing a circle of radius 5 centered at the origin, with a point marked at t=0 at an angle of -11.5 degrees." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate plane showing a circle of radius 5 centered at the origin, with a point marked at t=0 at an angle of -11.5 degrees.
+                  </figcaption>
+                </figure>
+              
+</article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Frequency and Speed in Circular Motion</h1>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}_1 = \langle \cos t, \sin t \rangle, \quad 0 \le t \le 2\pi \]
+    \[ \vec{r}_4 = \langle \cos(2t), \sin(2t) \rangle, \quad 0 \le t \le B \]
+  </div>
+  <p>The "2" is the frequency, where the period is defined as:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \text{period} = \frac{2\pi}{\text{freq}} \]
+  </div>
+  <p>For the second function, the identity holds:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \cos^2(2t) + \sin^2(2t) = 1 \]
+  </div>
+  <p>Both represent a circle of radius 1.</p>
+  <div class="flex gap-8">
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A unit circle graph for r1 showing t=0, 2pi at (1,0) and t=pi/2 at (0,1).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-5.webp" loading="lazy" decoding="async" alt="A unit circle graph for r1 showing t=0, 2pi at (1,0) and t=pi/2 at (0,1)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A unit circle graph for r1 showing t=0, 2pi at (1,0) and t=pi/2 at (0,1).
+                  </figcaption>
+                </figure>
+              
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A unit circle graph for r4 showing t=0, pi at (1,0) and t=pi/4, 3pi/4 at (0,1) and (0,-1).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-6.webp" loading="lazy" decoding="async" alt="A unit circle graph for r4 showing t=0, pi at (1,0) and t=pi/4, 3pi/4 at (0,1) and (0,-1)." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A unit circle graph for r4 showing t=0, pi at (1,0) and t=pi/4, 3pi/4 at (0,1) and (0,-1).
+                  </figcaption>
+                </figure>
+              
+  </div>
+  <p>So, \(B = \pi\).</p>
+  <p>Comparing speeds:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}_1' = \langle -\sin t, \cos t \rangle, \quad |\vec{r}_1'| = 1 \quad (\text{speed of } \vec{r}_1) \]
+    \[ \vec{r}_4' = \langle -2 \sin 2t, 2 \cos 2t \rangle, \quad |\vec{r}_4'| = 2 \quad (\text{twice the speed}) \]
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <section>
+    <p>Given the position vector:</p>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \vec{r} = \langle 3 \cos t, \sin t \rangle, \quad 0 \le t \le 2\pi \]
+    </div>
+    <p>This represents an ellipse:</p>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ x = 3 \cos t, \quad y = \sin t \implies \frac{x}{3} = \cos t, \quad y = \sin t \implies \left(\frac{x}{3}\right)^2 + y^2 = 1 \implies \frac{x^2}{9} + y^2 = 1 \]
+    </div>
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate graph showing an ellipse centered at the origin with x-intercepts at 3 and -3, and y-intercepts at 1 and -1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-7.webp" loading="lazy" decoding="async" alt="A coordinate graph showing an ellipse centered at the origin with x-intercepts at 3 and -3, and y-intercepts at 1 and -1." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate graph showing an ellipse centered at the origin with x-intercepts at 3 and -3, and y-intercepts at 1 and -1.
+                  </figcaption>
+                </figure>
+              
+    <p>Calculating velocity and orthogonality:</p>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \vec{v} = \vec{r}' = \langle -3 \sin t, \cos t \rangle \]
+      \[ |\vec{v}|^2 = 9 \sin^2 t + \cos^2 t = 1 + 8 \sin^2 t \]
+      \[ \vec{r} \cdot \vec{v} = -9 \cos t \sin t + \cos t \sin t = -8 \cos t \sin t \neq 0 \text{ for all } t \]
+    </div>
+    <p>Also, \(|\vec{v}| \neq \text{constant}\). The velocity is no longer ALWAYS orthogonal to position.</p>
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A coordinate graph of an ellipse with vectors drawn from the origin to the curve, showing velocity vectors at specific points.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-8.webp" loading="lazy" decoding="async" alt="A coordinate graph of an ellipse with vectors drawn from the origin to the curve, showing velocity vectors at specific points." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A coordinate graph of an ellipse with vectors drawn from the origin to the curve, showing velocity vectors at specific points.
+                  </figcaption>
+                </figure>
+              
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Projectile Motion</h1>
+  <p>For sake of calculation, let \(g = 10 \text{ m/s}^2\).</p>
+  <p>An object is launched from ground with initial velocity:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{v}(0) = \langle 1.25, 2.5, 5 \rangle \text{ m/s} \]
+  </div>
+  <p>Under only gravitational acceleration:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{a}(t) = \langle 0, 0, -10 \rangle \]
+  </div>
+  <p>Assume starting at origin \(\vec{r}(0) = \langle 0, 0, 0 \rangle\).</p>
+  <p>Find:</p>
+  <ul class="list-disc list-inside space-y-2 ml-4 mb-6">
+    <li>time of flight</li>
+    <li>range (distance covered)</li>
+    <li>max height</li>
+  </ul>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-9.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane.
+                  </figcaption>
+                </figure>
+              
+</article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Kinematics Calculation</h1>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{a}(t) = \langle 0, 0, -10 \rangle \]
+  </div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{v}(t) = \int \vec{a}(t) \, dt = \langle 0, 0, -10t \rangle + \vec{C} = \langle C_1, C_2, -10t + C_3 \rangle \]
+  </div>
+  <p class="mb-6">Use \( \vec{v}(0) = \langle 1.25, 2.5, 5 \rangle \) to find \( C_1, C_2, C_3 \).</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{v}(0) = \langle C_1, C_2, 0 + C_3 \rangle = \langle 1.25, 2.5, 5 \rangle \]
+  </div>
+  <p class="mb-6">So, \( C_1 = 1.25 \), \( C_2 = 2.5 \), \( C_3 = 5 \).</p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>So, \( \vec{v}(t) = \langle 1.25, 2.5, -10t + 5 \rangle \)</p>
+  </div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t) = \int \vec{v}(t) \, dt = \langle 1.25t + d_1, 2.5t + d_2, -5t^2 + 5t + d_3 \rangle \]
+  </div>
+  <p class="mb-6">Use \( \vec{r}(0) = \langle 0, 0, 0 \rangle \) to find \( d_1, d_2, d_3 \). We see \( d_1 = 0, d_2 = 0, d_3 = 0 \).</p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>So, \( \vec{r}(t) = \langle 1.25t, 2.5t, -5t^2 + 5t \rangle \)</p>
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Flight Analysis</h1>
+  <h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Time of Flight</h2>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-10.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a parabolic trajectory starting at the origin and landing on the ground plane.
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">z-component of position: \( -5t^2 + 5t = 0 \) (ground)</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ -5t(t - 1) = 0 \implies t = 0, t = 1 \]
+  </div>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>So time of flight is 1 second.</p>
+  </div>
+  <h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Range</h2>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing the displacement vector r(1) from the origin to the landing point.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-07-11.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing the displacement vector r(1) from the origin to the landing point." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing the displacement vector r(1) from the origin to the landing point.
+                  </figcaption>
+                </figure>
+              
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(1) = \langle 1.25, 2.5, 0 \rangle \]
+  </div>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>\( |\vec{r}(1)| \approx 2.8 \text{ meters} \)</p>
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">Max height?</h1>
+  <p class="mb-6">When the vertical component of \(\vec{v}\) is 0:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{v}_z = -10t + 5 = 0 \rightarrow t = \frac{1}{2} \]
+  </div>
+  <p class="mb-6">Height: \(z\) of position at \(t = \frac{1}{2}\)</p>
+  <div class="notebox border-2 border-slate-900 p-4 inline-block font-bold">
+    1.25 meters
+  </div>
+  <hr class="my-8 border-slate-300">
+  <h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">What if \(\vec{v}(0)\) is doubled?</h2>
+  <p class="mb-6">New \(\vec{v}(0) = \langle 2.5, 5, 10 \rangle\), same \(\vec{r}(0) = \langle 0, 0, 0 \rangle\)</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{a}(t) = \langle 0, 0, -10 \rangle \]
+    \[ \vec{v}(t) = \int \vec{a}(t) dt = \langle C_1, C_2, -10t + C_3 \rangle \]
+    \[ = \langle 2.5, 5, -10t + 10 \rangle \]
+    \[ \vec{r}(t) = \int \vec{v}(t) dt = \dots = \langle 2.5t, 5t, -5t^2 + 10t \rangle \]
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">Time of flight and range</h2>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    <p class="mb-6">Time of flight: \(-5t^2 + 10t = 0\)</p>
+    \[ -5t(t - 2) = 0 \rightarrow t = 0, t = 2 \]
+  </div>
+  <div class="notebox font-bold mb-6">doubled</div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    <p class="mb-6">Range: \(|\vec{r}(2)| = \dots = 11.18\)</p>
+  </div>
+  <div class="notebox font-bold">quadrupled</div>
+</article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

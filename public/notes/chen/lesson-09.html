@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.1 Functions of Several Variables - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%209%20%2815.1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                    <li><a href="#page-11">Page 11</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 9 (15.1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white text-slate-900 font-sans"><h1 class="text-4xl font-black tracking-tight mb-8 border-b-4 border-indigo-500 pb-2">15.1 Functions of Several Variables</h1><p class="mb-6">If <span class="inline-math">\( y = f(x) = \sqrt{9 - x^2} \)</span></p><div class="flex gap-12 mb-8 text-sm font-bold text-indigo-700"><div class="flex flex-col items-center"><span>input</span><span class="text-2xl">↑</span></div><div class="flex flex-col items-center"><span>output</span><span class="text-2xl">↑</span></div></div><p class="mb-6">The set of all acceptable input values form the <span class="underline decoration-indigo-500 decoration-2">domain</span>.</p><p class="mb-4">For this function, the domain is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm text-center"><p class="mb-2">\[ 9 - x^2 \ge 0 \]</p><p class="mb-2">\[ -3 \le x \le 3 \quad \text{or} \quad [-3, 3] \]</p></div><div class="flex flex-col items-center my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A horizontal number line with square brackets at -3 and 3, indicating the closed interval [-3, 3].">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-1.webp" loading="lazy" decoding="async" alt="A horizontal number line with square brackets at -3 and 3, indicating the closed interval [-3, 3]." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A horizontal number line with square brackets at -3 and 3, indicating the closed interval [-3, 3].
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-slate-700 italic">Note: this is a line or portions of a line.</p></div><p class="mb-6">The set of all possible output values is the <span class="underline decoration-indigo-500 decoration-2">range</span>.</p><p class="mb-6">Here, the range is <span class="inline-math">\( [0, 3] \)</span>.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white text-slate-900 font-sans"><p class="mb-10 text-lg font-medium">Now let's look at a function of two variables:</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm text-center"><p class="text-2xl">\[ z = f(x, y) = \sqrt{9 - x^2} - \sqrt{25 - y^2} \]</p></div><div class="flex gap-24 justify-center mb-10 text-sm font-bold text-indigo-700"><div class="flex flex-col items-center"><span>input</span><span class="text-2xl">↑</span></div><div class="flex flex-col items-center"><span>output</span><span class="text-2xl">↑</span></div></div><p class="mb-4">The input is now a set of ordered pairs <span class="inline-math">\( (x, y) \)</span>.</p><p class="mb-4">The output remains the same as before.</p><p class="mb-6">The domain is now more complicated:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-4">Here, we need:</p><p class="mb-2"><span class="inline-math">\( 9 - x^2 \ge 0 \)</span> AND <span class="inline-math">\( 25 - y^2 \ge 0 \)</span></p><p><span class="inline-math">\( -3 \le x \le 3 \)</span> AND <span class="inline-math">\( -5 \le y \le 5 \)</span></p></div><p class="mb-6">The graph of the domain is now a <span class="underline decoration-indigo-500 decoration-2">region</span>.</p><div class="flex flex-row items-center gap-8 my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A rectangular region shaded on a Cartesian plane, bounded by x = -3, x = 3, y = -5, and y = 5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-2.webp" loading="lazy" decoding="async" alt="A rectangular region shaded on a Cartesian plane, bounded by x = -3, x = 3, y = -5, and y = 5." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A rectangular region shaded on a Cartesian plane, bounded by x = -3, x = 3, y = -5, and y = 5.
+                  </figcaption>
+                </figure>
+              <div class="max-w-xs font-bold text-slate-800">All <span class="inline-math">\( (x, y) \)</span> inside and on the boundary of this box</div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section class="mb-10"><p class="mb-6">if boundary values are not included, for example <span class="inline-block ml-4">\(-3 &lt; x &lt; 3\) , \(-5 &lt; y &lt; 5\)</span></p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D coordinate system showing a rectangular region bounded by dashed lines at x = -3, 3 and y = -5, 5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-3.webp" loading="lazy" decoding="async" alt="A 2D coordinate system showing a rectangular region bounded by dashed lines at x = -3, 3 and y = -5, 5." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D coordinate system showing a rectangular region bounded by dashed lines at x = -3, 3 and y = -5, 5.
+                  </figcaption>
+                </figure>
+              </section><section class="mb-10"><p class="mb-6">the range doesn't change from 1-variable function</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[z = f(x,y) = \sqrt{9-x^2} - \sqrt{25-y^2}\]</div><div class="grid grid-cols-2 gap-4 mb-6 italic text-slate-700"><div class="text-center"><p>\(\sqrt{9-x^2}\)</p><p>largest 3</p><p>smallest 0</p></div><div class="text-center"><p>\(\sqrt{25-y^2}\)</p><p>largest 5</p><p>smallest 0</p></div></div><p class="mb-2">collectively, largest \(z\) is 3</p><p class="mb-6">smallest \(z\) is -5</p><div class="border-l-4 border-indigo-500 pl-6 my-8 text-slate-800 font-bold"><p>range: \(-5 \le z \le 3\)</p><p class="mt-2">or \([-5, 3]\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section class="mb-10"><p class="mb-6">we know \(z = f(x,y)\) produces a surface (e.g. plane, paraboloid, etc)</p><p class="mb-6">to aid visualization, we sometimes use <span class="underline decoration-indigo-500 decoration-2">level curves</span> or <span class="underline decoration-indigo-500 decoration-2">contours</span></p><p class="mb-6">these are produced from \(z = z_0 = \text{constant}\) then graph \(f(x,y) = z_0\)</p><p class="mb-6 italic">very similar to a trace</p></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[z = f(x,y) = 5 - x^2 - y^2 = 5 - (x^2 + y^2) \quad \text{paraboloid}\]</div><p class="mb-4">\(z = 5 - (x^2 + y^2)\)</p><p class="mb-6">if \(z = z_0\) , then we get <span class="inline-block ml-4">\(x^2 + y^2 = 5 - z_0\)</span> <span class="inline-block ml-4 text-slate-700 italic">circles radius \(\sqrt{5 - z_0}\)</span></p><div class="flex flex-col md:flex-row items-start gap-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate graph showing a downward-opening paraboloid with its vertex at z=5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-4.webp" loading="lazy" decoding="async" alt="3D coordinate graph showing a downward-opening paraboloid with its vertex at z=5." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate graph showing a downward-opening paraboloid with its vertex at z=5.
+                  </figcaption>
+                </figure>
+              <div class="space-y-4"><div class="flex gap-4"><strong>domain:</strong><div><p>\(-\infty &lt; x &lt; \infty\)</p><p>\(-\infty &lt; y &lt; \infty\)</p></div><p class="self-center">\(\rightarrow \{ (x,y) : \mathbb{R}^2 \}\)</p></div><p><strong>range:</strong> \((-\infty, 5]\)</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-8">Level Curves and Contours</h1><section class="mb-10"><p class="text-xl font-bold mb-4">Function: \( z = f(x,y) = 5 - x^2 - y^2 \)</p><p class="mb-6"><strong>Level curve / contour:</strong> Set \( z = z_0 = \text{constant} \)</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start"><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot of a downward-opening paraboloid starting at z=5 on the z-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-5.webp" loading="lazy" decoding="async" alt="3D plot of a downward-opening paraboloid starting at z=5 on the z-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot of a downward-opening paraboloid starting at z=5 on the z-axis.
+                  </figcaption>
+                </figure>
+              </div><div class="space-y-12"><div class="border-l-4 border-indigo-500 pl-6"><p class="font-bold">Case 1: \( z = z_0 = 5 \)</p><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 5 = 5 - x^2 - y^2 \implies x^2 + y^2 = 0 \]</div><p class="mb-4">This represents a <strong>point</strong> at the origin.</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A point at the origin of a 2D xy-coordinate system.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-6.webp" loading="lazy" decoding="async" alt="A point at the origin of a 2D xy-coordinate system." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A point at the origin of a 2D xy-coordinate system.
+                  </figcaption>
+                </figure>
+              </div><div class="border-l-4 border-indigo-500 pl-6"><p class="font-bold">Case 2: \( z = z_0 = 1 \)</p><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 1 = 5 - x^2 - y^2 \implies x^2 + y^2 = 4 \]</div><p class="mb-4">This represents a <strong>circle of radius 2</strong>.</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A circle of radius 2 centered at the origin in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-7.webp" loading="lazy" decoding="async" alt="A circle of radius 2 centered at the origin in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A circle of radius 2 centered at the origin in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div class="border-l-4 border-indigo-500 pl-6"><p class="font-bold">Case 3: \( z = z_0 = 0 \)</p><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ x^2 + y^2 = 5 \]</div><p class="mb-4">This represents a circle of radius \( \sqrt{5} \).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A circle of radius square root of 5 centered at the origin in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-8.webp" loading="lazy" decoding="async" alt="A circle of radius square root of 5 centered at the origin in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A circle of radius square root of 5 centered at the origin in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><p class="text-lg mb-10">The collection of level curves provide another way to visualize / understand the function.</p><div class="flex flex-col md:flex-row items-center gap-12"><div class="relative">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Contour plot showing concentric circles for z=0, z=1, and a point for z=5 in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-9.webp" loading="lazy" decoding="async" alt="Contour plot showing concentric circles for z=0, z=1, and a point for z=5 in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Contour plot showing concentric circles for z=0, z=1, and a point for z=5 in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div><div class="max-w-sm"><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700"><p>Each curve represents the surface at a particular height.</p></div></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Multivariable Function Analysis</h1><section class="mb-10"><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="text-2xl font-bold">f(x, y) = \sin(xy)</p></div><ul class="list-none space-y-4 ml-4 mb-6"><li><span class="font-bold">domain:</span> \(\{ (x, y) : \mathbb{R}^2 \}\) because sine can take any real number</li><li><span class="font-bold">range:</span> \([-1, 1]\)</li><li><span class="font-bold">level curves:</span> \(z = z_0\)</li></ul></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-4">Deriving Level Curves</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-4">\[ z = f(x, y) = \sin(xy) \]</p><p class="mb-4">\[ z_0 = \sin(xy) \quad \text{(constant)} \]</p><p class="mb-4">\[ xy = \sin^{-1}(z_0) = K \quad \text{(constant)} \]</p></div><p class="mb-6">So level curves are:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-4">\[ xy = K \]</p><p>\[ y = \frac{K}{x} \quad \text{hyperbolas} \]</p></div><div class="flex justify-center my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of hyperbolas y = K/x for K &gt; 0 in the first and third quadrants, and K &lt; 0 in the second and fourth.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-10.webp" loading="lazy" decoding="async" alt="Graph of hyperbolas y = K/x for K &gt; 0 in the first and third quadrants, and K &lt; 0 in the second and fourth." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of hyperbolas y = K/x for K &gt; 0 in the first and third quadrants, and K &lt; 0 in the second and fourth.
+                  </figcaption>
+                </figure>
+               0 in the first and third quadrants, and K &lt; 0 in the second and fourth."&gt;</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-xl">\[ y = \frac{K}{x} \quad \text{where } z_0 = \sin(K) \iff K = \sin^{-1}(z_0) \]</p></div><ul class="list-none space-y-4 ml-4 mb-6"><li>if \( K = \frac{\pi}{4} \) this corresponds to \( z_0 = \sin(\frac{\pi}{4}) = \frac{1}{\sqrt{2}} \)</li><li>if \( K = \frac{\pi}{2} \) this corresponds to \( z_0 = \sin(\frac{\pi}{2}) = 1 \)</li><li>if \( K = \pi \) this corresponds to \( z_0 = \sin(\pi) = 0 \)</li><li>if \( K = -\frac{\pi}{4} \) this corresponds to \( z_0 = \sin(-\frac{\pi}{4}) = -\frac{1}{\sqrt{2}} \)</li></ul></section><section class="flex flex-col items-center my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Detailed plot of level curves y = K/x for various values of K, showing multiple hyperbolic branches.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-11.webp" loading="lazy" decoding="async" alt="Detailed plot of level curves y = K/x for various values of K, showing multiple hyperbolic branches." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Detailed plot of level curves y = K/x for various values of K, showing multiple hyperbolic branches.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-sm text-slate-600 italic">Visual representation of level curves for different constant values.</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section class="mb-12"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8">Visualizing Multivariable Functions: Heat Maps</h1><p class="text-lg mb-6">The following figure illustrates a 2D representation of a function where the height is represented by a color gradient. This is often referred to as a heat map or a surface plot viewed from above.</p><div class="flex justify-center my-10"><figure class="max-w-2xl border border-slate-200 rounded-xl p-4 shadow-sm bg-white">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D heat map on an x-y plane with axes ranging from -3 to 3. Colors transition from blue (low) to yellow (high).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-12.webp" loading="lazy" decoding="async" alt="A 2D heat map on an x-y plane with axes ranging from -3 to 3. Colors transition from blue (low) to yellow (high)." class="max-w-full h-auto" data-figure-id="fig_9_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D heat map on an x-y plane with axes ranging from -3 to 3. Colors transition from blue (low) to yellow (high).
+                  </figcaption>
+                </figure>
+              <figcaption class="mt-4 text-center text-sm text-slate-600 italic">Figure 1: Top-down view of a surface where color indicates height.</figcaption></figure></div><div class="notebox bg-indigo-50 border-l-4 border-indigo-500 p-6 my-8 rounded-r-xl"><p class="font-bold text-indigo-900 mb-2">Note on Visualization:</p><p class="text-slate-800">different colors are different heights</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section class="mb-12"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8">Visualizing Multivariable Functions: 3D Surface Plots</h1><p class="text-lg mb-6">This visualization provides a three-dimensional perspective of the same function shown previously. The vertical axis represents the function's value, while the horizontal axes represent the domain.</p><div class="flex justify-center my-10"><figure class="max-w-3xl border border-slate-200 rounded-xl p-4 shadow-sm bg-white">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D surface plot showing peaks and valleys. The z-axis ranges from -1 to 1, and x and y axes range from -3 to 3.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-13.webp" loading="lazy" decoding="async" alt="A 3D surface plot showing peaks and valleys. The z-axis ranges from -1 to 1, and x and y axes range from -3 to 3." class="max-w-full h-auto" data-figure-id="fig_10_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D surface plot showing peaks and valleys. The z-axis ranges from -1 to 1, and x and y axes range from -3 to 3.
+                  </figcaption>
+                </figure>
+              <figcaption class="mt-4 text-center text-sm text-slate-600 italic">Figure 2: 3D perspective of the surface showing oscillating peaks and valleys.</figcaption></figure></div><p class="text-slate-800 mt-6">The surface exhibits periodic behavior, with multiple local maxima (peaks) and minima (valleys) across the domain defined by \( x \in [-3, 3] \) and \( y \in [-3, 3] \).</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-11" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 11</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-8">3D Surface Visualization and Projections</h1><section class="mb-10"><figure class="my-8 flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D surface plot showing a wave-like structure with peaks and valleys, colored from blue to yellow.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-14.webp" loading="lazy" decoding="async" alt="A 3D surface plot showing a wave-like structure with peaks and valleys, colored from blue to yellow." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D surface plot showing a wave-like structure with peaks and valleys, colored from blue to yellow.
+                  </figcaption>
+                </figure>
+              <figcaption class="mt-4 text-sm text-slate-600 italic">Figure 1: 3D surface plot of a periodic function.</figcaption></figure></section><section class="mt-10"><p class="mb-6 text-lg">"edge" on with \( x \) or \( y \) pointing at us \( \rightarrow \) \( x = \text{constant} = C \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-xl font-semibold text-center">\[ z = \sin(cy) \]</p></div><div class="flex justify-end mt-4"><figure class="inline-block">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A small 2D sketch of a sine wave on a zy-coordinate plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-09-15.webp" loading="lazy" decoding="async" alt="A small 2D sketch of a sine wave on a zy-coordinate plane." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A small 2D sketch of a sine wave on a zy-coordinate plane.
+                  </figcaption>
+                </figure>
+              </figure></div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

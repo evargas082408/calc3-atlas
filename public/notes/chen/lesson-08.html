@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.4 Length of Curves - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%208%20%2814.4-14.5%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 8 (14.4-14.5).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-4xl mt-10 mb-4">14.4 Length of Curves</h1>
+  <p class="mb-6">Given a vector function \(\vec{r}(t)\) for \(a \le t \le b\), we want to find the length of the curve.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A curve in 2D space starting at t=a and ending at t=b, with the question 'length = ?' written below it.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-08-1.webp" loading="lazy" decoding="async" alt="A curve in 2D space starting at t=a and ending at t=b, with the question 'length = ?' written below it." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A curve in 2D space starting at t=a and ending at t=b, with the question 'length = ?' written below it.
+                  </figcaption>
+                </figure>
+              
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>Note: if \(h\) is small, then \(|\vec{r}(t+h) - \vec{r}(t)| \approx \text{actual length from } t \text{ to } t+h\).</p>
+  </div>
+  <p class="mb-6">How to calculate \(|\vec{r}(t+h) - \vec{r}(t)|\) to estimate a small segment of length? Once done, accumulate by integration.</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h2 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">Derivation of Arc Length</h2>
+  <p class="mb-6">Recall the definition of the derivative:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}'(t) = \lim_{h \to 0} \frac{\vec{r}(t+h) - \vec{r}(t)}{h} \]
+  </div>
+  <p class="mb-6">This means when \(h\) is small:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}'(t) \approx \frac{\vec{r}(t+h) - \vec{r}(t)}{h} \]
+  </div>
+  <p class="mb-6">So,</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t+h) - \vec{r}(t) \approx h \vec{r}'(t) \]
+    \[ |\vec{r}(t+h) - \vec{r}(t)| \approx h |\vec{r}'(t)| \]
+  </div>
+  <p class="mb-6">So, one small segment has length given by \(|\vec{r}'(t)| h\).</p>
+  <p class="mb-6">The total length \(L\) is the sum of all segments:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ L = \sum_{i=1}^{n} |\vec{r}'(t)| h \approx \sum_{i=1}^{n} |\vec{r}'(t)| \Delta t \]
+  </div>
+  <p class="mb-6">Where \(h\) is the change in \(t\), called \(\Delta t\). Now let \(n \to \infty\), so \(\sum \to \int\) and \(\Delta t \to dt\).</p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>Therefore, the exact length \(L\) for \(a \le t \le b\) is:</p>
+    \[ L = \int_{a}^{b} |\vec{r}'(t)| dt \]
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Example</h1>
+  <p>Given the vector function:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t) = \langle \cos t, \sin t, t \rangle, \quad \frac{\pi}{2} \le t \le 2\pi \]
+  </div>
+  <p>This represents a helix traveling on the surface of a cylinder.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a helical path winding around a cylinder, with points marked at t = pi/2 and t = 2pi.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-08-2.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a helical path winding around a cylinder, with points marked at t = pi/2 and t = 2pi." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a helical path winding around a cylinder, with points marked at t = pi/2 and t = 2pi.
+                  </figcaption>
+                </figure>
+              
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ L = \int_{a}^{b} |\vec{r}'(t)| \, dt \]
+  </div>
+  <p>Calculating the derivative and its magnitude:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}' = \langle -\sin t, \cos t, 1 \rangle \]
+    \[ |\vec{r}'| = \sqrt{\sin^2 t + \cos^2 t + 1} = \sqrt{2} \]
+  </div>
+  <p>Evaluating the integral:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \int_{\pi/2}^{2\pi} \sqrt{2} \, dt = \sqrt{2} t \Big|_{\pi/2}^{2\pi} = \sqrt{2} \left( 2\pi - \frac{\pi}{2} \right) = \boxed{\frac{3\pi}{2} \sqrt{2}} \]
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Arc Length as a Function of t</h1>
+  <p>What if we want the length as a function of <em>t</em>? Let <em>S(t) = ?</em> for <em>a ≤ t ≤ something else</em>.</p>
+  <p>We modify the arc length formula:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ L = \int_{a}^{b} |\vec{r}'(t)| \, dt \]
+  </div>
+  <p>Remove <em>b</em> and replace it with <em>t</em>:</p>
+  <div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    \[ S(t) = \int_{a}^{t} |\vec{r}'(u)| \, du \]
+  </div>
+  <p>Note: <em>u</em> is called a "dummy variable". We don't want <em>t</em> to be the variable when we integrate it to <em>t</em>.</p>
+  <h2 class="text-2xl font-bold mt-10 mb-4">Try it on the helix</h2>
+  <p>Given <em>\(\vec{r}(t) = \langle \cos t, \sin t, t \rangle\)</em> and <em>|\(\vec{r}'| = \sqrt{2}\)</em>:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ S(t) = \int_{\pi/2}^{t} \sqrt{2} \, du = \sqrt{2} u \Big|_{\pi/2}^{t} = \boxed{\sqrt{2} \left( t - \frac{\pi}{2} \right)} \]
+  </div>
+  <p>At <em>\(t = 2\pi\)</em>:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ S(2\pi) = \sqrt{2} \left( 2\pi - \frac{\pi}{2} \right) = \frac{3\pi}{2} \sqrt{2} \quad \text{(same as before)} \]
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ S(t) = \int_{a}^{t} |\vec{r}'(u)| du \]
+  </div>
+  <p class="mb-6">gives relationship between distance and time.</p>
+  <p class="mb-6">In <span class="font-mono">\(\vec{r}(t) = \langle \cos t, \sin t, t \rangle\)</span> gives us the position at a given time <span class="font-mono">\(t\)</span>.</p>
+  <p class="mb-6">but we know <span class="font-mono">\(S(t)\)</span> so we can change the parameter from time <span class="font-mono">\(t\)</span> to distance <span class="font-mono">\(S\)</span> to get <span class="font-mono">\(\vec{r}(S)\)</span> → location having traveled distance of <span class="font-mono">\(S\)</span>.</p>
+  <p class="mb-6">back to helix : <span class="font-mono">\(\vec{r}(t) = \langle \cos t, \sin t, t \rangle\)</span>, <span class="font-mono">\(\frac{\pi}{2} \le t \le 2\pi\)</span></p>
+  <p class="mb-6">we found <span class="font-mono">\(S(t) = \sqrt{2}(t - \pi/2)\)</span> from <span class="font-mono">\(t = \pi/2\)</span> to some other <span class="font-mono">\(t\)</span></p>
+  <p class="mb-6"><span class="font-mono">\(S = \sqrt{2}(t - \pi/2) \rightarrow t = \frac{S}{\sqrt{2}} + \frac{\pi}{2}\)</span></p>
+  <div class="notebox border-2 border-slate-900 p-4 rounded-lg my-6">
+    <p class="font-semibold mb-2">Sub in <span class="font-mono">\(\vec{r}(t)\)</span>:</p>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \vec{r}(S) = \langle \cos(\frac{S}{\sqrt{2}} + \frac{\pi}{2}), \sin(\frac{S}{\sqrt{2}} + \frac{\pi}{2}), \frac{S}{\sqrt{2}} + \frac{\pi}{2} \rangle \]
+    </div>
+  </div>
+  <p class="mb-6">"using arc length as parameter"</p>
+  <p class="mb-6"><span class="font-mono">\(\frac{\pi}{2} \le t \le 2\pi \rightarrow \text{length at } t=\pi/2 \le S \le \text{length at } t=2\pi\)</span></p>
+  <p class="mb-6"><span class="font-mono">\(0 \le S \le \frac{3\pi}{2}\sqrt{2}\)</span></p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">14.5 Curvature</h1>
+  <p class="mb-6">curvature is a measure of how "curvy" a curve is.</p>
+  <p class="mb-6">Straight line has curvature of 0.</p>
+  <p class="mb-6">given <span class="font-mono">\(\vec{r}(t)\)</span>, how to find curvature <span class="font-mono">\(\kappa(t)\)</span>.</p>
+  <p class="mb-6">recall <span class="font-mono">\(\vec{T}\)</span> is the unit tangent vector:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{T} = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} \]
+  </div>
+  <p class="mb-6">the unit tangent vector <span class="font-mono">\(\vec{T}\)</span> changes more rapidly on more curvy portion.</p>
+  <p class="mb-6">so we need to track the change in <span class="font-mono">\(\vec{T}\)</span> as we move along:</p>
+  <div class="notebox border-2 border-slate-900 p-4 rounded-lg my-6">
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \left| \frac{d\vec{T}}{ds} \right| = \kappa \]
+    </div>
+    <p class="text-sm italic">where <span class="font-mono">\(s\)</span> is length</p>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Three line segments showing increasing curvature: a straight line, a gentle curve, and a sharper curve, each with tangent vectors.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-08-3.webp" loading="lazy" decoding="async" alt="Three line segments showing increasing curvature: a straight line, a gentle curve, and a sharper curve, each with tangent vectors." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Three line segments showing increasing curvature: a straight line, a gentle curve, and a sharper curve, each with tangent vectors.
+                  </figcaption>
+                </figure>
+              
+  </div>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <p class="mb-6">but <span class="inline-block">\(\frac{d\vec{T}}{ds}\)</span> is not always most practical, since <span class="inline-block">\(\vec{r}\)</span> is usually a function of <span class="inline-block">\(t\)</span> (because <span class="inline-block">\(\vec{r}(t)\)</span> is more often given as a function of <span class="inline-block">\(t\)</span>)</p>
+  <p class="mb-6">→ find alternative formula that deals with <span class="inline-block">\(t\)</span></p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    <p>\(s(t) = \int_{a}^{t} |\vec{r}'(u)| du\)</p>
+  </div>
+  <p class="mb-6">we get <span class="inline-block">\(\frac{d}{dt} s(t) = \frac{d}{dt} \int_{a}^{t} |\vec{r}'(u)| du\)</span></p>
+  <p class="mb-6"><span class="inline-block">\(\frac{ds}{dt} = |\vec{r}'(t)|\)</span> from the Fundamental Theorem of Calculus (part 1)</p>
+  <div class="notebox border-2 border-green-600 p-4 rounded-lg my-6">
+    <p>\(\kappa = |\frac{d\vec{T}}{ds}| = \frac{|d\vec{T}|}{|ds|} = \frac{|\frac{d\vec{T}}{dt}|}{|\frac{ds}{dt}|} = \frac{|\vec{T}'(t)|}{|\vec{r}'(t)|} = \kappa\)</p>
+  </div>
+  <p class="mb-6">other forms (vector) : <span class="inline-block">\(\kappa = \frac{|\vec{r}'' \times \vec{r}'|}{|\vec{r}'|^3}\)</span></p>
+</article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.8 Lagrange Multipliers - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2017%20%2815.8%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 17 (15.8).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="max-w-4xl mx-auto p-8 bg-white shadow-lg font-sans text-slate-800"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-indigo-500 pb-2">15.8 Lagrange Multipliers</h1><p class="mb-6 text-lg"><span class="font-bold text-indigo-700">Constrained optimization problems:</span> find max/min of something subject to a certain condition.</p><p class="mb-6">For example, find max/min of \( f(x,y) = x^2 + y^2 \) subject to the condition that \( xy = 1 \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-4">\( f(x,y) = x^2 + y^2 \) is called the <span class="underline decoration-indigo-500 decoration-2">objective</span></p><p>\( g(x,y) = xy - 1 = 0 \) is called the <span class="underline decoration-indigo-500 decoration-2">constraint</span></p></div><p class="mb-6">Since the constraint is simple we can solve this by substitution:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f(x,y) = x^2 + y^2 \quad \text{and} \quad xy = 1 \rightarrow y = \frac{1}{x} \]\[ f(x,y) = x^2 + \left(\frac{1}{x}\right)^2 = x^2 + \frac{1}{x^2} = f(x) \]\[ f'(x) = 2x - \frac{2}{x^3} = 0 \rightarrow x^4 = 1 \rightarrow x = -1, \, x = 1 \]\[ y = \frac{1}{x} \rightarrow y = -1 \text{ when } x = -1, \quad y = 1, \, x = 1 \]</div><p class="font-bold text-slate-900">Critical pts: \( (-1, -1), (1, 1) \)</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="max-w-4xl mx-auto p-8 bg-white shadow-lg font-sans text-slate-800"><div class="flex justify-between mb-8 font-bold text-lg"><span>\( f(x,y) = x^2 + y^2 \)</span><span>\( xy = 1 \)</span></div><p class="mb-6">\( f \) does not have a maximum since we can make \( x \) or \( y \) arbitrarily large \( (y = \frac{1}{x}, \text{ or } x = \frac{1}{y}) \).</p><p class="mb-6">So critical pts \( (1, 1), (-1, -1) \) must be where minima are.</p><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">The geometric interpretation is much more important</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="flex justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of concentric circles (level curves k=0, 1, 4) and a red hyperbola (xy=1) tangent at (1,1) and (-1,-1).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-17-1.webp" loading="lazy" decoding="async" alt="Graph of concentric circles (level curves k=0, 1, 4) and a red hyperbola (xy=1) tangent at (1,1) and (-1,-1)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of concentric circles (level curves k=0, 1, 4) and a red hyperbola (xy=1) tangent at (1,1) and (-1,-1).
+                  </figcaption>
+                </figure>
+              </div><div class="space-y-4"><div class="bg-slate-50 p-4 rounded-lg border border-slate-100 shadow-sm"><p>\( f(x,y) = x^2 + y^2 \)</p><p>Level curves: \( x^2 + y^2 = k \)</p></div><div class="bg-slate-50 p-4 rounded-lg border border-slate-100 shadow-sm"><p>Constraint: \( xy = 1 \)</p><p>\( y = \frac{1}{x} \) (hyperbolas)</p></div></div></div><p class="mt-8 mb-4">At \( (1, 1) \) any movement on the red curve \( \rightarrow \) bigger \( k \).</p><div class="border-l-4 border-red-500 pl-6 my-8 italic text-slate-700 font-bold"><p>At locations of max/min, the constraint curve and the objective level curve are tangent to each other.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="mb-6">At the point where the objective (\(f\)) is tangent to the constraint (\(g\)), their gradients must also be tangent.</p><div class="flex flex-col items-center my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A sketch of two curves f and g meeting at a tangent point with parallel gradient vectors.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-17-2.webp" loading="lazy" decoding="async" alt="A sketch of two curves f and g meeting at a tangent point with parallel gradient vectors." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A sketch of two curves f and g meeting at a tangent point with parallel gradient vectors.
+                  </figcaption>
+                </figure>
+              <p class="text-sm italic text-slate-600">Tangent gradients \(\Rightarrow \vec{\nabla} f = \lambda \vec{\nabla} g\)</p></div><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Greek lowercase "lambda" (Lagrange multiplier)</p></div><section><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4 border-b-2 border-slate-900 pb-2">Method of Lagrange Multipliers:</h2><p class="mb-6">To find max/min of \(f(x, y)\) subject to constraint \(g(x, y) = 0\), find where:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm text-center"><p class="text-xl font-bold">\(\vec{\nabla} f = \lambda \vec{\nabla} g\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example</h2><div class="space-y-4 mb-6"><p>\(f(x, y) = 4 - x^2 - y^2\)</p><p>Subject to \(4x^2 + y^2 = 4\)</p></div><div class="notebox bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6"><p>Rewrite: \(g(x, y) = 4x^2 + y^2 - 4 = 0\)</p></div><p class="mb-4">Solve \(\vec{\nabla} f = \lambda \vec{\nabla} g\)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\(\vec{\nabla} f = \langle f_x, f_y \rangle = \langle -2x, -2y \rangle\)</p><p>\(\vec{\nabla} g = \langle g_x, g_y \rangle = \langle 8x, 2y \rangle\)</p></div><p class="mb-4">\(\vec{\nabla} f = \lambda \vec{\nabla} g \rightarrow \langle -2x, -2y \rangle = \lambda \langle 8x, 2y \rangle\)</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mb-6"><div class="space-y-2"><p>\(-2x = \lambda \cdot 8x \quad \text{--- (1)}\)</p><p>\(-2y = \lambda \cdot 2y \quad \text{--- (2)}\)</p></div><div class="italic text-slate-700"><p>Solve for \(x\), \(y\) and optionally \(\lambda\) with the help of \(g(x, y) = 0\)</p></div></div><div class="space-y-4"><p><strong>(1):</strong> \(\lambda \cdot 8x + 2x = 0\)</p><p>\(2x(4\lambda + 1) = 0 \rightarrow x = 0 \quad \text{or} \quad \lambda = -1/4\)</p></div><div class="mt-6 p-4 bg-indigo-50 border-l-4 border-indigo-500"><p class="mb-2">Using \(g(x, y) = 4x^2 + y^2 - 4 = 0\), we set \(y = \pm 2\)</p><p class="font-bold">Points of interest: \((0, 2), (0, -2)\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section><h1 class="text-3xl font-black tracking-tight mb-6">Lagrange Multipliers: Continued Analysis</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-2">②: \( \lambda \cdot 2y + 2y = 0 \)</p><p>\( 2y(\lambda + 1) = 0 \rightarrow y = 0 \text{ or } \lambda = -1 \)</p></div><p class="mb-6">From \( g(x,y) = 4x^2 + y^2 - 4 = 0 \), we get \( x = \pm 1 \).</p><div class="notebox border-2 border-emerald-500 p-4 rounded-lg inline-block mb-8 font-bold text-emerald-900">points of interest: \( (1, 0), (-1, 0) \)</div></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Comparing Function Values</h2><p class="mb-6">Now compare \( f(x,y) = 4 - x^2 - y^2 \) at the points of interest:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700"><p>\( f(0, 2) = 0 \)</p><p>\( f(0, -2) = 0 \)</p><p class="mt-2 font-bold">two minima at \( (0, \pm 2), f = 0 \)</p></div><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700"><p>\( f(1, 0) = 3 \)</p><p>\( f(-1, 0) = 3 \)</p><p class="mt-2 font-bold">two maxima at \( (\pm 1, 0), f = 3 \)</p></div></div></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Geometric View</h2><p class="mb-4">\( f(x,y) = 4 - x^2 - y^2 \rightarrow \) level curves are circles</p><div class="my-4 overflow-x-auto py-2 bg-slate-50 rounded-lg px-4 border border-slate-100">\( k = 4 - x^2 - y^2 \rightarrow x^2 + y^2 = (4 - k) \)</div><p class="mb-6">\( g(x,y) = 4x^2 + y^2 - 4 = 0 \rightarrow \) ellipse</p><figure class="my-10 flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing concentric circles (f) and a vertical ellipse (g) intersecting at (0,2), (0,-2), (1,0), and (-1,0).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-17-3.webp" loading="lazy" decoding="async" alt="Coordinate graph showing concentric circles (f) and a vertical ellipse (g) intersecting at (0,2), (0,-2), (1,0), and (-1,0)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing concentric circles (f) and a vertical ellipse (g) intersecting at (0,2), (0,-2), (1,0), and (-1,0).
+                  </figcaption>
+                </figure>
+              <figcaption class="text-sm text-slate-500 mt-4 italic">Geometric representation of level curves and constraint ellipse.</figcaption></figure></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example: Optimization with Three Variables</h1><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="text-xl font-bold mb-2">\( f(x,y,z) = xyz \)</p><p>Subject to \( x^2 + y^2 + z^2 = 3 \rightarrow g(x,y,z) = x^2 + y^2 + z^2 - 3 = 0 \)</p></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Geometric Interpretation</h2><p class="mb-6">Find places on the sphere \( x^2 + y^2 + z^2 = 3 \) where the product of the coordinates \( (x,y,z) \) is max/min.</p></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Solution using Lagrange Multipliers</h2><p class="mb-4">Solve \( \vec{\nabla} f = \lambda \vec{\nabla} g \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm space-y-2"><p>\( \vec{\nabla} f = \langle yz, xz, xy \rangle \)</p><p>\( \vec{\nabla} g = \langle 2x, 2y, 2z \rangle \)</p></div><p class="mb-6">\( \vec{\nabla} f = \lambda \vec{\nabla} g \rightarrow \langle yz, xz, xy \rangle = \lambda \langle 2x, 2y, 2z \rangle \)</p><div class="flex flex-col md:flex-row items-center gap-8 my-8"><div class="space-y-4"><p>① \( yz = \lambda \cdot 2x \rightarrow \lambda = \frac{yz}{2x} \)</p><p>② \( xz = \lambda \cdot 2y \rightarrow \lambda = \frac{xz}{2y} \)</p><p>③ \( xy = \lambda \cdot 2z \rightarrow \lambda = \frac{xy}{2z} \)</p><p>④ \( g = x^2 + y^2 + z^2 - 3 = 0 \)</p></div><div class="text-2xl font-bold text-slate-400 hidden md:block">}</div><div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-inner"><p class="text-xl font-mono">\( \frac{yz}{2x} = \frac{xz}{2y} = \frac{xy}{2z} \)</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Solving for Critical Points</h1><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{yz}{2x} = \frac{xz}{2y} = \frac{xy}{2z} \]</div><p class="mb-6">From the first equality:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ y^2z = x^2z \implies x^2 = y^2 \]</div><p class="mb-6">From the second equality:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ xz^2 = xy^2 \implies y^2 = z^2 \]</div><p class="mb-6">Combining these, we get:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ x^2 = y^2 = z^2 \]</div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Substitution into Constraint</h2><p class="mb-6">Now substitute into \( g(x, y, z) = x^2 + y^2 + z^2 - 3 = 0 \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 3x^2 - 3 = 0 \implies x = \pm 1 \]</div><p class="mb-6">So,</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ y = \pm 1 \] \[ z = \pm 1 \]</div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Points of Interest</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="space-y-2"><ul class="list-none space-y-2"><li>\( (1, 1, 1) \)</li><li>\( (-1, -1, -1) \)</li><li>\( (1, -1, -1), (-1, 1, -1), (-1, -1, 1) \)</li><li>\( (1, 1, -1), (1, -1, 1), (-1, 1, 1) \)</li></ul></div><div class="border-l-4 border-indigo-500 pl-6 italic text-slate-700"><p class="mb-4">Compare \( f(x, y, z) = xyz \) at these locations:</p><p class="mb-2"><strong>max:</strong> \( 1 \) at \( (1, 1, 1), (-1, -1, 1), (-1, 1, -1), (1, -1, -1) \)</p><p><strong>min:</strong> \( -1 \) at the other places</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Analysis of Boundary Conditions</h1><section class="mb-10"><p class="mb-6">When we solved for \( \lambda \) earlier, we implicitly required \( x \neq 0, y \neq 0, z \neq 0 \).</p><p class="mb-6">But there are possible locations on the sphere where these variables could be zero.</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>However, \( f = xyz \). If one is zero, \( f = 0 \) and it's neither max nor min.</p></div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

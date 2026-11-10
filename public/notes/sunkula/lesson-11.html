@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 161 - Lesson 11: Partial Derivatives (15.3)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* Figure and Image Styles */
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson11.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 161 - Lesson 11: Partial Derivatives (15.3)</h3>
+
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-11-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson 11 title and warmup exercises on derivatives">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Warm-up: Evaluate the following derivatives</h4>
+    
+    <p>Before diving into partial derivatives, let's review single-variable differentiation:</p>
+    
+    <div class="example">
+        <h5>Warm-up Problems</h5>
+        <p>\(\frac{d}{dx}(\sin(x^3)) = \cos(x^3) \cdot 3x^2\)</p>
+        
+        <p>\(\frac{d}{dx}(\sin(8)x^3) = \sin(8) \cdot 3x^2\)</p>
+        
+        <p>\(\frac{d}{dy}(8\sin y) = 8\cos y\)</p>
+        
+        <p>\(\frac{d}{dy}(27\sin y) = 27\cos y\)</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Today's Focus:</strong> Finding derivatives when we have two or more variables.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-11-2.webp" loading="lazy" decoding="async" alt="Page 2: Recall of derivative meaning with graph">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Recall: Derivative and its Meaning</h4>
+    
+    <p>For a function \(y = f(x)\), the derivative \(f'(a)\) represents:</p>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> The derivative \(f'(a)\) is the slope of the tangent line at \((a, f(a))\).</p>
+        
+        <p>It also represents the rate of change of \(y\) with respect to \(x\).</p>
+        
+        <p>Formally: \[f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}\]</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> The page shows a coordinate system with a blue curve \(y = f(x)\). At point \(a\) on the x-axis, there is a vertical dashed line intersecting the curve. A red tangent line touches the curve at \((a, f(a))\), illustrating the geometric meaning of the derivative as the slope of this tangent line.</p>
+        
+        <p>Key annotations indicate: \(f'(x) > 0\) where \(f\) is increasing (tangent has positive slope), and \(f'(x) < 0\) where \(f\) is decreasing (tangent has negative slope).</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-11-3.webp" loading="lazy" decoding="async" alt="Page 3: Introduction to partial derivatives with 3D visualization">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Partial Derivatives of \(z = f(x,y)\)</h4>
+    
+    <p>When we have a function of two variables \(z = f(x,y)\), we can take derivatives with respect to one variable while keeping the other constant.</p>
+    
+    <div class="definition">
+        <p><strong>Definition: Partial Derivative with respect to \(x\)</strong></p>
+        <p>\[\frac{\partial f}{\partial x} = f_x = \text{partial with respect to } x \text{ keeping } y \text{ constant}\]</p>
+        
+        <p>Formally: \[f_x(a,b) = \lim_{h \to 0} \frac{f(a+h, b) - f(a,b)}{h}\]</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition: Partial Derivative with respect to \(y\)</strong></p>
+        <p>\[\frac{\partial f}{\partial y} = f_y = \text{partial with respect to } y \text{ keeping } x \text{ constant}\]</p>
+        
+        <p>Formally: \[f_y(a,b) = \lim_{h \to 0} \frac{f(a, b+h) - f(a,b)}{h}\]</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>3D Visualization:</strong> The page includes a three-dimensional coordinate system showing the surface \(z = f(x,y)\). The diagram illustrates two key concepts:</p>
+        
+        <p>The top portion shows a surface in 3D space with a point \((a,b,z)\) marked on it. Curves on the surface indicate the direction of partial derivatives.</p>
+        
+        <p>The bottom portion shows a contour plot (level curves) in the \(xy\)-plane, with the point \((a,b)\) marked. This represents looking down at the surface from above.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-11-4.webp" loading="lazy" decoding="async" alt="Page 4: Examples of finding partial derivatives">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Finding Partial Derivatives</h4>
+    
+    <div class="example">
+        <h5>Example: \(f(x,y) = x^3\sin y\)</h5>
+        
+        <div class="solution">
+            <p><strong>Finding \(f_x\):</strong></p>
+            <p>To find the partial derivative with respect to \(x\), treat \(y\) as a constant:</p>
+            \[f_x = \frac{\partial}{\partial x}(x^3\sin y) = 3x^2\sin y\]
+            
+            <p><strong>Finding \(f_y\):</strong></p>
+            <p>To find the partial derivative with respect to \(y\), treat \(x\) as a constant:</p>
+            \[f_y = \frac{\partial}{\partial y}(x^3\sin y) = x^3\cos y\]
+        </div>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Principle:</strong> When taking a partial derivative with respect to one variable, treat all other variables as constants and apply standard differentiation rules.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-11-5.webp" loading="lazy" decoding="async" alt="Page 5: Complex example using chain rule for partial derivatives">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>More Complex Examples</h4>
+    
+    <div class="example">
+        <h5>Example: \(f(x,y) = y^2x^3 + \sin(xy)\)</h5>
+        
+        <p>This example requires using the chain rule, since we have \(\sin(xy)\) where the argument is a function of both variables.</p>
+        
+        <div class="solution">
+            <p><strong>Finding \(f_x\):</strong></p>
+            <p>We need to differentiate with respect to \(x\), treating \(y\) as a constant.</p>
+            
+            <p>Recall that \(\frac{d}{dx}(f(g(x))) = f'(g(x)) \cdot g'(x)\).</p>
+            
+            \[\begin{align*}
+            f_x &= \frac{\partial}{\partial x}(y^2x^3 + \sin(xy)) \\
+            &= \frac{\partial}{\partial x}(y^2x^3) + \frac{\partial}{\partial x}(\sin(xy)) \\
+            &= 3x^2y^2 + \cos(xy) \cdot \frac{\partial}{\partial x}(xy) \\
+            &= 3x^2y^2 + \cos(xy) \cdot y \\
+            &= 3x^2y^2 + y\cos(xy)
+            \end{align*}\]
+            
+            <p><strong>Finding \(f_y\):</strong></p>
+            <p>We differentiate with respect to \(y\), treating \(x\) as a constant.</p>
+            
+            \[\begin{align*}
+            f_y &= \frac{\partial}{\partial y}(y^2x^3 + \sin(xy)) \\
+            &= 2yx^3 + \cos(xy) \cdot \frac{\partial}{\partial y}(xy) \\
+            &= 2yx^3 + \cos(xy) \cdot x \\
+            &= 2yx^3 + x\cos(xy)
+            \end{align*}\]
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-11-6.webp" loading="lazy" decoding="async" alt="Page 6: Example evaluating partial derivatives at specific points">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Evaluating Partial Derivatives at Points</h4>
+    
+    <div class="example">
+        <h5>Example: \(f(x,y) = \sin\left(\frac{x}{1+y}\right)\), find \(f_x\left(\frac{\pi}{2}, 1\right)\) and \(f_y\left(\frac{\pi}{2}, 1\right)\)</h5>
+        
+        <div class="solution">
+            <p><strong>Finding \(f_x\):</strong></p>
+            <p>Using the chain rule with \(u = \frac{x}{1+y}\):</p>
+            
+            \[\begin{align*}
+            f_x &= \frac{\partial}{\partial x}\left(\sin\left(\frac{x}{1+y}\right)\right) \\
+            &= \cos\left(\frac{x}{1+y}\right) \cdot \frac{\partial}{\partial x}\left(\frac{x}{1+y}\right) \\
+            &= \cos\left(\frac{x}{1+y}\right) \cdot \frac{1}{1+y}
+            \end{align*}\]
+            
+            <p>Evaluating at \(\left(\frac{\pi}{2}, 1\right)\):</p>
+            \[f_x\left(\frac{\pi}{2}, 1\right) = \cos\left(\frac{\pi/2}{1 + 1}\right) \cdot \frac{1}{1 + 1} = \cos\left(\frac{\pi}{4}\right) \cdot \frac{1}{2} = \frac{\sqrt{2}}{2} \cdot \frac{1}{2} = \frac{\sqrt{2}}{4}\]
+            
+            <p><strong>Finding \(f_y\):</strong></p>
+            <p>Again using the chain rule:</p>
+            
+            \[\begin{align*}
+            f_y &= \frac{\partial}{\partial y}\left(\sin\left(\frac{x}{1+y}\right)\right) \\
+            &= \cos\left(\frac{x}{1+y}\right) \cdot \frac{\partial}{\partial y}\left(\frac{x}{1+y}\right) \\
+            &= \cos\left(\frac{x}{1+y}\right) \cdot \frac{-x}{(1+y)^2}
+            \end{align*}\]
+            
+            <p>Evaluating at \(\left(\frac{\pi}{2}, 1\right)\):</p>
+            \[f_y\left(\frac{\pi}{2}, 1\right) = \cos\left(\frac{\pi}{4}\right) \cdot \frac{-\pi/2}{(1 + 1)^2} = \frac{\sqrt{2}}{2} \cdot \frac{-\pi/2}{4} = \frac{-\sqrt{2}\pi}{16}\]
+            
+            <div class="important">
+                <p><strong>Note:</strong> The quotient rule formula used here: \[\frac{\partial}{\partial y}\left(\frac{x}{1+y}\right) = \frac{0 \cdot (1+y) - x \cdot 1}{(1+y)^2} = \frac{-x}{(1+y)^2}\]</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-11-7.webp" loading="lazy" decoding="async" alt="Page 7: Introduction to higher order partial derivatives">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Higher Order Partial Derivatives</h4>
+    
+    <p>Just as we can take second derivatives in single-variable calculus, we can take second and higher order partial derivatives in multivariable calculus. For functions of two or more variables, we can take partials multiple times.</p>
+    
+    <div class="example">
+        <h5>Example: \(f(x,y) = y^2x^3 + \sin(xy)\)</h5>
+        
+        <p>We previously found:</p>
+        <p>\(f_x = 3y^2x^2 + y\cos(xy)\)</p>
+        <p>\(f_y = 2yx^3 + x\cos(xy)\)</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition: Second Order Partial Derivatives</strong></p>
+        <p>For functions of two or more variables, we can take partials of the first partial derivatives:</p>
+        
+        <p>\[\frac{\partial}{\partial x}(f_x) = f_{xx} \quad \text{and} \quad \frac{\partial}{\partial y}(f_x) = f_{xy}\]</p>
+        
+        <p>\[\frac{\partial}{\partial x}(f_y) = f_{yx} \quad \text{and} \quad \frac{\partial}{\partial y}(f_y) = f_{yy}\]</p>
+        
+        <p>Similarly, we can have \(f_{xxx}\), \(f_{xxy}\), \(f_{xyy}\), \(f_{yyy}\), etc.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Important Note:</strong> The notation \(f_{xy}\) means "first differentiate with respect to \(x\), then differentiate the result with respect to \(y\)." We work from left to right in the subscript notation, but from right to left in the \(\frac{\partial}{\partial y}\frac{\partial}{\partial x}\) notation.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-11-8.webp" loading="lazy" decoding="async" alt="Page 8: Computing second order partial derivatives">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Computing Second Order Partial Derivatives</h4>
+    
+    <div class="example">
+        <h5>Example continued: \(f(x,y) = y^2x^3 + \sin(xy)\)</h5>
+        
+        <p>With \(f_x = 3y^2x^2 + y\cos(xy)\), let's find the second order partial derivatives.</p>
+        
+        <div class="solution">
+            <p><strong>Finding \(f_{xx}\):</strong></p>
+            <p>Take the partial derivative of \(f_x\) with respect to \(x\):</p>
+            
+            \[\begin{align*}
+            f_{xx} &= \frac{\partial}{\partial x}(3y^2x^2 + y\cos(xy)) \\
+            &= 6y^2x + y \cdot (-\sin(xy)) \cdot \frac{\partial}{\partial x}(xy) \\
+            &= 6y^2x - y^2\sin(xy)
+            \end{align*}\]
+            
+            <p><strong>Finding \(f_{xy}\):</strong></p>
+            <p>Take the partial derivative of \(f_x\) with respect to \(y\):</p>
+            
+            \[\begin{align*}
+            f_{xy} &= \frac{\partial}{\partial y}(3y^2x^2 + y\cos(xy)) \\
+            &= 6yx^2 + (1)\cos(xy) + y \cdot \frac{\partial}{\partial y}(\cos(xy)) \\
+            &= 6yx^2 + \cos(xy) - xy\sin(xy)
+            \end{align*}\]
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-11-9.webp" loading="lazy" decoding="async" alt="Page 9: Computing remaining second derivatives and observation about mixed partials">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Completing the Second Order Partial Derivatives</h4>
+    
+    <div class="example">
+        <h5>Example continued: \(f(x,y) = y^2x^3 + \sin(xy)\)</h5>
+        
+        <p>With \(f_y = 2yx^3 + x\cos(xy)\), let's find the remaining second order partial derivatives.</p>
+        
+        <div class="solution">
+            <p><strong>Finding \(f_{yx}\):</strong></p>
+            <p>Take the partial derivative of \(f_y\) with respect to \(x\):</p>
+            
+            \[\begin{align*}
+            f_{yx} &= \frac{\partial}{\partial x}(2yx^3 + x\cos(xy)) \\
+            &= 6yx^2 + \cos(xy) - xy\sin(xy)
+            \end{align*}\]
+            
+            <p><strong>Finding \(f_{yy}\):</strong></p>
+            <p>Take the partial derivative of \(f_y\) with respect to \(y\):</p>
+            
+            \[\begin{align*}
+            f_{yy} &= \frac{\partial}{\partial y}(2yx^3 + x\cos(xy)) \\
+            &= 2x^3 - x^2\sin(xy)
+            \end{align*}\]
+        </div>
+    </div>
+    
+    <div class="important">
+        <p><strong>Observation:</strong></p>
+        <p>Notice that \[f_{xy} = 6yx^2 + \cos(xy) - xy\sin(xy) = f_{yx}\]</p>
+        
+        <p>The mixed partial derivatives are equal! This is not a coincidence.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-11-10.webp" loading="lazy" decoding="async" alt="Page 10: Clairaut's theorem and generalizations">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Clairaut's Theorem</h4>
+    
+    <div class="theorem">
+        <p><strong>Clairaut's Theorem:</strong></p>
+        <p>\[f_{xy} = f_{yx}\]</p>
+        <p>provided they are continuous.</p>
+        
+        <p><strong>Meaning:</strong> The order in which we differentiate does not matter, as long as the partial derivatives are continuous.</p>
+    </div>
+    
+    <div class="theorem">
+        <p><strong>Generalization:</strong></p>
+        <p>For functions of multiple variables, the order does not matter for any sequence of partial derivatives, provided they are continuous. For example:</p>
+        
+        <p>\[f_{xyx} = (f_{xy})_x = (f_{yx})_x = f_{yxx} = (f_y)_{xx} = (f_{yx})_x = f_{yxx}\]</p>
+        
+        <p>Similarly:</p>
+        <p>\[f_{xyy} = (f_{xy})_y = f_{yxy} = f_{yyx}\]</p>
+        
+        <p>And:</p>
+        <p>\[f_{xyx} = f_{yxx} = f_{xxy}\]</p>
+        
+        <p>\[f_{xyy} = f_{yxy} = f_{yyx}\]</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Takeaway:</strong> When computing mixed partial derivatives, you can choose the order of differentiation that is most convenient, and the result will be the same (assuming continuity). The order does not matter as long as the partial derivatives are continuous.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-11-11.webp" loading="lazy" decoding="async" alt="Page 11: Three-variable example with all mixed partial derivatives">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Example with Three Variables</h4>
+    
+    <div class="example">
+        <h5>Example: \(f(x,y,z) = xy^2z^3\), find \(f_{xyz}\), \(f_{yzx}\), \(f_{zyx}\)</h5>
+        
+        <p>This example demonstrates Clairaut's theorem with three variables, showing that the order of differentiation does not matter.</p>
+        
+        <div class="solution">
+            <p><strong>First Partial Derivatives:</strong></p>
+            <p>\[f_x = \frac{\partial}{\partial x}(xy^2z^3) = y^2z^3\]</p>
+            
+            <p>\[f_y = \frac{\partial}{\partial y}(xy^2z^3) = 2xyz^3\]</p>
+            
+            <p>\[f_z = \frac{\partial}{\partial z}(xy^2z^3) = 3xy^2z^2\]</p>
+            
+            <p><strong>Second Partial Derivatives:</strong></p>
+            <p>From \(f_x = y^2z^3\):</p>
+            <p>\[f_{xx} = 0\]</p>
+            <p>\[f_{xy} = 2yz^3\] (highlighted in yellow)</p>
+            <p>\[f_{xz} = 3y^2z^2\] (highlighted in pink)</p>
+            
+            <p>From \(f_y = 2xyz^3\):</p>
+            <p>\[f_{yx} = 2yz^3\] (highlighted in yellow)</p>
+            <p>\[f_{yy} = 2xz^3\]</p>
+            <p>\[f_{yz} = 6xyz^2\] (highlighted in cyan)</p>
+            
+            <p>From \(f_z = 3xy^2z^2\):</p>
+            <p>\[f_{zx} = 3y^2z^2\] (highlighted in pink)</p>
+            <p>\[f_{zy} = 6xyz^2\] (highlighted in cyan)</p>
+            <p>\[f_{zz} = 6xy^2z\]</p>
+            
+            <p><strong>Third Partial Derivatives:</strong></p>
+            <p>Computing \(f_{xyz}\) (starting from \(f_{xy} = 2yz^3\)):</p>
+            <p>\[f_{xyz} = \frac{\partial}{\partial z}(2yz^3) = 6yz^2\]</p>
+            
+            <p>Computing \(f_{yzx}\) (starting from \(f_{yz} = 6xyz^2\)):</p>
+            <p>\[f_{yzx} = \frac{\partial}{\partial x}(6xyz^2) = 6yz^2\]</p>
+            
+            <p>Computing \(f_{zyx}\) (starting from \(f_{zy} = 6xyz^2\)):</p>
+            <p>\[f_{zyx} = \frac{\partial}{\partial x}(6xyz^2) = 6yz^2\]</p>
+        </div>
+    </div>
+    
+    <div class="important">
+        <p><strong>Verification:</strong> As predicted by Clairaut's theorem, we have:</p>
+        <p>\[f_{xyz} = f_{yzx} = f_{zyx} = 6yz^2\]</p>
+        <p>All three mixed partial derivatives are equal, regardless of the order in which we differentiate.</p>
+    </div>
+</div>
+
+</body>
+</html>

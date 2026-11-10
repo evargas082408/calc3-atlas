@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 7: Motion in Space (14.3) - Part II</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson7.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 7: Motion in Space (14.3) - Part II</h3>
+
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-07-1.webp" loading="lazy" decoding="async" alt="Page 1: Review example with derivative of vector function">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Review Example</h4>
+    
+    <div class="example">
+        <h5>Review: Derivative of Vector-Valued Function</h5>
+        <p>Given \(\vec{r}(t) = \langle t\sin t, t\cos t, t \rangle\), what does \(\vec{r}'\left(\frac{\pi}{2}\right)\) represent?</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Recall that for a scalar function \(f(x)\), \(f'(a)\) represents the slope of the tangent line at \((a, f(a))\).</p>
+            
+            <p>For a vector-valued function, \(\vec{r}'(a)\) represents the direction vector of the tangent line.</p>
+            
+            <p>Computing the derivative:</p>
+            \[
+            \vec{r}'(t) = \left\langle \frac{d}{dt}(t\sin t), \frac{d}{dt}(t\cos t), \frac{d}{dt}(t) \right\rangle
+            \]
+            \[
+            = \langle \sin t + t\cos t, \cos t - t\sin t, 1 \rangle
+            \]
+            
+            <p>Evaluating at \(t = \frac{\pi}{2}\):</p>
+            \[
+            \vec{r}'\left(\frac{\pi}{2}\right) = \left\langle \sin\frac{\pi}{2} + \frac{\pi}{2}\cos\frac{\pi}{2}, \cos\frac{\pi}{2} - \frac{\pi}{2}\sin\frac{\pi}{2}, 1 \right\rangle
+            \]
+            \[
+            = \left\langle 1 + \frac{\pi}{2}(0), 0 - \frac{\pi}{2}(1), 1 \right\rangle = \left\langle 1, -\frac{\pi}{2}, 1 \right\rangle
+            \]
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A three-dimensional curve with a tangent line shown at a specific point. The curve spirals around as it ascends, and the purple tangent line indicates the direction of motion at that instant.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-07-2.webp" loading="lazy" decoding="async" alt="Page 2: Finding equation of tangent line">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Finding the Equation of a Tangent Line</h4>
+    
+    <div class="example">
+        <h5>Example: Tangent Line at a Specific Point</h5>
+        <p>Find the equation of the tangent line to \(\vec{r}(t) = \langle t\sin t, t\cos t, t \rangle\) at \(\left(\frac{\pi}{2}, 0, \frac{\pi}{2}\right)\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>We need two components for the equation of a line:</p>
+            <ol>
+                <li>A point on the line: \(\left(\frac{\pi}{2}, 0, \frac{\pi}{2}\right)\)</li>
+                <li>A direction vector: \(\vec{r}'\left(\frac{\pi}{2}\right)\)</li>
+            </ol>
+            
+            <p>First, verify that the point corresponds to \(t = \frac{\pi}{2}\):</p>
+            \[
+            \vec{r}\left(\frac{\pi}{2}\right) = \left\langle \frac{\pi}{2}\sin\frac{\pi}{2}, \frac{\pi}{2}\cos\frac{\pi}{2}, \frac{\pi}{2} \right\rangle = \left\langle \frac{\pi}{2}, 0, \frac{\pi}{2} \right\rangle \checkmark
+            \]
+            
+            <p>From the previous problem, we found:</p>
+            \[
+            \vec{r}'\left(\frac{\pi}{2}\right) = \left\langle 1, -\frac{\pi}{2}, 1 \right\rangle
+            \]
+            
+            <p>The equation of the tangent line is:</p>
+            \[
+            \langle x, y, z \rangle = t\left\langle 1, -\frac{\pi}{2}, 1 \right\rangle + \left\langle \frac{\pi}{2}, 0, \frac{\pi}{2} \right\rangle
+            \]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-07-3.webp" loading="lazy" decoding="async" alt="Page 3: Particle motion definitions">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Particle Moving in 3D/2D</h4>
+    
+    <div class="definition">
+        <p><strong>Definition: Position, Velocity, and Acceleration</strong></p>
+        <p>For a particle moving in space:</p>
+        <ul>
+            <li>\(\vec{r}(t)\) = position vector</li>
+            <li>\(\vec{v}(t) = \vec{r}'(t)\) = velocity vector</li>
+            <li>\(\vec{a}(t) = \vec{v}'(t) = \vec{r}''(t)\) = acceleration vector</li>
+        </ul>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A three-dimensional coordinate system showing a curved trajectory. The position vector extends from the origin to a point on the curve, while arrows along the curve indicate the direction of motion (velocity vectors).</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-07-4.webp" loading="lazy" decoding="async" alt="Page 4: Computing velocity and acceleration">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Computing Velocity and Acceleration Vectors</h4>
+    
+    <div class="example">
+        <h5>Example: Finding Velocity and Acceleration</h5>
+        <p>Given \(\vec{r}(t) = \langle e^{2t}, t^2, \sin(\pi t) \rangle\) is the position vector.</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p><strong>Step 1:</strong> Find the velocity vector \(\vec{v}(t) = \vec{r}'(t)\):</p>
+            \[
+            \vec{v}(t) = \vec{r}'(t) = \left\langle \frac{d}{dt}(e^{2t}), \frac{d}{dt}(t^2), \frac{d}{dt}(\sin(\pi t)) \right\rangle
+            \]
+            \[
+            = \langle 2e^{2t}, 2t, \pi\cos(\pi t) \rangle
+            \]
+            
+            <p>At \(t = 0\):</p>
+            \[
+            \vec{v}(0) = \langle 2e^0, 2(0), \pi\cos(0) \rangle = \langle 2, 0, \pi \rangle
+            \]
+            
+            <p>At \(t = \frac{1}{2}\):</p>
+            \[
+            \vec{v}\left(\frac{1}{2}\right) = \left\langle 2e^1, 2\left(\frac{1}{2}\right), \pi\cos\left(\frac{\pi}{2}\right) \right\rangle = \langle 2e, 1, 0 \rangle
+            \]
+            
+            <p><strong>Step 2:</strong> Find the acceleration vector \(\vec{a}(t) = \vec{v}'(t) = \vec{r}''(t)\):</p>
+            \[
+            \vec{a}(t) = \vec{v}'(t) = \left\langle \frac{d}{dt}(2e^{2t}), \frac{d}{dt}(2t), \frac{d}{dt}(\pi\cos(\pi t)) \right\rangle
+            \]
+            \[
+            = \langle 4e^{2t}, 2, -\pi^2\sin(\pi t) \rangle
+            \]
+            
+            <p>At \(t = 0\):</p>
+            \[
+            \vec{a}(0) = \langle 4e^0, 2, -\pi^2\sin(0) \rangle = \langle 4, 2, 0 \rangle
+            \]
+            
+            <p>At \(t = \frac{1}{2}\):</p>
+            \[
+            \vec{a}\left(\frac{1}{2}\right) = \left\langle 4e^1, 2, -\pi^2\sin\left(\frac{\pi}{2}\right) \right\rangle = \langle 4e, 2, -\pi^2 \rangle
+            \]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-07-5.webp" loading="lazy" decoding="async" alt="Page 5: Circular motion example">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Circular Motion</h4>
+    
+    <div class="example">
+        <h5>Example: Uniform Circular Motion</h5>
+        <p>Consider \(\vec{r}(t) = \langle \cos t, \sin t \rangle\) for \(0 \leq t \leq 2\pi\) (2D motion).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p>The velocity vector is:</p>
+            \[
+            \vec{v}(t) = \vec{r}'(t) = \langle -\sin t, \cos t \rangle
+            \]
+            
+            <p>At specific times:</p>
+            <ul>
+                <li>\(\vec{r}(0) = \langle 1, 0 \rangle\), \(\vec{v}(0) = \langle 0, 1 \rangle\)</li>
+                <li>\(\vec{r}\left(\frac{\pi}{4}\right) = \left\langle \frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2} \right\rangle\), \(\vec{v}\left(\frac{\pi}{4}\right) = \left\langle -\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2} \right\rangle\)</li>
+                <li>\(\vec{r}\left(\frac{\pi}{2}\right) = \langle 0, 1 \rangle\), \(\vec{v}\left(\frac{\pi}{2}\right) = \langle -1, 0 \rangle\)</li>
+                <li>\(\vec{r}(\pi) = \langle -1, 0 \rangle\), \(\vec{v}(\pi) = \langle 0, -1 \rangle\)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A unit circle in the xy-plane with position vectors drawn from the origin to points on the circle, and velocity vectors shown tangent to the circle at those points. The velocity vectors are perpendicular to the position vectors, indicating circular motion.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Important Property:</strong> This represents circular motion because \(x^2(t) + y^2(t) = \cos^2 t + \sin^2 t = 1\) for all \(t\).</p>
+        <p>Key observation: \(\vec{v}(t) \perp \vec{r}(t)\) for all \(t\), meaning \(\vec{v}(t) \cdot \vec{r}(t) = 0\) for all \(t\).</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-07-6.webp" loading="lazy" decoding="async" alt="Page 6: General circular motion">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>General Circular Motion</h4>
+    
+    <div class="theorem">
+        <p><strong>Theorem: Characterization of Circular Motion</strong></p>
+        <p>If \(\vec{r}(t) = \langle x(t), y(t) \rangle\) is in circular motion, then:</p>
+        <ol>
+            <li>Eliminating \(t\) yields the equation \(x^2 + y^2 = R^2\) (a circle of radius \(R\))</li>
+            <li>\(\vec{r}(t) \perp \vec{v}(t)\) for all values of \(t\)</li>
+        </ol>
+    </div>
+    
+    <div class="example">
+        <h5>Example 1: Standard Circular Motion</h5>
+        <p>For \(\vec{r}(t) = \langle \cos(t^2), \sin(t^2) \rangle\):</p>
+        <div class="solution">
+            <p>The velocity is:</p>
+            \[
+            \vec{v}(t) = \langle -2t\sin(t^2), 2t\cos(t^2) \rangle
+            \]
+            <p>We can verify: \(x^2 + y^2 = \cos^2(t^2) + \sin^2(t^2) = 1\), and \(\vec{r}(t) \cdot \vec{v}(t) = 0\).</p>
+        </div>
+    </div>
+    
+    <div class="example">
+        <h5>Example 2: Circular Motion with Different Radius</h5>
+        <p>For \(\vec{r}(t) = \langle R\cos(f(t)), R\sin(f(t)) \rangle\) where \(f(t)\) is any function:</p>
+        <div class="solution">
+            <p>The velocity is:</p>
+            \[
+            \vec{v}(t) = \langle -Rf'(t)\sin(f(t)), Rf'(t)\cos(f(t)) \rangle
+            \]
+            <p>We verify: \(x^2 + y^2 = R^2\cos^2(f(t)) + R^2\sin^2(f(t)) = R^2\), and \(\vec{r}(t) \cdot \vec{v}(t) = 0\).</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-07-7.webp" loading="lazy" decoding="async" alt="Page 7: Think-pair-share ellipse example">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Think-Pair-Share (iClicker)</h4>
+    
+    <div class="example">
+        <h5>Question: Does This Describe Circular Motion?</h5>
+        <p>Given \(\vec{r}(t) = \langle 5\cos t, \sin t \rangle\) for \(0 \leq t \leq 2\pi\), does this describe circular motion?</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p>To check, we compute \(\vec{v}(t)\) and test if \(\vec{r}(t) \cdot \vec{v}(t) = 0\):</p>
+            \[
+            \vec{v}(t) = \langle -5\sin t, \cos t \rangle
+            \]
+            \[
+            \vec{r}(t) \cdot \vec{v}(t) = (5\cos t)(-5\sin t) + (\sin t)(\cos t)
+            \]
+            \[
+            = -25\sin t\cos t + \sin t\cos t = -24\sin t\cos t \neq 0
+            \]
+            
+            <p><strong>Answer:</strong> No, this is NOT circular motion.</p>
+            
+            <p>To identify the curve, we eliminate the parameter \(t\):</p>
+            <p>From the parametric equations \(x = 5\cos t\) and \(y = \sin t\), we have:</p>
+            \[
+            \frac{x}{5} = \cos t \quad \text{and} \quad y = \sin t
+            \]
+            \[
+            \left(\frac{x}{5}\right)^2 + y^2 = \cos^2 t + \sin^2 t = 1
+            \]
+            \[
+            \frac{x^2}{25} + y^2 = 1
+            \]
+            
+            <p>This is the equation of an <strong>ellipse</strong> with semi-major axis 5 (along the x-axis) and semi-minor axis 1 (along the y-axis).</p>
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> An ellipse centered at the origin with horizontal extent from (-5, 0) to (5, 0) and vertical extent from (0, -1) to (0, 1). The curve is labeled with key points at (5, 0), (0, 1), (-5, 0), and (0, -1).</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-07-8.webp" loading="lazy" decoding="async" alt="Page 8: Review of integration">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Review: Integration of Vector-Valued Functions</h4>
+    
+    <p>Integration of vector-valued functions is performed component-wise, with each component producing a constant of integration.</p>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> If \(\vec{r}(t) = \langle f(t), g(t), h(t) \rangle\), then:</p>
+        \[
+        \int \vec{r}(t) \, dt = \left\langle \int f(t) \, dt, \int g(t) \, dt, \int h(t) \, dt \right\rangle + \vec{C}
+        \]
+        <p>where \(\vec{C}\) is a constant vector of integration.</p>
+    </div>
+    
+    <div class="example">
+        <h5>Example 1: Indefinite Integral</h5>
+        <p>Find \(\int \vec{r}(t) \, dt\) where \(\vec{r}(t) = \langle t^2, e^t, \sqrt{t} \rangle\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            \[
+            \int \langle t^2, e^t, \sqrt{t} \rangle \, dt = \left\langle \int t^2 \, dt, \int e^t \, dt, \int t^{1/2} \, dt \right\rangle + \vec{C}
+            \]
+            \[
+            = \left\langle \frac{t^3}{3}, e^t, \frac{2t^{3/2}}{3} \right\rangle + \vec{C}
+            \]
+        </div>
+    </div>
+    
+    <div class="example">
+        <h5>Example 2: Definite Integral</h5>
+        <p>Evaluate \(\int_0^1 \vec{r}(t) \, dt\) where \(\vec{r}(t) = \langle t^2, e^t, \sqrt{t} \rangle\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            \[
+            \int_0^1 \langle t^2, e^t, \sqrt{t} \rangle \, dt = \left\langle \frac{t^3}{3}, e^t, \frac{2t^{3/2}}{3} \right\rangle \Big|_0^1
+            \]
+            \[
+            = \left\langle \frac{1^3}{3}, e^1, \frac{2(1)^{3/2}}{3} \right\rangle - \left\langle \frac{0^3}{3}, e^0, \frac{2(0)^{3/2}}{3} \right\rangle
+            \]
+            \[
+            = \left\langle \frac{1}{3}, e, \frac{2}{3} \right\rangle - \langle 0, 1, 0 \rangle = \left\langle \frac{1}{3}, e-1, \frac{2}{3} \right\rangle
+            \]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-07-9.webp" loading="lazy" decoding="async" alt="Page 9: Projectile motion problem">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Application: Projectile Motion</h4>
+    
+    <div class="example">
+        <h5>Example: Ball Launched from Height</h5>
+        <p>A ball 49 m above the ground is launched with initial velocity \(\vec{v}(0) = \langle 2, 4, 14.7 \rangle\) m/s. Find the position vector \(\vec{r}(t)\).</p>
+        
+        <p><strong>Given information:</strong></p>
+        <ul>
+            <li>Initial position: \(\vec{r}(0) = \langle 0, 0, 49 \rangle\) m</li>
+            <li>Initial velocity: \(\vec{v}(0) = \langle 2, 4, 14.7 \rangle\) m/s</li>
+            <li>Acceleration due to gravity: \(\vec{a}(t) = \langle 0, 0, -9.8 \rangle\) m/s²</li>
+        </ul>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p><strong>Step 1:</strong> Find velocity by integrating acceleration:</p>
+            \[
+            \vec{v}(t) = \int \vec{a}(t) \, dt + \vec{C} = \int \langle 0, 0, -9.8 \rangle \, dt + \vec{C}
+            \]
+            \[
+            = \langle 0, 0, -9.8t \rangle + \vec{C}
+            \]
+            
+            <p>Using the initial condition \(\vec{v}(0) = \langle 2, 4, 14.7 \rangle\):</p>
+            \[
+            \langle 2, 4, 14.7 \rangle = \langle 0, 0, 0 \rangle + \vec{C} \implies \vec{C} = \langle 2, 4, 14.7 \rangle
+            \]
+            
+            <p>Therefore:</p>
+            \[
+            \vec{v}(t) = \langle 2, 4, -9.8t + 14.7 \rangle
+            \]
+            
+            <p><strong>Step 2:</strong> Find position by integrating velocity:</p>
+            \[
+            \vec{r}(t) = \int \vec{v}(t) \, dt + \vec{D} = \int \langle 2, 4, -9.8t + 14.7 \rangle \, dt + \vec{D}
+            \]
+            \[
+            = \left\langle 2t, 4t, -4.9t^2 + 14.7t \right\rangle + \vec{D}
+            \]
+            
+            <p>Using the initial condition \(\vec{r}(0) = \langle 0, 0, 49 \rangle\):</p>
+            \[
+            \langle 0, 0, 49 \rangle = \langle 0, 0, 0 \rangle + \vec{D} \implies \vec{D} = \langle 0, 0, 49 \rangle
+            \]
+            
+            <p><strong>Final Answer:</strong></p>
+            \[
+            \vec{r}(t) = \left\langle 2t, 4t, -4.9t^2 + 14.7t + 49 \right\rangle
+            \]
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A parabolic trajectory showing a ball launched from a height of 49 m, following a curved path under the influence of gravity before returning to ground level.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-07-10.webp" loading="lazy" decoding="async" alt="Page 10: When ball hits ground">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Continuation: When Does the Ball Hit the Ground?</h4>
+    
+    <div class="example">
+        <h5>Question: When does the ball hit the ground?</h5>
+        <p>Using the position vector \(\vec{r}(t) = \left\langle 2t, 4t, -4.9t^2 + 14.7t + 49 \right\rangle\), find when the ball reaches the ground (where \(z = 0\)).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>The ball hits the ground when the z-component equals 0:</p>
+            \[
+            z(t) = -4.9t^2 + 14.7t + 49 = 0
+            \]
+            
+            <p>Factoring out -4.9:</p>
+            \[
+            -4.9(t^2 - 3t - 10) = 0
+            \]
+            \[
+            -4.9(t - 5)(t + 2) = 0
+            \]
+            
+            <p>This gives \(t = 5\) or \(t = -2\).</p>
+            
+            <p>Since time must be positive, <strong>\(t = 5\) seconds</strong>.</p>
+            
+            <p>At \(t = 5\), the position is:</p>
+            \[
+            \vec{r}(5) = \langle 2(5), 4(5), -4.9(5)^2 + 14.7(5) + 49 \rangle = \langle 10, 20, 0 \rangle
+            \]
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A parabolic trajectory showing the complete path of the ball from launch at 49 m height to landing at ground level, with the landing point marked.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-07-11.webp" loading="lazy" decoding="async" alt="Page 11: Maximum height calculation">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Continuation: When Does the Ball Reach Maximum Height?</h4>
+    
+    <div class="example">
+        <h5>Question: When does the ball attain its peak height?</h5>
+        <p>Find the time when the ball reaches maximum height and calculate that height.</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>At maximum height, the vertical component of velocity equals zero:</p>
+            \[
+            \vec{v}(t) = \langle 2, 4, -9.8t + 14.7 \rangle
+            \]
+            
+            <p>Setting the z-component equal to zero:</p>
+            \[
+            -9.8t + 14.7 = 0
+            \]
+            \[
+            t = \frac{14.7}{9.8} = \frac{3}{2} = 1.5 \text{ seconds}
+            \]
+            
+            <p>The maximum height is the z-component at \(t = 1.5\):</p>
+            \[
+            \vec{r}(t) = \left\langle 2t, 4t, -4.9t^2 + 14.7t + 49 \right\rangle
+            \]
+            \[
+            \text{Max height} = z(1.5) = -4.9(1.5)^2 + 14.7(1.5) + 49
+            \]
+            \[
+            = -4.9(2.25) + 22.05 + 49
+            \]
+            \[
+            = -11.025 + 22.05 + 49 = 60.025 \text{ m}
+            \]
+        </div>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Concept:</strong> Maximum height occurs when the vertical component of velocity equals zero, which is when the ball momentarily stops rising before beginning to fall.</p>
+    </div>
+</div>
+
+</body>
+</html>

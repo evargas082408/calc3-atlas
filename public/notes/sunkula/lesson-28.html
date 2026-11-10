@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 28: Fundamental Theorem of Calculus for Line Integrals (17.3) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson28.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+                    <li><a href="#page-section-12">Page 12</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 28: Fundamental Theorem of Calculus for Line Integrals (17.3)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 3/30/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson28.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 28: Fundamental Theorem of Calculus for Line Integrals (17.3)</h4>
+
+<div class="example">
+    <p>Example from last class: \(\vec{F} = \langle x, -y \rangle\)</p>
+    <p>\(C_1 = \vec{r}_1(t) = \langle 2t, t^2 \rangle, 0 \le t \le 1\)</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-28-1.webp" loading="lazy" decoding="async" alt="A coordinate plane plot illustrating different paths between the origin (0,0) and the point (2,1). A green curved path, labeled C1, connects (0,0) and (2,1), arching upwards. A blue straight line path, labeled C2, also connects (0,0) and (2,1) directly. Two additional paths are sketched in red: one starts at (0,0), dips below the x-axis, and then curves back up to reach (2,1); another red path curves from above to the endpoint. Arrows on all paths indicate a direction of travel from (0,0) toward (2,1). The diagram visually represents multiple ways to travel between the same two points in a vector field." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate plane plot illustrating different paths between the origin (0,0) and the point (2,1). A green curved path, labeled C1, connects (0,0) and (2,1), arching upwards. A blue straight line path, labeled C2, also connects (0,0) and (2,1) directly. Two additional paths are sketched in red: one starts at (0,0), dips below the x-axis, and then curves back up to reach (2,1); another red path curves from above to the endpoint. Arrows on all paths indicate a direction of travel from (0,0) toward (2,1). The diagram visually represents multiple ways to travel between the same two points in a vector field.</span>
+                      </div>
+                    </div>
+                  
+    </diagram-placeholder>
+
+    <div class="solution">
+        \[ \int_{C_1} \vec{F} \cdot \vec{T} \, ds = \int_{C_1} \vec{F} \cdot d\vec{r} = \int_{0}^{1} \vec{F}(\vec{r}_1(t)) \cdot \vec{r}_1'(t) \, dt \]
+        \[ = \int_{0}^{1} \langle 2t, -t^2 \rangle \cdot \langle 2, 2t \rangle \, dt \]
+        \[ = \int_{0}^{1} (4t - 2t^3) \, dt = \frac{3}{2} \]
+    </div>
+
+    <p>\(\underline{C_2}: \vec{r}_2(t) = \langle t, \frac{t}{2} \rangle, 0 \le t \le 2\)</p>
+
+    <div class="solution">
+        \[ \int_{C_2} \vec{F} \cdot \vec{T} \, ds = \int_{0}^{2} \vec{F}(\vec{r}_2(t)) \cdot \vec{r}_2'(t) \, dt = \int_{0}^{2} \langle t, -\frac{t}{2} \rangle \cdot \langle 1, \frac{1}{2} \rangle \, dt \]
+        \[ = \int_{0}^{2} \frac{3t}{4} \, dt = \left. \frac{3t^2}{8} \right|_0^2 = \frac{3}{2} \]
+    </div>
+</div>
+
+<div class="important">
+    <p><strong>Today!</strong> When is \(\int_{C} \vec{F} \cdot \vec{T} \, ds\) <strong>NOT</strong> dependent on the curve?</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="important">
+    <h4>Recall!</h4>
+    \[ \int_{a}^{b} f'(t) dt = f(b) - f(a) \]
+    This is the <strong>Fundamental Theorem of Calculus</strong>.
+</div>
+
+<div class="definition">
+    A vector field \(\vec{F}\) is called a <strong>Gradient field</strong> or <strong>Conservative</strong> if there exists a scalar function \(\phi\) such that:
+    \[ \vec{F} = \vec{\nabla}\phi \]
+    In this context, \(\phi\) is called the <strong>potential function</strong>.
+</div>
+
+<h4>Fundamental Theorem of Calculus for Line Integrals</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-28-2.webp" loading="lazy" decoding="async" alt="A 2D coordinate system showing a path C between two points. The x and y axes are drawn as simple black lines. A green, winding curve labeled C starts at a point A labeled '(start)' in the bottom-left quadrant and ends at a point B labeled '(end)' in the top-right quadrant. The path is complex and crosses the axes multiple times, illustrating that the path taken does not matter for conservative fields. There is an arrow on the path C indicating the direction from A to B." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate system showing a path C between two points. The x and y axes are drawn as simple black lines. A green, winding curve labeled C starts at a point A labeled '(start)' in the bottom-left quadrant and ends at a point B labeled '(end)' in the top-right quadrant. The path is complex and crosses the axes multiple times, illustrating that the path taken does not matter for conservative fields. There is an arrow on the path C indicating the direction from A to B.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+<p>Suppose \(\vec{F} = \vec{\nabla}\phi\), then:</p>
+
+\[ \int_{C} \vec{F} \cdot d\vec{r} = \int_{C} \vec{\nabla}\phi \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) \]
+
+<div class="theorem">
+    If \(\vec{F}\) is <strong>Conservative</strong>, then the line integral does not depend on the path (curve).
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Going back to the example from last class:</h4>
+
+<div class="example">
+    <p>Is \(\vec{F} = \langle x, -y \rangle\) conservative?</p>
+    <p>Can we find \(\phi(x,y)\) such that \(\vec{F} = \vec{\nabla}\phi\)?</p>
+    <p>Can we find \(\phi(x,y)\) such that \(\phi_x = x\) &amp; \(\phi_y = -y\)?</p>
+
+    <div class="solution">
+        <p><strong>Guess:</strong> \(\phi(x,y) = \frac{x^2 - y^2}{2}\)</p>
+        <p><strong>Verify:</strong></p>
+        \[ \frac{\partial\phi}{\partial x} = \frac{\partial}{\partial x} \left( \frac{x^2 - y^2}{2} \right) = x, \quad \frac{\partial\phi}{\partial y} = \frac{\partial}{\partial y} \left( \frac{x^2 - y^2}{2} \right) = -y. \]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Application of the Fundamental Theorem of Line Integrals</h4>
+
+<div class="example">
+    <p>\(\vec{F} = \langle x, -y \rangle\) is conservative, \(\vec{F} = \vec{\nabla}\phi\) for \(\phi(x,y) = \frac{x^2 - y^2}{2}\)</p>
+    
+    <p>to compute \(\int_C \vec{F} \cdot \vec{T} ds = \int_C \vec{F} \cdot d\vec{r}\)</p>
+    
+    <p>we can apply <strong>FTCLI</strong></p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-28-3.webp" loading="lazy" decoding="async" alt="Diagram illustrating path independence in a vector field on a 2D Cartesian plane. The origin (0,0) and a point (2,1) in the first quadrant are connected by three different paths. A straight blue line path with an arrow points directly from the origin to (2,1). A smooth green curve, labeled 'C', also runs from the origin to (2,1). A third path, drawn in red, is highly irregular and winding, passing through the second, third, and fourth quadrants before eventually terminating at (2,1). Arrows on all three paths indicate the direction of travel from the start point (0,0) to the end point (2,1). This visual demonstrates that for a conservative vector field, the line integral between two points depends only on the endpoints and is independent of the specific path taken." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram illustrating path independence in a vector field on a 2D Cartesian plane. The origin (0,0) and a point (2,1) in the first quadrant are connected by three different paths. A straight blue line path with an arrow points directly from the origin to (2,1). A smooth green curve, labeled 'C', also runs from the origin to (2,1). A third path, drawn in red, is highly irregular and winding, passing through the second, third, and fourth quadrants before eventually terminating at (2,1). Arrows on all three paths indicate the direction of travel from the start point (0,0) to the end point (2,1). This visual demonstrates that for a conservative vector field, the line integral between two points depends only on the endpoints and is independent of the specific path taken.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        \[
+        \begin{aligned}
+        \int_C \vec{F} \cdot \vec{T} ds &amp;= \phi(\text{end}) - \phi(\text{start}) \\
+        &amp;= \phi(2, 1) - \phi(0, 0) \\
+        &amp;= \left( \frac{2^2 - 1^2}{2} \right) - \left( \frac{0^2 - 0^2}{2} \right) \\
+        &amp;= \frac{3}{2}
+        \end{aligned}
+        \]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <section>
+    <h3>When is \(\vec{F} = \langle f, g \rangle\) Conservative?</h3>
+
+    <p>If it is conservative, we can find \(\phi(x, y)\) such that:</p>
+    \[ \langle f, g \rangle = \vec{F} = \nabla\phi = \langle \phi_x, \phi_y \rangle \]
+
+    <p>This leads to the system of equations:</p>
+    \[ 
+    \begin{cases} 
+    f = \phi_x \\ 
+    g = \phi_y 
+    \end{cases} 
+    \]
+
+    <div class="important">
+        <p><strong>Recall:</strong> Mixed partials are the same:</p>
+        \[ \phi_{xy} = \phi_{yx} \]
+        \[ \frac{\partial}{\partial y}(\phi_x) = \frac{\partial}{\partial x}(\phi_y) \]
+        <p>Substituting the definitions for \(f\) and \(g\):</p>
+        \[ \frac{\partial f}{\partial y} = \frac{\partial g}{\partial x} \]
+    </div>
+
+    <div class="theorem">
+        <p><strong>Theorem:</strong> \(\vec{F} = \langle f, g \rangle\) is conservative when \(f_y = g_x\).</p>
+    </div>
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Examples: Testing for Conservative Vector Fields and Applicability of FTCLI</h4>
+
+<div class="example">
+    <strong>1)</strong> \(\vec{F} = \langle \underbrace{x}_{f}, \underbrace{y}_{g} \rangle\)
+
+    \[
+    \left.
+    \begin{aligned}
+    f_y &amp;= \frac{\partial}{\partial y}(x) = 0 \\
+    g_x &amp;= \frac{\partial}{\partial x}(y) = 0
+    \end{aligned}
+    \right\} \Rightarrow \vec{F} \text{ is conservative}
+    \]
+
+    <strong>CAN APPLY FTCLI</strong> to compute \(\int_C \vec{F} \cdot d\vec{r}\)
+</div>
+
+<div class="example">
+    <strong>2)</strong> \(\vec{F} = \langle \underbrace{x^2}_{f}, \underbrace{-xy}_{g} \rangle\)
+
+    \[
+    \left.
+    \begin{aligned}
+    f_y &amp;= \frac{\partial}{\partial y}(x^2) = 0 \\
+    g_x &amp;= \frac{\partial}{\partial x}(-xy) = -y
+    \end{aligned}
+    \right\} \Rightarrow \vec{F} \text{ is NOT conservative}
+    \]
+
+    <strong>CANNOT Apply FTCLI</strong> to compute \(\int_C \vec{F} \cdot d\vec{r}\)
+</div>
+
+<div class="example">
+    <strong>3)</strong> \(\vec{F} = \langle \underbrace{ye^x + 1}_{f}, \underbrace{e^x + 2y}_{g} \rangle\)
+
+    \[
+    \left.
+    \begin{aligned}
+    f_y &amp;= e^x \\
+    g_x &amp;= e^x
+    \end{aligned}
+    \right\} \Rightarrow \vec{F} \text{ is conservative}
+    \]
+
+    <strong>CAN APPLY FTCLI</strong> to compute \(\int_C \vec{F} \cdot d\vec{r}\)
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Example: \(\vec{F} = \langle x^2, -xy \rangle\) is NOT conservative</h4>
+
+<div class="example">
+    <p>Consider the vector field \(\vec{F} = \langle x^2, -xy \rangle\). We will evaluate the line integral of this field along two different paths, \(C_1\) and \(C_2\), connecting the points \((0,1)\) and \((1,0)\).</p>
+    
+    <p>Paths defined:</p>
+    <ul>
+        <li>\(C_1: \vec{r}_1(t) = \langle \sin t, \cos t \rangle, \quad 0 \le t \le \frac{\pi}{2}\)</li>
+        <li>\(C_2: \vec{r}_2(t) = \langle t, -t+1 \rangle, \quad 0 \le t \le 1\)</li>
+    </ul>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-28-4.webp" loading="lazy" decoding="async" alt="A hand-drawn diagram on a grid showing two integration paths, C1 and C2, in the first quadrant of a 2D Cartesian plane. Both paths start at the point (0, 1) on the vertical y-axis and end at the point (1, 0) on the horizontal x-axis. Path C1 is depicted as a blue circular arc curving away from the origin, with a blue arrow showing the direction of movement from (0,1) to (1,0). Path C2 is a straight green line segment directly connecting (0, 1) and (1, 0), with a green arrow indicating the same direction of travel." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn diagram on a grid showing two integration paths, C1 and C2, in the first quadrant of a 2D Cartesian plane. Both paths start at the point (0, 1) on the vertical y-axis and end at the point (1, 0) on the horizontal x-axis. Path C1 is depicted as a blue circular arc curving away from the origin, with a blue arrow showing the direction of movement from (0,1) to (1,0). Path C2 is a straight green line segment directly connecting (0, 1) and (1, 0), with a green arrow indicating the same direction of travel.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    <p><strong>Evaluating the integral along path \(C_1\):</strong></p>
+    \[C_1: \int_{C_1} \vec{F} \cdot d\vec{r} = \int_{0}^{\frac{\pi}{2}} \vec{F}(\vec{r}_1(t)) \cdot \vec{r}_1'(t) dt\]
+    \[= \int_{0}^{\frac{\pi}{2}} \langle \sin^2 t, -\sin t \cos t \rangle \cdot \langle \cos t, -\sin t \rangle dt\]
+    \[= \int_{0}^{\frac{\pi}{2}} ( \sin^2 t \cos t + \sin^2 t \cos t ) dt\]
+    \[= \int_{0}^{\frac{\pi}{2}} 2 \sin^2 t \cos t dt = 2 \left[ \frac{\sin^3 t}{3} \right]_0^{\frac{\pi}{2}} = \frac{2}{3}\]
+
+    <p><strong>Evaluating the integral along path \(C_2\):</strong></p>
+    \[C_2: \int_{C_2} \vec{F} \cdot d\vec{r} = \int_{0}^{1} \langle t^2, -(t)(-t+1) \rangle \cdot \langle 1, -1 \rangle dt\]
+    \[= \int_{0}^{1} \langle t^2, t^2 - t \rangle \cdot \langle 1, -1 \rangle dt\]
+    \[= \int_{0}^{1} (t^2 - (t^2 - t)) dt\]
+    \[= \int_{0}^{1} t dt = \left[ \frac{t^2}{2} \right]_0^1 = \frac{1}{2}\]
+
+    <p>Since the line integral depends on the path taken (\(\frac{2}{3} \neq \frac{1}{2}\)), the vector field \(\vec{F}\) is <strong>not</strong> conservative.</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        #### Finding a Potential Function
+
+Find \(\phi\) such that \(\vec{F} = \vec{\nabla}\phi\)
+
+<div class="example">
+Given: \(\vec{F} = \langle ye^x + 1, e^x + 2y \rangle\). 
+We want \(\phi\) such that \(\vec{F} = \vec{\nabla}\phi = \langle \phi_x, \phi_y \rangle\).
+
+To find \(\phi\), we solve the system of equations:
+<ol>
+    <li>\(\frac{\partial \phi}{\partial x} = ye^x + 1\)</li>
+    <li>\(\frac{\partial \phi}{\partial y} = e^x + 2y\)</li>
+</ol>
+
+<div class="solution">
+<strong>Step 1:</strong> Integrate equation (1) with respect to \(x\), treating \(y\) as a constant.
+\[ \frac{\partial \phi}{\partial x} = ye^x + 1 \xrightarrow{\text{integrate w.r.t } x, \text{ } y \text{ is const.}} \phi(x,y) = ye^x + x + K(y) \]
+
+<strong>Step 2:</strong> Substitute this expression for \(\phi(x,y)\) into equation (2).
+\[ e^x + 2y = \frac{\partial \phi}{\partial y} = e^x + 0 + K'(y) \]
+Solving for \(K'(y)\):
+\[ K'(y) = 2y \]
+
+<strong>Step 3:</strong> Integrate \(K'(y)\) with respect to \(y\).
+\[ K'(y) = 2y \xrightarrow{\text{integrate w.r.t } y} K(y) = y^2 + K \]
+
+<strong>Final Result:</strong>
+\[ \phi(x,y) = ye^x + x + y^2 + K \text{ satisfies } \vec{F} = \vec{\nabla}\phi. \]
+</div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Conservative Vector Fields and Line Integrals</h4>
+    <p>
+        Given the vector field \(\vec{F} = \langle ye^x + 1, e^x + 2y \rangle\), find the line integral \(\int_C \vec{F} \cdot \vec{T} ds\).
+    </p>
+    <p>
+        Assume \(\vec{F} = \vec{\nabla}\phi\), where the potential function is \(\phi(x,y) = ye^x + x + y^2 + k\).
+    </p>
+</div>
+
+<div class="solution">
+    <p><strong>Apply FTCLI:</strong></p>
+    
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-28-5.webp" loading="lazy" decoding="async" alt="A coordinate plane diagram showing a complex, winding path labeled 'C'. The path starts at a point labeled 'start' with coordinates (1,0) located on the x-axis. The green curve meanders through several quadrants before ending at a point labeled 'end' with coordinates (0,1) located on the y-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate plane diagram showing a complex, winding path labeled 'C'. The path starts at a point labeled 'start' with coordinates (1,0) located on the x-axis. The green curve meanders through several quadrants before ending at a point labeled 'end' with coordinates (0,1) located on the y-axis.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        According to the Fundamental Theorem of Calculus for Line Integrals (FTCLI), the line integral of a conservative vector field is independent of the path and depends only on the endpoints.
+    </p>
+
+    \[\int_C \vec{F} \cdot \vec{T} ds = \phi(\text{end}) - \phi(\text{start})\]
+    \[= \phi(0,1) - \phi(1,0)\]
+    \[= (1 + 1 + k) - (1 + k)\]
+    \[= 1\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>3D Vector Fields</h4>
+
+<div class="definition">
+    A vector field \(\vec{F} = \langle f, g, h \rangle\) is <strong>conservative</strong> if there exists a scalar potential function \(\phi(x, y, z)\) such that:
+    \[\langle f, g, h \rangle = \vec{F} = \vec{\nabla}\phi = \langle \phi_x, \phi_y, \phi_z \rangle\]
+</div>
+
+<div class="important">
+    This implies the following component relationships:
+    \[
+    \left.
+    \begin{aligned}
+    f &amp;= \phi_x \\
+    g &amp;= \phi_y \\
+    h &amp;= \phi_z
+    \end{aligned}
+    \right\}
+    \]
+</div>
+
+<p>Apply! Mixed partials are Same</p>
+
+\[ \phi_{xy} = \phi_{yx} \rightsquigarrow f_y = g_x \]
+\[ \phi_{yz} = \phi_{zy} \rightsquigarrow g_z = h_y \]
+\[ \phi_{zx} = \phi_{xz} \rightsquigarrow h_x = f_z \]
+
+<div class="theorem">
+    The vector field \(\vec{F} = \langle f, g, h \rangle\) is <strong>conservative</strong> when:
+    \[ f_y = g_x, \quad f_z = h_x \quad \text{and} \quad g_z = h_y \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example</h4>
+    <p>
+        \( \vec{F} = \langle x^2 + e^z, 2z, x e^z + 2y + z^2 \rangle \), is \( \vec{F} \) conservative?
+    </p>
+
+    <div class="solution">
+        <p>
+            Let \( \vec{F} = \langle f, g, h \rangle \). To determine if the vector field is conservative, we calculate and compare the relevant partial derivatives:
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 1em;">
+            <div>
+                \( f_y = 0 \) <br>
+                \( g_x = 0 \)
+            </div>
+            <div>
+                \( g_z = 2 \) <br>
+                \( h_y = 2 \)
+            </div>
+            <div>
+                \( f_z = e^z \) <br>
+                \( h_x = e^z \)
+            </div>
+            <div>
+                \[
+                \left.
+                \begin{aligned}
+                f_y &amp;= g_x \\
+                g_z &amp;= h_y \\
+                f_z &amp;= h_x
+                \end{aligned}
+                \right\}
+                \]
+                <p><strong>\( \vec{F} \) is conservative</strong></p>
+            </div>
+        </div>
+
+        <p>
+            To find the potential function \( \phi \) such that \( \vec{F} = \vec{\nabla}\phi = \langle \phi_x, \phi_y, \phi_z \rangle \), we set up the following system:
+        </p>
+
+        <p>Then solve:</p>
+        <p style="padding-left: 20px;">
+            ① \( \phi_x = x^2 + e^z \) <br>
+            ② \( \phi_y = 2z \) <br>
+            ③ \( \phi_z = x e^z + 2y + z^2 \)
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-12" aria-labelledby="page-title-12">
+                    <h3 id="page-title-12">Page 12</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Worked Example: Finding a Potential Function</h4>
+
+<div class="solution">
+    <p>
+        (1) \(\phi_x = x^2 + e^z\)<br>
+        (2) \(\phi_y = 2z\)<br>
+        (3) \(\phi_z = x e^z + 2y + z^2\)
+    </p>
+
+    <p><strong>Integrate with respect to \(x\)</strong> (treating \(y, z\) as constants):</p>
+    \[\phi(x, y, z) = \frac{x^3}{3} + x e^z + k_1(y, z)\]
+
+    <p>Substituting <strong>in (2)</strong>:</p>
+    \[2z = \phi_y = \frac{\partial k_1(y, z)}{\partial y}\]
+
+    <p><strong>Integrate with respect to \(y\)</strong> (\(z\) is constant):</p>
+    \[k_1(y, z) = 2yz + k_2(z)\]
+    
+    <p>Substituting this back into the expression for \(\phi\):</p>
+    \[\phi(x, y, z) = \frac{x^3}{3} + x e^z + 2yz + k_2(z)\]
+
+    <p>Substituting <strong>in (3)</strong>:</p>
+    \[x e^z + 2y + z^2 = \phi_z = x e^z + 2y + k_2'(z)\]
+    
+    <p>By canceling the common terms on both sides, we find:</p>
+    \[k_2'(z) = z^2\]
+
+    <p><strong>Integrate with respect to \(z\)</strong>:</p>
+    \[k_2(z) = \frac{z^3}{3} + K\]
+
+    <p>Combining all results gives the final potential function:</p>
+    \[\phi(x, y, z) = \frac{x^3}{3} + x e^z + 2yz + \frac{z^3}{3} + K\]
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 3/30/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

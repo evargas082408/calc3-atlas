@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 5: Vector Valued Functions</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        /* Page-specific styles */
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson5.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 5: Vector Valued Functions (14.1)</h3>
+
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-05-1.webp" loading="lazy" decoding="async" alt="Page 1: Warm-up questions about functions">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Warm-up</h4>
+    
+    <p>We begin by reviewing the concept of a function:</p>
+    
+    <p><strong>(1) What is a function?</strong> A function has one output for each input.</p>
+    
+    <p><strong>(2) What are some examples of functions?</strong></p>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> Two mapping diagrams are shown side by side. The left diagram shows a non-function where multiple inputs (cat, dog, cow, horse) map to the same outputs (-1, 2, Apple, Banana), with some inputs having multiple outputs, labeled "NOT function". The right diagram shows a valid function where each input (cat, dog, cow, horse) maps to exactly one output (-1, 2, Apple, Banana), labeled "Function".</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> The <strong>domain</strong> of a function consists of all possible inputs. The <strong>range</strong> consists of all outputs.</p>
+    </div>
+    
+    <p>For example, consider \(f(x) = x^2\). The domain is \((-\infty, \infty)\) and the range is \([0, \infty)\).</p>
+    
+    <p>Another example: \(f(x) = \ln x\) has domain \((0, \infty)\) and range \((-\infty, \infty)\).</p>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-05-2.webp" loading="lazy" decoding="async" alt="Page 2: Recall of scalar functions">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Recall: Scalar Functions</h4>
+    
+    <p>Scalar functions have the property that the input is a number and the output is a number.</p>
+    
+    <div class="example">
+        <h5>Example: Properties of Scalar Functions</h5>
+        
+        <p>Consider \(f(x) = x^3 + 1\) with domain \([0, \infty)\) and range \([1, \infty)\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> A cubic curve is shown in a standard xy-coordinate system. The curve starts at the origin and extends upward and to the right, representing \(f(x) = x^3 + 1\) for \(x \geq 0\). Multiple arrows point outward from the origin, indicating the behavior of the function near \(x = 0\).</p>
+        </div>
+        
+        <p><strong>Limit:</strong> We can compute</p>
+        \[\lim_{x \to 0} f(x) = 1 = f(0)\]
+        <p>which shows the function is continuous at \(x = 0\).</p>
+        
+        <p><strong>Derivative:</strong></p>
+        \[\frac{d}{dx}(x^3 + 1) = 3x^2\]
+        
+        <p><strong>Indefinite Integral:</strong></p>
+        \[\int (x^3 + 1) \, dx = \frac{x^4}{4} + x + C\]
+        <p>where \(C\) is a constant.</p>
+        
+        <p><strong>Definite Integral (Signed Area):</strong></p>
+        \[\int_{-2}^{1} f(x) \, dx = F(1) - F(-2)\]
+        <p>where \(F\) is an antiderivative. The notation FTC refers to the Fundamental Theorem of Calculus.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-05-3.webp" loading="lazy" decoding="async" alt="Page 3: Introduction to vector valued functions">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Vector Valued Functions</h4>
+    
+    <p>A vector valued function has a number as input and a vector as output.</p>
+    
+    <div class="definition">
+        <p><strong>Definition (Notation):</strong> We write</p>
+        \[\vec{r}(t) = \langle f(t), g(t), h(t) \rangle\]
+        <p>where each of \(f(t)\), \(g(t)\), and \(h(t)\) are scalar functions.</p>
+        
+        <p>The <strong>domain</strong> of \(\vec{r}(t)\) is the intersection of the domains of \(f(t)\), \(g(t)\), and \(h(t)\).</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-05-4.webp" loading="lazy" decoding="async" alt="Page 4: Example finding the domain">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Finding the Domain</h5>
+        
+        <p>Find the domain of</p>
+        \[\vec{r}(t) = \langle t^3 + 5, \ln(3-t), \sqrt{t} \rangle\]
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p>We examine each component function separately:</p>
+            
+            <p><strong>First component:</strong> \(f(t) = t^3 + 5\) has domain \((-\infty, \infty)\)</p>
+            
+            <p><strong>Second component:</strong> \(g(t) = \ln(3-t)\) requires \(3 - t > 0\), which gives \(t < 3\). Therefore the domain is \((-\infty, 3)\).</p>
+            
+            <p><strong>Third component:</strong> \(h(t) = \sqrt{t}\) requires \(t \geq 0\). Therefore the domain is \([0, \infty)\).</p>
+            
+            <p>The domain of \(\vec{r}(t)\) is the intersection:</p>
+            \[(-\infty, \infty) \cap (-\infty, 3) \cap [0, \infty) = [0, 3)\]
+            
+            <div class="visual-desc">
+                <p><strong>Number Line Description:</strong> Three horizontal number lines are shown. The first (blue) extends infinitely in both directions. The second (green) shows an interval from negative infinity to 3 with an open circle at 3. The third (purple) shows an interval from 0 (closed circle) to positive infinity. Below these, a final number line shows the intersection as the interval [0, 3), with a closed circle at 0 and an open circle at 3.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-05-5.webp" loading="lazy" decoding="async" alt="Page 5: Example of a line in 3D space">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Line in 3D Space</h5>
+        
+        <p>Consider</p>
+        \[\vec{r}(t) = \langle 1+t, 2t, 2+3t \rangle\]
+        <p>with domain \((-\infty, \infty)\).</p>
+        
+        <p>We can rewrite this as:</p>
+        \[\vec{r}(t) = \langle 1, 0, 2 \rangle + t\langle 1, 2, 3 \rangle\]
+        
+        <p>This represents a line passing through the point \((1, 0, 2)\) in the direction of the vector \(\langle 1, 2, 3 \rangle\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>3D Graph Description:</strong> A three-dimensional coordinate system with x, y, and z axes is shown. A straight line passes through the point (1, 0, 2) and extends in both directions. The direction vector \(\langle 1, 2, 3 \rangle\) is indicated, showing the line rises as it moves away from the point in both positive and negative parameter directions.</p>
+        </div>
+        
+        <div class="important">
+            <p><strong>Interpretation:</strong> The vector \(\langle 1, 0, 2 \rangle\) gives one point on the line, and \(t\langle 1, 2, 3 \rangle\) is the direction vector that determines how the line extends through space.</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-05-6.webp" loading="lazy" decoding="async" alt="Page 6: Explanation of orientation">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Orientation</h4>
+    
+    <div class="definition">
+        <p><strong>Definition (Positive Orientation):</strong> Positive orientation means we go from lower \(t\) values to higher \(t\) values along the curve.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A diagonal line in teal extends from lower-left to upper-right. Points are marked along the line at \(t = -1\), \(t = 0\), \(t = 1\), and \(t = 2\), with corresponding position vectors shown. Arrows point in the direction of increasing \(t\), demonstrating positive orientation. The point \((1, 0, 2)\) is marked at \(t = 0\), and \((2, 2, 5)\) is marked at \(t = 1\).</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition (Negative Orientation):</strong> Negative orientation means we go from higher \(t\) values to lower \(t\) values along the curve.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A diagonal line in purple extends from upper-right to lower-left. Points are marked at \(t = 2\), \(t = 1\), \(t = 0\), and \(t = -1\). Arrows point in the direction of decreasing \(t\), demonstrating negative orientation.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-05-7.webp" loading="lazy" decoding="async" alt="Page 7: Example of a circle in the xy-plane">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Circle in the xy-plane</h5>
+        
+        <p>Consider</p>
+        \[\vec{r}(t) = \langle \cos t, \sin t \rangle, \quad 0 \leq t \leq \frac{\pi}{2}\]
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> A unit circle is shown in the xy-plane centered at the origin. Only the first quadrant arc is highlighted, corresponding to \(0 \leq t \leq \pi/2\). The point \((0, 1)\) is marked at \(t = \pi/2\), and the point \((1, 0)\) is marked at \(t = 0\). The arc traces counterclockwise from \((1, 0)\) to \((0, 1)\).</p>
+        </div>
+        
+        <p>A table of values shows the correspondence between \(t\), \(x = \cos t\), and \(y = \sin t\):</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>\(t\)</th>
+                    <th>\(x\)</th>
+                    <th>\(y\)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>\(\pi/6\)</td>
+                    <td>\(\sqrt{3}/2\)</td>
+                    <td>\(1/2\)</td>
+                </tr>
+                <tr>
+                    <td>\(\pi/4\)</td>
+                    <td>\(\sqrt{2}/2\)</td>
+                    <td>\(\sqrt{2}/2\)</td>
+                </tr>
+                <tr>
+                    <td>\(\pi/3\)</td>
+                    <td>\(1/2\)</td>
+                    <td>\(\sqrt{3}/2\)</td>
+                </tr>
+                <tr>
+                    <td>\(\pi/2\)</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p>We can verify that all points lie on the unit circle since</p>
+        \[x^2 + y^2 = \cos^2 t + \sin^2 t = 1\]
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-05-8.webp" loading="lazy" decoding="async" alt="Page 8: Example of a cylinder in the xy-plane">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Cylinder in 3D</h5>
+        
+        <p>Consider</p>
+        \[\vec{r}(t) = \langle \cos t, \sin t, 0 \rangle, \quad 0 \leq t \leq \frac{\pi}{2}\]
+        
+        <p>The equation \(x^2 + y^2 = 1\) describes a cylinder in 3D. Since \(z = 0\), this curve lies in the xy-plane.</p>
+        
+        <div class="visual-desc">
+            <p><strong>3D Graph Description:</strong> A three-dimensional coordinate system is shown with x, y, and z axes. A vertical cylinder of radius 1 is indicated by dashed lines, representing the surface \(x^2 + y^2 = 1\). Within the xy-plane (\(z = 0\)), a quarter-circle arc is drawn from the point \((1, 0, 0)\) at \(t = 0\) to the point \((0, 1, 0)\) at \(t = \pi/2\), with arrows showing positive orientation. The arc lies flat in the xy-plane, traced counterclockwise when viewed from above.</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-05-9.webp" loading="lazy" decoding="async" alt="Page 9: Example of a circle at height z=3">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Circle at Height z = 3</h5>
+        
+        <p>Consider</p>
+        \[\vec{r}(t) = \langle \cos t, \sin t, 3 \rangle, \quad 0 \leq t \leq \frac{\pi}{2}\]
+        
+        <p>This describes a circle of radius 1 centered on the z-axis at height \(z = 3\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>3D Graph Description:</strong> A three-dimensional coordinate system shows a vertical cylinder of radius 1. At the horizontal plane \(z = 3\), a quarter-circle arc is drawn from the point \((1, 0, 3)\) at \(t = 0\) to the point \((0, 1, 3)\) at \(t = \pi/2\). The arc is traced counterclockwise when viewed from above, parallel to the xy-plane but elevated to \(z = 3\). Dashed vertical and horizontal lines show the cylindrical surface and the plane at \(z = 3\).</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-05-10.webp" loading="lazy" decoding="async" alt="Page 10: Break time reminder">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Break!!</h4>
+    
+    <p>Take a moment to:</p>
+    
+    <ul>
+        <li>Stretch</li>
+        <li>Walk around</li>
+        <li>Ask Questions</li>
+        <li>Reflect</li>
+        <li>Talk to your neighbors</li>
+    </ul>
+</div>
+
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-05-11.webp" loading="lazy" decoding="async" alt="Page 11: Example of a helix with table of values">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Helix</h5>
+        
+        <p>Consider</p>
+        \[\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle, \quad -2\pi \leq t \leq 2\pi\]
+        
+        <p>This equation describes a helix that spirals around the z-axis. We note that \(x^2 + y^2 = 1\), so the helix stays on the cylinder of radius 1.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description (left):</strong> A unit circle in the xy-plane is shown with x and y axes. This represents the projection of the helix onto the xy-plane, which traces around the circle multiple times as t varies.</p>
+        </div>
+        
+        <p>A table shows selected values of the helix:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>\(t\)</th>
+                    <th>\(x\)</th>
+                    <th>\(y\)</th>
+                    <th>\(z\)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>\(-2\pi\)</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>\(-4\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(-3\pi/2\)</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>\(-3\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(-\pi\)</td>
+                    <td>-1</td>
+                    <td>0</td>
+                    <td>\(-2\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(-\pi/2\)</td>
+                    <td>0</td>
+                    <td>-1</td>
+                    <td>\(-\pi\)</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>\(\pi/2\)</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>\(\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(\pi\)</td>
+                    <td>-1</td>
+                    <td>0</td>
+                    <td>\(2\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(3\pi/2\)</td>
+                    <td>0</td>
+                    <td>-1</td>
+                    <td>\(3\pi\)</td>
+                </tr>
+                <tr>
+                    <td>\(2\pi\)</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>\(4\pi\)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-05-12.webp" loading="lazy" decoding="async" alt="Page 12: 3D visualization of the helix">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Helix Visualization (continued)</h4>
+    
+    <div class="visual-desc">
+        <p><strong>3D Graph Description:</strong> A three-dimensional coordinate system shows the complete helix structure. The curve spirals upward around a vertical cylinder of radius 1. Key points are marked: \((1, 0, 4\pi)\) at the top, \((0, 1, \pi)\) partway up, \((1, 0, 0)\) at the middle, \((0, 1, -2\pi)\) partway down, and \((1, 0, -4\pi)\) at the bottom. The helix makes two complete revolutions as it rises from \(z = -4\pi\) to \(z = 4\pi\). The word "Helix" is written with decorative styling to emphasize this three-dimensional curve.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Observation:</strong> As \(t\) increases from \(-2\pi\) to \(2\pi\), the helix makes exactly two complete loops around the z-axis while rising linearly in the z-direction at a rate of 2 units per radian of \(t\).</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-05-13.webp" loading="lazy" decoding="async" alt="Page 13: Intersection of helix with sphere">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Intersection with a Surface</h4>
+    
+    <div class="example">
+        <h5>Example: Helix Intersecting a Sphere</h5>
+        
+        <p>Does</p>
+        \[\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle, \quad -\infty < t < \infty\]
+        <p>intersect with the sphere \(x^2 + y^2 + z^2 = 25\) of radius 5?</p>
+        
+        <div class="visual-desc">
+            <p><strong>3D Graph Description:</strong> A sphere of radius 5 is shown centered at the origin. A helix (purple curve) winds around the z-axis, passing through the interior of the sphere. The helix intersects the spherical surface at exactly two points, marked as \(\vec{r}(\sqrt{6})\) near the top of the sphere and \(\vec{r}(-\sqrt{6})\) near the bottom. A vertical dashed cylinder indicates the surface on which the helix lies.</p>
+        </div>
+        
+        <div class="important">
+            <p><strong>Note:</strong> The helix intersects the sphere at two points!</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-05-14.webp" loading="lazy" decoding="async" alt="Page 14: Calculation of intersection points">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Finding Points of Intersection</h4>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>To find where \(\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle\) intersects the sphere \(x^2 + y^2 + z^2 = 25\), we plug in \(x\), \(y\), \(z\) from \(\vec{r}(t)\) into the sphere equation:</p>
+        
+        \[\cos^2 t + \sin^2 t + (2t)^2 = 25\]
+        
+        <p>Using the Pythagorean identity \(\cos^2 t + \sin^2 t = 1\), we have:</p>
+        
+        \[1 + 4t^2 = 25\]
+        \[4t^2 = 24\]
+        \[t^2 = 6\]
+        \[t = \pm\sqrt{6}\]
+        
+        <p><strong>Two points of intersection:</strong></p>
+        
+        <p><strong>Top point:</strong></p>
+        \[\vec{r}(\sqrt{6}) = \langle \cos(\sqrt{6}), \sin(\sqrt{6}), 2\sqrt{6} \rangle\]
+        
+        <p><strong>Bottom point:</strong></p>
+        \[\vec{r}(-\sqrt{6}) = \langle \cos(-\sqrt{6}), \sin(-\sqrt{6}), -2\sqrt{6} \rangle\]
+        
+        <div class="important">
+            <p><strong>Interpretation:</strong> The helix enters the sphere from below at \(t = -\sqrt{6}\), passes through the interior, and exits at the top at \(t = \sqrt{6}\).</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

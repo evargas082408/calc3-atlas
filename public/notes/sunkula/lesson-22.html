@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson22 (Transcription)</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid #3498db; 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #007bff;
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid #3498db;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson22.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <main>
+        
+            <section aria-labelledby="page-title-1">
+                <h3 id="page-title-1">Page 1</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-1.webp" loading="lazy" decoding="async" alt="Original handwritten page 1">
+                    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Lesson 22: Triple Integrals in Cylindrical Coordinates (16.5)</h4>
+
+<div class="example">
+    <h5>Warmup</h5>
+    Evaluate \(\iint_D (4 - x^2 - y^2) \, dA\), where \(D\) is the region below:
+    
+    <div class="visual-desc">
+        A graph shows a shaded circle centered at the origin on a Cartesian coordinate system. The circle is labeled with the equation \(x^2 + y^2 = 4\) and its radius \(r = 2\). A blue ray is drawn from the origin into the first quadrant, with an arc indicating the angle \(\theta\) from the positive x-axis and the radius \(r\).
+    </div>
+</div>
+
+<div class="important">
+    <strong>Review: Polar Coordinates</strong>
+    <p>
+        \(x = r \cos \theta\) <br>
+        \(y = r \sin \theta\)
+    </p>
+    <p>
+        \(r^2 = x^2 + y^2\) <br>
+        \(\tan \theta = \frac{y}{x}\)
+    </p>
+
+    \[\iint_D f(x, y) \, dA = \int_{\theta \text{ Bounds}} \int_{r \text{ Bounds}} f(r \cos \theta, r \sin \theta) \, r \, dr \, d\theta\]
+</div>
+
+<div class="solution">
+    <h5>Solution</h5>
+    <strong>Bounds:</strong> \(0 \le r \le 2\), \(0 \le \theta \le 2\pi\)
+    
+    \[\iint_D (4 - x^2 - y^2) \, dA = \int_0^{2\pi} \int_0^2 (4 - r^2) r \, dr \, d\theta\]
+    
+    \[= \int_0^{2\pi} \int_0^2 (4r - r^3) \, dr \, d\theta\]
+
+    \[= \int_0^{2\pi} \left[ 2r^2 - \frac{r^4}{4} \right]_0^2 \, d\theta\]
+
+    \[= \int_0^{2\pi} (8 - 4) \, d\theta = \int_0^{2\pi} 4 \, d\theta\]
+    
+    \[= [4\theta]_0^{2\pi} = 8\pi\]
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-2">
+                <h3 id="page-title-2">Page 2</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-2.webp" loading="lazy" decoding="async" alt="Original handwritten page 2">
+                    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example: Finding Volume with Triple Integrals</h4>
+
+<div class="example">
+    <p><strong>Example:</strong> Find the volume of the region \( D \) between \( z = x^2 + y^2 \) & \( z = 4 \)</p>
+</div>
+
+<div class="visual-desc">
+    <p>The diagram depicts a three-dimensional region \( D \) bounded below by a paraboloid opening upwards from the origin and above by a horizontal plane. The paraboloid is labeled \( z = x^2 + y^2 \) and the horizontal plane is labeled \( z = 4 \). The region between these two surfaces is shaded and labeled \( D \). Below the paraboloid, on the \( xy \)-plane, a circular "shadow" region is labeled \( R \). Dashed lines project the circular intersection of the plane and the paraboloid down onto this region \( R \) on the \( xy \)-plane. A vertical red line segment inside the paraboloid illustrates the vertical distance between the lower surface and the upper plane for a fixed point \( (x, y) \).</p>
+</div>
+
+<div class="solution">
+    \[ V = \iiint_D 1 \, dV \]
+
+    <p>Fix \( (x, y) \) in the shadow \( R \):</p>
+
+    \[ x^2 + y^2 \leq z \leq 4 \]
+
+    <p>Boundary of shadow = intersection \( x^2 + y^2 = 4 \).</p>
+
+    \[ \iiint_D 1 \, dV = \iint_R \left[ \int_{x^2 + y^2}^4 1 \, dz \right] dA = \iint_R (4 - x^2 - y^2) \, dA \]
+
+    <p>Use polar coordinates to compute:</p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-3">
+                <h3 id="page-title-3">Page 3</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-3.webp" loading="lazy" decoding="async" alt="Original handwritten page 3">
+                    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4 style="color: red;">Cylindrical Coordinates</h4>
+
+<div class="definition">
+    <p>Combination of Cartesian (in 1 variable) &amp; polar (in 2 variables)</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Visual Description:</strong> A 2D Cartesian coordinate system showing the relationship between Cartesian and polar coordinates. An arrow extends from the origin to a point labeled \((x, y)\). The radial distance of this arrow is labeled \(r\), and the angle it makes with the positive \(x\)-axis is labeled \(\theta\).</p>
+</div>
+
+<div class="theorem">
+    <p>
+        \[
+        \begin{aligned}
+        x &= r \cos \theta \\
+        y &= r \sin \theta \\
+        z &= z
+        \end{aligned}
+        \longleftrightarrow
+        \begin{aligned}
+        r &= \sqrt{x^2 + y^2} \\
+        \theta &= \tan^{-1}\left(\frac{y}{x}\right) \\
+        z &= z
+        \end{aligned}
+        \]
+    </p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Visual Description:</strong> A 3D coordinate system with \(x\), \(y\), and \(z\) axes. A point in 3D space is labeled \((x, y, z)\). A vertical dashed blue line drops from this point down to the \(xy\)-plane, meeting it at the point \((x, y, 0)\); the vertical height is labeled \(z\). In the \(xy\)-plane, a solid blue line connects the origin to the point \((x, y, 0)\), labeled as \(r\). The angle between the positive \(x\)-axis and this radial line is labeled \(\theta\).</p>
+</div>
+
+<div class="theorem">
+    <p>
+        \[ \iiint_{D} f(x, y, z) \, dV = \int_{\text{bounds of } \theta} \int_{\text{bounds of } r} \int_{\text{bounds of } z} f(r \cos \theta, r \sin \theta, z) \cdot r \, dz \, dr \, d\theta \]
+    </p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-4">
+                <h3 id="page-title-4">Page 4</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-4.webp" loading="lazy" decoding="async" alt="Original handwritten page 4">
+                    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Graphs in Cylindrical Coordinates</h4>
+
+<div class="example">
+    <strong>Example 1:</strong> \(\theta = \frac{\pi}{4}\) (where \(r\) and \(z\) are free)
+</div>
+
+<div class="visual-desc">
+    <strong>Visual Description of 2D Plot:</strong> A Cartesian coordinate system showing the \(xy\)-plane. A blue ray originates from the origin and extends into the first quadrant. The angle between the ray and the positive \(x\)-axis is labeled \(\frac{\pi}{4}\). Two points are marked on this ray with the coordinates \((1, \frac{\pi}{4})\) and \((r, \frac{\pi}{4})\).
+</div>
+
+<div class="visual-desc">
+    <strong>Visual Description of 3D Plot:</strong> A 3D Cartesian coordinate system with \(x\), \(y\), and \(z\) axes. A vertical plane is depicted that contains the \(z\)-axis and extends into the first octant along the line where \(y = x\) in the \(xy\)-plane. Parallel blue lines are drawn vertically on the surface of this plane to illustrate its extension in the \(z\)-direction.
+</div>
+
+<div class="solution">
+    <strong>Solution:</strong>
+    Represents a plane: \(\theta = \frac{\pi}{4} \Rightarrow \tan\left(\frac{\pi}{4}\right) = \frac{y}{x} \Rightarrow 1 = \frac{y}{x} \Rightarrow y = x\).
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-5">
+                <h3 id="page-title-5">Page 5</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-5.webp" loading="lazy" decoding="async" alt="Original handwritten page 5">
+                    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example 2</h4>
+<div class="example">
+    <p><strong>Example 2:</strong> \(r = 1\) in 2D circle of Radius 1</p>
+
+    <div class="visual-desc">
+        A diagram showing a 2D Cartesian coordinate system with x and y axes. A blue circle is centered at the origin, representing a circle with a radius of 1.
+    </div>
+
+    <p>\(r = 1\)<br>
+    \(0 \leq \theta \leq 2\pi\)</p>
+
+    <p>In 3D, \(z\) is "free"</p>
+
+    <div class="visual-desc">
+        A 3D coordinate system with x, y, and z axes. A blue vertical cylinder is centered along the vertical z-axis. The cylinder is defined by its vertical edges and two circular cross-sections, illustrating that the radius \(r = 1\) is constant for all values of \(z\).
+    </div>
+
+    <p>Circular Cylinder.</p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-6">
+                <h3 id="page-title-6">Page 6</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-6.webp" loading="lazy" decoding="async" alt="Original handwritten page 6">
+                    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example 3</h4>
+
+<div class="example">
+    <p><strong>eg(3):</strong> \( z = r \) or \( z = \sqrt{x^2 + y^2} \)</p>
+    
+    <p>Single Cone.</p>
+
+    <div class="visual-desc">
+        A 3D coordinate system graph illustrating a single cone opening upwards. The vertex of the cone is positioned at the origin (0, 0, 0). The cone extends upwards along the vertical z-axis. Horizontal circular cross-sections are drawn at regular intervals, using solid lines for the front and dashed lines for the back to create a three-dimensional perspective.
+    </div>
+
+    <p>Similarly: \( z = -r = -\sqrt{x^2 + y^2} \) is a single cone</p>
+
+    <div class="visual-desc">
+        A 3D coordinate system graph illustrating a single cone opening downwards. The vertex of the cone is positioned at the origin (0, 0, 0). The cone extends downwards into the negative z-region. Parallel horizontal cross-sections are indicated with dashed lines for the back edges to depict the three-dimensional volume of the downward-facing cone.
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-7">
+                <h3 id="page-title-7">Page 7</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-7.webp" loading="lazy" decoding="async" alt="Original handwritten page 7">
+                    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>eg 4:</h4>
+
+<div class="example">
+    <p>
+        \[ z = 6 - r^2 = 6 - x^2 - y^2 \]
+    </p>
+
+    <p>
+        \( z = 6 \leadsto 6 = 6 - x^2 - y^2 \leadsto x^2 + y^2 = 0 \)
+    </p>
+
+    <p>
+        \( z > 6 \leadsto z = 6 - x^2 - y^2 \leadsto x^2 + y^2 = 6 - z \quad \text{X} \)
+    </p>
+
+    <p>
+        \( z < 6 \leadsto x^2 + y^2 = 6 - z \leadsto \text{Circles} \)
+    </p>
+
+    <div class="visual-desc">
+        <strong>Visual Description:</strong> A hand-drawn sketch of a 3D coordinate system showing the x, y, and z axes. A paraboloid is drawn opening downwards, starting from a peak on the positive z-axis (representing \( z = 6 \)). The sketch includes horizontal traces represented by elliptical lines (dashed for the background parts and solid for the foreground) at two different levels below the peak to illustrate the circular cross-sections of the surface.
+    </div>
+
+    <p>Paraboloid Facing down.</p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-8">
+                <h3 id="page-title-8">Page 8</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-8.webp" loading="lazy" decoding="async" alt="Original handwritten page 8">
+                    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Evaluating Triple Integrals using Cylindrical Coordinates</h4>
+
+<div class="example">
+    <strong>eg ①:</strong> Find volume of the region \(D = \{ (r, \theta, z) : 1 \leq r \leq 5; \frac{\pi}{4} \leq \theta \leq \frac{3\pi}{4}; 2 \leq z \leq 7 \}\)
+</div>
+
+<div class="solution">
+    \[ \iiint_{D} 1 \, dV = \int_{\pi/4}^{3\pi/4} \int_{1}^{5} \int_{2}^{7} 1 \cdot r \, dz \, dr \, d\theta \]
+    \[ = \int_{\pi/4}^{3\pi/4} \int_{1}^{5} 5r \, dr \, d\theta = \int_{\pi/4}^{3\pi/4} \left[ \frac{5r^2}{2} \right]_{1}^{5} \, d\theta \]
+    \[ = \int_{\pi/4}^{3\pi/4} 60 \, d\theta = 60 \left( \frac{3\pi}{4} - \frac{\pi}{4} \right) = 60 \cdot \frac{\pi}{2} = 30\pi \]
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-9">
+                <h3 id="page-title-9">Page 9</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-9.webp" loading="lazy" decoding="async" alt="Original handwritten page 9">
+                    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4 id="region-definition-cylindrical">Defining a Region in Cylindrical Coordinates</h4>
+
+<div class="definition">
+    \[ D = \{ (r, \theta, z) : 1 \leq r \leq 5; \frac{\pi}{4} \leq \theta \leq \frac{3\pi}{4}; 2 \leq z \leq 7 \} \]
+    <p>The constraints \( 1 \leq r \leq 5 \) and \( \frac{\pi}{4} \leq \theta \leq \frac{3\pi}{4} \) are bracketed together and labeled as the <strong>\( xy \)-plane</strong> projection.</p>
+</div>
+
+<div class="visual-desc">
+    <h5 id="visual-description-geometric-representation">Visual Description: Geometric Representation of Region \( D \)</h5>
+    <p>The notes provide two diagrams illustrating the mathematical definition above:</p>
+    
+    <p><strong>Left Diagram (2D Projection):</strong> This diagram shows the region \( R \) in the \( xy \)-plane using polar coordinates. It features two concentric circles centered at the origin: an inner circle with radius \( r = 1 \) and an outer circle with radius \( r = 5 \). Two boundary lines are drawn from the origin at angles \( \theta = \frac{\pi}{4} \) and \( \theta = \frac{3\pi}{4} \). The area captured between these two radii and two angles is shaded in blue and labeled with a red <strong>\( R \)</strong>.</p>
+    
+    <p><strong>Right Diagram (3D Visualization):</strong> This diagram illustrates the full volume \( D \) in a 3D coordinate system with \( x, y, \) and \( z \) axes.</p>
+    <ul>
+        <li>The region \( R \) from the first diagram is projected onto the \( xy \)-plane and shaded light blue.</li>
+        <li>Extending upward from region \( R \) along the \( z \)-axis is a 3D volume shaded yellow and labeled with a red <strong>\( D \)</strong>.</li>
+        <li>The volume is a segment of a hollow cylinder (a cylindrical shell slice).</li>
+        <li>The vertical extent of the yellow volume is marked on the \( z \)-axis, beginning at \( z = 2 \) and ending at \( z = 7 \).</li>
+    </ul>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-10">
+                <h3 id="page-title-10">Page 10</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-10.webp" loading="lazy" decoding="async" alt="Original handwritten page 10">
+                    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example 2</h4>
+<div class="example">
+    <p>Find the volume of the region between \(z = \sqrt{x^2+y^2}\) and \(z = 6 - x^2 - y^2\)</p>
+    <p>In cylindrical coordinates:</p>
+    <ul>
+        <li>\(z = \sqrt{x^2+y^2}\) becomes \(z = r\)</li>
+        <li>\(z = 6 - x^2 - y^2\) becomes \(z = 6 - r^2\)</li>
+    </ul>
+</div>
+
+<div class="visual-desc">
+    <p>A 3D coordinate graph illustrates the region of integration \(D\). A cone opening upwards from the origin, defined by \(z = \sqrt{x^2+y^2}\), intersects with a paraboloid opening downwards from \(z=6\), defined by \(z = 6 - x^2 - y^2\). The bounded volume between these two surfaces is labeled \(D\). A vertical red line segment within the volume indicates the range of \(z\) from the cone surface to the paraboloid surface. Below the surfaces, on the \(xy\)-plane, a circular "shadow" region is shaded with purple vertical lines and labeled \(R\). Dotted lines project the boundaries of the intersection down to the boundary of region \(R\).</p>
+</div>
+
+<div class="solution">
+    <h5>Volume Calculation</h5>
+    <p>\[V = \iiint_D 1 \, dV\]</p>
+
+    <h5>Boundary of shadow</h5>
+    <p>The boundary is determined by the intersection of the two surfaces:</p>
+    <p>
+        \[6 - r^2 = r \implies r^2 + r - 6 = 0\]
+        \[(r + 3)(r - 2) = 0\]
+        \[r = 2\]
+    </p>
+
+    <h5>Integral Setup</h5>
+    <p>To set up the triple integral, fix a point in the region \(R\) on the \(xy\)-plane. The vertical range is: \(r \le z \le 6 - r^2\)</p>
+
+    <p>
+        \[\iiint_D 1 \, dV = \iint_R \left( \int_r^{6-r^2} 1 \, dz \right) dA\]
+        \[= \int_0^{2\pi} \int_0^2 \int_r^{6-r^2} r \, dz \, dr \, d\theta\]
+    </p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-11">
+                <h3 id="page-title-11">Page 11</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-11.webp" loading="lazy" decoding="async" alt="Original handwritten page 11">
+                    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example 3</h4>
+
+<div class="example">
+    <p>Find the volume of the region between \(y = \sqrt{x^2 + z^2}\) &amp; \(y = 2 - \sqrt{x^2 + z^2}\)</p>
+</div>
+
+<div class="visual-desc">
+    <p>A 3D coordinate system showing the \(x\), \(y\), and \(z\) axes. The volume \(D\) is bounded by two cones oriented along the \(y\)-axis. One cone, labeled \(y = r\), has its vertex at the origin and opens towards the positive \(y\) direction. The second cone, labeled \(y = 2 - r\), has its vertex at \(y = 2\) and opens towards the origin. The two cones intersect, forming a double-cone shape. A red shaded region on the \(xz\)-plane represents the "shadow" or projection \(R\), which is a circular disk of radius 1.</p>
+</div>
+
+<div class="solution">
+    <p>Cartesian in \(y\), polar in \(xz\):</p>
+    
+    \[x^2 + z^2 = r^2\]
+    \[y = \sqrt{x^2 + z^2} = r\]
+    \[y = 2 - \sqrt{x^2 + z^2} = 2 - r\]
+    
+    <p><strong>Boundary of shadow = intersection:</strong></p>
+    \[r = 2 - r \implies 2r = 2 \implies r = 1\]
+    
+    <p>
+        \[V = \iiint_D 1 \, dV = \iint\limits_{R} \left( \int_{r}^{2-r} 1 \, dy \right) dA = \int_{0}^{2\pi} \int_{0}^{1} \int_{r}^{2-r} r \, dy \, dr \, d\theta\]
+    </p>
+    
+    <p>Where \(R = \text{Disk of radius 1}\)</p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-12">
+                <h3 id="page-title-12">Page 12</h3>
+                
+                <figure>
+                    <img src="img/lesson-22-12.webp" loading="lazy" decoding="async" alt="Original handwritten page 12">
+                    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Example</h4>
+
+<div class="example">
+    <p>
+        \[ \int_0^{\frac{\sqrt{2}}{2}} \int_y^{\sqrt{1-y^2}} \int_0^{1-x^2-y^2} 1 \, dz \, dx \, dy \]
+        evaluate by converting to Cylindrical Coordinates
+    </p>
+</div>
+
+<div class="solution">
+    <h4>Solution</h4>
+    <p>Convert to Bounds in polar:</p>
+    
+    <p>The differential elements \(dx \, dy\) are converted to \(r \, dr \, d\theta\).</p>
+
+    <p>Analyzing the limits of integration for \(x\):</p>
+    <p>\[ y \leq x \leq \sqrt{1-y^2} \]</p>
+    
+    <p>
+        <strong>Left Bound:</strong> \(x = y\) <br>
+        <strong>Right Bound:</strong> \(x = \sqrt{1-y^2} \implies x^2 + y^2 = 1\)
+    </p>
+
+    <div class="visual-desc">
+        A graph shows the projection of the region of integration onto the \(xy\)-plane. The axes are labeled \(x\) and \(y\). A purple line \(y=x\) passes through the origin into the first quadrant. A green circular arc representing \(x^2 + y^2 = 1\) connects the \(x\)-axis to the \(y\)-axis. The intersection of the line and the arc is marked with a point at \((\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})\). The region between the \(x\)-axis, the line \(y=x\), and the circular arc is shaded with blue horizontal lines. The angle \(\theta\) is indicated starting from the positive \(x\)-axis toward the line \(y=x\).
+    </div>
+
+    <p><strong>Bounds in polar:</strong></p>
+    <p>
+        \[ 0 \leq r \leq 1 \]
+        \[ 0 \leq \theta \leq \frac{\pi}{4} \]
+    </p>
+
+    <p>
+        The conversion to cylindrical coordinates yields:
+        \[ \int_0^{\frac{\sqrt{2}}{2}} \int_y^{\sqrt{1-y^2}} \int_0^{1-x^2-y^2} 1 \, dz \, dx \, dy = \int_0^{\frac{\pi}{4}} \int_0^1 \int_0^{1-r^2} r \, dz \, dr \, d\theta \]
+    </p>
+</div>
+                </div>
+                
+            </section>
+          
+    </main>
+</body>
+</html>

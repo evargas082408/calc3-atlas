@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 30: Curl and Divergence (17.5) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson30.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 30: Curl and Divergence (17.5)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/3/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson30.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 30: Curl and Divergence (17.5)</h4>
+
+<p>Review: Computing \(\int_C \vec{F} \cdot d\vec{r} = \int_C \vec{F} \cdot \vec{T} \, ds = \int_C f \, dx + g \, dy\)</p>
+
+<p>The method to compute the line integral depends on a primary question: <strong>Is \(C\) a Simple Closed Curve in 2D?</strong></p>
+
+<h5>Case: Yes</h5>
+
+<p>If the curve \(C\) is a simple closed curve, we apply <strong>Green's Theorem</strong> to relate the line integral to a double integral over the region \(R\) enclosed by \(C\).</p>
+
+
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-30-1.webp" loading="lazy" decoding="async" alt="A hand-drawn diagram illustrating the geometric domain for Green's Theorem. It shows an irregularly shaped region labeled R, shaded with purple diagonal parallel lines. The region R is enclosed by a simple closed curve labeled C. An arrow on curve C indicates a counter-clockwise (positive) orientation." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn diagram illustrating the geometric domain for Green's Theorem. It shows an irregularly shaped region labeled R, shaded with purple diagonal parallel lines. The region R is enclosed by a simple closed curve labeled C. An arrow on curve C indicates a counter-clockwise (positive) orientation.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="theorem">
+    <p><strong>Tangential form of Green's Theorem:</strong></p>
+    \[ \oint_C \vec{F} \cdot \vec{T} \, ds = \iint_R (g_x - f_y) \, dA \]
+    <p>The integrand \((g_x - f_y)\) is known as the <strong>Scalar Curl</strong>.</p>
+
+    <p><strong>Normal form of Green's Theorem:</strong></p>
+    \[ \oint_C \vec{F} \cdot \vec{N} \, ds = \oint_C g \, dx - f \, dy = \iint_R (f_x + g_y) \, dA \]
+    <p>The integrand \((f_x + g_y)\) is known as <strong>div \(\vec{F}\)</strong> (Divergence of \(\vec{F}\)).</p>
+</div>
+
+<h5>Case: No</h5>
+
+<p>If the curve \(C\) is not a simple closed curve, the next question is: <strong>Is the vector field \(\vec{F}\) conservative?</strong> (i.e., does there exist a potential function \(\phi\) such that \(\vec{F} = \nabla \phi\)?)</p>
+
+<ul>
+    <li>
+        <strong>If Yes: Apply FTCLI</strong> (Fundamental Theorem of Calculus for Line Integrals)
+        \[ \int_C \nabla \phi \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) \]
+    </li>
+    <li>
+        <strong>If No: Use the Definition</strong> of a line integral
+        \[ \int_C \vec{F} \cdot d\vec{r} = \int_a^b \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \, dt \]
+    </li>
+</ul>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Worked Example: Line Integrals and Green's Theorem</h4>
+    <p>
+        Given the vector field \(\vec{F} = \langle \underbrace{-y^3 + 9}_{f}, \underbrace{x^3 + 3y^2 + 1}_{g} \rangle\) and the curve \(C\) defined by \(\vec{r}(t) = \langle \cos t, \sin t \rangle\) for \(0 \le t \le 2\pi\), evaluate the line integrals \(\oint_C \vec{F} \cdot \vec{T} \, ds\) and \(\oint_C \vec{F} \cdot \vec{N} \, ds\).
+    </p>
+
+    <p>
+        Note that \(C\) is a circle of radius 1 and is a simple closed curve.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-30-2.webp" loading="lazy" decoding="async" alt="A 2D plot on a Cartesian coordinate system showing a unit circle centered at the origin. The boundary of the circle is labeled C and has a counter-clockwise orientation arrow. The interior of the circle, representing the region R, is shaded with diagonal purple lines." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D plot on a Cartesian coordinate system showing a unit circle centered at the origin. The boundary of the circle is labeled C and has a counter-clockwise orientation arrow. The interior of the circle, representing the region R, is shaded with diagonal purple lines.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <h5>1. Evaluating \(\oint_C \vec{F} \cdot \vec{T} \, ds\) (Circulation form of Green's Theorem)</h5>
+        <p>
+            Using Green's Theorem for circulation, we have:
+            \[\oint_C \vec{F} \cdot \vec{T} \, ds = \iint_R (g_x - f_y) \, dA\]
+        </p>
+        <p>
+            First, calculate the partial derivatives:
+            \[g_x = \frac{\partial}{\partial x}(x^3 + 3y^2 + 1) = 3x^2\]
+            \[f_y = \frac{\partial}{\partial y}(-y^3 + 9) = -3y^2\]
+        </p>
+        <p>
+            Substituting these into the double integral:
+            \[\iint_R (3x^2 - (-3y^2)) \, dA = \iint_R 3(x^2 + y^2) \, dA\]
+        </p>
+        <p>
+            Converting to polar coordinates for the region \(R\) (where \(0 \le r \le 1\) and \(0 \le \theta \le 2\pi\)):
+            \[= \int_0^{2\pi} \int_0^1 3(r^2) \cdot r \, dr \, d\theta\]
+            \[= \left. \frac{3r^4}{4} \right|_0^1 \cdot \left. \theta \right|_0^{2\pi}\]
+            \[= \frac{3}{4} \cdot 2\pi = \frac{3\pi}{2}\]
+        </p>
+
+        <h5>2. Evaluating \(\oint_C \vec{F} \cdot \vec{N} \, ds\) (Flux form of Green's Theorem)</h5>
+        <p>
+            Using Green's Theorem for flux, we have:
+            \[\oint_C \vec{F} \cdot \vec{N} \, ds = \iint_R (f_x + g_y) \, dA\]
+        </p>
+        <p>
+            Calculate the partial derivatives:
+            \[f_x = \frac{\partial}{\partial x}(-y^3 + 9) = 0\]
+            \[g_y = \frac{\partial}{\partial y}(x^3 + 3y^2 + 1) = 6y\]
+        </p>
+        <p>
+            Substituting these into the double integral:
+            \[\iint_R (0 + 6y) \, dA = \iint_R 6y \, dA\]
+        </p>
+        <p>
+            Converting to polar coordinates (where \(y = r \sin \theta\)):
+            \[= \int_0^{2\pi} \int_0^1 (6r \sin \theta) \cdot r \, dr \, d\theta\]
+            \[= \left. 2r^3 \right|_0^1 \cdot \left. -\cos \theta \right|_0^{2\pi}\]
+            \[= 2(1 - 0) \cdot (-(\cos 2\pi - \cos 0))\]
+            \[= 2 \cdot -(1 - 1) = 0\]
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Curl and Divergence of a Vector Field \(\vec{F} = \langle f, g, h \rangle\)</h3>
+
+<p><strong>Notation:</strong> \(\vec{\nabla} = \left\langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \right\rangle \rightarrow\) "<strong>del</strong>" is an operator.</p>
+
+<section class="definition">
+    <p>
+        \[\text{grad}(\phi) = \vec{\nabla}\phi = \left\langle \frac{\partial\phi}{\partial x}, \frac{\partial\phi}{\partial y}, \frac{\partial\phi}{\partial z} \right\rangle\]
+    </p>
+    <p>
+        In this operation, \(\phi\) is a <strong>scalar</strong> input, and the resulting gradient is a <strong>vector</strong>.
+    </p>
+</section>
+
+<section class="definition">
+    <p>
+        \[\text{Curl}(\vec{F}) = \vec{\nabla} \times \vec{F} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ f & g & h \end{vmatrix} = \langle h_y - g_z, -(h_x - f_z), g_x - f_y \rangle\]
+    </p>
+    <p><strong>Key Notes:</strong></p>
+    <ul>
+        <li>Takes a <strong>vector input</strong> (\(\vec{F}\)).</li>
+        <li>Often described as the "<strong>vector derivative of \(\vec{F}\)</strong>" or "<strong>Circulation Density</strong>."</li>
+        <li>The <strong>output is a vector</strong>.</li>
+    </ul>
+</section>
+
+<section class="definition">
+    <p>
+        \[\text{div}(\vec{F}) = \vec{\nabla} \cdot \vec{F} = \left\langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \right\rangle \cdot \langle f, g, h \rangle = f_x + g_y + h_z\]
+    </p>
+    <p><strong>Key Notes:</strong></p>
+    <ul>
+        <li>Often described as the "<strong>Scalar derivative of \(\vec{F}\)</strong>" or "<strong>Flux density</strong>."</li>
+        <li>The result is a <strong>Scalar output</strong>.</li>
+    </ul>
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example</h4>
+    <p>\[ \vec{F} = \langle -y, x, 0 \rangle \]</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-30-3.webp" loading="lazy" decoding="async" alt="A vector field plot on a 2D Cartesian coordinate system representing \(\vec{F} = \langle -y, x, 0 \rangle\). The diagram shows blue arrows indicating the direction and magnitude of the field: in the upper-left quadrant, arrows point left; in the lower-left, they point down; in the lower-right, they point right; and in the upper-right, they point up, overall creating a counter-clockwise circulation around the origin. A red rectangular object, labeled as a 'Log', is placed diagonally across the origin with internal hatching. Below the plot, the text notes 'Log Rotates' and 'Does not Drift', signifying that the vector field causes rotation but has no net diverging or converging flow at the center." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field plot on a 2D Cartesian coordinate system representing \(\vec{F} = \langle -y, x, 0 \rangle\). The diagram shows blue arrows indicating the direction and magnitude of the field: in the upper-left quadrant, arrows point left; in the lower-left, they point down; in the lower-right, they point right; and in the upper-right, they point up, overall creating a counter-clockwise circulation around the origin. A red rectangular object, labeled as a 'Log', is placed diagonally across the origin with internal hatching. Below the plot, the text notes 'Log Rotates' and 'Does not Drift', signifying that the vector field causes rotation but has no net diverging or converging flow at the center.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>Log Rotates<br>
+    Does not Drift</p>
+
+    <div class="solution">
+        <p>
+            \[ \text{curl } \vec{F} = \nabla \times \vec{F} = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \\ -y &amp; x &amp; 0 \end{vmatrix} \]
+            \[ = \langle 0, 0, 2 \rangle \]
+        </p>
+        <p>
+            \(\text{curl } \vec{F} \neq \langle 0, 0, 0 \rangle \rightsquigarrow\) <strong>Rotating</strong>
+        </p>
+        <p>
+            \[ \text{div } \vec{F} = \nabla \cdot \vec{F} = \left\langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \right\rangle \cdot \langle -y, x, 0 \rangle \]
+            \[ = 0 \]
+        </p>
+        <p>
+            \(\text{div } \vec{F} = 0 \rightsquigarrow\) <strong>Source free</strong>, <strong>incompressible</strong>, <strong>divergence free</strong>
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Analyzing a Vector Field</h4>
+    <p>Consider the vector field defined by:</p>
+    \[ \vec{F} = \langle x, y, 0 \rangle \]
+
+    
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-30-4.webp" loading="lazy" decoding="async" alt="A vector field plot on a Cartesian coordinate system representing \(\vec{F} = \langle x, y, 0 \rangle\). The diagram features blue arrows radiating outward from the origin in all directions. Specific arrows are drawn along the x and y axes and the diagonal lines \(y=x\) and \(y=-x\). A red rectangle, representing a 'log', is placed diagonally across the origin along the line \(y=x\). The rectangle contains red cross-hatching to indicate its physical extent. The radial nature of the arrows suggests an expanding field with no swirling or circular motion around the origin." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field plot on a Cartesian coordinate system representing \(\vec{F} = \langle x, y, 0 \rangle\). The diagram features blue arrows radiating outward from the origin in all directions. Specific arrows are drawn along the x and y axes and the diagonal lines \(y=x\) and \(y=-x\). A red rectangle, representing a 'log', is placed diagonally across the origin along the line \(y=x\). The rectangle contains red cross-hatching to indicate its physical extent. The radial nature of the arrows suggests an expanding field with no swirling or circular motion around the origin.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>To determine the rotational properties of the field, we calculate the curl:</p>
+    \[ \text{curl } \vec{F} = \vec{\nabla} \times \vec{F} = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \\ x &amp; y &amp; 0 \end{vmatrix} = \langle 0, 0, 0 \rangle \]
+
+    <div class="definition">
+        <strong>Conclusion:</strong> Since \(\text{curl } \vec{F} = \vec{0}\), the vector field is <strong>irrotational</strong> or <strong>curl free</strong>.
+    </div>
+
+    <p>Next, we calculate the divergence of the field:</p>
+    \[ \text{div } \vec{F} = \vec{\nabla} \cdot \vec{F} = \frac{\partial}{\partial x} x + \frac{\partial}{\partial y} y + \frac{\partial}{\partial z} 0 = 1 + 1 + 0 = 2 \]
+
+    <p style="text-align: center;">"Log Drifts"</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Vector Operations</h4>
+    <p>Given a vector field \(\vec{F}\), which of the following does not make sense?</p>
+
+    <ol>
+        <li>\(\text{grad } \vec{F} = \vec{\nabla} \vec{F}\) (Does not make sense)</li>
+        <li>\(\text{curl } \vec{F} = \vec{\nabla} \times \vec{F}\) (Makes sense)</li>
+        <li>\(\text{div } \vec{F} = \vec{\nabla} \cdot \vec{F}\) (Makes sense)</li>
+        <li>\(\text{grad}(\text{curl } \vec{F})\) (Does not make sense)</li>
+        <li>\(\text{curl}(\text{curl } \vec{F})\) (Makes sense)</li>
+        <li>\(\text{curl}(\text{div } \vec{F})\) (Does not make sense)</li>
+        <li>\(\text{div}(\text{curl } \vec{F})\) (Makes sense)</li>
+        <li>\(\text{div}(\text{div } \vec{F})\) (Does not make sense)</li>
+        <li>\(\text{grad}(\text{div } \vec{F})\) (Makes sense)</li>
+    </ol>
+</div>
+
+<div class="important">
+    <p><strong>Note:</strong> Operation input and output types:</p>
+    <p>\(\text{grad } [\text{scalar}] = \text{vector}\)</p>
+    <p>\(\text{curl } [\text{vector}] = \text{vector}\)</p>
+    <p>\(\text{div } [\text{vector}] = \text{scalar}\)</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Vector Calculus Operations Example</h4>
+
+<div class="example">
+    <p><strong>Example:</strong> \(\vec{F} = \langle x^2y, ze^x, xyz \rangle\)</p>
+    <p>Compute \(\text{curl } \vec{F}\), \(\text{div } \vec{F}\), and \(\text{grad}(\text{div } \vec{F})\)</p>
+</div>
+
+<div class="solution">
+    <p><strong>To compute \(\text{curl } \vec{F}\):</strong></p>
+    \[\text{curl } \vec{F} = \vec{\nabla} \times \vec{F} = \begin{vmatrix} \vec{i} &amp; \vec{j} &amp; \vec{k} \\ \partial/\partial x &amp; \partial/\partial y &amp; \partial/\partial z \\ x^2y &amp; ze^x &amp; xyz \end{vmatrix}\]
+    
+    \[= \left\langle \frac{\partial}{\partial y}(xyz) - \frac{\partial}{\partial z}(ze^x), -\left( \frac{\partial}{\partial x}(xyz) - \frac{\partial}{\partial z}(x^2y) \right), \frac{\partial}{\partial x}(ze^x) - \frac{\partial}{\partial y}(x^2y) \right\rangle\]
+    
+    \[= \langle xz - e^x, -yz, ze^x - x^2 \rangle\]
+
+    <p><strong>To compute \(\text{div } \vec{F}\):</strong></p>
+    \[\text{div } \vec{F} = \vec{\nabla} \cdot \vec{F} = \frac{\partial}{\partial x}(x^2y) + \frac{\partial}{\partial y}(ze^x) + \frac{\partial}{\partial z}(xyz) = 2xy + 0 + xy = 3xy\]
+
+    <p><strong>To compute \(\text{grad}(\text{div } \vec{F})\):</strong></p>
+    \[\text{grad}(\text{div } \vec{F}) = \vec{\nabla}(3xy) = \left\langle \frac{\partial}{\partial x} 3xy, \frac{\partial}{\partial y} 3xy, \frac{\partial}{\partial z} 3xy \right\rangle = \langle 3y, 3x, 0 \rangle\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Vector Calculus Identities</h3>
+
+<div class="theorem">
+    \[ \text{div}(\text{curl } \vec{F}) = 0 \]
+</div>
+
+<div class="example">
+    <p>Consider the specific vector field:</p>
+    \[ \vec{F} = \langle x^2 y, z e^x, x y z \rangle \]
+
+    <p>First, calculate the curl of \( \vec{F} \):</p>
+    \[ \text{curl } \vec{F} = \langle x z - e^x, -y z, z e^x - x^2 \rangle \]
+
+    <p>Then, calculate the divergence of that curl:</p>
+    <div class="solution">
+        \[ \text{div}(\text{curl } \vec{F}) = \vec{\nabla} \cdot (\text{curl } \vec{F}) = \vec{\nabla} \cdot (\vec{\nabla} \times \vec{F}) \]
+        \[ = \frac{\partial}{\partial x}(x z - e^x) + \frac{\partial}{\partial y}(-y z) + \frac{\partial}{\partial z}(z e^x - x^2) \]
+        \[ = z - e^x + (-z) + e^x = 0 \]
+    </div>
+</div>
+
+<hr>
+
+<h3>General Derivation</h3>
+
+<p>To prove this identity for any smooth vector field, let:</p>
+\[ \vec{F} = \langle f, g, h \rangle \]
+
+<p>The curl of \( \vec{F} \) is expressed as:</p>
+\[ \vec{\nabla} \times \vec{F} = \text{curl } \vec{F} = \langle h_y - g_z, -(h_x - f_z), g_x - f_y \rangle \]
+
+<p>Next, we take the divergence of the resulting vector:</p>
+<div class="solution">
+    \[ \text{div}(\text{curl } \vec{F}) = \frac{\partial}{\partial x}(h_y - g_z) + \frac{\partial}{\partial y}(-h_x + f_z) + \frac{\partial}{\partial z}(g_x - f_y) \]
+    \[ = h_{yx} - g_{zx} - h_{xy} + f_{zy} + g_{xz} - f_{yz} \]
+
+    <p>By Clairaut's Theorem, for functions with continuous second partial derivatives, the mixed partials are equal (e.g., \( h_{yx} = h_{xy} \)). Applying this to the terms above leads to total cancellation:</p>
+    \[ = 0 \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Vector Operations on Scalar Functions</h4>
+    <p>Given a scalar function \(\phi\), which of these makes sense?</p>
+
+    <p>1. \(\text{grad } \phi\) ✓</p>
+    <p>2. \(\text{div } \phi\) ✗</p>
+    <p>3. \(\text{curl } \phi\) ✗</p>
+    <p>4. \(\text{curl}(\text{grad } \phi)\) ✓</p>
+    <p>5. \(\text{div}(\text{curl } \phi)\) ✗</p>
+    <p>6. \(\text{div}(\text{grad } \phi)\) ✓</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example</h4>
+    <p>
+        \(\phi = x^2 + yz^3\), find \(grad \, \phi\), \(div \, \phi\), \(curl \, \phi\)
+    </p>
+    <div class="warning">
+        Note: In the original handwritten notes, \(div \, \phi\) and \(curl \, \phi\) are marked with red "X"s, as these operations are not defined for scalar fields.
+    </div>
+
+    <div class="solution">
+        <p>
+            \(grad \, \phi = \vec{\nabla}\phi = \langle 2x, z^3, 3yz^2 \rangle\)
+        </p>
+        <p>
+            \(div(grad \, \phi) = \vec{\nabla} \cdot \vec{\nabla}\phi = \langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \rangle \cdot \langle 2x, z^3, 3yz^2 \rangle\)
+            <br>
+            \(= 2 + 0 + 6yz\)
+        </p>
+        <p>
+            \(div(grad \, \phi) = \vec{\nabla} \cdot \vec{\nabla}\phi = \langle \frac{\partial}{\partial x}, \frac{\partial}{\partial y}, \frac{\partial}{\partial z} \rangle \cdot \langle \phi_x, \phi_y, \phi_z \rangle\)
+            <br>
+            \(= \phi_{xx} + \phi_{yy} + \phi_{zz}\)
+        </p>
+    </div>
+</div>
+
+<div class="definition">
+    <h4><u>Notation</u>:</h4>
+    <p>
+        \[div(grad \, \phi) = \vec{\nabla} \cdot \vec{\nabla}\phi = \Delta \phi\]
+        <strong style="color: red;">Laplacian</strong>
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Curl of a Gradient</h4>
+
+<div class="example">
+    <p>Given a specific gradient vector field:</p>
+    \[ \text{grad } \phi = \vec{\nabla} \phi = \langle 2x, z^3, 3yz^2 \rangle \]
+    
+    <p>The <strong>curl</strong> of this <strong>gradient</strong> is calculated using the cross product of the del operator and the gradient vector:</p>
+    \[ \text{curl}(\text{grad } \phi) = \vec{\nabla} \times \vec{\nabla} \phi = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \\ 2x &amp; z^3 &amp; 3yz^2 \end{vmatrix} \]
+    
+    \[ = \langle 3z^2 - 3z^2, -(0 - 0), 0 - 0 \rangle \]
+    
+    \[ = \langle 0, 0, 0 \rangle \]
+</div>
+
+<div class="important">
+    \[ \text{curl}(\text{grad } \phi) = \langle 0, 0, 0 \rangle \]
+</div>
+
+<p><strong>General Case Derivation:</strong></p>
+<p>For any scalar field \(\phi\) with continuous second-order partial derivatives, the curl of the gradient is always the zero vector. Using subscript notation for partial derivatives:</p>
+
+\[ \vec{\nabla} \times \text{grad } \phi = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \\ \phi_x &amp; \phi_y &amp; \phi_z \end{vmatrix} = \langle \phi_{zy} - \phi_{yz}, -(\phi_{zx} - \phi_{xz}), \phi_{yx} - \phi_{xy} \rangle \]
+
+<p>By Clairaut's Theorem (equality of mixed partials), each component simplifies to zero:</p>
+
+\[ = \langle 0, 0, 0 \rangle \]
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/3/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

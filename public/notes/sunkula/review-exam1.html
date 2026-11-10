@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 26100 - Spring 2026                          Exam 1                          Test/Quiz #: 11 - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Review-Exam1.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+                    <li><a href="#page-section-12">Page 12</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">MA 26100 - Spring 2026                          Exam 1                          Test/Quiz #: 11</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/27/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Review-Exam1.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p>MA 26100 - Spring 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Exam 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Test/Quiz #: 11</p>
+
+<h4 id="problem-1">1. Consider the surface</h4>
+
+<div class="definition">
+    \[ 4x^3 - 12x + 6y + z^3 + 2 = 0 \]
+</div>
+
+<p>Find a point on the surface at which the tangent plane is parallel to the \(xz\)-plane.</p>
+
+<p>
+    A. \((-1, 1, 0)\)<br>
+    B. \((1, 2, 0)\)<br>
+    C. \((-1, 2, 0)\)<br>
+    D. \((1, \frac{5}{6}, 1)\)<br>
+    <strong>→ E. \((1, 1, 0)\)</strong>
+</p>
+
+<div class="solution">
+    <p>From the handwritten notes, let the surface equation be defined as the function \(f(x, y, z)\):</p>
+    \[ f(x, y, z) = 4x^3 - 12x + 6y + z^3 + 2 = 0 \]
+
+    <p>The normal vector to the tangent plane at any point on the surface is given by \(\vec{n} = \nabla f\). The \(xz\)-plane is defined by the equation \(y = 0\), so its normal vector is \(\vec{n} = \langle 0, 1, 0 \rangle\).</p>
+
+    <div class="important">
+        <strong>parallel planes \(\Rightarrow\) normals are parallel</strong>
+    </div>
+
+    <p>We want to find a point \((x, y, z)\) such that \(\nabla f \parallel \langle 0, 1, 0 \rangle\).</p>
+
+    <p>First, calculate the gradient of \(f\):</p>
+    \[ \nabla f = \langle 12x^2 - 12, 6, 3z^2 \rangle \]
+
+    <p>For \(\nabla f\) to be parallel to \(\langle 0, 1, 0 \rangle\), its \(x\) and \(z\) components must be equal to zero:</p>
+    \[ 12x^2 - 12 = 0 \rightarrow x = \pm 1 \]
+    \[ 3z^2 = 0 \Rightarrow z = 0 \]
+
+    <p>Next, substitute these candidate values back into the original surface equation to solve for \(y\):</p>
+
+    <p><strong>Case 1:</strong> \(x = 1, z = 0 \rightsquigarrow\)</p>
+    \[ 4 - 12 + 6y + 0 + 2 = 0 \Rightarrow 6y - 6 = 0 \Rightarrow y = 1 \]
+    <p>This provides the point <strong>\((1, 1, 0)\)</strong>.</p>
+
+    <p><strong>Case 2:</strong> \(x = -1, z = 0 \rightsquigarrow\)</p>
+    \[ -4 + 12 + 6y + 2 = 0 \Rightarrow 6y + 10 = 0 \Rightarrow y = -10/6 \]
+    <p>This provides the point \((-1, -10/6, 0)\).</p>
+
+    <p>The point \((1, 1, 0)\) corresponds to <strong>Option E</strong>.</p>
+</div>
+
+<p style="text-align: center; margin-top: 50px;">2</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p>MA 26100 - Spring 2026        Exam 1        Test/Quiz #: 11</p>
+
+<div class="example">
+    <h4>Question 2</h4>
+    <p><strong>2.</strong> Let \( f(x, y) = x^2 y + y^3 \). At the point \( (1, 2) \), what is the direction in which \( f \) increases most rapidly?</p>
+    <ul style="list-style-type: none; padding-left: 40px;">
+        <li>A. <strong>\( \langle 4, 13 \rangle \)</strong></li>
+        <li>B. \( \langle 4, 12 \rangle \)</li>
+        <li>C. \( \langle 1, 1 \rangle \)</li>
+        <li>D. \( \langle 2, 8 \rangle \)</li>
+        <li>E. \( \langle 4, 16 \rangle \)</li>
+    </ul>
+</div>
+
+<div class="solution">
+    <p><strong>Handwritten Solution:</strong></p>
+    <p>The direction of most rapid increase is given by the gradient vector \( \vec{\nabla} f \).</p>
+    
+    \[ \vec{\nabla} f = \langle 2xy, x^2 + 3y^2 \rangle \]
+    \[ \vec{\nabla} f(1, 2) = \langle 4, 13 \rangle \]
+    
+    <p>max. Rate of change is \( |\vec{\nabla} f(1, 2)| = \sqrt{4^2 + 13^2} = \sqrt{185} \)</p>
+</div>
+
+<p style="text-align: center; margin-top: 100px;">3</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="text-align: center;">MA 26100 - Spring 2026      Exam 1      Test/Quiz #: 11</p>
+
+<h4>Question 3</h4>
+
+<p><strong>3.</strong> Let \(\vec{r}(t) = \langle e^t, e^t, t \rangle\). Which of the following statements is true?</p>
+
+<ul style="list-style-type: none;">
+    <li>A. The speed is constant. ❌</li>
+    <li>B. The acceleration vector is zero. ❌</li>
+    <li>C. The motion lies in a plane.</li>
+    <li>D. None of the other answers</li>
+    <li>E. The velocity and acceleration vectors are orthogonal for \(t = 0\). ❌</li>
+</ul>
+
+<div class="solution">
+    <p><strong>Solution:</strong></p>
+    <p>\(\vec{r}(t) = \langle x(t), y(t), z(t) \rangle\)</p>
+    <p>\(\text{Velocity} = \vec{r}'(t)\),   \(\text{Speed} = |\vec{r}'(t)|\)</p>
+    <p>\(\text{Acceleration} = \vec{r}''(t)\)</p>
+    
+    <p>\(\vec{r}'(t) = \langle e^t, e^t, 1 \rangle \Rightarrow |\vec{r}'(t)|\) dependent on \(t\).</p>
+    <p>\(\vec{r}''(t) = \langle e^t, e^t, 0 \rangle\)</p>
+    
+    <p>\(\vec{r}''(0) \cdot \vec{r}'(0) = \langle 1, 1, 0 \rangle \cdot \langle 1, 1, 1 \rangle = 1 + 1 + 0 = 2 \neq 0\)</p>
+    
+    <p>To determine if the motion lies in a plane, we look at the parametric equations of the components:</p>
+    <p>
+        \(x = e^t\)<br>
+        \(y = e^t\)<br>
+        \(z = t\)
+    </p>
+    <p>Eliminating the parameter \(t\) from the equations for \(x\) and \(y\), we find:</p>
+    <p>\(x = y\)</p>
+    <p>Since the motion is constrained by the relationship \(x - y = 0\), the entire path lies in a <strong>plane</strong>. Therefore, statement C is true.</p>
+</div>
+
+<p style="text-align: center; margin-top: 50px;">4</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        MA 26100 - Spring 2026    Exam 1    Test/Quiz #: 11
+
+<h4>Question 4: Partial Derivative of an Integral</h4>
+
+<p>4. Let \( g \) be a scalar-valued function of a single variable. Find \( \frac{\partial f}{\partial y} \) if 
+\[ f(x,y) = \int_{x+y}^{x-y} g(t) \, dt. \]</p>
+
+<ul style="list-style-type: none;">
+    <li>A. \( -g(y-x) - g(x+y) \)</li>
+    <li>B. \( g(x-y) - g(x+y) \)</li>
+    <li>C. \( g(-y) - g(y) \)</li>
+    <li>D. \( g(y-x) - g(x+y) \)</li>
+    <li><strong>E. → \( -g(x-y) - g(x+y) \)</strong></li>
+</ul>
+
+<div class="solution">
+    <p><strong>Solution:</strong></p>
+    <p>Using <strong>FTC (Fundamental Theorem of Calculus) &amp; Chain Rule</strong>:</p>
+    
+    \[ F(y) = \int_{f_1(y)}^{f_2(y)} g(t) \, dt \]
+    \[ F'(y) = g(f_2(y)) f_2'(y) - g(f_1(y)) f_1'(y) \]
+    
+    <p>Applying this formula to \( f(x,y) \), where we differentiate with respect to \( y \) and treat \( x \) as a constant:</p>
+    
+    \[ \frac{\partial f}{\partial y} = g(x-y) \cdot \left( \frac{\partial}{\partial y}(x-y) \right) - g(x+y) \cdot \left( \frac{\partial}{\partial y}(x+y) \right) \]
+    
+    <p>The derivatives of the limits of integration with respect to \( y \) are:</p>
+    <ul>
+        <li>\( \frac{\partial}{\partial y}(x-y) = -1 \)</li>
+        <li>\( \frac{\partial}{\partial y}(x+y) = 1 \)</li>
+    </ul>
+    
+    <p>Substituting these values back into the partial derivative expression:</p>
+    
+    \[ \frac{\partial f}{\partial y} = g(x-y) \cdot (-1) - g(x+y) \cdot (1) \]
+    \[ \frac{\partial f}{\partial y} = -g(x-y) - g(x+y) \]
+</div>
+
+<p style="text-align: center;">5</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="display: flex; justify-content: space-between; align-items: center;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 1</span>
+    <span>Test/Quiz #: 11</span>
+</p>
+
+<div class="example">
+    <h4>Question 5</h4>
+    <p>5. Find the maximal <span style="border: 1px solid blue; border-radius: 50%; padding: 2px;">domain</span><span style="color: blue;"> → All possible inputs</span> of the multivariable function</p>
+    
+    \[ f(x, y) = \ln |x^2 - y^2|. \]
+
+    <p>
+        <span style="color: red; font-weight: bold; margin-right: 5px;">✗</span> A. All of \( \mathbb{R}^2 \) except where \( x^2 - y^2 = 1 \) or \( xy = -1 \).<br>
+        B. All of \( \mathbb{R}^2 \) except where \( |x| = |y| \). <span style="color: blue; font-weight: bold;">✓</span><br>
+        <span style="color: red; font-weight: bold; margin-right: 5px;">✗</span> C. All of \( \mathbb{R}^2 \) except the point \( (0,0) \).<br>
+        D. All of \( \mathbb{R}^2 \) except where \( x = y \).<br>
+        <span style="color: red; font-weight: bold; margin-right: 5px;">✗</span> E. All points \( (x,y) \) in \( \mathbb{R}^2 \) such that <span style="text-decoration: underline red; text-underline-offset: 4px;">\( |x| \ge |y| \)</span>.
+    </p>
+</div>
+
+<div class="solution">
+    <p style="color: blue; text-align: right; padding-right: 5%; font-family: cursive, sans-serif;">
+        ln has only +ve numbers as inputs<br><br>
+        Want \( |x^2 - y^2| &gt; 0 \)<br>
+        only points to remove are \( x^2 - y^2 = 0 \)<br>
+        \( \Rightarrow x^2 = y^2 \rightsquigarrow |x| = |y| \)
+    </p>
+</div>
+
+<div style="text-align: center; margin-top: 100px;">6</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 20px; font-weight: normal;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 1</span>
+    <span>Test/Quiz #: 11</span>
+</div>
+
+<div class="example">
+    <h4>Question 6</h4>
+    <p>6. A particle moves along \(\vec{r}(t) = \langle t^2, t^3, \ln(t + 1) \rangle\), \(t &gt; -1\). What is the <u>unit tangent vector</u> \(\vec{T}(t)\) at \(t = 1\)?</p>
+    
+    <ol style="list-style-type: upper-alpha;">
+        <li>\(\frac{1}{\sqrt{3}} \langle 1, 1, 1 \rangle\)</li>
+        <li><strong>→</strong> \(\frac{1}{\sqrt{13.25}} \langle 2, 3, 0.5 \rangle\)</li>
+        <li>\(\frac{1}{\sqrt{14}} \langle 2, 3, 1 \rangle\)</li>
+        <li>\(\frac{1}{\sqrt{5.5}} \langle 2, 3, 0.5 \rangle\)</li>
+        <li>\(\frac{1}{\sqrt{10.25}} \langle 1, 3, 0.5 \rangle\)</li>
+    </ol>
+</div>
+
+<div class="solution">
+    <p><strong>Solution:</strong></p>
+    <p>The unit tangent vector is defined as:</p>
+    \[ \vec{T}(t) = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} \]
+
+    <p>First, find the derivative of the position vector \(\vec{r}(t)\):</p>
+    \[ \vec{r}'(t) = \left\langle 2t, 3t^2, \frac{1}{t+1} \right\rangle \]
+
+    <p>Evaluate the velocity vector at \(t = 1\):</p>
+    \[ \vec{r}'(1) = \langle 2, 3, 0.5 \rangle \]
+
+    <p>Calculate the magnitude of the velocity vector at \(t = 1\):</p>
+    \[ |\vec{r}'(1)| = \sqrt{4 + 9 + 0.25} = \sqrt{13.25} \]
+
+    <p>Substitute these into the formula for the unit tangent vector at \(t = 1\):</p>
+    \[ \vec{T}(1) = \frac{1}{\sqrt{13.25}} \langle 2, 3, 0.5 \rangle \]
+</div>
+
+<div style="text-align: center; margin-top: 50px;">
+    7
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span>MA 26100 - Spring 2026</span>
+        <span>Exam 1</span>
+        <span>Test/Quiz #: 11</span>
+    </div>
+
+    <h4>7. Identify the surface:</h4>
+    \[ -x^2 + \frac{y^2}{25} - \frac{z^2}{9} - 1 = 0. \]
+
+    <ol type="A">
+        <li>Hyperboloid of one sheet.</li>
+        <li>Hyperboloid of two sheets, the shortest distance between the two sheets is 6.</li>
+        <li>Hyperboloid of two sheets, the shortest distance between the two sheets is 5.</li>
+        <li>Hyperboloid of two sheets, the shortest distance between the two sheets is 18.</li>
+        <li>Hyperboloid of two sheets, the shortest distance between the two sheets is 10.</li>
+    </ol>
+
+    <div class="solution">
+        <p>To identify the surface, we can rearrange the equation to its standard form:</p>
+        \[ \frac{y^2}{25} - x^2 - \frac{z^2}{9} = 1 \]
+
+        <p>We analyze the traces of the surface:</p>
+
+        <p>For traces where \( x = k \) and \( z = k \), the results are hyperbolas:</p>
+        <ul>
+            <li>When \( x = k \): \( \frac{y^2}{25} - \frac{z^2}{9} = k^2 + 1 \) (Hyperbolas)</li>
+            <li>When \( z = k \): \( \frac{y^2}{25} - x^2 = \frac{k^2}{9} + 1 \) (Hyperbolas)</li>
+        </ul>
+
+        <p>For traces where \( y = k \), the surface consists of ellipses:</p>
+        \[ x^2 + \frac{z^2}{9} = \frac{k^2}{25} - 1 \]
+
+        <div class="important">
+            <p>For the ellipses to exist, the right side of the equation must be greater than or equal to zero:</p>
+            <p>Want \( \frac{k^2}{25} - 1 \ge 0 \Rightarrow k^2 \ge 25 \Rightarrow k \ge 5 \) or \( k \le -5 \).</p>
+        </div>
+
+        <p>This indicates a hyperboloid of two sheets that opens along the \( y \)-axis, with vertices at \( y = 5 \) and \( y = -5 \).</p>
+
+        
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam1-1.webp" loading="lazy" decoding="async" alt="Hand-drawn 3D coordinate system showing a hyperboloid of two sheets opening along the y-axis. The x-axis extends toward the bottom left, the z-axis points upward, and the y-axis points to the right. Two bowl-shaped surfaces (nappes) are sketched on the y-axis. The vertex of the left nappe is at y = -5 and the vertex of the right nappe is at y = 5. A red bracket spans the gap between the two vertices along the y-axis, labeled with the number 10, indicating the shortest distance between the two sheets. Cross-sectional ellipses are drawn on both nappes to represent the traces." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Hand-drawn 3D coordinate system showing a hyperboloid of two sheets opening along the y-axis. The x-axis extends toward the bottom left, the z-axis points upward, and the y-axis points to the right. Two bowl-shaped surfaces (nappes) are sketched on the y-axis. The vertex of the left nappe is at y = -5 and the vertex of the right nappe is at y = 5. A red bracket spans the gap between the two vertices along the y-axis, labeled with the number 10, indicating the shortest distance between the two sheets. Cross-sectional ellipses are drawn on both nappes to represent the traces.</span>
+                      </div>
+                    </div>
+                  
+        </diagram-placeholder>
+
+        <p>Since the vertices are at \( y = 5 \) and \( y = -5 \), the shortest distance between the two sheets is \( 5 - (-5) = 10 \).</p>
+        <p>The correct answer is <strong>E</strong>.</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">8</div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>MA 26100 - Spring 2026 — Exam 1 — Test/Quiz #: 11</h4>
+
+<p>8. Compute following limit, if it exists:</p>
+
+\[ \lim_{(x,y) \to (0,0)} \frac{xy^2}{x^2 + y^4} \]
+
+
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam1-2.webp" loading="lazy" decoding="async" alt="A coordinate plane diagram illustrating different paths of approach to the origin (0,0) for the multivariable limit problem. The diagram includes: 1) A blue vertical line representing the y-axis (x = 0) with arrows pointing inward toward the origin from both above and below. 2) A red parabolic curve opening to the right, labeled elsewhere as the path x = y², with arrows pointing toward the origin. 3) A purple parabolic curve opening to the left, representing another path of approach (x = -y²), also with arrows pointing toward the origin. A black horizontal line represents the x-axis. The diagram visually demonstrates why the limit might not exist by showing different possible trajectories toward the origin." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate plane diagram illustrating different paths of approach to the origin (0,0) for the multivariable limit problem. The diagram includes: 1) A blue vertical line representing the y-axis (x = 0) with arrows pointing inward toward the origin from both above and below. 2) A red parabolic curve opening to the right, labeled elsewhere as the path x = y², with arrows pointing toward the origin. 3) A purple parabolic curve opening to the left, representing another path of approach (x = -y²), also with arrows pointing toward the origin. A black horizontal line represents the x-axis. The diagram visually demonstrates why the limit might not exist by showing different possible trajectories toward the origin.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    <p>A. <strong>The limit does not exist.</strong></p>
+    <p>B. \( \frac{1}{2} \)</p>
+    <p>C. 0</p>
+    <p>D. \( -\frac{1}{2} \)</p>
+    <p>E. 1</p>
+
+    <p><strong>Worked Solution:</strong></p>
+    
+    <p>To determine if the limit exists, we test the limit along different paths approaching \((0,0)\).</p>
+
+    <p><strong>Path 1:</strong> Let \( x = 0 \)</p>
+    \[ \lim_{y \to 0} \frac{0 \cdot y^2}{0^2 + y^4} = \lim_{y \to 0} \frac{0}{y^4} = 0 \]
+
+    <p><strong>Path 2:</strong> Let \( x = y^2 \)</p>
+    \[ \lim_{y \to 0} \frac{y^2 \cdot y^2}{(y^2)^2 + y^4} = \lim_{y \to 0} \frac{y^4}{y^4 + y^4} = \lim_{y \to 0} \frac{y^4}{2y^4} = \frac{1}{2} \]
+
+    <div class="important">
+        Since the limit yields different values (\(0\) and \( \frac{1}{2} \)) along different paths, the limit does not exist.
+    </div>
+</div>
+
+<p style="text-align: center;">9</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <h4>Optimization on a Region</h4>
+
+    <p>9. Let \( M \) and \( m \) denote the maximum and the minimum values of \( f(x, y) = x^2 + y^2 - 6x + 3 \) on the disk \( x^2 + y^2 \leq 16 \). Find \( M + m \).</p>
+
+    <p>
+        A. 37<br>
+        B. 49<br>
+        C. 43<br>
+        D. 48<br>
+        E. 38
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/review-exam1-3.webp" loading="lazy" decoding="async" alt="Coordinate plane diagram showing a circle centered at the origin representing the region x^2 + y^2 ≤ 16. The interior of the circle is filled with horizontal hatching lines. The boundary of the circle intersects the x-axis at two labeled points: (-4, 0) on the left and (4, 0) on the right. A vertical line represents the y-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Coordinate plane diagram showing a circle centered at the origin representing the region x^2 + y^2 ≤ 16. The interior of the circle is filled with horizontal hatching lines. The boundary of the circle intersects the x-axis at two labeled points: (-4, 0) on the left and (4, 0) on the right. A vertical line represents the y-axis.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <p><strong>Step 1: Check the interior of the disk (\( x^2 + y^2 &lt; 16 \)).</strong></p>
+        <p>Find \( (x, y) \) such that \( f_x = 0 \) and \( f_y = 0 \):</p>
+        \[ f_x = 2x - 6 = 0 \implies x = 3 \]
+        \[ f_y = 2y = 0 \implies y = 0 \]
+        <p>This gives the critical point \( (3, 0) \), which is inside the disk.</p>
+
+        <p><strong>Step 2: Check the boundary (\( x^2 + y^2 = 16 \)).</strong></p>
+        <p>On the boundary, \( y^2 = 16 - x^2 \) for \( -4 \leq x \leq 4 \). Substitute this into \( f \):</p>
+        \[ f = x^2 + (16 - x^2) - 6x + 3 \]
+        \[ f = 19 - 6x, \text{ for } -4 \leq x \leq 4 \]
+        <p>Since this expression is <strong>linear</strong>, we look at the endpoints: \( (4, 0) \) and \( (-4, 0) \).</p>
+
+        <p><strong>Step 3: Evaluate \( f \) at candidate points to find \( M \) and \( m \).</strong></p>
+        <ul>
+            <li>\( f(3, 0) = 3^2 + 0^2 - 6(3) + 3 = 9 - 18 + 3 = -6 \) (minimum value, <strong>\( m \)</strong>)</li>
+            <li>\( f(4, 0) = 4^2 + 0^2 - 6(4) + 3 = 16 - 24 + 3 = -5 \)</li>
+            <li>\( f(-4, 0) = (-4)^2 + 0^2 - 6(-4) + 3 = 16 + 24 + 3 = 43 \) (maximum value, <strong>\( M \)</strong>)</li>
+        </ul>
+
+        <p><strong>Step 4: Calculate \( M + m \).</strong></p>
+        \[ M + m = 43 + (-6) = 37 \]
+    </div>
+
+    <p style="text-align: center;">10</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p>MA 26100 - Spring 2026          Exam 1          Test/Quiz #: 11</p>
+
+<h4>Question 10</h4>
+<p>
+    10. A particle travels with position vector \(\vec{r}(t) = \langle 5 \cos t + 7, 12t - 11, 5 \sin t - 12 \rangle, t \geq 0\). Find the difference \(t_2 - t_1\) such that during the interval of time from \(t_1\) to \(t_2\) the particle has traveled a distance 52.
+</p>
+
+<p style="padding-left: 2em;">
+    A. 3<br>
+    B. 2<br>
+    C. 5<br>
+    D. 6<br>
+    E. 4
+</p>
+
+<div class="definition">
+    <p>\(\vec{r}(t), a \leq t \leq b\)</p>
+    \[ \text{Arc Length} = \int_a^b |\vec{r}'(t)| dt \]
+</div>
+
+<div class="solution">
+    <p>Distance travelled = Arc length = 52</p>
+    <p>Find \(t_2 - t_1\) such that \(52 = \int_{t_1}^{t_2} |\vec{r}'(t)| dt\)</p>
+    
+    <p>
+        \[ \vec{r}'(t) = \langle -5 \sin t, 12, 5 \cos t \rangle \]
+        \[ |\vec{r}'(t)| = \sqrt{5^2 + 12^2} = 13 \]
+    </p>
+
+    <p>
+        \[ 52 = \int_{t_1}^{t_2} 13 dt = 13(t_2 - t_1) \]
+    </p>
+
+    <p>
+        \[ t_2 - t_1 = 4 \]
+    </p>
+</div>
+
+<p style="text-align: center; margin-top: 2em;">11</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div style="display: flex; justify-content: space-between; font-family: sans-serif; font-size: 0.9em; margin-bottom: 20px;">
+    <span>MA 26100 - Spring 2026</span>
+    <span>Exam 1</span>
+    <span>Test/Quiz #: 11</span>
+</div>
+
+<h4 id="question-11">Question 11</h4>
+
+<p>
+    11. Let \( \overset{F(x,y,z)}{e^{xz} + yz^2} = 3 \). Use implicit differentiation to compute \( \frac{\partial z}{\partial x} \) at \( (x, y, z) = (0, 2, 1) \).
+</p>
+
+<div style="margin-left: 2em; margin-bottom: 20px; line-height: 1.5;">
+    A. \( \frac{1}{2} \)<br>
+    <span style="color: red; font-weight: bold;">→</span> B. \( -\frac{1}{4} \)<br>
+    C. \( -4 \)<br>
+    D. \( \frac{1}{4} \)<br>
+    E. \( -\frac{1}{2} \)
+</div>
+
+<div class="solution">
+    <div class="important">
+        <strong>Remember:</strong> \( z = z(x, y) \)<br>
+        Take partial derivative w.r.t. \( x \) of the equation:
+    </div>
+
+    \[ \frac{\partial}{\partial x} \left[ e^{xz} + yz^2 \right] = \frac{\partial}{\partial x} 3 \]
+    \[ e^{xz} \left[ 1 \cdot z + x \cdot \frac{\partial z}{\partial x} \right] + 2yz \cdot \frac{\partial z}{\partial x} = 0 \]
+
+    <p>Substitute \( x = 0, y = 2, z = 1 \):</p>
+    \[ 1 [1 + 0] + 4 \frac{\partial z}{\partial x} = 0 \implies \frac{\partial z}{\partial x} = -1/4 \]
+    
+    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+    
+    <p><strong>OR</strong></p>
+    
+    <p>\( F(x, y, z) = e^{xz} + yz^2 \)</p>
+    
+    \[ F_x + F_z \cdot \frac{\partial z}{\partial x} = 0 \implies \frac{\partial z}{\partial x} = -\frac{F_x}{F_z} = -\frac{[z e^{xz}]}{x e^{xz} + 2yz} \]
+    
+    <p>Evaluating at \( (0, 2, 1) \):</p>
+    
+    <div style="text-align: center; margin-top: 10px;">
+        <span style="border: 1px solid black; border-radius: 50%; padding: 10px; display: inline-block;">
+            \( -\frac{1}{4} \)
+        </span>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 40px; font-size: 0.9em;">
+    12
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-12" aria-labelledby="page-title-12">
+                    <h3 id="page-title-12">Page 12</h3>
+                    
+                    
+                    <div class="page-content">
+                        <p style="display: flex; justify-content: space-between; margin-bottom: 2em;">
+  <span>MA 26100 - Spring 2026</span>
+  <span>Exam 1</span>
+  <span>Test/Quiz #: 11</span>
+</p>
+
+<h4>Question 12</h4>
+
+<p><strong>12.</strong> Find equation of the plane in \(\mathbb{R}^3\) that passes through the point \(P(1, 5, -3)\) and is orthogonal to the line passing through the two points \(Q(-3, 3, 4)\) and \(R(3, 2, 5)\)</p>
+
+<div style="margin-left: 2em; margin-bottom: 2em; line-height: 1.8;">
+  A. \(5y + 9z = -2\)<br>
+  B. \(4x + 2y - 7z = 35\)<br>
+  C. \(6x - y + z = -2\)<br>
+  D. \(5x + 46y + 16z = 187\)<br>
+  E. \(-y + z = -8\)
+</div>
+
+<div class="solution">
+  <p>\(\vec{n} = \vec{QR} = \langle 6, -1, 1 \rangle\)</p>
+
+  <p>
+    equation of plane through \((1, 5, -3)\)<br>
+    with \(\vec{n} = \langle 6, -1, 1 \rangle\)
+  </p>
+
+  \[ 6(x - 1) - 1(y - 5) + 1(z + 3) = 0 \]
+  \[ 6x - 6 - y + 5 + z + 3 = 0 \longrightarrow \boxed{6x - y + z + 2 = 0} \]
+</div>
+
+<p style="text-align: center; margin-top: 5em;">13</p>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/27/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

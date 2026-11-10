@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 25: Vector Fields (17.1) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson25.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 25: Vector Fields (17.1)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 3/23/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson25.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 25: Vector Fields (17.1)</h4>
+
+<p>The following table outlines the progression of function types through various stages of calculus, categorized by their input and output dimensions, culminating in the definition of a vector field.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Context</th>
+            <th style="text-align: center;">input</th>
+            <th style="text-align: center;">function \(\longrightarrow\)</th>
+            <th style="text-align: center;">Output</th>
+            <th>Examples</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Calc I &amp; II</strong></td>
+            <td style="text-align: center;">1 Number</td>
+            <td></td>
+            <td style="text-align: center;">1 Number</td>
+            <td>
+                eg: \(f(x) = \sin x\) <br>
+                \(f(x) = x^3 - x\)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Ch. 14</strong></td>
+            <td style="text-align: center;">1 Number</td>
+            <td></td>
+            <td style="text-align: center;">
+                2-vector <br>
+                or <br>
+                3-vector
+            </td>
+            <td>
+                eg: \(\vec{r}(t) = \langle \sin t, \cos t \rangle\) <br>
+                \(\vec{r}(t) = \langle \sin t, \cos t, t \rangle\)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Ch. 15, 16</strong></td>
+            <td style="text-align: center;">
+                2 Numbers <br>
+                or <br>
+                3 Numbers
+            </td>
+            <td></td>
+            <td style="text-align: center;">1 Number</td>
+            <td>
+                eg: \(f(x,y) = x^2 + y^2\) <br>
+                \(f(x,y,z) = x + \sin y + z^2\)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Ch. 17</strong></td>
+            <td style="text-align: center;">
+                2 Numbers <br>
+                3 Numbers
+            </td>
+            <td></td>
+            <td style="text-align: center;">
+                2-vector <br>
+                3-vector
+            </td>
+            <td>
+                <div class="definition">
+                    <strong>Vector field</strong>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Physical examples:</h4>
+
+<div class="example">
+    <p>
+        1) Acceleration due to gravity = \(\langle 0, 0, -9.8 \rangle\) 
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-1.webp" loading="lazy" decoding="async" alt="A 3D Cartesian coordinate system diagram illustrating a uniform vector field for acceleration due to gravity. The system shows three axes meeting at an origin. Distributed throughout the 3D space are several identical blue arrows, all pointing vertically downwards in the negative z-direction. The uniform length and direction of the arrows visually represent a constant vector field where every vector is defined as \(\langle 0, 0, -9.8 \rangle\)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D Cartesian coordinate system diagram illustrating a uniform vector field for acceleration due to gravity. The system shows three axes meeting at an origin. Distributed throughout the 3D space are several identical blue arrows, all pointing vertically downwards in the negative z-direction. The uniform length and direction of the arrows visually represent a constant vector field where every vector is defined as \(\langle 0, 0, -9.8 \rangle\).</span>
+                      </div>
+                    </div>
+                  
+    </p>
+
+    <p>2) Wind velocity</p>
+    
+                    <div class="inline-diagram-container" style="width: 69%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-2.webp" loading="lazy" decoding="async" alt="A 3D Cartesian coordinate system diagram illustrating wind velocity as a non-uniform vector field. The system features three axes meeting at an origin. Multiple blue arrows of varying lengths and pointing in different directions are scattered throughout the space. This variety in arrow size and orientation represents a vector field where the magnitude and direction of the vectors change depending on the spatial location, which is characteristic of phenomena like wind." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D Cartesian coordinate system diagram illustrating wind velocity as a non-uniform vector field. The system features three axes meeting at an origin. Multiple blue arrows of varying lengths and pointing in different directions are scattered throughout the space. This variety in arrow size and orientation represents a vector field where the magnitude and direction of the vectors change depending on the spatial location, which is characteristic of phenomena like wind.</span>
+                      </div>
+                    </div>
+                  
+</div>
+
+<h4>Non-examples:</h4>
+<p>Temperature, pressure.</p>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>2D examples</h4>
+
+<div class="example">
+    <p>
+        1) \(\vec{F}(x,y) = \langle 1, -1 \rangle\)
+    </p>
+    <div class="solution">
+        <p>
+            \(\vec{F}(1, 0) = \langle 1, -1 \rangle\)<br>
+            \(\vec{F}(1, 5) = \langle 1, -1 \rangle\)
+        </p>
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-3.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate system showing a constant vector field. Five blue vectors are plotted at different points across the quadrants. Each vector has the same length and points in the same direction, diagonally down and to the right at a 45-degree angle. This illustrates that for the vector field \(\vec{F}(x,y) = \langle 1, -1 \rangle\), the vector assigned to any point \((x,y)\) is constant in both magnitude and direction." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate system showing a constant vector field. Five blue vectors are plotted at different points across the quadrants. Each vector has the same length and points in the same direction, diagonally down and to the right at a 45-degree angle. This illustrates that for the vector field \(\vec{F}(x,y) = \langle 1, -1 \rangle\), the vector assigned to any point \((x,y)\) is constant in both magnitude and direction.</span>
+                      </div>
+                    </div>
+                  
+    </div>
+</div>
+
+<div class="example">
+    <p>
+        2) \(\vec{F}(x,y) = \langle -y, x \rangle\)
+    </p>
+    <div class="solution">
+        <p>
+            \(\vec{F}(1, 0) = \langle 0, 1 \rangle\)<br>
+            \(\vec{F}(3, 0) = \langle 0, 3 \rangle\)<br>
+            \(\vec{F}(1, 3) = \langle -3, 1 \rangle\)<br>
+            \(\vec{F}(2, -1) = \langle 1, 2 \rangle\)<br>
+            \(\vec{F}(0, 1) = \langle -1, 0 \rangle\)<br>
+            \(\vec{F}(-1, 0) = \langle 0, -1 \rangle\)<br>
+            \(\vec{F}(0, -1) = \langle 1, 0 \rangle\)
+        </p>
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-4.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate system showing a rotational vector field. Several blue vectors are plotted to demonstrate the field \(\vec{F}(x,y) = \langle -y, x \rangle\). On the positive x-axis at (1,0), a vector points straight up; further out at (3,0), a significantly longer vector points straight up. On the positive y-axis at (0,1), a vector points to the left. On the negative x-axis at (-1,0), a vector points straight down. On the negative y-axis at (0,-1), a vector points to the right. Additionally, a vector at (1,3) points sharply left and slightly up, while a vector at (2,-1) points right and up. The resulting pattern shows vectors that are always tangent to concentric circles centered at the origin, creating a counter-clockwise rotation with magnitudes that increase linearly with distance from the origin." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate system showing a rotational vector field. Several blue vectors are plotted to demonstrate the field \(\vec{F}(x,y) = \langle -y, x \rangle\). On the positive x-axis at (1,0), a vector points straight up; further out at (3,0), a significantly longer vector points straight up. On the positive y-axis at (0,1), a vector points to the left. On the negative x-axis at (-1,0), a vector points straight down. On the negative y-axis at (0,-1), a vector points to the right. Additionally, a vector at (1,3) points sharply left and slightly up, while a vector at (2,-1) points right and up. The resulting pattern shows vectors that are always tangent to concentric circles centered at the origin, creating a counter-clockwise rotation with magnitudes that increase linearly with distance from the origin.</span>
+                      </div>
+                    </div>
+                  
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>3D examples:</h4>
+
+<div class="example">
+    <p>
+        1. \(\vec{F}(x, y, z) = \langle 1, 0, -1 \rangle\)
+    </p>
+    
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-5.webp" loading="lazy" decoding="async" alt="A sketch of a 3D vector field on a coordinate system representing the constant vector function \(\vec{F}(x, y, z) = \langle 1, 0, -1 \rangle\). The diagram shows a set of 3D axes. Multiple blue arrows are drawn throughout the coordinate space, all of equal length and pointing in the same direction: forward (positive x-direction) and downward (negative z-direction), with no movement in the y-direction." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A sketch of a 3D vector field on a coordinate system representing the constant vector function \(\vec{F}(x, y, z) = \langle 1, 0, -1 \rangle\). The diagram shows a set of 3D axes. Multiple blue arrows are drawn throughout the coordinate space, all of equal length and pointing in the same direction: forward (positive x-direction) and downward (negative z-direction), with no movement in the y-direction.</span>
+                      </div>
+                    </div>
+                  
+</div>
+
+<div class="example">
+    <p>
+        2. \(\vec{F}(x, y, z) = \langle x, y, z \rangle\)
+    </p>
+    
+    <div class="solution">
+        <p>
+            \(\vec{F}(1, 0, 0) = \langle 1, 0, 0 \rangle\)<br>
+            \(\vec{F}(1, 1, 1) = \langle 1, 1, 1 \rangle\)<br>
+            \(\vec{F}(2, 2, 2) = \langle 2, 2, 2 \rangle\)
+        </p>
+    </div>
+
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-6.webp" loading="lazy" decoding="async" alt="A sketch of a 3D vector field representing the radial function \(\vec{F}(x, y, z) = \langle x, y, z \rangle\). The diagram shows a 3D Cartesian coordinate system with x, y, and z axes. Numerous blue arrows originate from various points in space and point directly away from the origin (0,0,0). Arrows are drawn pointing along the positive and negative directions of each axis, as well as diagonally into the octants. The length of the arrows increases as they get further from the origin, indicating that the magnitude of the vector is proportional to the distance from the source." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A sketch of a 3D vector field representing the radial function \(\vec{F}(x, y, z) = \langle x, y, z \rangle\). The diagram shows a 3D Cartesian coordinate system with x, y, and z axes. Numerous blue arrows originate from various points in space and point directly away from the origin (0,0,0). Arrows are drawn pointing along the positive and negative directions of each axis, as well as diagonally into the octants. The length of the arrows increases as they get further from the origin, indicating that the magnitude of the vector is proportional to the distance from the source.</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Radial Vector Fields</h3>
+
+<div class="definition">
+    <p>Let \(\vec{r} = \langle x, y, z \rangle\) and \(f(x, y, z)\) be a scalar function. The vector field \(\vec{F}(x, y, z) = f(x, y, z) \vec{r}\) is called a <strong>radial vector field</strong>.</p>
+</div>
+
+<div class="example">
+    <p><strong>e.g.</strong></p>
+    <ol>
+        <li>\(\vec{F}(x, y, z) = \langle x, y, z \rangle = \vec{r}\)</li>
+        <li>\(\vec{F}(x, y, z) = \frac{\vec{r}}{|\vec{r}|^p}\), where \(p\) is any number.</li>
+        <li>\(\vec{F}(x, y) = \frac{\vec{r}}{|\vec{r}|} = \frac{1}{\sqrt{x^2+y^2}} \langle x, y \rangle \leadsto |\vec{F}| = \frac{|\vec{r}|}{|\vec{r}|} = 1\) at every point.</li>
+    </ol>
+
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-7.webp" loading="lazy" decoding="async" alt="A vector field diagram representing the unit radial vector field F(x, y) = r / |r|. The diagram depicts a 2D Cartesian coordinate system with arrows pointing directly away from the origin in eight distinct radial directions: along the positive and negative x-axis, the positive and negative y-axis, and the four 45-degree diagonal lines. Along each of these eight rays, there are three blue arrows of equal length, signifying that the vector field has a constant magnitude of 1 at every point." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A vector field diagram representing the unit radial vector field F(x, y) = r / |r|. The diagram depicts a 2D Cartesian coordinate system with arrows pointing directly away from the origin in eight distinct radial directions: along the positive and negative x-axis, the positive and negative y-axis, and the four 45-degree diagonal lines. Along each of these eight rays, there are three blue arrows of equal length, signifying that the vector field has a constant magnitude of 1 at every point.</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+  <h4>Example</h4>
+  <p>
+    \(\vec{F}(x,y) = \langle y, x \rangle\), \(C\) is a unit circle \(x^2 + y^2 = 1\)
+  </p>
+  <p>
+    Where is \(\vec{F}\) <strong>tangent</strong> to \(C\)? (parallel to tangent line)<br>
+    Where is \(\vec{F}\) <strong>Normal</strong> to \(C\)? (perpendicular)
+  </p>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-8.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a unit circle \(x^2+y^2=1\) centered at the origin on a Cartesian grid. Several vector arrows originating from the circle's circumference represent the vector field \(\vec{F}(x,y) = \langle y, x \rangle\). At the point \((1, 0)\), a vector arrow points vertically upward, showing it is tangent to the circle. At a point in the first quadrant (approximately 45 degrees), a vector arrow points radially outward, showing it is normal to the circle. Other vectors in the first and fourth quadrants are shown pointing outward at various angles, illustrating the vector field's orientation relative to the circle boundary." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Coordinate graph showing a unit circle \(x^2+y^2=1\) centered at the origin on a Cartesian grid. Several vector arrows originating from the circle's circumference represent the vector field \(\vec{F}(x,y) = \langle y, x \rangle\). At the point \((1, 0)\), a vector arrow points vertically upward, showing it is tangent to the circle. At a point in the first quadrant (approximately 45 degrees), a vector arrow points radially outward, showing it is normal to the circle. Other vectors in the first and fourth quadrants are shown pointing outward at various angles, illustrating the vector field's orientation relative to the circle boundary.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+  <p>
+    Let \(g(x,y) = x^2 + y^2\)
+  </p>
+  <p>
+    \(C\) is <strong>Level curve</strong> \(g = 1\)
+  </p>
+  <p>
+    \(\vec{\nabla}g = \langle 2x, 2y \rangle\) is <strong>perpendicular</strong> to Level curves
+  </p>
+  <p>
+    \(\vec{F}\) is tangent to \(C \implies \vec{F} \perp \vec{\nabla}g\)
+  </p>
+  <p>
+    \(\vec{F}\) is Normal to \(C \implies \vec{F} \parallel \vec{\nabla}g\)
+  </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Tangency and the Gradient Vector</h4>
+
+<p>
+    The vector field \(\vec{F}\) is tangent to the curve \(C\) if it is perpendicular to the gradient vector of the constraint function \(g\):
+    \[ \vec{F} \text{ is tangent to } C \Rightarrow \vec{F} \perp \vec{\nabla} g \]
+</p>
+
+<p>
+    Given \(\vec{F} = \langle y, x \rangle\) and \(\vec{\nabla} g = \langle 2x, 2y \rangle\), we have:
+    \[ \vec{F} \perp \vec{\nabla} g \Rightarrow \langle y, x \rangle \cdot \langle 2x, 2y \rangle = 0 \]
+    \[ 2xy + 2xy = 0 \]
+    \[ 4xy = 0 \]
+</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-9.webp" loading="lazy" decoding="async" alt="Diagram showing a unit circle on a Cartesian coordinate system. The circle is centered at the origin of the x and y axes. There are four blue dots marking the intercepts where the circle crosses the axes. At each of these points, a blue arrow represents a tangent vector field F. At the top intercept (0, 1), the vector points right. At the bottom intercept (0, -1), the vector points left. At the right intercept (1, 0), the vector points up. At the left intercept (-1, 0), the vector points down. These vectors illustrate the points where the vector field F = (y, x) is tangent to the curve C defined by the unit circle." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram showing a unit circle on a Cartesian coordinate system. The circle is centered at the origin of the x and y axes. There are four blue dots marking the intercepts where the circle crosses the axes. At each of these points, a blue arrow represents a tangent vector field F. At the top intercept (0, 1), the vector points right. At the bottom intercept (0, -1), the vector points left. At the right intercept (1, 0), the vector points up. At the left intercept (-1, 0), the vector points down. These vectors illustrate the points where the vector field F = (y, x) is tangent to the curve C defined by the unit circle.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    <p>From the equation \(4xy = 0\), we find the points on the unit circle \(x^2 + y^2 = 1\) where the vector field is tangent to the curve by considering two cases:</p>
+
+    <p><strong>Case 1: \(x = 0\)</strong></p>
+    <p>
+        Substituting into the unit circle equation:
+        \[ x^2 + y^2 = 1 \]
+        \[ 0^2 + y^2 = 1 \]
+        \[ y^2 = 1 \]
+        \[ y = \pm 1 \]
+    </p>
+    <p>This yields the points: <strong>\((0, 1)\)</strong> and <strong>\((0, -1)\)</strong>.</p>
+
+    <p><strong>Case 2: \(y = 0\)</strong></p>
+    <p>
+        Substituting into the unit circle equation:
+        \[ x^2 + y^2 = 1 \]
+        \[ x^2 + 0^2 = 1 \]
+        \[ x^2 = 1 \]
+        \[ x = \pm 1 \]
+    </p>
+    <p>This yields the points: <strong>\((1, 0)\)</strong> and <strong>\((-1, 0)\)</strong>.</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Vector Field Normal to a Curve</h4>
+
+<div class="example">
+    <p>Finding points where the vector field \(\vec{F}\) is normal to the curve \(C\):</p>
+    <p>\[\vec{F} \text{ is Normal to } C \Rightarrow \vec{F} \parallel \nabla g\]</p>
+    
+    <p>Given \(\vec{F} = \langle y, x \rangle\) and \(\nabla g = \langle 2x, 2y \rangle\), we have:</p>
+    <p>
+        \[\vec{F} = \langle y, x \rangle \parallel \nabla g = \langle 2x, 2y \rangle \Rightarrow \langle y, x \rangle = k \langle 2x, 2y \rangle\]
+        \[\langle y, x \rangle = \langle 2kx, 2ky \rangle\]
+    </p>
+
+    <p>This results in the following system of equations:</p>
+    <ol>
+        <li>\(y = 2kx\)</li>
+        <li>\(x = 2ky\)</li>
+    </ol>
+
+    <p>Substituting equation (1) into (2):</p>
+    <p>\[x = 2k(2kx) \Rightarrow x = 4k^2x\]</p>
+
+    <div class="solution">
+        <p>From the equation \(x = 4k^2x\), we analyze the possible solutions:</p>
+        
+        <p><strong>Case 1: \(x = 0\)</strong></p>
+        <p>If \(x = 0\), then from equations (1) or (2), \(y = 0\). This gives the point \((0, 0)\). This point is rejected (marked with a red cross) because it does not lie on the constraint curve \(C: x^2 + y^2 = 1\).</p>
+
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-25-10.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate graph showing a blue circle centered at the origin, representing the constraint curve C where x squared plus y squared equals 1. The horizontal x-axis and vertical y-axis are shown. Four green vectors are drawn originating from the circle at points approximately 45 degrees apart in each of the four quadrants. These vectors point directly away from the origin, illustrating that the vector field F is normal (perpendicular) to the circle at these specific points: (1/sqrt(2), 1/sqrt(2)), (-1/sqrt(2), 1/sqrt(2)), (-1/sqrt(2), -1/sqrt(2)), and (1/sqrt(2), -1/sqrt(2))." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate graph showing a blue circle centered at the origin, representing the constraint curve C where x squared plus y squared equals 1. The horizontal x-axis and vertical y-axis are shown. Four green vectors are drawn originating from the circle at points approximately 45 degrees apart in each of the four quadrants. These vectors point directly away from the origin, illustrating that the vector field F is normal (perpendicular) to the circle at these specific points: (1/sqrt(2), 1/sqrt(2)), (-1/sqrt(2), 1/sqrt(2)), (-1/sqrt(2), -1/sqrt(2)), and (1/sqrt(2), -1/sqrt(2)).</span>
+                      </div>
+                    </div>
+                  
+
+        <p><strong>Case 2: \(4k^2 = 1\)</strong></p>
+        
+        <p>This leads to two sub-cases for the constant \(k\):</p>
+        
+        <div class="important">
+            <p><strong>Sub-case \(k = \frac{1}{2}\):</strong></p>
+            <p>Substituting \(k\) back into equations (1) or (2) yields:</p>
+            <p>\[y = x\]</p>
+            <p>Substituting this into the constraint equation \(x^2 + y^2 = 1\):</p>
+            <p>\[2x^2 = 1\]</p>
+            <p>This gives the points: \(\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)\) and \(\left(-\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}\right)\)</p>
+        </div>
+
+        <div class="important">
+            <p><strong>Sub-case \(k = -\frac{1}{2}\):</strong></p>
+            <p>Substituting \(k\) back into equations (1) or (2) yields:</p>
+            <p>\[y = -x\]</p>
+            <p>Substituting this into the constraint equation \(x^2 + y^2 = 1\):</p>
+            <p>\[2x^2 = 1\]</p>
+            <p>This gives the points: \(\left(-\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)\) and \(\left(\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}\right)\)</p>
+        </div>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Gradient Field</h4>
+
+<p>Given any \(\phi(x,y,z)\) a scalar function,</p>
+<p>\[\vec{F} = \vec{\nabla}\phi = \langle\phi_x, \phi_y, \phi_z\rangle \text{ is a vector field.}\]</p>
+
+<div class="important">
+    <p>Can every \(\vec{F}\) be written as \(\vec{F} = \vec{\nabla}\phi\), for some \(\phi\)?</p>
+</div>
+
+<div class="definition">
+    <p><strong>Definition:</strong> If yes, \(\vec{F}\) is called a <strong>Gradient Field</strong> or <strong>Force Field</strong>.</p>
+    <p><strong>Definition:</strong> Such a \(\phi\), if it exists, is called a <strong>potential function</strong>.</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Determining if a Vector Field is a Gradient Field</h4>
+    <p>Given \(\vec{F} = \langle y, x \rangle\), is \(\vec{F}\) a Gradient Field?</p>
+
+    <div class="solution">
+        <p>Can we find a potential function \(\phi(x, y)\) such that \(\vec{F} = \nabla \phi = \langle \phi_x, \phi_y \rangle\)?</p>
+        <p>i.e., \(\langle y, x \rangle = \langle \phi_x, \phi_y \rangle\)</p>
+
+        <p>(1) \(\phi_x = y \leadsto \frac{\partial \phi}{\partial x} = y\)</p>
+        <p>(2) \(\phi_y = x\)</p>
+
+        <p><strong>Integrate w.r.t. \(x\):</strong></p>
+        \[ \phi(x, y) = \int y \, dx = xy + K(y) \]
+
+        <p><strong>Derivative w.r.t. \(y\):</strong></p>
+        \[ \phi_y = x + K'(y) \]
+
+        <p><strong>Use (2):</strong></p>
+        \[ x = x + K'(y) \]
+        \[ K'(y) = 0 \leadsto K(y) = C \]
+
+        <p>For \(\phi(x, y) = xy + C\), \(\nabla \phi = \vec{F} \Rightarrow \vec{F}\) is a <strong>Gradient Field</strong>.</p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Determining if a Vector Field is a Gradient Field</h4>
+    <p><strong>Example:</strong> Given \(\vec{F} = \langle y, -x \rangle\), is \(\vec{F}\) a Gradient Field?</p>
+    <p>Can we find \(\phi(x, y)\) such that \(\vec{F} = \vec{\nabla}\phi = \langle \phi_x, \phi_y \rangle\)?</p>
+    <p>i.e., \(\langle y, -x \rangle = \langle \phi_x, \phi_y \rangle\)</p>
+
+    <div class="solution">
+        <p>From the above relation, we have two required conditions:</p>
+        <ol>
+            <li>\(\phi_x = y\)</li>
+            <li>\(\phi_y = -x\)</li>
+        </ol>
+
+        <p>Starting with condition (1):</p>
+        \[\phi_x = y \rightarrow \frac{\partial \phi}{\partial x} = y\]
+        
+        <p>Integrating with respect to \(x\):</p>
+        \[\phi(x, y) = \int y \, dx = xy + k(y)\]
+
+        <p>Now, taking the derivative of this expression with respect to \(y\):</p>
+        \[\phi_y = x + k'(y)\]
+
+        <p>Using condition (2), where \(\phi_y = -x\), we substitute to find \(k'(y)\):</p>
+        \[-x = x + k'(y)\]
+        \[k'(y) = -2x\]
+
+        <div class="important">
+            <p>Note: \(k'(y)\) must be a <strong>function of \(y\) only</strong>. Because the result involves \(x\), this is <strong>NOT possible</strong>.</p>
+        </div>
+
+        <p>Conclusion: \(\vec{F}\) is <strong>Not a Gradient Field</strong>.</p>
+    </div>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 3/23/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

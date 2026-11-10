@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Derivative Test - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2016%20addendum-second_derivative_test-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 16 addendum-second_derivative_test.pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><section><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Second Derivative Test</h1><p class="mb-6">The second derivative test says:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_x = 0 \text{ and } f_y = 0 \Rightarrow x=a, y=b \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>If at \((a,b)\) \(f_{xx} f_{yy} - (f_{xy})^2 &gt; 0, f_{xx} &gt; 0\), local min</li><li>If at \((a,b)\) \(f_{xx} f_{yy} - (f_{xy})^2 &gt; 0, f_{xx} &lt; 0\), local max</li><li>If at \((a,b)\) \(f_{xx} f_{yy} - (f_{xy})^2 &lt; 0\), saddle point</li></ul></section><section><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Why?</h2><p class="mb-6">We can use two-variable Taylor series expansion about \((a,b)\) to rewrite \(z = f(x,y)\) as:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f(x,y) = f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b) \] \[ + \frac{1}{2!} \left[ f_{xx}(a,b)(x-a)^2 + 2f_{xy}(a,b)(x-a)(y-b) + f_{yy}(a,b)(y-b)^2 \right] + \dots \]</div><p class="italic text-slate-700 mb-6">(Note the first line is simply the tangent plane approximation of \(f(x,y)\))</p><p class="mb-6">At \((a,b)\), \(f_x(a,b) = f_y(a,b) = 0\) (definition of critical points). Let's truncate the series after the second-order terms (ignore the \(\dots\)).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f(x,y) \approx f(a,b) + \frac{1}{2!} \left[ f_{xx}(a,b)(x-a)^2 + 2f_{xy}(a,b)(x-a)(y-b) + f_{yy}(a,b)(y-b)^2 \right] \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><section><p class="mb-6">If \(f(a,b)\) is a <span class="border-b-2 border-red-500">local minimum</span>, then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f(x,y) - f(a,b) &gt; 0 \]</div><p class="mb-6">So</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \frac{1}{2!} \left[ f_{xx}(a,b)(x-a)^2 + 2f_{xy}(a,b)(x-a)(y-b) + f_{yy}(a,b)(y-b)^2 \right] &gt; 0 \]</div><p class="mb-6">or</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_{xx}(a,b)(x-a)^2 + 2f_{xy}(a,b)(x-a)(y-b) + f_{yy}(a,b)(y-b)^2 &gt; 0 \]</div><p class="mb-6">Let \(x-a = h, y-b = k\). We want</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_{xx} h^2 + 2f_{xy} hk + f_{yy} k^2 &gt; 0 \]</div><p class="mb-6">Divide by \(k^2\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_{xx} \left(\frac{h}{k}\right)^2 + 2f_{xy} \left(\frac{h}{k}\right) + f_{yy} &gt; 0 \]</div><p class="italic text-slate-700 mb-6">Quadratic in the form of:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_{xx} w^2 + 2f_{xy} w + f_{yy} &gt; 0 \]</div><p class="mb-6">Consider \(f_{xx} w^2 + 2f_{xy} w + f_{yy} = 0\) first. Its roots are:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ w = \frac{-f_{xy} \pm \sqrt{(f_{xy})^2 - f_{xx} f_{yy}}}{f_{xx}} \]</div><p class="mb-6">If \((f_{xy})^2 - f_{xx} f_{yy} &lt; 0\) (or \(f_{xx} f_{yy} - (f_{xy})^2 &gt; 0\)), then there are no real roots and \(f_{xx} w^2 + 2f_{xy} w + f_{yy}\) is always positive if...</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_{xx} &gt; 0 \]</div><p class="mb-6">so, \[ f(x,y) - f(a,b) = \frac{1}{2!} \left[ f_{xx} h^2 + 2 f_{xy} hk + f_{yy} k^2 \right] &gt; 0 \]</p><p class="mb-6">this is why \( D = f_{xx} f_{yy} - (f_{xy})^2 &gt; 0 \) and \( f_{xx} &gt; 0 \) means we have a local minimum at \( (a,b) \).</p></section><section class="mb-10"><p class="mb-6">and if \( f_{xx} &lt; 0 \), then as long as \( f_{xx} f_{yy} - (f_{xy})^2 &gt; 0 \) means there are no real roots to \( f_{xx} w^2 + 2 f_{xy} w + f_{yy} = 0 \) and \( f_{xx} w^2 + 2 f_{xy} w + f_{yy} &lt; 0 \)</p></section><section class="mb-10"><p class="mb-6">If \( f_{xx} f_{yy} - (f_{xy})^2 &lt; 0 \), then \( w \) will have real roots, and that means \( f_{xx} w^2 + 2 f_{xy} w + f_{yy} \) will sometimes be positive and sometimes be negative, so \( f(x,y) - f(a,b) \) will sometimes be greater than zero and sometimes less than zero.</p></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

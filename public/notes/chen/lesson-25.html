@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.1 Vector Fields - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2025%20%2817.1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 25 (17.1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight mb-2">17.1 Vector Fields</h1><p class="text-red-600 font-bold mb-8">(NOT on exam 2)</p><section class="mb-12"><div class="grid-layout"><div class="mb-6"><p class="mb-4">\( f(x, y) = x + y \) this is also called a <span class="underline decoration-indigo-500">scalar field</span> because it assigns a <span class="underline decoration-indigo-500 text-indigo-700">scalar</span> to each point \( (x, y) \).</p><div class="my-4 pl-4 border-l-2 border-slate-200"><p>at \( (1, 1) \) &nbsp;&nbsp; \( f(1, 1) = 2 \)</p><p>\( (2, 0) \) &nbsp;&nbsp; \( f(2, 0) = 2 \)</p></div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D Cartesian coordinate system with points (1,1) and (2,0) marked on the axes.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-1.webp" loading="lazy" decoding="async" alt="2D Cartesian coordinate system with points (1,1) and (2,0) marked on the axes." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D Cartesian coordinate system with points (1,1) and (2,0) marked on the axes.
+                  </figcaption>
+                </figure>
+              </div><p class="italic text-slate-700">an example: temperature distribution in this room</p></section><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Vector Fields</h2><p class="mb-6">A <span class="underline decoration-indigo-500">vector field</span> is a function that assigns a vector to a point \( (x, y) \).</p><div class="grid-layout"><div class="mb-6"><p class="mb-4">for example, \( \vec{F}(x, y) = \langle x, y \rangle = x\vec{i} + y\vec{j} \)</p><div class="my-4 pl-4 border-l-2 border-slate-200"><p>at \( (1, 1) \), \( \vec{F}(1, 1) = \langle 1, 1 \rangle = \vec{i} + \vec{j} \)</p><p>\( (0, 2) \), \( \vec{F}(0, 2) = \langle 0, 2 \rangle \)</p></div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D coordinate system showing vectors &lt;1,1&gt; and &lt;0,2&gt; originating from their respective points.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-2.webp" loading="lazy" decoding="async" alt="2D coordinate system showing vectors &lt;1,1&gt; and &lt;0,2&gt; originating from their respective points." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D coordinate system showing vectors &lt;1,1&gt; and &lt;0,2&gt; originating from their respective points.
+                  </figcaption>
+                </figure>
+              </div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-12"><p class="mb-6">the acceleration due to gravity in this room is a vector field</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-center text-xl">\( \vec{F}(x, y, z) = \langle 0, 0, -g \rangle \)</p></div><div class="grid-layout">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system (x, y, z) with multiple downward-pointing arrows indicating a constant vector field.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-3.webp" loading="lazy" decoding="async" alt="3D coordinate system (x, y, z) with multiple downward-pointing arrows indicating a constant vector field." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system (x, y, z) with multiple downward-pointing arrows indicating a constant vector field.
+                  </figcaption>
+                </figure>
+              <div class="flex items-center justify-center italic text-slate-700"><p>magnitude is \( g \)</p></div></div></section><hr class="border-t-2 border-indigo-100 my-12"><section><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-xl">\( \vec{F}(x, y) = \left\langle \frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}} \right\rangle \)</p></div><p class="font-bold text-indigo-700 mb-4">Sketch?</p><p class="mb-6">we can pick points, but let's analyze this vector field a bit more</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><section><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{F} = \frac{1}{\sqrt{x^2+y^2}} \langle x, y \rangle \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ |\vec{F}| = \left| \frac{1}{\sqrt{x^2+y^2}} \right| |\langle x, y \rangle| = \frac{1}{\sqrt{x^2+y^2}} \sqrt{x^2+y^2} = 1 \]</div><p class="mb-6">So this vector field consists of vectors of magnitude 1.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><p class="mb-6">direction is from \( \langle x, y \rangle \)</p><ul class="list-none space-y-2 mb-6"><li>at \( (1,1) \rightarrow \langle 1,1 \rangle \)</li><li>\( (0,1) \rightarrow \langle 0,1 \rangle \)</li><li>\( (1,0) \rightarrow \langle 1,0 \rangle \)</li><li>\( (-1,0) \rightarrow \langle -1,0 \rangle \)</li></ul></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D coordinate plane showing unit vectors pointing radially away from the origin in all directions.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-4.webp" loading="lazy" decoding="async" alt="A 2D coordinate plane showing unit vectors pointing radially away from the origin in all directions." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D coordinate plane showing unit vectors pointing radially away from the origin in all directions.
+                  </figcaption>
+                </figure>
+              </div></div><p class="mt-4 font-bold">unit vectors pointing radially away from origin</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><section><h1 class="text-2xl font-black tracking-tight text-slate-900 mb-6 underline">example</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{F}(x,y) = \langle y, -x \rangle \]</div><p class="mb-6">magnitude: \( |\vec{F}| = \sqrt{x^2+y^2} \) → the farther from origin, the greater the magnitude</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A vector field plot on a 2D plane where vectors spiral clockwise and increase in length further from the origin.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-5.webp" loading="lazy" decoding="async" alt="A vector field plot on a 2D plane where vectors spiral clockwise and increase in length further from the origin." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A vector field plot on a 2D plane where vectors spiral clockwise and increase in length further from the origin.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><ul class="list-none space-y-2 mb-6"><li>\( \vec{F}(0,0) = \langle 0,0 \rangle = \vec{0} \) (zero vector)</li><li>\( \vec{F}(1,0) = \langle 0,-1 \rangle \)</li><li>\( \vec{F}(0,1) = \langle 1,0 \rangle \)</li><li>\( \vec{F}(0,-1) = \langle -1,0 \rangle \)</li><li>\( \vec{F}(1,1) = \langle 1,-1 \rangle \)</li><li>\( \vec{F}(2,0) = \langle 0,-2 \rangle \)</li></ul><p class="mt-10 font-bold">Spiral out</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><section><p class="mb-6">If the vector field →F is the gradient of some scalar function U, then the function U is called the <span class="border-b-2 border-indigo-500">potential function</span> of the vector field →F.</p><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ U = \frac{1}{\sqrt{x^2+y^2}} \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{\nabla} U = \left\langle \frac{\partial U}{\partial x}, \frac{\partial U}{\partial y} \right\rangle = \left\langle -\frac{1}{2}(x^2+y^2)^{-3/2}(2x), -\frac{1}{2}(x^2+y^2)^{-3/2}(2y) \right\rangle \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \left\langle \frac{-x}{(\sqrt{x^2+y^2})^3}, \frac{-y}{(\sqrt{x^2+y^2})^3} \right\rangle \]</div><p class="mb-6">So, U is the potential function since the vector field is \( \vec{\nabla} U \).</p><p class="mb-6">If we graph them, we see the vectors of the field vector field being \( \perp \) to level curves of U.</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><section><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Visualizing Vector Fields and Potential Contours</h2><div class="grid-layout"><p class="mb-6">The following plot illustrates the relationship between a vector field \( \vec{F} \) and the contours of its potential function \( f \). Note how the vectors are consistently perpendicular to the level curves.</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector field plot with arrows perpendicular to colored contour lines of a potential function f.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-25-6.webp" loading="lazy" decoding="async" alt="Vector field plot with arrows perpendicular to colored contour lines of a potential function f." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector field plot with arrows perpendicular to colored contour lines of a potential function f.
+                  </figcaption>
+                </figure>
+              <figcaption class="text-center text-sm text-slate-600 mt-2">Vector field F with contours of potential f</figcaption></figure></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><section class="mb-10"><p class="text-xl font-semibold mb-4">NOT every vector field is the gradient of something</p><ul class="list-none space-y-4 ml-4"><li><span class="inline-block mr-2 text-indigo-600">→</span>not every vector field has a potential function</li></ul></section><section class="mb-10"><p class="mb-6">If the vector field ℒ represents a force vector field, and it has a potential function <span class="inline-block bg-slate-50 px-2 py-1 rounded border border-slate-200">(ℒ = ∇U)</span>, then we say the force is <span class="underline decoration-indigo-500 decoration-2 font-bold">conservative</span> (gravity is one such force)</p><ul class="list-none space-y-4 ml-4"><li><span class="inline-block mr-2 text-indigo-600">→</span>in a conservative force field, the work done is independent of path</li></ul></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

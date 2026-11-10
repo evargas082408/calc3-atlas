@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 34: Stokes Theorem - I (17.7) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson34.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 34: Stokes Theorem - I (17.7)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/13/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson34.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 34: Stokes Theorem - I (17.7)</h4>
+
+<div class="example">
+    Review example: Evaluate \(\iint_S \vec{F} \cdot d\vec{S}\), where \(\vec{F} = 4\vec{k} = \langle 0, 0, 4 \rangle\) and \(S\) is the rectangle in the \(xy\)-plane.
+    
+    \[ \iint_S \vec{F} \cdot d\vec{S} = \iint_S \vec{F} \cdot \vec{n} \, dS \]
+
+    <div class="important">
+        <strong>Convention:</strong> The unit normal vector \(\vec{n}\) should point up or outward.
+    </div>
+
+    
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-1.webp" loading="lazy" decoding="async" alt="A 3D coordinate system with x, y, and z axes. A green shaded rectangular surface labeled S lies in the xy-plane. The rectangle's boundaries are defined by its vertices, including (3, 0, 0) on the x-axis and (0, 2, 0) on the y-axis. Two blue arrows, representing the unit normal vector n, point vertically upwards from the surface S in the positive z-direction." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system with x, y, and z axes. A green shaded rectangular surface labeled S lies in the xy-plane. The rectangle's boundaries are defined by its vertices, including (3, 0, 0) on the x-axis and (0, 2, 0) on the y-axis. Two blue arrows, representing the unit normal vector n, point vertically upwards from the surface S in the positive z-direction.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        In the \(xy\)-plane \(\Rightarrow z = 0\).
+        The unit normal vector is \(\vec{n} = \vec{k} = \langle 0, 0, 1 \rangle\).
+
+        \[ \iint_S \vec{F} \cdot d\vec{S} = \iint_S \vec{F} \cdot \vec{n} \, dS = \iint_S 4 \, dS \]
+        \[ = 4 \iint_S 1 \, dS \]
+        \[ = 4 \times \text{Area}(S) \]
+        \[ = 4 \times 6 = 24 \]
+    </div>
+</div>
+
+<p>Suppose \(\vec{G} = 7\vec{j} = \langle 0, 7, 0 \rangle\), then:</p>
+\[ \iint_S \vec{G} \cdot d\vec{S} = \iint_S \vec{G} \cdot \vec{n} \, dS = 0 \]
+(Since \(\vec{G} \cdot \vec{n} = \langle 0, 7, 0 \rangle \cdot \langle 0, 0, 1 \rangle = 0\))
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Surface Integrals</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-2.webp" loading="lazy" decoding="async" alt="A diagram illustrating the parameterization of a surface. On the left, a 2D coordinate system with axes labeled u and v contains a blue-outlined region R. A red arrow labeled r(u, v) points from region R to a green-shaded surface S in a 3D coordinate system (represented by a vertical z-axis) on the right. A purple normal vector n is shown pointing outward from the surface S. Next to surface S, the formula for the unit normal vector is given as \vec{n} = \pm \frac{(r_u \times r_v)}{|r_u \times r_v|}." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A diagram illustrating the parameterization of a surface. On the left, a 2D coordinate system with axes labeled u and v contains a blue-outlined region R. A red arrow labeled r(u, v) points from region R to a green-shaded surface S in a 3D coordinate system (represented by a vertical z-axis) on the right. A purple normal vector n is shown pointing outward from the surface S. Next to surface S, the formula for the unit normal vector is given as \vec{n} = \pm \frac{(r_u \times r_v)}{|r_u \times r_v|}.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+The surface integral of a scalar function \( f \) over a surface \( S \) is defined by mapping it back to the region \( R \) in the \( uv \)-plane:
+\[ \iint_S f \, dS = \iint_R f(r(u,v)) |r_u \times r_v| \, dA \]
+
+The surface integral of a vector field \( \vec{F} \) over an oriented surface \( S \), also known as the flux, is defined as:
+\[ \iint_S \vec{F} \cdot d\vec{S} = \iint_S \vec{F} \cdot \vec{n} \, dS = \iint_R \vec{F}(r(u,v)) \cdot (\pm r_u \times r_v) \, dA \]
+
+<div class="important">
+Regarding the \(\pm\) sign in the vector surface integral formula:
+<strong>Choose \(\pm\) based on what's given or convention.</strong>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Stokes Theorem \(\rightarrow\) extension of Green's to 3D</h4>
+
+<div class="theorem">
+    <p><strong>Green's Theorem:</strong> \(C\) is a 2D closed curve.</p>
+    \[ \vec{F} = \langle f(x,y), g(x,y) \rangle \]
+
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram with labeled x, y, and z axes. The y-axis is vertical (pointing up), the x-axis is horizontal (pointing right), and the z-axis is drawn diagonally (pointing down and to the left). In the xy-plane, there is a shaded region labeled 'S', which is enclosed by a green boundary curve labeled 'C'. The region 'S' is filled with purple diagonal hatching lines. This visualizes the planar region and its boundary in a 3D context." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram with labeled x, y, and z axes. The y-axis is vertical (pointing up), the x-axis is horizontal (pointing right), and the z-axis is drawn diagonally (pointing down and to the left). In the xy-plane, there is a shaded region labeled 'S', which is enclosed by a green boundary curve labeled 'C'. The region 'S' is filled with purple diagonal hatching lines. This visualizes the planar region and its boundary in a 3D context.</span>
+                      </div>
+                    </div>
+                  
+
+    \[ \oint_C \vec{F} \cdot d\vec{r} = \iint_S (g_x - f_y) dA \]
+    <p>In this expression, the term \( (g_x - f_y) \) is the <strong>2D curl</strong>.</p>
+</div>
+
+<h4>Extend to 3D:</h4>
+<p>To extend the theorem to three dimensions, we define the vector field \(\vec{F}\) as:</p>
+\[ \vec{F} = \langle f(x,y), g(x,y), 0 \rangle \]
+
+<p>Consider \(S\) as a region in the \(xy\) plane, with boundary curve \(C\) and a normal vector \(\vec{n} = \langle 0, 0, 1 \rangle\).</p>
+
+<p>The curl of the vector field is:</p>
+\[ \text{curl } \vec{F} = \nabla \times \vec{F} = \langle 0, 0, g_x - f_y \rangle \]
+
+<p>Using these definitions, the relationship can be expressed as:</p>
+\[ \oint_C \vec{F} \cdot d\vec{r} = \iint_S \text{curl } \vec{F} \cdot \vec{n} \, dA \]
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h2>Stokes' Theorem and Orientation</h2>
+
+
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-4.webp" loading="lazy" decoding="async" alt="A technical diagram illustrating an oriented surface S and its boundary curve C. The surface S is shown as a 3D dome-like shape with purple diagonal hatching. A blue arrow points vertically upwards from the surface, representing the positive unit normal vector field. The boundary of this surface is a closed green curve C at the base. A green arrow on curve C indicates a counter-clockwise orientation when viewed from above, which is consistent with the right-hand rule relative to the upward-pointing surface normal." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram illustrating an oriented surface S and its boundary curve C. The surface S is shown as a 3D dome-like shape with purple diagonal hatching. A blue arrow points vertically upwards from the surface, representing the positive unit normal vector field. The boundary of this surface is a closed green curve C at the base. A green arrow on curve C indicates a counter-clockwise orientation when viewed from above, which is consistent with the right-hand rule relative to the upward-pointing surface normal.</span>
+                      </div>
+                    </div>
+                  
+
+<p>If \( S \) is an oriented surface with boundary an oriented curve \( C \), then:</p>
+
+<div class="theorem">
+    \[ \oint_{C} \vec{F} \cdot d\vec{r} = \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} \]
+</div>
+
+<p>Orientation of \( S \) is determined by its normal vector.</p>
+
+<p>For curve \( C \):</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-5.webp" loading="lazy" decoding="async" alt="Two simplified diagrams of closed loops showing possible directions for a curve C. The first loop on the left has a green arrow indicating a clockwise orientation. The word 'or' is written in green between the two loops. The second loop on the right has a green arrow indicating a counter-clockwise orientation." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Two simplified diagrams of closed loops showing possible directions for a curve C. The first loop on the left has a green arrow indicating a clockwise orientation. The word 'or' is written in green between the two loops. The second loop on the right has a green arrow indicating a counter-clockwise orientation.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="important">
+    <p>Choose direction/orientation such that when you roll your fingers in the direction of curve \( C \), your thumb points in the normal direction of \( S \).</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example</h4>
+    <p>
+        \( \vec{F} = \langle y, -x, 0 \rangle \) <br>
+        \( S \) is part of sphere of Radius 2, \( z \geq 1 \). Normal pointing outward.
+    </p>
+
+    <div class="important">
+        <p>
+            Normal pointing outward \( \Downarrow \) <br>
+            z coordinate is \( \geq 0 \)
+        </p>
+    </div>
+
+    <p>Find \( \iint_S \text{curl} \vec{F} \cdot d\vec{S} \)</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-6.webp" loading="lazy" decoding="async" alt="A 3D coordinate diagram showing a spherical cap S situated above the xy-plane. The cap is the part of a sphere of radius 2 where z is greater than or equal to 1. Blue arrows represent outward-pointing normal vectors on the surface S. The boundary of the surface is a circular curve C in a horizontal plane. A green arrow on curve C indicates a counter-clockwise orientation when viewed from above. The x, y, and z axes are shown originating from (0,0,0) below the cap." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate diagram showing a spherical cap S situated above the xy-plane. The cap is the part of a sphere of radius 2 where z is greater than or equal to 1. Blue arrows represent outward-pointing normal vectors on the surface S. The boundary of the surface is a circular curve C in a horizontal plane. A green arrow on curve C indicates a counter-clockwise orientation when viewed from above. The x, y, and z axes are shown originating from (0,0,0) below the cap.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>Two ways to compute:</p>
+
+    <ol>
+        <li>
+            <strong>Direct:</strong>
+            <ul>
+                <li>Find \( \text{curl} \vec{F} \)</li>
+                <li>Parametrize \( S: \vec{r}(u,v) \) on \( R \)</li>
+                <li>Find \( \vec{r}_u \times \vec{r}_v \)</li>
+                <li>
+                    Evaluate: 
+                    \[ \iint_S \text{curl} \vec{F} \cdot d\vec{S} = \iint_R \text{curl} \vec{F} \cdot (\pm \vec{r}_u \times \vec{r}_v) \, dA \]
+                </li>
+            </ul>
+        </li>
+        <li>
+            <strong>Stokes:</strong>
+            <ul>
+                <li>Parametrize \( C: \vec{r}(t), a \leq t \leq b \)</li>
+                <li>
+                    Evaluate: 
+                    \[ \iint_S \text{curl} \vec{F} \cdot d\vec{S} = \oint_C \vec{F} \cdot d\vec{r} = \int_a^b \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \, dt \]
+                </li>
+            </ul>
+        </li>
+    </ol>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Vector Field Calculation and Surface Parametrization</h3>
+
+
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-7.webp" loading="lazy" decoding="async" alt="A 3D Cartesian coordinate system featuring a surface S and its boundary curve C. The surface S is a hemispherical dome portion, shaded with purple hatch lines, situated above the xy-plane. A blue arrow points away from the surface, indicating its orientation. The boundary of the dome is a green circular curve C, which includes an arrow indicating a counter-clockwise orientation when viewed from above. Labels 'S' and 'C' are placed near their respective components." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D Cartesian coordinate system featuring a surface S and its boundary curve C. The surface S is a hemispherical dome portion, shaded with purple hatch lines, situated above the xy-plane. A blue arrow points away from the surface, indicating its orientation. The boundary of the dome is a green circular curve C, which includes an arrow indicating a counter-clockwise orientation when viewed from above. Labels 'S' and 'C' are placed near their respective components.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+<div class="solution">
+    <section>
+        <p><strong>Direct:</strong></p>
+        \[ \text{curl } \vec{F} = \vec{\nabla} \times \vec{F} = \begin{vmatrix} \bar{i} & \bar{j} & \bar{k} \\ \partial/\partial x & \partial/\partial y & \partial/\partial z \\ y & -x & 0 \end{vmatrix} \]
+        \[ = \langle 0, 0, -2 \rangle \]
+    </section>
+
+    <section>
+        <p><strong>Parametrize \( S \):</strong> Use spherical coordinates</p>
+        \[ 
+        \begin{aligned}
+        x &= \rho \sin \phi \cos \theta \\
+        y &= \rho \sin \phi \sin \theta \\
+        z &= \rho \cos \phi 
+        \end{aligned}
+        \]
+
+        <p>
+            \( \rho = 2 \leadsto \) sphere of radius 2<br>
+            \( \phi \) is 0 to when you hit \( z = 1 \leadsto 1 = 2 \cos \phi \leadsto \cos \phi = 1/2 \Rightarrow \phi = \pi/3 \)<br>
+            \( 0 \le \theta \le 2\pi \)
+        </p>
+    </section>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Surface Parametrization and Vector Normal Calculation</h4>
+
+<div class="solution">
+    <p>
+        \[ r(\phi, \theta) = \langle 2 \sin\phi \cos\theta, 2 \sin\phi \sin\theta, 2 \cos\phi \rangle \]
+        \[ 0 \leq \phi \leq \pi/3 \]
+        \[ 0 \leq \theta \leq 2\pi \]
+    </p>
+
+    <p>
+        Partial derivatives with respect to \(\phi\) and \(\theta\):
+        \[ r_{\phi} = \langle 2 \cos\phi \cos\theta, 2 \cos\phi \sin\theta, -2 \sin\phi \rangle \]
+        \[ r_{\theta} = \langle -2 \sin\phi \sin\theta, 2 \sin\phi \cos\theta, 0 \rangle \]
+    </p>
+
+    <p>
+        Calculating the cross product to find the normal vector:
+        \[ r_{\phi} \times r_{\theta} = \langle 4 \sin^{2}\phi \cos\theta, 4 \sin^{2}\phi \sin\theta, 4 \cos\phi \sin\phi (\underbrace{\cos^{2}\theta + \sin^{2}\theta}_{1}) \rangle \]
+    </p>
+
+    <p>
+        Evaluating the orientation based on the \(z\)-coordinate:
+        \[ z \text{-coordinate} = 4 \cos\phi \sin\phi &gt; 0 \]
+        for \( 0 &lt; \phi &lt; \pi/3 \)
+    </p>
+
+    <div class="important">
+        So we choose \( r_{\phi} \times r_{\theta} \) instead of \( -r_{\phi} \times r_{\theta} \).
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="solution">
+    <h4>Evaluation of the Surface Integral</h4>
+
+    \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \int_{0}^{2\pi} \int_{0}^{\pi/3} \text{curl } \vec{F} \cdot (\vec{r}_{\phi} \times \vec{r}_{\theta}) \, d\phi \, d\theta \]
+
+    \[ = \int_{0}^{2\pi} \int_{0}^{\pi/3} \langle 0, 0, -2 \rangle \cdot \langle \, , \, , 4 \cos \phi \sin \phi \rangle \, d\phi \, d\theta \]
+
+    \[ = -8 \int_{0}^{2\pi} \int_{0}^{\pi/3} \cos \phi \sin \phi \, d\phi \, d\theta \]
+
+    \[ = -8 * 2\pi * \left. \frac{\sin^2 \phi}{2} \right|_{0}^{\pi/3} = -8 \times \pi \times \left[ \frac{\sqrt{3}}{2} \right]^2 \]
+
+    \[ = -6\pi \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Using Stokes:</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-8.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram illustrating the setup for Stokes' Theorem. It shows a three-dimensional hemispherical surface labeled \( S \), shaded with pink diagonal lines, and several blue arrows representing normal vectors pointing outwards. The base of the dome is a horizontal boundary curve labeled \( C \), shown in green. The coordinate system includes a vertical z-axis and two horizontal axes (x and y). The curve \( C \) is situated above the xy-plane, representing the intersection of the sphere and a horizontal plane." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram illustrating the setup for Stokes' Theorem. It shows a three-dimensional hemispherical surface labeled \( S \), shaded with pink diagonal lines, and several blue arrows representing normal vectors pointing outwards. The base of the dome is a horizontal boundary curve labeled \( C \), shown in green. The coordinate system includes a vertical z-axis and two horizontal axes (x and y). The curve \( C \) is situated above the xy-plane, representing the intersection of the sphere and a horizontal plane.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    \( C \): intersection of \( z = 1 \) &amp; \( x^2 + y^2 + z^2 = 4 \)
+    <br>
+    \( \Rightarrow x^2 + y^2 = 3, \quad z = 1 \)
+    <br>
+    \( C \): circle of radius \( \sqrt{3} \) at \( z = 1 \)
+    <p>
+        \( r(t) = \langle \sqrt{3} \cos t, \sqrt{3} \sin t, 1 \rangle \)
+        <br>
+        \( 0 \le t \le 2\pi \)
+    </p>
+    <p>
+        \( r'(t) = \langle -\sqrt{3} \sin t, \sqrt{3} \cos t, 0 \rangle \)
+        <br>
+        \( F(r(t)) = \langle \sqrt{3} \sin t, -\sqrt{3} \cos t, 0 \rangle \)
+    </p>
+    \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} = \int_{0}^{2\pi} F(r(t)) \cdot r'(t) \, dt = \int_{0}^{2\pi} (-3) \, dt = -6\pi \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Stokes' Theorem Example</h4>
+
+<div class="example">
+    <strong>Example:</strong> Given the vector field \(\vec{F} = \langle xz - y, x - yz, x^2 \rangle\) and a surface \(S\) that is the part of the paraboloid \(z = 1 - x^2 - y^2\) above the \(xy\)-plane, with the normal pointing upward, find:
+    \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} \]
+</div>
+
+<div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-9.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram showing the surface S. The surface is a downward-opening paraboloid defined by \(z = 1 - x^2 - y^2\), located above the xy-plane. The peak of the paraboloid is at (0, 0, 1) on the vertical z-axis, and its base is a circle of radius 1 centered at the origin in the xy-plane. Blue arrows on the surface point upward and outward, representing the positive orientation of the normal vectors. The x, y, and z axes are drawn to show the spatial orientation." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram showing the surface S. The surface is a downward-opening paraboloid defined by \(z = 1 - x^2 - y^2\), located above the xy-plane. The peak of the paraboloid is at (0, 0, 1) on the vertical z-axis, and its base is a circle of radius 1 centered at the origin in the xy-plane. Blue arrows on the surface point upward and outward, representing the positive orientation of the normal vectors. The x, y, and z axes are drawn to show the spatial orientation.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>By Stokes' Theorem, the surface integral of the curl is equal to the line integral around the boundary curve \(C\):</p>
+    \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} \]
+
+    <p>First, we identify the boundary curve \(C\), which is the intersection of the paraboloid and the \(xy\)-plane:</p>
+    <ul>
+        <li>Surface equation: \(z = 1 - x^2 - y^2\)</li>
+        <li>\(xy\)-plane equation: \(z = 0\)</li>
+    </ul>
+    <p>Setting \(z = 0\), we get \(0 = 1 - x^2 - y^2\), which is a <strong>circle of radius 1</strong> at \(z = 0\).</p>
+
+    <p>Next, we parameterize the curve \(C\):</p>
+    \[ \vec{r}(t) = \langle \cos t, \sin t, 0 \rangle, \quad 0 \le t \le 2\pi \]
+    <p>The derivative is:</p>
+    \[ \vec{r}'(t) = \langle -\sin t, \cos t, 0 \rangle \]
+
+    <p>Evaluating the vector field \(\vec{F}\) on the curve \(\vec{r}(t)\):</p>
+    \[ \vec{F}(\vec{r}(t)) = \langle xz - y, x - yz, x^2 \rangle = \langle (\cos t)(0) - \sin t, \cos t - (\sin t)(0), \cos^2 t \rangle \]
+    \[ \vec{F}(\vec{r}(t)) = \langle -\sin t, \cos t, \cos^2 t \rangle \]
+
+    <p>Finally, we calculate the line integral:</p>
+    \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} = \int_{0}^{2\pi} \vec{F}(\vec{r}(t)) \cdot \vec{r}'(t) \, dt \]
+    \[ = \int_{0}^{2\pi} \langle -\sin t, \cos t, \cos^2 t \rangle \cdot \langle -\sin t, \cos t, 0 \rangle \, dt \]
+    \[ = \int_{0}^{2\pi} (\sin^2 t + \cos^2 t + 0) \, dt \]
+    \[ = \int_{0}^{2\pi} 1 \, dt = [t]_{0}^{2\pi} = \mathbf{2\pi} \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Application of Stokes' Theorem</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-34-10.webp" loading="lazy" decoding="async" alt="A 3D coordinate diagram illustrating the relationship between two surfaces sharing the same boundary curve for the application of Stokes' Theorem. A purple dome-shaped surface, labeled S, rises from the xy-plane into the positive z-direction. Its base is a green closed curve, labeled C, which lies entirely in the xy-plane. Several blue arrows represent the outward-pointing normal vectors of surface S. Within the same green boundary curve C, a second surface labeled S2 is shown as a flat, red-hashed disk lying in the xy-plane. The z-axis is indicated by a vertical blue arrow, and the x and y axes are represented by black lines." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate diagram illustrating the relationship between two surfaces sharing the same boundary curve for the application of Stokes' Theorem. A purple dome-shaped surface, labeled S, rises from the xy-plane into the positive z-direction. Its base is a green closed curve, labeled C, which lies entirely in the xy-plane. Several blue arrows represent the outward-pointing normal vectors of surface S. Within the same green boundary curve C, a second surface labeled S2 is shown as a flat, red-hashed disk lying in the xy-plane. The z-axis is indicated by a vertical blue arrow, and the x and y axes are represented by black lines.</span>
+                      </div>
+                    </div>
+                  
+
+<p>\( C \) is also the boundary for \( S_2 \).</p>
+
+\[ \iint_S \text{curl } \vec{F} \cdot d\vec{S} = \oint_C \vec{F} \cdot d\vec{r} \]
+\[ = \iint_{S_2} \text{curl } \vec{F} \cdot d\vec{S} \]
+
+<div class="important">
+    <strong>Another way to apply Stokes':</strong> find an easy surface with the same boundary.
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/13/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 3: Cylinders and Quadric Surfaces (Page-by-Page)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.1
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.5em;
+        }
+        
+        h3:first-of-type {
+            margin-top: 0;
+        }
+        
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0 40px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        figure {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.95em;
+        }
+        
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        
+        li { 
+            margin: 8px 0; 
+        }
+        
+        hr {
+            margin: 50px 0;
+            border: none;
+            border-top: 3px solid #3498db;
+            opacity: 0.6;
+        }
+        
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+            .page-content {
+                padding: 15px;
+            }
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            figure {
+                page-break-inside: avoid;
+            }
+            .page-content {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson3.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 3: Cylinders and Quadric Surfaces (13.6) - Part I</h3>
+<p><em>Page-by-Page Format: Each handwritten page is shown followed by its accessible content</em></p>
+
+<hr>
+
+<!-- PAGE 1 -->
+<h3>Page 1: Title and Warm-up Questions</h3>
+<figure>
+    <img src="img/lesson-03-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson title and warm-up questions about x=2 and x²+y²=1">
+    <figcaption>Original handwritten page 1</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Lesson 3: Cylinders and Quadric Surfaces (13.6) - Part I</h4>
+    
+    <h4>Warm-up Questions (Think-Pair-Share)</h4>
+    
+    <div class="example">
+        <h5>Question 1: What does \(x = 2\) represent?</h5>
+        <p>The handwritten notes indicate there is "No context in my question" - the answer depends on what space we're considering. Unless specified, assume \(\mathbb{R}^3\).</p>
+        
+        <p>Possible answers listed:</p>
+        <ul>
+            <li>Plane</li>
+            <li>Line</li>
+            <li>Point</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <h5>Question 2: What does \(x^2 + y^2 = 1\) represent? Assume \(\mathbb{R}^3\)</h5>
+        <p>Possible answers listed:</p>
+        <ul>
+            <li>Circle</li>
+            <li>Cylinder</li>
+        </ul>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 2 -->
+<h3>Page 2: \(x = 2\) in \(\mathbb{R}^1\) and \(\mathbb{R}^2\)</h3>
+<figure>
+    <img src="img/lesson-03-2.webp" loading="lazy" decoding="async" alt="Page 2: Diagram showing x=2 as a point in R1 and a line in R2">
+    <figcaption>Original handwritten page 2</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Understanding \(x = 2\) in Different Dimensions</h4>
+    
+    <p><strong>In \(\mathbb{R}^1\):</strong> The equation \(x = 2\) represents a single point at \(x = 2\) on the real line.</p>
+    
+    <p><strong>In \(\mathbb{R}^2\) (xy plane):</strong> The equation \(x = 2\) represents a vertical line where the x-coordinate is fixed at 2, but y can be anything. Since y is "Free", we stack all the points in the y-direction and get a line.</p>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The page shows a coordinate system with the x-axis horizontal and y-axis vertical. A vertical line is drawn at \(x = 2\). Several points are marked on this line: \((2, 2)\), \((2, 1)\), \((2, 0)\), \((2, -1)\), and \((2, -2)\). The annotation states "y can be Anything" and identifies y as a "Free" variable. The note explains that by stacking all the points in the y-direction, we get a line.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 3 -->
+<h3>Page 3: \(x = 2\) in \(\mathbb{R}^3\)</h3>
+<figure>
+    <img src="img/lesson-03-3.webp" loading="lazy" decoding="async" alt="Page 3: Three-dimensional diagram showing x=2 as a plane">
+    <figcaption>Original handwritten page 3</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>\(x = 2\) in Three Dimensions</h4>
+    
+    <p><strong>In \(\mathbb{R}^3\):</strong> The equation \(x = 2\) represents a plane perpendicular to the x-axis. Both y and z are free variables that can take any values.</p>
+    
+    <div class="important">
+        <p><strong>Key Concept:</strong> When both y and z are free variables, we stack all the lines (from the \(\mathbb{R}^2\) case) in the z-direction to get a plane.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A three-dimensional coordinate system shows the x, y, and z axes. A plane is drawn perpendicular to the x-axis at \(x = 2\). The plane extends infinitely in the y and z directions. Multiple points are marked including \((2, 0, 25)\), \((2, 0, 11)\), \((2, 0, 0)\), \((2, 4, 0)\), \((2, 4, 11)\), \((2, 4, -1)\), and \((2, 0, -25)\). The annotations indicate that "y is Free" and "z is Free", and that we "stack all the lines in z-direction" to "Get a Plane."</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 4 -->
+<h3>Page 4: \(x^2 + y^2 = 1\) - Circular Cylinder</h3>
+<figure>
+    <img src="img/lesson-03-4.webp" loading="lazy" decoding="async" alt="Page 4: Circle in 2D becoming a cylinder in 3D">
+    <figcaption>Original handwritten page 4</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>From Circle to Cylinder</h4>
+    
+    <p>The equation \(x^2 + y^2 = 1\) has different interpretations depending on dimension. In \(\mathbb{R}^3\), z is a Free Variable.</p>
+    
+    <p><strong>In the xy plane (\(z = 0\)):</strong> This is a circle of radius 1 centered at the origin.</p>
+    
+    <p><strong>In \(\mathbb{R}^3\):</strong> By stacking circles of radius 1 in the z-direction, we obtain a circular cylinder parallel to the z-axis.</p>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> A <strong>circular cylinder</strong> parallel to the z-axis is formed when z is a free variable and the equation in x and y describes a circle.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> On the left, a circle of radius 1 is shown in the xy-plane, labeled "Circle of Radius 1 in xy Plane (z=0)". On the right, a three-dimensional view shows this circle extended vertically along the z-axis to form a cylinder. Multiple circular cross-sections are shown at different heights (some solid, some dashed to indicate depth). The cylinder extends infinitely in both positive and negative z-directions. The annotation reads "Stack Circles of Radius 1 in z-direction" resulting in a "Circular Cylinder Parallel to z-axis".</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 5 -->
+<h3>Page 5: Understanding Traces</h3>
+<figure>
+    <img src="img/lesson-03-5.webp" loading="lazy" decoding="async" alt="Page 5: Explanation of traces as slices and cross-sections">
+    <figcaption>Original handwritten page 5</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>What Are Traces?</h4>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> <strong>Traces</strong> (also called slices, curves, or cross-sections) are the curves we obtain by intersecting a three-dimensional surface with a plane. We stack these traces to get a complete 3D picture.</p>
+    </div>
+    
+    <p><strong>Types of traces:</strong></p>
+    
+    <p><strong>\(z = 0\) trace (xy trace):</strong> The intersection of the surface with the xy plane.</p>
+    
+    <p><strong>\(z = k\) trace:</strong> The intersection of surface with the \(z = k\) plane, which is a plane parallel to the xy plane.</p>
+    
+    <p><strong>\(x = k\) trace:</strong> The intersection of surface with the \(x = k\) plane, which is a plane parallel to the yz plane.</p>
+    
+    <p><strong>\(y = k\) trace:</strong> The intersection of surface with the \(y = k\) plane, which is a plane parallel to the xz plane.</p>
+    
+    <div class="important">
+        <p><strong>Important:</strong> By examining traces in different directions, we can understand the complete three-dimensional structure of a surface.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 6 -->
+<h3>Page 6: Cylinders with Different Orientations</h3>
+<figure>
+    <img src="img/lesson-03-6.webp" loading="lazy" decoding="async" alt="Page 6: Circular cylinders parallel to y-axis and x-axis">
+    <figcaption>Original handwritten page 6</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Circular Cylinders in Different Directions</h4>
+    
+    <div class="example">
+        <h5>\(x^2 + z^2 = 1\) - Cylinder Parallel to y-axis</h5>
+        <p>In this equation, y is Free. We stack traces (circles) in the y-direction to form a circular cylinder parallel to the y-axis.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> On the left, a circle is shown in the xz-plane. On the right, a three-dimensional cylinder is shown oriented horizontally along the y-axis, with circular cross-sections visible at various y-values.</p>
+        </div>
+    </div>
+    
+    <div class="example">
+        <h5>\(y^2 + z^2 = 1\) - Cylinder Parallel to x-axis</h5>
+        <p>In this equation, x is Free. We stack traces (circles) in the x-direction to form a circular cylinder parallel to the x-axis.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> A three-dimensional cylinder is shown oriented along the x-axis. The cylinder has circular cross-sections in planes perpendicular to the x-axis, drawn at various x-values with some in solid blue and others dashed to show depth.</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 7 -->
+<h3>Page 7: Parabolic Cylinder</h3>
+<figure>
+    <img src="img/lesson-03-7.webp" loading="lazy" decoding="async" alt="Page 7: Parabolic cylinder formed by extending a parabola">
+    <figcaption>Original handwritten page 7</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Parabolic Cylinder: \(x = 7 - z^2\)</h4>
+    
+    <p>In this equation, y is the free variable. The base curve is a parabola in the xz-plane.</p>
+    
+    <div class="example">
+        <p>For any fixed value of y, the equation \(x = 7 - z^2\) describes a parabola. When we stack these parabolic traces in the y-direction, we obtain a parabolic cylinder parallel to the y-axis.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> On the left, a parabola opening to the left is shown in the xz-plane with vertex near \((7, 0)\). The equation \(x = 7 - z^2\) is labeled, with y noted as Free. On the right, the three-dimensional parabolic cylinder is shown extending along the y-axis. Multiple parabolic cross-sections are drawn at different y-values (some solid, some dashed), illustrating how the parabola is "stacked" in the y-direction to form the cylinder.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 8 -->
+<h3>Page 8: Break and Preview</h3>
+<figure>
+    <img src="img/lesson-03-8.webp" loading="lazy" decoding="async" alt="Page 8: Break instructions and preview of next topics">
+    <figcaption>Original handwritten page 8</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Class Break</h4>
+    
+    <p><strong>Break activities:</strong></p>
+    <ul>
+        <li>Stand up and Stretch</li>
+        <li>Reflect</li>
+        <li>Ask Questions</li>
+        <li>Talk to your neighbor</li>
+    </ul>
+    
+    <p><strong>Next topics:</strong> Sphere, Cone, and Paraboloid</p>
+</div>
+
+<hr>
+
+<!-- PAGE 9 -->
+<h3>Page 9: Sphere - \(x^2 + y^2 + z^2 = 25\)</h3>
+<figure>
+    <img src="img/lesson-03-9.webp" loading="lazy" decoding="async" alt="Page 9: Sphere with traces at different z-values">
+    <figcaption>Original handwritten page 9</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Sphere of Radius 5</h4>
+    
+    <p>The equation \(x^2 + y^2 + z^2 = 25\) represents a sphere of radius 5 centered at the origin.</p>
+    
+    <div class="example">
+        <h5>Traces in the z-direction</h5>
+        <p>We can rewrite the equation as \(x^2 + y^2 = 25 - z^2\) to see how horizontal traces change with height:</p>
+        
+        <ul>
+            <li>\(z = 0\): \(x^2 + y^2 = 25\) (circle of radius 5)</li>
+            <li>\(z = 1\) or \(z = -1\): \(x^2 + y^2 = 24\) (circle of radius \(\sqrt{24} \approx 4.90\))</li>
+            <li>\(z = 2\) or \(z = -2\): \(x^2 + y^2 = 21\) (circle of radius \(\sqrt{21} \approx 4.58\))</li>
+            <li>\(z = 4\) or \(z = -4\): \(x^2 + y^2 = 9\) (circle of radius 3)</li>
+            <li>\(z = 5\) or \(z = -5\): \(x^2 + y^2 = 0\) (points \((0,0,5)\) and \((0,0,-5)\))</li>
+        </ul>
+        
+        <p><strong>No traces above 5 or below -5</strong> because \(25 - z^2\) would be negative.</p>
+    </div>
+    
+    <div class="example">
+        <h5>Traces in coordinate planes</h5>
+        <ul>
+            <li>\(x = 0\): yz trace gives \(y^2 + z^2 = 25\)</li>
+            <li>\(y = 0\): xz trace gives \(x^2 + z^2 = 25\)</li>
+        </ul>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A sphere of radius 5 is shown centered at the origin. Horizontal circular cross-sections are drawn at various z-values, shown as solid and dashed purple ellipses. The x, y, and z axes pass through the center. Three great circles (in purple, blue, and green) are drawn on the surface to help visualize the spherical shape.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 10 -->
+<h3>Page 10: More Sphere Traces</h3>
+<figure>
+    <img src="img/lesson-03-10.webp" loading="lazy" decoding="async" alt="Page 10: Additional sphere traces showing circular cross-sections">
+    <figcaption>Original handwritten page 10</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Continuing Sphere Analysis: \(x^2 + y^2 = z^2\)</h4>
+    
+    <p><strong>Note:</strong> This page shows different trace calculations, including:</p>
+    
+    <ul>
+        <li>\(z = 0\): \(x^2 + y^2 = 0\) (single point)</li>
+        <li>\(z = 1\) or \(z = -1\): \(x^2 + y^2 = 1\)</li>
+        <li>\(z = 2\) or \(z = -2\): \(x^2 + y^2 = 4\)</li>
+        <li>\(z = 3\) or \(z = -3\): \(x^2 + y^2 = 9\)</li>
+        <li>\(z = 4\) or \(z = -4\): \(x^2 + y^2 = 16\)</li>
+    </ul>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A three-dimensional view shows horizontal circular cross-sections at various z-heights. The circles are drawn in purple/magenta, with some solid and some dashed to indicate which are in front and which are behind. The cross-sections grow larger as we move away from \(z = 0\), illustrating how the surface expands.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 11 -->
+<h3>Page 11: Double Cone - Traces in Other Directions</h3>
+<figure>
+    <img src="img/lesson-03-11.webp" loading="lazy" decoding="async" alt="Page 11: Double cone showing linear traces in coordinate planes">
+    <figcaption>Original handwritten page 11</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Double Cone: \(x^2 + y^2 = z^2\)</h4>
+    
+    <p>To distinguish a cone from other surfaces, we need to find traces in other directions beyond just horizontal slices.</p>
+    
+    <div class="example">
+        <h5>Traces in coordinate planes</h5>
+        
+        <p><strong>\(x = 0\) (yz trace):</strong> Setting \(x = 0\) gives \(y^2 = z^2\), which simplifies to \(y = z\) or \(y = -z\). These are two lines passing through the origin.</p>
+        
+        <p><strong>\(y = 0\) (xz trace):</strong> Setting \(y = 0\) gives \(x^2 = z^2\), which gives \(x = z\) or \(x = -z\). Again, two lines through the origin.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> At the top, two red sketches show rough outlines of the double cone from different viewing angles. Below, two coordinate plane diagrams show the linear traces. The left diagram shows the yz-plane with two lines \(y = z\) and \(y = -z\) intersecting at the origin. The right diagram shows similar lines in the xz-plane: \(x = z\) and \(x = -z\). Both sets of lines pass through the origin at 45-degree angles to the vertical axis.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Characteristic of Cones:</strong> Horizontal traces are circles that grow linearly with height, while traces in coordinate planes are intersecting lines.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 12 -->
+<h3>Page 12: Double Cone Complete Visualization</h3>
+<figure>
+    <img src="img/lesson-03-12.webp" loading="lazy" decoding="async" alt="Page 12: Complete double cone with vertex at origin">
+    <figcaption>Original handwritten page 12</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Complete Double Cone Structure</h4>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A complete three-dimensional double cone is shown with its vertex at the origin and axis along the z-axis. The cone consists of two nappes (upper and lower portions) extending infinitely in both the positive and negative z-directions. Circular cross-sections are drawn at various heights, showing how the radius increases linearly with \(|z|\). Blue lines on the surface indicate the linear traces from the coordinate planes (the lines \(x = z\), \(x = -z\), \(y = z\), and \(y = -z\) that pass through the vertex).</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 13 -->
+<h3>Page 13: Paraboloid - \(z = x^2 + y^2\)</h3>
+<figure>
+    <img src="img/lesson-03-13.webp" loading="lazy" decoding="async" alt="Page 13: Paraboloid with traces and coordinate plane analysis">
+    <figcaption>Original handwritten page 13</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Elliptic Paraboloid: \(z = x^2 + y^2\)</h4>
+    
+    <p>This surface opens upward along the positive z-axis, forming a bowl or cup shape.</p>
+    
+    <div class="example">
+        <h5>Horizontal traces (constant z)</h5>
+        
+        <p><strong>No traces for \(z < 0\)</strong> because \(x^2 + y^2 \geq 0\) always.</p>
+        
+        <ul>
+            <li>\(z = 0\): \(x^2 + y^2 = 0\) (single point at origin - the vertex)</li>
+            <li>\(z = 1\): \(x^2 + y^2 = 1\) (circle of radius 1)</li>
+            <li>\(z = 2\): \(x^2 + y^2 = 2\) (circle of radius \(\sqrt{2}\))</li>
+            <li>\(z = 4\): \(x^2 + y^2 = 4\) (circle of radius 2)</li>
+        </ul>
+        
+        <p>The circles' radii increase as \(\sqrt{z}\) as we go up in the z-direction.</p>
+    </div>
+    
+    <div class="example">
+        <h5>Traces in coordinate planes</h5>
+        
+        <p><strong>\(x = 0\) (yz trace):</strong> \(z = y^2\) - an upward-opening parabola</p>
+        
+        <p><strong>\(y = 0\) (xz trace):</strong> \(z = x^2\) - an upward-opening parabola</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> On the left, two parabolas are shown: one in the yz-plane (\(z = y^2\)) and one in the xz-plane (\(z = x^2\)), both opening upward with vertices at the origin. On the right, the three-dimensional paraboloid is displayed showing the bowl shape opening upward. Horizontal circular cross-sections are visible at various heights (\(z = 0\) as a point, and larger circles at \(z = 1, 2, 4\)).</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- PAGE 14 -->
+<h3>Page 14: Paraboloid Complete Visualization</h3>
+<figure>
+    <img src="img/lesson-03-14.webp" loading="lazy" decoding="async" alt="Page 14: Complete paraboloid surface with grid pattern">
+    <figcaption>Original handwritten page 14</figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Complete Paraboloid Surface</h4>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A detailed three-dimensional illustration shows the paraboloid \(z = x^2 + y^2\) as a smooth bowl-shaped surface opening upward. The surface extends from the vertex at the origin upward and outward in all directions. Horizontal circular cross-sections are visible at various heights, and the parabolic curves forming the surface extend from the vertex along different radial directions. The smooth curvature is characteristic of a paraboloid. Vertical parabolic curves (shown in blue and green) represent the traces in the xz and yz planes.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Summary:</strong> The paraboloid \(z = x^2 + y^2\) is characterized by circular horizontal traces whose radii grow as \(\sqrt{z}\), and parabolic traces in vertical planes through the z-axis.</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Key Takeaways</h3>
+<div class="page-content">
+    <div class="theorem">
+        <p><strong>Summary of Surface Types:</strong></p>
+        <ul>
+            <li><strong>Cylinders:</strong> One variable missing from equation → extends infinitely along that axis</li>
+            <li><strong>Sphere:</strong> \(x^2 + y^2 + z^2 = r^2\) → circular traces that grow then shrink</li>
+            <li><strong>Cone:</strong> \(x^2 + y^2 = z^2\) → circular traces growing linearly, linear traces in coordinate planes</li>
+            <li><strong>Paraboloid:</strong> \(z = x^2 + y^2\) → circular traces growing as \(\sqrt{z}\), parabolic coordinate plane traces</li>
+        </ul>
+    </div>
+    
+    <div class="important">
+        <p><strong>Strategy:</strong> To identify and sketch surfaces, examine traces in multiple directions. The combination of trace shapes (circles, lines, parabolas, etc.) and how they change reveals the surface type.</p>
+    </div>
+</div>
+
+</body>
+</html>

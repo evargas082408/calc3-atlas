@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA261 - Lesson 1: Course Introduction and Review of Vectors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson1.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA261 - Lesson 1: Course Introduction and Review of Vectors</h3>
+
+<h3>Welcome to MA261: Multivariate Calculus</h3>
+
+<p><strong>Instructor:</strong> Prof. Mahesh Sunkula</p>
+<p><strong>Office:</strong> Mathematical Sciences Building (MATH), Room 842</p>
+<p><strong>Email:</strong> msunkula@purdue.edu</p>
+<p><strong>Course Webpage:</strong> <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/MA261">https://www.math.purdue.edu/MA261</a> and Brightspace</p>
+<p><strong>Office Hours:</strong> Monday and Friday 9:45 AM – 11:00 AM, Thursday 11:00 AM – 12:00 PM, or by appointment</p>
+
+<h4>What is MA261?</h4>
+
+<p>MA261 extends what you already know from Calculus 1 and 2 to more variables. The course covers multivariable functions, partial derivatives, multiple integrals, and vector fields. These topics have applications in optimization, physics, and machine learning.</p>
+
+<h4>Today's Agenda</h4>
+
+<ol>
+    <li>Syllabus overview</li>
+    <li>Review of Vectors (Sections 13.1-13.4)
+        <ul>
+            <li>Definition of vectors</li>
+            <li>Addition and subtraction</li>
+            <li>Dot product</li>
+            <li>Cross product</li>
+        </ul>
+    </li>
+</ol>
+
+<h4>Course Structure</h4>
+
+<p>The course uses MyLab Math for online homework and includes weekly quizzes in recitation sessions. There will be 37 online assignments due almost every Tuesday and Thursday at 11:59 PM. No late homework is accepted, but the 3 lowest homework scores are dropped.</p>
+
+<p>Quizzes are administered in almost every recitation session, covering material from lessons whose homework was due the previous week. Each quiz is no more than 15 minutes long. No make-up quizzes will be given, but the 2 lowest quiz scores are dropped.</p>
+
+<h4>Exams</h4>
+
+<ul>
+    <li>Exam 1: Thursday, February 25, 8:00 PM – 9:00 PM (Lessons 1-16)</li>
+    <li>Exam 2: Wednesday, April 21, 6:30 PM – 7:30 PM (Lessons 17-33)</li>
+    <li>Final Exam: To be announced by the Registrar (Comprehensive)</li>
+</ul>
+
+<p>Location and more details will be provided before each exam.</p>
+
+<h4>Grading Scheme</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Percentage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Homework</td>
+            <td>15%</td>
+        </tr>
+        <tr>
+            <td>Quizzes</td>
+            <td>15%</td>
+        </tr>
+        <tr>
+            <td>Midterms (20% each)</td>
+            <td>40%</td>
+        </tr>
+        <tr>
+            <td>Final</td>
+            <td>30%</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Letter grade cutoffs: A+ (97%), A (93%), A- (90%), B+ (87%), B (83%), B- (80%), C+ (77%), C (73%), C- (70%), D+ (67%), D (63%), D- (60%). At the end of the semester, if the distribution of letter grades is significantly different from the traditional distribution, these cutoff points may be lowered but will never be raised.</p>
+
+<div class="important">
+    <p><strong>Important:</strong> Students with accommodations should schedule exams directly with the DRC, contact their recitation TA for quiz accommodations, and contact the instructor for any other needs.</p>
+</div>
+
+<h4>Advice to Succeed in This Class</h4>
+
+<ul>
+    <li><strong>Prepare:</strong> Before each class, review material from the last class and look at the new material in the book.</li>
+    <li><strong>Own it:</strong> Take ownership of your own learning.</li>
+    <li><strong>Check it:</strong> We all make mistakes. Check your work and ask yourself if your answer makes sense.</li>
+    <li><strong>Persist:</strong> Persist and work through perceived failure.</li>
+    <li><strong>Collaborate:</strong> Positive experiences working in groups contribute to overall learning, retention, and college success.</li>
+    <li><strong>Participate actively:</strong> Don't be a passive learner. Ask questions, stay focused, and answer questions posed by the instructor, TA, or other students.</li>
+    <li><strong>Address issues immediately:</strong> If unexpected events make it difficult to complete an assignment on time, address the issue right away rather than waiting until the end of the semester.</li>
+</ul>
+
+<h3>Review of Vectors</h3>
+
+<h4>Definition of a Vector</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A vector is a quantity that has both magnitude and direction.</p>
+</div>
+
+<p>Consider two points \(P(2, -1)\) and \(Q(3, 5)\). The vector from \(P\) to \(Q\), denoted \(\overrightarrow{PQ}\), is calculated by subtracting the coordinates of \(P\) from the coordinates of \(Q\):</p>
+
+\[\overrightarrow{PQ} = \langle 3-2, 5-(-1) \rangle = \langle 1, 6 \rangle\]
+
+<p>Similarly, the vector from \(Q\) to \(P\) is:</p>
+
+\[\overrightarrow{QP} = \langle 2-3, -1-5 \rangle = \langle -1, -6 \rangle\]
+
+<p>Notice that \(\overrightarrow{QP} = -\overrightarrow{PQ}\).</p>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A coordinate plane showing two points P and Q. Two vectors are drawn: one blue vector pointing from P to Q (pointing upward and to the right), and one green vector pointing from Q to P (pointing downward and to the left). The vectors are parallel but point in opposite directions, illustrating that they are negatives of each other.</p>
+</div>
+
+<h4>Length of a Vector</h4>
+
+<p>For a vector \(\vec{u} = \langle 1, 6 \rangle\), the length (or magnitude) is calculated using the Pythagorean theorem:</p>
+
+\[|\overrightarrow{PQ}| = \sqrt{1^2 + 6^2} = \sqrt{37}\]
+
+<p>The length of \(\overrightarrow{QP}\) is the same:</p>
+
+\[|\overrightarrow{QP}| = |\vec{u}| = \sqrt{37}\]
+
+<div class="definition">
+    <p><strong>Definition:</strong> In general, for a vector \(\vec{u} = \langle x, y, z \rangle\) in three dimensions, the length is:</p>
+    \[|\vec{u}| = \sqrt{x^2 + y^2 + z^2}\]
+</div>
+
+<h4>Unit Vectors</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> A unit vector is a vector of length 1. The unit vector in the direction of \(\vec{u}\) is denoted \(\hat{u}\) and calculated as:</p>
+    \[\hat{u} = \frac{\vec{u}}{|\vec{u}|}\]
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A coordinate system showing a vector drawn from the origin. A dashed line from the tip of the vector perpendicular to the x-axis illustrates the relationship between the vector's length and its components.</p>
+</div>
+
+<div class="example">
+    <h5>Example 1: Finding a Unit Vector and Scaled Vector</h5>
+    <p>Let \(\vec{u} = \langle 1, 2, -1 \rangle\). Find the unit vector in the direction of \(\vec{u}\), and find a vector of length 7 in the opposite direction.</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>First, find the length of \(\vec{u}\):</p>
+        \[|\vec{u}| = \sqrt{1^2 + 2^2 + (-1)^2} = \sqrt{1 + 4 + 1} = \sqrt{6}\]
+        
+        <p>The unit vector in the direction of \(\vec{u}\) is:</p>
+        \[\hat{u} = \frac{\vec{u}}{|\vec{u}|} = \frac{\langle 1, 2, -1 \rangle}{\sqrt{6}} = \left\langle \frac{1}{\sqrt{6}}, \frac{2}{\sqrt{6}}, \frac{-1}{\sqrt{6}} \right\rangle\]
+        
+        <p>For a vector of length 7 in the opposite direction to \(\vec{u}\), we use:</p>
+        \[-7\hat{u} = -7 \cdot \frac{\vec{u}}{|\vec{u}|} = \frac{-7}{\sqrt{6}} \langle 1, 2, -1 \rangle = \frac{7}{\sqrt{6}} \langle -1, -2, 1 \rangle\]
+        
+        <p>Alternatively:</p>
+        \[-7\hat{u} = \left\langle \frac{-7}{\sqrt{6}}, \frac{-14}{\sqrt{6}}, \frac{7}{\sqrt{6}} \right\rangle\]
+    </div>
+</div>
+
+<h4>Adding and Subtracting Vectors</h4>
+
+<p>Vectors can be added and subtracted both algebraically and geometrically.</p>
+
+<h5>Algebraically: Component-wise Operations</h5>
+
+<p>Given \(\vec{u} = \langle 1, 2, -1 \rangle\) and \(\vec{v} = \langle 2, 3, 4 \rangle\):</p>
+
+\[\vec{u} + \vec{v} = \langle 1+2, 2+3, -1+4 \rangle = \langle 3, 5, 3 \rangle\]
+
+\[\vec{u} - \vec{v} = \langle 1-2, 2-3, -1-4 \rangle = \langle -1, -1, -5 \rangle\]
+
+<h5>Geometrically</h5>
+
+<p>To add vectors geometrically, place the tail of the second vector at the head of the first vector. The sum is the vector from the tail of the first to the head of the second.</p>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A parallelogram showing vector addition. Two vectors, \(\vec{u}\) and \(\vec{v}\), are drawn from a common origin. A third vector \(\vec{u} + \vec{v}\) is shown as the diagonal of the parallelogram formed by \(\vec{u}\) and \(\vec{v}\). Additionally, the vector \(\vec{u} - \vec{v}\) is shown, illustrating subtraction as addition of the negative vector.</p>
+</div>
+
+<h3>Multiplication of Vectors</h3>
+
+<p>There are two ways to multiply vectors: the dot product and the cross product.</p>
+
+<ul>
+    <li><strong>Dot Product:</strong> Multiply two vectors and get a number (scalar)</li>
+    <li><strong>Cross Product:</strong> Multiply two vectors and get a vector</li>
+</ul>
+
+<h4>Dot Product</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> The dot product of two vectors \(\vec{u} = \langle u_1, u_2, u_3 \rangle\) and \(\vec{v} = \langle v_1, v_2, v_3 \rangle\) is calculated by multiplying corresponding components and adding the results:</p>
+    \[\vec{u} \cdot \vec{v} = u_1 v_1 + u_2 v_2 + u_3 v_3\]
+</div>
+
+<div class="example">
+    <h5>Example 2: Computing a Dot Product</h5>
+    <p>Let \(\vec{u} = \langle 1, 2, -1 \rangle\) and \(\vec{v} = \langle 2, 3, 4 \rangle\). Find \(\vec{u} \cdot \vec{v}\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        \[\vec{u} \cdot \vec{v} = (1)(2) + (2)(3) + (-1)(4) = 2 + 6 - 4 = 4\]
+    </div>
+</div>
+
+<div class="theorem">
+    <p><strong>Geometric Interpretation:</strong> The dot product can also be expressed in terms of the angle \(\theta\) between the two vectors:</p>
+    \[\vec{u} \cdot \vec{v} = |\vec{u}| |\vec{v}| \cos\theta\]
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> Two vectors \(\vec{u}\) and \(\vec{v}\) emanating from a common origin, with the angle \(\theta\) between them marked.</p>
+</div>
+
+<h4>Cross Product</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> The cross product of two vectors \(\vec{u}\) and \(\vec{v}\), denoted \(\vec{u} \times \vec{v}\), is a vector perpendicular to both \(\vec{u}\) and \(\vec{v}\).</p>
+</div>
+
+<p>The magnitude of the cross product is:</p>
+
+\[|\vec{u} \times \vec{v}| = |\vec{u}| |\vec{v}| \sin\theta\]
+
+<p>where \(\theta\) is the angle between \(\vec{u}\) and \(\vec{v}\).</p>
+
+<p>The direction of \(\vec{u} \times \vec{v}\) is determined by the right-hand rule: point your fingers in the direction of \(\vec{u}\), curl them toward \(\vec{v}\), and your thumb points in the direction of \(\vec{u} \times \vec{v}\). Note that \(\vec{v} \times \vec{u} = -(\vec{u} \times \vec{v})\).</p>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A three-dimensional coordinate system showing two vectors \(\vec{u}\) and \(\vec{v}\) in a plane, with the cross product vector \(\vec{u} \times \vec{v}\) pointing perpendicular to that plane. The angle \(\theta\) between \(\vec{u}\) and \(\vec{v}\) is marked.</p>
+</div>
+
+<h5>Computing the Cross Product</h5>
+
+<p>For vectors \(\vec{u} = \langle u_1, u_2, u_3 \rangle\) and \(\vec{v} = \langle v_1, v_2, v_3 \rangle\), the cross product is computed using the determinant:</p>
+
+\[\vec{u} \times \vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ u_1 & u_2 & u_3 \\ v_1 & v_2 & v_3 \end{vmatrix}\]
+
+<p>Expanding this determinant gives:</p>
+
+\[\vec{u} \times \vec{v} = \langle u_2 v_3 - u_3 v_2, -(u_1 v_3 - u_3 v_1), u_1 v_2 - u_2 v_1 \rangle\]
+
+<div class="example">
+    <h5>Example 3: Computing a Cross Product</h5>
+    <p>Let \(\vec{u} = \langle 1, 2, -1 \rangle\) and \(\vec{v} = \langle 2, 3, 4 \rangle\). Find \(\vec{u} \times \vec{v}\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>We compute the cross product using the determinant formula:</p>
+        
+        \[\vec{u} \times \vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & 2 & -1 \\ 2 & 3 & 4 \end{vmatrix}\]
+        
+        <p>Expanding along the first row:</p>
+        
+        \[\vec{u} \times \vec{v} = \vec{i}(2 \cdot 4 - (-1) \cdot 3) - \vec{j}(1 \cdot 4 - (-1) \cdot 2) + \vec{k}(1 \cdot 3 - 2 \cdot 2)\]
+        
+        \[= \vec{i}(8 + 3) - \vec{j}(4 + 2) + \vec{k}(3 - 4)\]
+        
+        \[= 11\vec{i} - 6\vec{j} - 1\vec{k}\]
+        
+        \[= \langle 11, -6, -1 \rangle\]
+    </div>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> A 3×3 matrix showing the determinant calculation for the cross product. The first row contains the unit vectors \(\vec{i}\), \(\vec{j}\), \(\vec{k}\). The second row contains the components of \(\vec{u}\): 1, 2, -1. The third row contains the components of \(\vec{v}\): 2, 3, 4. Curved arrows indicate the calculation pattern for each component, with specific pairs of numbers circled to show which terms are multiplied.</p>
+</div>
+
+<div class="important">
+    <p><strong>Key Properties:</strong></p>
+    <ul>
+        <li>The dot product results in a scalar and measures how much two vectors point in the same direction.</li>
+        <li>The cross product results in a vector perpendicular to both input vectors.</li>
+        <li>The magnitude of the cross product equals the area of the parallelogram formed by the two vectors.</li>
+        <li>\(\vec{u} \times \vec{v} = -(\vec{v} \times \vec{u})\)</li>
+    </ul>
+</div>
+
+</body>
+</html>

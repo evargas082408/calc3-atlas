@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.3 Conservative Vector Fields and the Fundamental Theorem of Line Integrals - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2028%20%2817.3%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 28 (17.3).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white text-slate-900 font-sans"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-slate-900 pb-2">17.3 Conservative Vector Fields and the Fundamental Theorem of Line Integrals</h1><section class="mb-10"><p class="mb-6">If \(\vec{F}\) is conservative, then \(\vec{F} = \vec{\nabla} \phi\), where \(\phi\) is the <span class="italic">potential function</span>.</p><p class="mb-6">Given \(\vec{F}\), how do we know if it is conservative? If so, how to find \(\phi\)?</p></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">Determining Conservativeness</h2><p class="mb-6">Let \(\vec{F} = \langle f, g \rangle\) be conservative.</p><p class="mb-6">Then we know \(\vec{F} = \langle f, g \rangle = \vec{\nabla} \phi = \langle \frac{\partial \phi}{\partial x}, \frac{\partial \phi}{\partial y} \rangle\).</p><p class="mb-6">So, \(f = \frac{\partial \phi}{\partial x}\) and \(g = \frac{\partial \phi}{\partial y}\).</p><p class="mb-6">Furthermore, we know that mixed partials are equal: \(f_{yx} = f_{xy}\).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center"><div class="flex flex-col items-center space-y-4">\[ \frac{\partial}{\partial y} \left( \frac{\partial \phi}{\partial x} \right) = \frac{\partial}{\partial x} \left( \frac{\partial \phi}{\partial y} \right) \]\[ \phi_{xy} = \phi_{yx} \]</div></div><div class="notebox border-2 border-red-500 p-6 rounded-lg my-8 bg-red-50/30"><p class="text-xl font-bold text-center">\(f_y = g_x\) if \(\vec{F} = \langle f, g \rangle\) is conservative (\(\vec{F} = \vec{\nabla} \phi\))</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white text-slate-900 font-sans"><section class="mb-12"><h2 class="text-2xl font-bold text-slate-800 mb-4">Example 1</h2><p class="mb-4">\(\vec{F} = \langle x, y \rangle\)</p><p class="italic text-slate-600 mb-4">Note: Here \(f = x\) and \(g = y\).</p><p class="mb-6">Conservative if \(f_y = g_x\).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \frac{\partial}{\partial y}(x) = \frac{\partial}{\partial x}(y) \quad ? \]</div><p class="mb-6">Yes, \(0 = 0\). So, \(\vec{F} = \langle x, y \rangle\) is <span class="font-bold">conservative</span>.</p></section><section class="mb-12"><h2 class="text-2xl font-bold text-slate-800 mb-4">Example 2</h2><p class="mb-4">\(\vec{F} = \langle -y, x \rangle\)</p><p class="italic text-slate-600 mb-4">Note: Here \(f = -y\) and \(g = x\).</p><p class="mb-6">Is \(\frac{\partial}{\partial y}(-y) = \frac{\partial}{\partial x}(x)\)?</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ -1 \neq 1 \]</div><p class="mb-6">No, \(-1 \neq 1\). So \(\vec{F} = \langle -y, x \rangle\) is <span class="font-bold">NOT conservative</span>.</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Finding the Potential Function \(\phi\)</h1><p class="mb-6">If conservative (\(\vec{F} = \vec{\nabla} \phi\)), how to find \(\phi\)?</p><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Example</h2><p class="mb-6">\(\vec{F} = \langle x+y, x \rangle\)</p><p class="mb-6">Is \(f_y = g_x\)? Yes, so \(\vec{F} = \langle x+y, x \rangle = \langle \phi_x, \phi_y \rangle = \vec{\nabla} \phi\)</p><p class="mb-4">We see:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><ol class="list-none space-y-4"><li>(1) \(\frac{\partial \phi}{\partial x} = x + y\)</li><li>(2) \(\frac{\partial \phi}{\partial y} = x\)</li></ol></div></section><section><p class="mb-6">Integrate (1) with respect to \(x\) (treat \(y\) as constant):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ (1) \rightarrow \phi = \int (x+y) dx = \frac{1}{2}x^2 + xy + a(y) \]</div><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4"><div class="italic text-slate-700 border-l-4 border-slate-300 pl-4"><p>Note: \(y\) is constant.</p></div><div class="notebox p-4 bg-slate-100 rounded-lg border border-slate-200"><p class="text-sm">\(a(y)\) is a function that depends on \(y\) that vanishes when we take partial with \(x\) (to get (1)). It could be a constant.</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans max-w-4xl mx-auto"><p class="mb-6">Now let's take partial with respect to \(y\) and equate with (2):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="mb-2">\(\phi = \frac{1}{2}x^2 + xy + a(y)\)</p><p class="mb-2">\(\phi_y = x + \frac{da}{dy} = x\)</p><p class="mb-2">\(\frac{da}{dy} = 0 \rightarrow a = C \text{ (constant)}\)</p></div><section class="mb-10"><h2 class="text-xl font-bold mb-4">Now we know \(\phi\):</h2><div class="notebox p-6 border-2 border-slate-900 rounded-lg text-center text-2xl font-bold">\[ \phi = \frac{1}{2}x^2 + xy + C \]</div></section><section><h2 class="text-xl font-bold mb-4">Check:</h2><p class="mb-4">Is \(\vec{\nabla} \phi = \vec{F} = \langle x+y, x \rangle\)?</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{\nabla} (\frac{1}{2}x^2 + xy + C) = \langle x+y, x \rangle \text{ Yes.} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">3D Conservative Vector Fields</h1><section class="mb-8"><p class="text-lg mb-4">3D: \( \vec{F} = \langle f, g, h \rangle \) is it conservative?</p><p class="mb-6">If conservative, \( \vec{F} = \langle f, g, h \rangle = \vec{\nabla} \phi = \langle \phi_x, \phi_y, \phi_z \rangle \)</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start"><div class="space-y-2">\[ f = \phi_x \]\[ g = \phi_y \]\[ h = \phi_z \]</div><div><p class="font-bold mb-4">Mixed partials are equal:</p><div class="space-y-2">\[ \phi_{xy} = \phi_{yx} \]\[ \phi_{yz} = \phi_{zy} \]\[ \phi_{zx} = \phi_{xz} \]</div></div></div></section><section class="my-10"><div class="notebox border-2 border-red-500 p-6 rounded-lg max-w-xs mx-auto shadow-md bg-red-50/30"><div class="text-xl space-y-4">\[ f_y = g_x \]\[ g_z = h_y \]\[ h_x = f_z \]</div></div></section><p class="mt-10 italic text-slate-700">To recover \( \phi \), do similar thing as in 2D case.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Why find the Potential Function \( \phi \)?</h1><section class="mb-8"><h2 class="text-xl font-bold mb-4">Why bother with finding \( \phi \)?</h2><p class="mb-4">Because if \( \vec{F} \) is conservative, then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot \vec{T} ds = \int_C \vec{F} \cdot \vec{r}' dt = \int_C \vec{F} \cdot d\vec{r} \]</div><p class="border-l-4 border-slate-400 pl-6 my-6 italic">is path-independent, the only things that matter are the start and end locations.</p></section><section class="mb-8"><h2 class="text-xl font-bold mb-4">Proof / Derivation</h2><p class="mb-4">Why? If \( \vec{F} = \vec{\nabla} \phi = \langle \phi_x, \phi_y \rangle \), \( \vec{r}(t) = \langle x(t), y(t) \rangle \)</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} \cdot \vec{r}' dt = \left\langle \frac{\partial \phi}{\partial x}, \frac{\partial \phi}{\partial y} \right\rangle \cdot \left\langle \frac{dx}{dt}, \frac{dy}{dt} \right\rangle dt \]\[ = \left( \frac{\partial \phi}{\partial x} \frac{dx}{dt} + \frac{\partial \phi}{\partial y} \frac{dy}{dt} \right) dt \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Chain rule tree diagram showing phi branching to x and y, which both branch to t.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-28-1.webp" loading="lazy" decoding="async" alt="Chain rule tree diagram showing phi branching to x and y, which both branch to t." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Chain rule tree diagram showing phi branching to x and y, which both branch to t.
+                  </figcaption>
+                </figure>
+              </div><p class="text-center text-green-700 font-semibold mb-4">result of chain rule</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \left( \frac{d\phi}{dt} \right) dt = d\phi \]\[ \int_C \vec{F} \cdot \vec{r}' dt = \int_C d\phi = \phi(B) - \phi(A) \]</div><div class="flex justify-center space-x-12 italic text-sm text-slate-600"><p>\( \phi(B) \): end location</p><p>\( \phi(A) \): start location</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-4 border-b-4 border-slate-900 pb-2">Fundamental Theorem of Line Integrals</h1><p class="mb-6">If ⅒ is conservative (⅒ = ∇ϕ), then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center">\[ \int_C \vec{F} \cdot \vec{T} ds = \int_C \vec{F} \cdot \vec{r}' dt = \int_C \vec{F} \cdot d\vec{r} = \phi(B) - \phi(A) \]</div><p class="text-sm text-slate-600 mb-6 italic">Where B is the end point and A is the start point.</p><div class="grid-layout flex flex-col md:flex-row items-center gap-8 mb-10"><div class="flex-1"><p class="mb-4">The theorem implies that for a conservative field, the line integral depends only on the endpoints, not the path taken.</p><p class="font-bold text-slate-900">All paths lead to the same \[ \int_C \vec{F} \cdot \vec{T} ds \] if \( \vec{F} = \nabla \phi \).</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph showing three different paths C1, C2, and C3 connecting point A to point B in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-28-2.webp" loading="lazy" decoding="async" alt="Graph showing three different paths C1, C2, and C3 connecting point A to point B in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph showing three different paths C1, C2, and C3 connecting point A to point B in the xy-plane.
+                  </figcaption>
+                </figure>
+              </div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot \vec{r}' dt \quad \text{where} \quad \vec{F} = \langle x+y, x \rangle \]</div><p class="mb-4">\( C \): line segment from \( (1, 0) \) to \( (0, -1) \), then along the left half of \( x^2 + y^2 = 1 \) to \( (0, 1) \).</p><div class="grid-layout flex flex-col md:flex-row items-start gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing path C1 as a line segment and C2 as a semi-circle on the left side of the y-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-28-3.webp" loading="lazy" decoding="async" alt="Coordinate graph showing path C1 as a line segment and C2 as a semi-circle on the left side of the y-axis." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing path C1 as a line segment and C2 as a semi-circle on the left side of the y-axis.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="italic text-slate-700 mb-4">Let's do the "old way" first and compare to the "new way".</p><ul class="list-none space-y-4"><li><strong>\( C_1 \):</strong> \( \vec{r}(t) = \langle 1-t, -t \rangle \) for \( 0 \le t \le 1 \)</li><li><strong>\( C_2 \):</strong> \( \vec{r}(t) = \langle -\sin t, -\cos t \rangle \) for \( 0 \le t \le \pi \)</li></ul></div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \underbrace{\int_0^1 \langle 1-2t, 1-t \rangle \cdot \langle -1, -1 \rangle dt}_{C_1} + \underbrace{\int_0^\pi \langle -\sin t - \cos t, -\sin t \rangle \cdot \langle -\cos t, \sin t \rangle dt}_{C_2} \]\[ = \int_0^1 (3t - 2) dt + \int_0^\pi (\sin t \cos t + \cos^2 t - \sin^2 t) dt = \dots = -\frac{1}{2} \]</div></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-6">Fundamental Theorem of Line Integrals</h1><p class="mb-6">Earlier we found \(\vec{F} = \langle x+y, x \rangle\) to be conservative (\(\vec{\nabla} \phi\)) and \(\phi = \frac{1}{2}x^2 + xy + C\).</p><p class="mb-6">Let's try using the Fundamental Theorem of Line Integrals:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot \vec{r}' dt = \phi(B) - \phi(A) \]</div><p class="mb-6">Where:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(B\) is the end location: \((0, 1)\)</li><li>\(A\) is the start location: \((1, 0)\)</li></ul><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \phi(0, 1) - \phi(1, 0) \]\[ = \left[ \frac{1}{2}(0)^2 + (0)(1) + C \right] - \left[ \frac{1}{2}(1)^2 + (1)(0) + C \right] \]\[ = C - (\frac{1}{2} + C) = -\frac{1}{2} \]</div><div class="grid-layout"><p class="mb-6">Alternatively, since path doesn't matter, we could replace the original path with a simpler one but preserve start/end locations.</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a path from point A at (1,0) to point B at (0,1) along the axes.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-28-4.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a path from point A at (1,0) to point B at (0,1) along the axes." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a path from point A at (1,0) to point B at (0,1) along the axes.
+                  </figcaption>
+                </figure>
+              </figure></div></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

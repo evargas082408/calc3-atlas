@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 10: Limits and Continuity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson10.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 10: Limits and Continuity (15.2)</h3>
+
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-10-1.webp" loading="lazy" decoding="async" alt="Page 1: Title page showing Lesson 10 on Limits and Continuity">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Course Information</h4>
+<p><strong>Today:</strong> Limits and Continuity</p>
+<p><strong>Next:</strong> Partial Derivatives</p>
+
+<div class="important">
+<p><strong>Office Hours:</strong></p>
+<ul>
+<li>Monday, Friday: 9:45 PM - 11:00 PM (MATH 842)</li>
+<li>Thursday: 11:00 AM - 12:00 PM (MATH 842)</li>
+<li>Thursday: 12:15 PM - 1:15 PM (Windsor)</li>
+</ul>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-10-2.webp" loading="lazy" decoding="async" alt="Page 2: Warm-up graph showing function with discontinuities">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Warm-up: Limits and Continuity (From Calculus I)</h4>
+
+<p><strong>Question:</strong> What are all the values where the limit does not exist?</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> A piecewise function \(f(x)\) is shown on a coordinate plane with \(x\)-axis ranging from approximately \(-6\) to \(13\) and \(y\)-axis ranging from \(0\) to \(7\). The graph displays several types of discontinuities:</p>
+<ul>
+<li>At \(x = -6\): The function approaches from the right, with arrows indicating two different directional approaches</li>
+<li>At \(x = -1\): The function has a jump discontinuity, with the left-hand limit approaching \(4\) (open circle) and the right-hand limit also at \(4\) (closed circle), but different behavior</li>
+<li>At \(x = 5\): The function has a removable discontinuity (hole) at \(y = 4\) (open circle), with the actual function value at \(y = 2\) (closed circle)</li>
+<li>At \(x = 11\): The function is continuous, reaching a maximum around \(y = 6\), then continuing horizontally</li>
+<li>The function appears continuous elsewhere with various curves and a horizontal asymptote behavior for large \(x\)</li>
+</ul>
+</div>
+
+<div class="example">
+<h5>Analysis of Limits</h5>
+
+<p><strong>At \(x = -6\):</strong> Two directions to approach \(-6\), and the function approaches different values from different directions.</p>
+<p>\[\lim_{x \to -6} f(x) = 4 \quad \text{and} \quad \lim_{x \to -6} f(x) \text{ DNE}\]</p>
+
+<p><strong>At \(x = -1\):</strong> The function approaches different values from the left and right.</p>
+<p>\[\lim_{x \to -1} f(x) \text{ DNE}\]</p>
+
+<p><strong>At \(x = 5\):</strong> There is a removable discontinuity (hole), but the limit exists.</p>
+<p>\[\lim_{x \to 5} f(x) = 4\]</p>
+<p>However, \(f(5) = 2\), so the limit exists but \(\lim_{x \to 5} f(x) \neq f(5)\).</p>
+
+<p><strong>At \(x = 11\):</strong> The function is continuous.</p>
+<p>\[\lim_{x \to 11} f(x) = f(11) = 3\]</p>
+</div>
+
+<div class="important">
+<p><strong>Summary:</strong> The limit does not exist (DNE) at \(x = -6\) and \(x = -1\) because the function approaches different values from different directions at these points.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-10-3.webp" loading="lazy" decoding="async" alt="Page 3: Continuity analysis with annotations for holes, jumps, and asymptotes">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Continuity Analysis</h4>
+
+<p><strong>Question:</strong> What are all the values where the function is not continuous?</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The same graph from the previous page is shown with annotations identifying three types of discontinuities: a hole (removable discontinuity), a jump discontinuity, and an asymptote. The annotations clarify the relationship between function values and limits at critical points.</p>
+</div>
+
+<div class="definition">
+<p><strong>Types of Discontinuities:</strong></p>
+<ul>
+<li><strong>Hole (Removable Discontinuity):</strong> The limit exists, but either the function is not defined at that point or \(f(a) \neq \lim_{x \to a} f(x)\)</li>
+<li><strong>Jump Discontinuity:</strong> The left-hand and right-hand limits exist but are not equal</li>
+<li><strong>Asymptote (Infinite Discontinuity):</strong> The limit approaches infinity as \(x\) approaches the point</li>
+</ul>
+</div>
+
+<div class="example">
+<h5>Detailed Analysis</h5>
+
+<p><strong>At \(x = -6\):</strong></p>
+<p>\[\lim_{x \to -6} f(x) \text{ DNE}\]</p>
+<p>\[f(-6) \text{ DNE}\]</p>
+<p>The function has an asymptote at \(x = -6\).</p>
+
+<p><strong>At \(x = -1\):</strong></p>
+<p>\[\lim_{x \to -1} f(x) = 4\]</p>
+<p>\[f(-1) \text{ DNE}\]</p>
+<p>The function has a jump discontinuity at \(x = -1\).</p>
+
+<p><strong>At \(x = 5\):</strong></p>
+<p>\[\lim_{x \to 5} f(x) \text{ DNE}\]</p>
+<p>\[f(5) = 2\]</p>
+<p>The function has a hole (removable discontinuity) at \(x = 5\).</p>
+
+<p><strong>At \(x = 11\):</strong></p>
+<p>\[\lim_{x \to 11} f(x) = f(11) = 3\]</p>
+<p>The function is continuous at \(x = 11\).</p>
+</div>
+
+<div class="important">
+<p><strong>Key Point:</strong> A function is continuous at \(x = a\) if and only if:</p>
+<ol>
+<li>\(f(a)\) exists</li>
+<li>\(\lim_{x \to a} f(x)\) exists</li>
+<li>\(\lim_{x \to a} f(x) = f(a)\)</li>
+</ol>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-10-4.webp" loading="lazy" decoding="async" alt="Page 4: Formal definitions of limit and continuity with visual illustration">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Formal Definitions</h4>
+
+<div class="important">
+<p><strong>Summary:</strong> \(\lim_{x \to a} f(x) = L\) means the function value is close to \(L\) when \(x\) is close to \(a\).</p>
+<p>This is equivalent to saying:</p>
+<p>\[\lim_{x \to a^-} f(x) = \lim_{x \to a^+} f(x)\]</p>
+</div>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> A coordinate system shows a curve approaching a limit point. The vertical axis is marked with \(L + \delta\), \(L\), and \(L - \delta\), illustrating an epsilon neighborhood around the limit value \(L\). The horizontal axis shows \(a - \varepsilon\), \(a\), and \(a + \varepsilon\), representing a delta neighborhood around \(a\). Multiple curves approach the point from different directions, all converging to the same limit value within the epsilon band.</p>
+</div>
+
+<div class="definition">
+<p><strong>Definition of Limit:</strong> \(\lim_{x \to a} f(x) = L\)</p>
+<p>if for any \(\varepsilon > 0\), suppose \(a - \delta < x < a + \varepsilon\), then there is \(\delta > 0\) such that</p>
+<p>\[L - \delta < f(x) < L + \delta\]</p>
+</div>
+
+<div class="warning">
+<p><strong>Note:</strong> \(f(a)\) need not be defined for the limit to exist.</p>
+</div>
+
+<div class="definition">
+<p><strong>Definition of Continuity:</strong> \(f(x)\) is continuous at \(x = a\) if and only if</p>
+<p>\[\lim_{x \to a} f(x) = f(a)\]</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-10-5.webp" loading="lazy" decoding="async" alt="Page 5: Extending limits and continuity to two-variable functions">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Limits and Continuity for Two-Variable Functions</h4>
+
+<p>For functions \(f(x,y)\) with domain in \(\mathbb{R}^2\):</p>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A three-dimensional representation shows a surface in \(xyz\)-space. The domain is illustrated as a shaded region in the \(xy\)-plane. A point \((a,b)\) in the domain is marked, with a small circular neighborhood (disk) \(\delta\) around it. The function values within this neighborhood approach a limit \(L\) on the \(z\)-axis, shown with an epsilon band \(L \pm \delta\). Multiple arrows indicate approaching the point \((a,b)\) from any direction in the plane.</p>
+</div>
+
+<div class="definition">
+<p><strong>Definition:</strong> \(\lim_{(x,y) \to (a,b)} f(x,y) = L\)</p>
+<p>This means the value of \(f(x,y)\) is close to \(L\) when we approach \((x,y)\) from \((a,b)\) in any direction.</p>
+</div>
+
+<div class="definition">
+<p><strong>Formal Definition:</strong> For any \(\varepsilon > 0\), suppose \(|(x,y) - (a,b)| < \varepsilon\), then there is \(\delta > 0\) such that</p>
+<p>\[|f(x,y) - L| < \delta\]</p>
+</div>
+
+<div class="definition">
+<p><strong>Continuity:</strong> \(f(x,y)\) is continuous at \((a,b)\) if and only if</p>
+<p>\[\lim_{(x,y) \to (a,b)} f(x,y) = f(a,b)\]</p>
+</div>
+
+<div class="important">
+<p><strong>Key Difference:</strong> For two-variable functions, we must approach the point from <em>any direction</em> in the plane, not just from left and right as in single-variable calculus. This makes showing limits do not exist easier (find two paths with different limits) but makes proving limits exist more challenging.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-10-6.webp" loading="lazy" decoding="async" alt="Page 6: Example showing limit does not exist by approaching along different paths">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Example: Showing a Limit Does Not Exist</h4>
+
+<div class="example">
+<h5>Example: \(\lim_{(x,y) \to (0,0)} \frac{x^2 - y^2}{x^2 + y^2}\)</h5>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> A coordinate system shows multiple arrows pointing toward the origin \((0,0)\) from different directions. The arrows illustrate various paths of approach: along the \(x\)-axis, along the \(y\)-axis, and along other directions in the \(xy\)-plane.</p>
+</div>
+
+<div class="solution">
+<p><strong>Solution:</strong> We will show this limit does not exist by approaching \((0,0)\) along different paths and obtaining different limit values.</p>
+
+<p><strong>Approach along \(x\)-axis (\(y = 0\)):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x^2 - 0^2}{x^2 + 0^2} = \lim_{x \to 0} \frac{x^2}{x^2} = 1\]</p>
+
+<p><strong>Approach along \(y\)-axis (\(x = 0\)):</strong></p>
+<p>\[\lim_{y \to 0} \frac{0^2 - y^2}{0^2 + y^2} = \lim_{y \to 0} \frac{-y^2}{y^2} = -1\]</p>
+
+<p><strong>Conclusion:</strong> Since approaching along \(y = 0\) gives a limit of \(1\) while approaching along \(x = 0\) gives a limit of \(-1\), and these values are different, the limit does not exist.</p>
+<p>\[\lim_{(x,y) \to (0,0)} \frac{x^2 - y^2}{x^2 + y^2} \text{ DNE}\]</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-10-7.webp" loading="lazy" decoding="async" alt="Page 7: Continuation of limit example with additional paths tested">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Testing Additional Paths</h4>
+
+<div class="example">
+<h5>Example (continued): \(\lim_{(x,y) \to (0,0)} \frac{xy}{x^2 + y^2}\)</h5>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The coordinate system shows additional paths approaching the origin, including diagonal lines \(y = x\) and \(y = -x\), as well as the axes \(x = 0\) and \(y = 0\). Arrows indicate the direction of approach along each path.</p>
+</div>
+
+<div class="solution">
+<p><strong>Testing different paths:</strong></p>
+
+<p><strong>Along \(y = 0\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x \cdot 0}{x^2 + 0^2} = \lim_{x \to 0} \frac{0}{x^2} = 0\]</p>
+
+<p><strong>Along \(x = 0\):</strong></p>
+<p>\[\lim_{y \to 0} \frac{0 \cdot y}{0^2 + y^2} = \lim_{y \to 0} \frac{0}{y^2} = 0\]</p>
+
+<p><strong>Along \(y = x\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x \cdot x}{x^2 + x^2} = \lim_{x \to 0} \frac{x^2}{2x^2} = \frac{1}{2}\]</p>
+
+<p><strong>Along \(y = -x\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x \cdot (-x)}{x^2 + (-x)^2} = \lim_{x \to 0} \frac{-x^2}{2x^2} = -\frac{1}{2}\]</p>
+
+<p>Since different paths yield different limits (\(0\), \(\frac{1}{2}\), and \(-\frac{1}{2}\)), the limit does not exist.</p>
+
+<p>\[\lim_{(x,y) \to (0,0)} \frac{xy}{x^2 + y^2} \text{ DNE}\]</p>
+</div>
+</div>
+
+<div class="important">
+<p><strong>Strategy:</strong> To show a limit does not exist, find two different paths that give different limit values. Common paths to test include the coordinate axes, lines through the origin (\(y = mx\)), and parabolic or other curved paths.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-10-8.webp" loading="lazy" decoding="async" alt="Page 8: Break time with instructions to stretch and reflect">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Break Time</h4>
+
+<div class="important">
+<p><strong>Break Activities:</strong></p>
+<ul>
+<li>Stretch</li>
+<li>Walk around</li>
+<li>Reflect</li>
+<li>Talk to your neighbors</li>
+</ul>
+</div>
+
+<p><strong>Have questions?</strong> Ask using iclicker</p>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-10-9.webp" loading="lazy" decoding="async" alt="Page 9: Example analyzing limit along various paths including curved paths">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>More Complex Path Analysis</h4>
+
+<div class="example">
+<h5>Example: \(\lim_{(x,y) \to (0,0)} \frac{x^3 - y^3}{x - y}\)</h5>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The diagram shows multiple paths approaching the origin, including the coordinate axes and diagonal lines. Various colored lines (red, orange, blue, purple) represent different linear paths \(y = mx\) with different slopes, and the axes \(x = 0\) and \(y = 0\).</p>
+</div>
+
+<div class="solution">
+<p><strong>Testing paths:</strong></p>
+
+<p><strong>Along \(y = 0\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x^3 - 0}{x} = \lim_{x \to 0} \frac{x^3}{x} = 0\]</p>
+
+<p><strong>Along \(x = 0\):</strong></p>
+<p>\[\lim_{y \to 0} \frac{0 - y^3}{-y} = \lim_{y \to 0} \frac{-y^3}{-y} = 0\]</p>
+
+<p><strong>Along \(y = x\):</strong> Not in domain since \(y = x\) makes the denominator zero.</p>
+
+<p><strong>Along \(y = -x\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x^3 - (-x)^3}{x - (-x)} = \lim_{x \to 0} \frac{x^3 + x^3}{2x} = \lim_{x \to 0} \frac{2x^3}{2x} = 0\]</p>
+
+<p><strong>Along \(y = mx\) where \(m \neq 1\):</strong></p>
+<p>\[\lim_{x \to 0} \frac{x^3 - (mx)^3}{x - mx} = \lim_{x \to 0} \frac{x^3 - m^3x^3}{x(1-m)} = \lim_{x \to 0} \frac{x^3(1-m^3)}{x(1-m)} = 0\]</p>
+
+<p><strong>Observation:</strong> All tested paths give a limit of \(0\). However, this does not prove the limit exists—we would need to test all possible paths or use a more rigorous method.</p>
+</div>
+</div>
+
+<div class="warning">
+<p><strong>Warning:</strong> Testing several paths and getting the same limit value does not prove the limit exists. You must either test all possible paths (usually impossible) or use algebraic techniques to prove the limit rigorously.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-10-10.webp" loading="lazy" decoding="async" alt="Page 10: Simplification using algebraic formulas and continuity">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Simplifying Using Formulas</h4>
+
+<div class="example">
+<h5>Example: \(\lim_{(x,y) \to (0,0)} \frac{x^3 - y^3}{x - y}\)</h5>
+
+<div class="solution">
+<p><strong>Method 1: Simplify using a formula</strong></p>
+<p>We can use the factorization formula: \(x^3 - y^3 = (x-y)(x^2 + xy + y^2)\)</p>
+
+<p>\[\lim_{(x,y) \to (0,0)} \frac{x^3 - y^3}{x - y} = \lim_{(x,y) \to (0,0)} \frac{(x-y)(x^2 + xy + y^2)}{(x-y)}\]</p>
+
+<p>Cancel the common factor \((x-y)\) (valid since we're taking a limit, not evaluating at \(x = y\)):</p>
+
+<p>\[= \lim_{(x,y) \to (0,0)} (x^2 + xy + y^2)\]</p>
+
+<p>Now plug in \((0,0)\) since \(x^2 + xy + y^2\) is continuous:</p>
+
+<p>\[= 0^2 + 0 \cdot 0 + 0^2 = 0\]</p>
+
+<p><strong>Method 2: Long Division</strong></p>
+<p>The handwritten work shows the polynomial long division of \(\frac{x^3 - y^3}{x - y}\), which yields \(x^2 + xy + y^2\).</p>
+
+<p><strong>Conclusion:</strong> \(\lim_{(x,y) \to (0,0)} \frac{x^3 - y^3}{x - y} = 0\)</p>
+</div>
+</div>
+
+<div class="important">
+<p><strong>Key Technique:</strong> When a function simplifies to a continuous function after algebraic manipulation, we can evaluate the limit by direct substitution. This is because continuous functions preserve limits.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-10-11.webp" loading="lazy" decoding="async" alt="Page 11: Using continuity properties to evaluate limits">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Using Continuity to Evaluate Limits</h4>
+
+<div class="example">
+<h5>Example: \(\lim_{(x,y) \to (0,0)} \frac{\cos(7x^3y)}{8 + e^{3xy^2}}\)</h5>
+
+<div class="solution">
+<p><strong>Solution:</strong> We recognize that both the numerator and denominator are continuous functions.</p>
+
+<p>The numerator \(\cos(7x^3y)\) is continuous everywhere because:</p>
+<ul>
+<li>\(7x^3y\) is a polynomial, which is continuous</li>
+<li>The composition of continuous functions is continuous</li>
+</ul>
+
+<p>The denominator \(8 + e^{3xy^2}\) is continuous everywhere and never zero because:</p>
+<ul>
+<li>\(3xy^2\) is a polynomial, which is continuous</li>
+<li>\(e^{3xy^2}\) is continuous as a composition of continuous functions</li>
+<li>\(e^{3xy^2} > 0\) always, so \(8 + e^{3xy^2} > 8 > 0\)</li>
+</ul>
+
+<p>Since both numerator and denominator are continuous and the denominator is never zero, the entire function is continuous throughout the domain. Therefore, we can evaluate the limit by direct substitution:</p>
+
+<p>\[\lim_{(x,y) \to (0,0)} \frac{\cos(7x^3y)}{8 + e^{3xy^2}} = \frac{\cos(0)}{8 + e^0} = \frac{1}{8 + 1} = \frac{1}{9}\]</p>
+</div>
+</div>
+
+<div class="theorem">
+<p><strong>Continuity Properties:</strong></p>
+<ul>
+<li>Polynomials are continuous everywhere</li>
+<li>Rational functions are continuous in their domain (where denominator ≠ 0)</li>
+<li>Trigonometric functions are continuous in their domains</li>
+<li>Exponential and logarithmic functions are continuous in their domains</li>
+<li>Compositions of continuous functions are continuous</li>
+<li>Sums, products, and quotients (where denominator ≠ 0) of continuous functions are continuous</li>
+</ul>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-10-12.webp" loading="lazy" decoding="async" alt="Page 12: iclicker question evaluating a limit">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Class Activity: Discuss with Neighbor</h4>
+
+<div class="example">
+<h5>Evaluate: \(\lim_{x \to 0} \frac{5 \sin(5x)}{5x}\)</h5>
+
+<p><strong>Answer choices:</strong></p>
+<ul>
+<li>A) DNE</li>
+<li>B) 1</li>
+<li>C) 0</li>
+<li>D) 5</li>
+<li>E) \(\frac{1}{5}\)</li>
+</ul>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>We can rewrite the expression to use the standard limit \(\lim_{\theta \to 0} \frac{\sin \theta}{\theta} = 1\):</p>
+
+<p>\[\lim_{x \to 0} \frac{5 \sin(5x)}{5x}\]</p>
+
+<p>Notice that if we let \(\theta = 5x\), then as \(x \to 0\), we have \(\theta \to 0\):</p>
+
+<p>\[= \lim_{\theta \to 0} \frac{5 \sin \theta}{\theta}\]</p>
+
+<p>\[= 5 \cdot \lim_{\theta \to 0} \frac{\sin \theta}{\theta}\]</p>
+
+<p>\[= 5 \cdot 1 = 5\]</p>
+
+<p><strong>Answer: D) 5</strong></p>
+</div>
+</div>
+
+<div class="important">
+<p><strong>Standard Limit:</strong> \(\lim_{x \to 0} \frac{\sin x}{x} = 1\)</p>
+<p>This is a fundamental limit often used in calculus. When the argument is scaled, adjust accordingly:
+\[\lim_{x \to 0} \frac{\sin(kx)}{x} = k \quad \text{and} \quad \lim_{x \to 0} \frac{\sin(kx)}{kx} = 1\]</p>
+</div>
+
+<p><strong>Instructions:</strong> Discuss with neighbor (1 min), then share on iclicker (1 min)</p>
+</div>
+
+<hr>
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-10-13.webp" loading="lazy" decoding="async" alt="Page 13: Using squeeze theorem and composition for two-variable limits">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Advanced Limit Techniques</h4>
+
+<div class="example">
+<h5>Example: \(\lim_{(x,y) \to (0,0)} \frac{\sin(x^2 + y^2)}{x^2 + y^2}\)</h5>
+
+<div class="solution">
+<p><strong>Method 1: Substitution</strong></p>
+
+<p>Let \(\theta = x^2 + y^2\). Note that as \((x,y) \to (0,0)\), we have \(\theta \to 0^+\) (since \(x^2 + y^2 \geq 0\) with equality only at the origin).</p>
+
+<p>Then:</p>
+<p>\[\lim_{(x,y) \to (0,0)} \frac{\sin(x^2 + y^2)}{x^2 + y^2} = \lim_{\theta \to 0^+} \frac{\sin \theta}{\theta} = 1\]</p>
+
+<p><strong>Method 2: Composition of Continuous Functions</strong></p>
+
+<p>We can write this as a composition:</p>
+<p>\[\lim_{(x,y) \to (0,0)} \frac{\sin(x^2 + y^2)}{x^2 + y^2}\]</p>
+
+<p>First, observe that \(\lim_{(x,y) \to (0,0)} (x^2 + y^2) = 0\).</p>
+
+<p>Since \(\lim_{t \to 0} \frac{\sin t}{t} = 1\) and this function is continuous near \(t = 0\) (with the removable discontinuity filled), we can compose:</p>
+
+<p>\[\lim_{(x,y) \to (0,0)} \frac{\sin(x^2 + y^2)}{x^2 + y^2} = 1\]</p>
+
+<p><strong>Answer: 1</strong></p>
+</div>
+</div>
+
+<div class="example">
+<h5>Alternative Example: \(\lim_{(x,y) \to (0,0)} \frac{\sin(5(x^2 + y^2))}{x^2 + y^2}\)</h5>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+<p>Using similar reasoning with \(\theta = x^2 + y^2\):</p>
+<p>\[\lim_{(x,y) \to (0,0)} \frac{\sin(5(x^2 + y^2))}{x^2 + y^2} = \lim_{\theta \to 0} \frac{\sin(5\theta)}{\theta} = 5 \cdot \lim_{\theta \to 0} \frac{\sin(5\theta)}{5\theta} = 5 \cdot 1 = 5\]</p>
+</div>
+</div>
+
+<div class="important">
+<p><strong>Key Observation:</strong> When dealing with limits involving \(x^2 + y^2\) as \((x,y) \to (0,0)\), we can often substitute \(\theta = x^2 + y^2\) and use the fact that \(\theta \to 0^+\) to apply single-variable limit techniques.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-10-14.webp" loading="lazy" decoding="async" alt="Page 14: Exit ticket asking about break preferences">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Exit Ticket</h4>
+
+<p><strong>Question:</strong> Should I continue to give a break?</p>
+
+<p><strong>Answer choices:</strong></p>
+<ul>
+<li>A) Yes, but facilitate an activity</li>
+<li>B) Yes, continue with the same</li>
+<li>C) No, do not waste our time</li>
+<li>D) Fine with anything</li>
+</ul>
+
+<div class="important">
+<p>This exit ticket helps the instructor gather feedback about class structure and student preferences for break time during lectures.</p>
+</div>
+</div>
+
+</body>
+</html>

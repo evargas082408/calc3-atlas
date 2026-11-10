@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux and the Divergence Theorem - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Exam%203%20Review-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Exam 3 Review.pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Flux and the Divergence Theorem</h1><section class="mb-10"><p class="mb-6">Let \(\mathbf{F} = 4x\mathbf{i} - z\mathbf{j} + x\mathbf{k}\). Compute <span class="italic">Flux</span> \[ \iint_S \mathbf{F} \cdot d\mathbf{S} \] where \(S\) is the union of the hemisphere \(x^2 + y^2 + z^2 = 1, z \ge 0\), and the base given by \(x^2 + y^2 \le 1, z = 0\). (Use the outward-pointing normal.)</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><h2 class="text-xl font-bold text-blue-700 mb-4">Surface closed: can use Divergence Theorem</h2><p class="mb-4 italic text-blue-800">IF \(\vec{F}\) is defined everywhere inside the enclosed volume</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D sketch of a hemisphere on the xy-plane with x, y, and z axes labeled.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/exam-3-review-1.webp" loading="lazy" decoding="async" alt="3D sketch of a hemisphere on the xy-plane with x, y, and z axes labeled." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D sketch of a hemisphere on the xy-plane with x, y, and z axes labeled.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-none w-full md:w-48 bg-slate-50 p-4 border border-slate-200 rounded-lg shadow-sm"><h3 class="font-bold mb-2">Options:</h3><ol class="list-none space-y-2"><li>A. \(\frac{2\pi}{3}\)</li><li>B. \(\frac{16\pi}{3}\)</li><li>C. \(\frac{8\pi}{3}\)</li><li>D. \(\frac{4\pi}{3}\)</li><li>E. \(\frac{-4\pi}{3}\)</li></ol></div></div></section><section class="border-l-4 border-slate-300 pl-6 my-8"><h2 class="text-2xl font-black text-blue-700 mb-4">Div. Theorem:</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_S \vec{F} \cdot d\vec{S} = \iiint_E \text{div } \vec{F} \, dV \]</div><p class="mb-4 text-blue-800 font-semibold">\(\text{div } \vec{F} = \nabla \cdot \langle 4x, -z, x \rangle = 4 + 0 + 0 = 4\)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iiint_E 4 \, dV = 4 \iiint_E dV = 4 \cdot \frac{1}{2} \cdot \frac{4}{3}\pi(1)^3 = \frac{16}{6}\pi = \frac{8\pi}{3} \]</div><div class="notebox bg-blue-50 p-4 rounded-lg border border-blue-100 italic text-blue-800 mb-6">volume of hemisphere</div><p class="text-blue-800 font-medium">note if \(\text{div } \vec{F} = 1\) then \(\iint_S \vec{F} \cdot d\vec{S} = \text{volume}\) (Flux)</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="text-blue-800 font-semibold mb-6">very much like we can use Green's Theorem to find area</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \oint_C \vec{F} \cdot d\vec{r} = \iint_R (g_x - f_y) \, dA \]</div><div class="grid-layout flex flex-col md:flex-row gap-8 items-center"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D graph of a circular region R centered at the origin of the xy-axes.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/exam-3-review-2.webp" loading="lazy" decoding="async" alt="2D graph of a circular region R centered at the origin of the xy-axes." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D graph of a circular region R centered at the origin of the xy-axes.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="text-blue-800 mb-4">if \(\vec{F}\) is such that \(g_x - f_y = 1\)</p><p class="text-blue-800">then \(\oint_C \vec{F} \cdot d\vec{r} = \text{area of } R\)</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Flux and Divergence Theorem</h1><section class="mb-10"><p class="text-lg mb-6">Find <span class="italic">Flux</span> 
+\[ \iint_S \vec{F} \cdot \vec{n} \, dS \]
+for the region bounded between <span class="italic">cylinder</span> \( x^2 + z^2 = 4 \), \( (-2 \le y \le 2) \) and <span class="italic">sphere</span> \( x^2 + y^2 + z^2 = 1 \) given \( \vec{F} = \langle 3x + y, 2y + z, z \rangle \) including \( y = 2 \) and \( y = -2 \).</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10"><div class="space-y-4"><ol class="list-none space-y-2"><li>A. 0</li><li>B. \( \frac{44\pi}{3} \)</li><li class="font-bold text-blue-700">C. \( 88\pi \)</li><li>D. \( \frac{188\pi}{3} \)</li><li>E. \( 376\pi \)</li></ol></div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D graph with x, y, z axes showing a cylinder along the y-axis from -2 to 2 and a sphere at the origin.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/exam-3-review-3.webp" loading="lazy" decoding="async" alt="3D graph with x, y, z axes showing a cylinder along the y-axis from -2 to 2 and a sphere at the origin." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D graph with x, y, z axes showing a cylinder along the y-axis from -2 to 2 and a sphere at the origin.
+                  </figcaption>
+                </figure>
+              <p class="italic text-sm text-slate-600">flux through the surface bounding the space between sphere and capped cylinder</p></div></div></section><section class="border-l-4 border-slate-400 pl-6 my-8"><h2 class="text-2xl font-bold mb-4">Divergence Theorem for hollowed volume</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_S \vec{F} \cdot \vec{n} \, dS = \iiint_{\text{outside}} \text{div} \vec{F} \, dV - \iiint_{\text{inside}} \text{div} \vec{F} \, dV \]</div><p class="mb-4">\[ \text{div} \vec{F} = 3 + 2 + 1 = 6 \]</p><p class="mb-4">\[ \iiint_{\text{cyl}} 6 \, dV - \iiint_{\text{sph}} 6 \, dV = 6 \left( \iiint_{\text{cyl}} dV - \iiint_{\text{sph}} dV \right) \]</p><p class="italic text-slate-600 mb-2">vol. of cylinder</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = 6 \left( \pi(2)^2 \cdot 4 - \frac{4}{3}\pi \right) = 6\pi \left( 16 - \frac{4}{3} \right) = 6\pi \left( \frac{44}{3} \right) = 88\pi \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Particle Position and Arc Length</h1><section class="mb-10"><p class="text-lg mb-6">The position of a particle is given by \( \vec{r}(t) = \langle 2t, 1 - 2t, 5 + t \rangle \), starting when \( t = 0 \). After the particle has gone a distance of 3, the \( x \)-coordinate is</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10"><div class="space-y-4"><ol class="list-none space-y-2"><li>A. \( \frac{1}{3} \)</li><li>B. 3</li><li>C. \( \frac{1}{2} \)</li><li class="font-bold text-blue-700">D. 2</li><li>E. 1</li></ol></div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A diagram of a vector path r(t) starting at t=0, showing an arc length s=3 reaching a point (x, y, z) at t=?.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/exam-3-review-4.webp" loading="lazy" decoding="async" alt="A diagram of a vector path r(t) starting at t=0, showing an arc length s=3 reaching a point (x, y, z) at t=?." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A diagram of a vector path r(t) starting at t=0, showing an arc length s=3 reaching a point (x, y, z) at t=?.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="border-l-4 border-slate-400 pl-6 my-8"><h2 class="text-2xl font-bold mb-4">Solution</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="space-y-4"><p>length: \[ s(t) = \int_0^t |\vec{r}'| \, du \]</p><p>\[ = \int_0^t 3 \, du = 3t \]</p></div><div class="space-y-4"><p>\[ \vec{r}' = \langle 2, -2, 1 \rangle \]</p><p>\[ |\vec{r}'| = \sqrt{4 + 4 + 1} = 3 \]</p></div></div><div class="mt-8 space-y-4"><p>want \( s = 3 \rightarrow 3 = 3t \rightarrow t = 1 \)</p><p>at \( t = 1 \), \( \vec{r}(1) = \langle 2, -1, 6 \rangle \)</p><p class="font-bold">The x-coordinate is 2.</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-6">Directional Derivatives and Gradients</h1><p class="mb-6">19 from practice problems set</p><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Problem Statement</h2><p class="mb-6">Find directional derivative of \( f(x,y) = 5 - 4x^2 - 3y \) at \( (x,y) \) towards the origin.</p><div class="grid-layout"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ D_{\vec{u}}f = \vec{\nabla}f \cdot \vec{u} \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate axes with a vector starting at point (x,y) and pointing to the origin, labeled &lt;-x, -y&gt;.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/exam-3-review-5.webp" loading="lazy" decoding="async" alt="Coordinate axes with a vector starting at point (x,y) and pointing to the origin, labeled &lt;-x, -y&gt;." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate axes with a vector starting at point (x,y) and pointing to the origin, labeled &lt;-x, -y&gt;.
+                  </figcaption>
+                </figure>
+              </div><p class="italic text-slate-700 mb-6">Note: \( \vec{\nabla}f \) is the gradient and \( \vec{u} \) is the unit vector specifying direction.</p></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Solution</h2><p class="mb-4">The unit vector \( \vec{u} \) towards the origin is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{u} = \frac{\langle -x, -y \rangle}{\sqrt{x^2 + y^2}} \]</div><p class="mb-4">The gradient of \( f \) is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{\nabla}f = \langle -8x, -3 \rangle \]</div><p class="mb-4">Calculating the directional derivative:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ D_{\vec{u}}f = \langle -8x, -3 \rangle \cdot \frac{\langle -x, -y \rangle}{\sqrt{x^2 + y^2}} = \frac{8x^2 + 3y}{\sqrt{x^2 + y^2}} \]</div></section><section class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><h2 class="text-xl font-bold not-italic text-slate-900 mb-2">Properties of the Gradient \( \vec{\nabla}f \)</h2><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li><strong>Direction?</strong> Greatest increase \( \rightarrow \perp \) to level curve.</li><li><strong>Magnitude?</strong> Maximum directional derivative.</li><li>No \( D_{\vec{u}}f \) if going \( \perp \vec{\nabla}f \) or parallel to level curve.</li></ul></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-6">Extrema of Functions of Two Variables</h1><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Problem #24</h2><p class="mb-6">The function \( f(x,y) = 2x^3 - 6xy - 3y^2 \). Find max/min/saddle pt.</p></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">1. Find Critical Points</h2><p class="mb-4">Set partial derivatives to zero: \( f_x = 0 \) AND \( f_y = 0 \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_x = 6x^2 - 6y = 0 \implies x^2 = y \implies x = y, -y \]\[ f_y = -6x - 6y = 0 \implies x = -y \]</div><div class="notebox border border-slate-200 p-4 rounded-lg bg-slate-50 mb-6"><p class="mb-2">Substitute \( x = -y \) into \( f_x = 0 \):</p><div class="overflow-x-auto">\[ 6(-y)^2 - 6y = 0 \]\[ 6y^2 - 6y = 0 \]\[ 6y(y - 1) = 0 \implies y = 0, y = 1 \]</div><p class="mt-2">Corresponding x-values: \( x = 0, x = -1 \)</p></div><p class="font-bold">Critical Points (cp): \( (0,0), (-1, 1) \)</p></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">2. Second Derivative Test</h2><p class="mb-4">The discriminant \( D \) is defined as:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ D = f_{xx}f_{yy} - (f_{xy})^2 \]</div><div class="grid grid-cols-2 gap-4 mb-6"><div class="p-4 bg-slate-50 rounded-lg border border-slate-200">\[ f_{xx} = 12x \]\[ f_{yy} = -6 \]</div><div class="p-4 bg-slate-50 rounded-lg border border-slate-200">\[ f_{xy} = -6 \]</div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ D(x,y) = (12x)(-6) - (-6)^2 = -72x - 36 \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section class="mb-10"><h1 class="text-3xl font-black tracking-tight mb-6">Second Derivative Test Analysis</h1><p class="mb-4">At the point \((0,0)\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[D = -36 &lt; 0 \rightarrow \text{saddle pt}\]</div><p class="mb-4">At the point \((-1,1)\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[D = 72 - 36 &gt; 0 \rightarrow \text{max or min}\]</div><p class="mb-4">Check \(f_{xx}\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[f_{xx}(-1,1) &lt; 0 \rightarrow \text{max}\]</div><div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>If \(D = 0 \rightarrow \text{inconclusive, this test fails}\)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section class="mb-10"><h1 class="text-3xl font-black tracking-tight mb-6">Problem 14: Mixed Partial Derivatives</h1><p class="mb-6">Given the function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[f(x,y) = \cos(xy)\]</div><p class="mb-4">Find the mixed partial derivative:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\frac{\partial^2 f}{\partial x \partial y} = ?\]</div><p class="italic text-slate-700 mb-6">Note: Differentiate with respect to \(y\) first, then \(x\). When differentiating with respect to \(y\), treat \(x\) as a "constant".</p><h2 class="text-xl font-bold mb-4">Step 1: First Partial Derivative with respect to \(y\)</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\frac{\partial}{\partial y} (\cos(xy)) = -\sin(xy) \cdot x = -x \sin(xy)\]</div><h2 class="text-xl font-bold mb-4">Step 2: Second Partial Derivative with respect to \(x\)</h2><p class="mb-4">Apply the product rule to \(\frac{\partial}{\partial x} [(-x) \cdot \sin(xy)]\), treating \(y\) as a "constant":</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[= (-x) \cdot \frac{\partial}{\partial x} \sin(xy) + \sin(xy) \cdot \frac{\partial}{\partial x} (-x)\]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[= (-x) \cdot \cos(xy) \cdot y + \sin(xy) \cdot (-1)\]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Vector Fields and Potential Functions</h1><section class="mb-10"><p class="text-lg mb-6">A potential for the vector field \(\mathbf{F}(x, y) = (3x^2y + 2xy, \, x^3 + x^2)\) is</p><ol class="list-none space-y-4 ml-8 mb-8"><li>A. \(xy^3 + xy^2 + C\)</li><li>B. \(x^3y + x^2y + C\)</li><li>C. \(x^2y^3 + xy^3 + C\)</li><li>D. \(x^2y^3 + x^3 + C\)</li><li>E. A potential for \(\mathbf{F}\) does not exist.</li></ol></section><section class="border-l-4 border-slate-400 pl-6 my-8"><h2 class="text-xl font-bold mb-4">Solution Derivation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \nabla \phi = \vec{F} \]\[ \langle \phi_x, \phi_y \rangle = \langle 3x^2y + 2xy, \, x^3 + x^2 \rangle \]</div><p class="mb-4">From the components, we have:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(\phi_x = 3x^2y + 2xy\)</li><li>\(\phi_y = x^3 + x^2\)</li></ul><p class="mb-4">To find \(\phi\), we integrate \(\phi_x\) with respect to \(x\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \phi = \int (3x^2y + 2xy) dx = x^3y + x^2y + h(y) \]</div><div class="notebox italic text-slate-700 mb-6">Note: This expression represents what we know about \(\phi\) so far.</div><p class="mb-4">Now, take the partial of our \(\phi\) with respect to \(y\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \phi_y = x^3 + x^2 + \frac{dh}{dy} \]\[ \text{It must be equal to } \phi_y = x^3 + x^2 \text{ (from } \vec{F} \text{)} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><p class="mb-4">Comparing the two expressions for \(\phi_y\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \text{so, } \frac{dh}{dy} = 0 \quad \text{which means } h = C \text{ (numerical constant)} \]</div><p class="mb-4">Substituting back into our expression for \(\phi\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \phi = x^3y + x^2y + C \]</div><p class="text-slate-700 font-semibold">Therefore, the correct option is B.</p></section><section class="mt-12 border-t pt-8"><h2 class="text-2xl font-black tracking-tight mb-6">Fundamental Theorem of Line Integrals</h2><p class="mb-6">\(\phi\) is important in the Fundamental Theorem of Line Integrals:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \nabla \phi \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) \quad : \text{path independent} \]\[ \int_C \vec{F} \cdot d\vec{r} \text{ if } \vec{F} \text{ is conservative} \]</div><div class="notebox border-l-4 border-slate-400 pl-4 italic">\[ \vec{F} \text{ is conservative } \implies \text{curl } \vec{F} = \vec{0} \]</div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

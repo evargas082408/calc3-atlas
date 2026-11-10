@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.2 Calculus of Vector-Valued Functions - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%206%20%2814.2,%2014.3-1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 6 (14.2, 14.3-1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-4xl mt-10 mb-4">14.2 Calculus of Vector-Valued Functions</h1>
+  <p class="mb-6">Recall if <span class="font-mono">\(y = f(t)\)</span> is a scalar function, then <span class="font-mono">\(y' = f'(t) = \lim_{h \to 0} \frac{f(t+h) - f(t)}{h}\)</span>.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A graph showing a curve y=f(t) with a secant line connecting points at t and t+h, illustrating the slope calculation.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-06-1.webp" loading="lazy" decoding="async" alt="A graph showing a curve y=f(t) with a secant line connecting points at t and t+h, illustrating the slope calculation." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A graph showing a curve y=f(t) with a secant line connecting points at t and t+h, illustrating the slope calculation.
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">If <span class="font-mono">\(\vec{r}(t) = \langle x(t), y(t) \rangle\)</span> is a vector-valued function, its derivative is as expected:</p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \vec{r}'(t) = \lim_{h \to 0} \frac{\vec{r}(t+h) - \vec{r}(t)}{h} \]
+    </div>
+  </div>
+  <p class="mb-6">What is the geometric interpretation?</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}'(t) = \lim_{h \to 0} \frac{\vec{r}(t+h) - \vec{r}(t)}{h} \]
+  </div>
+  <p class="mb-6">Then if <span class="font-mono">h</span> is small, then <span class="font-mono">\(\vec{r}'(t) \approx \frac{\vec{r}(t+h) - \vec{r}(t)}{h}\)</span> or <span class="font-mono">\(\vec{r}(t+h) - \vec{r}(t) \approx h\vec{r}'(t)\)</span>.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Two diagrams showing a curve with vectors r(t) and r(t+h) originating from the origin, and a difference vector u(t) connecting them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-06-2.webp" loading="lazy" decoding="async" alt="Two diagrams showing a curve with vectors r(t) and r(t+h) originating from the origin, and a difference vector u(t) connecting them." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Two diagrams showing a curve with vectors r(t) and r(t+h) originating from the origin, and a difference vector u(t) connecting them.
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">Notice <span class="font-mono">\(\vec{r}(t) + \vec{u}(t) = \vec{r}(t+h)\)</span> or <span class="font-mono">\(\vec{r}(t+h) - \vec{r}(t) = \vec{u}(t)\)</span>.</p>
+  <p class="mb-6">As <span class="font-mono">\(h \to 0\)</span>, <span class="font-mono">h</span> is small, so <span class="font-mono">\(\vec{r}(t+h) - \vec{r}(t) \approx h\vec{r}'(t) = \vec{u}(t)\)</span>. <span class="font-mono">\(\vec{u}(t)\)</span> will end up following the slope of <span class="font-mono">\(\vec{r}(t)\)</span> at <span class="font-mono">t</span>, which is the tangent vector.</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <p class="mb-6">\( \vec{r}'(t) = \vec{u}(t) \) which is tangent vector to \( \vec{r}(t) \)</p>
+  <p class="mb-6">so \( \vec{r}'(t) \) is also tangent to \( \vec{r}(t) \)</p>
+  <p class="mb-6">back to \( \vec{r}(t) = \langle x(t), y(t) \rangle \)</p>
+  <p class="mb-6">to calculate \( \vec{r}'(t) \), we do:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}'(t) = \lim_{h \to 0} \frac{\vec{r}(t+h) - \vec{r}(t)}{h} \]
+  </div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}'(t) = \lim_{h \to 0} \left\langle \frac{x(t+h) - x(t)}{h}, \frac{y(t+h) - y(t)}{h} \right\rangle \]
+  </div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ = \left\langle \lim_{h \to 0} \frac{x(t+h) - x(t)}{h}, \lim_{h \to 0} \frac{y(t+h) - y(t)}{h} \right\rangle \]
+  </div>
+  <div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    \[ \vec{r}'(t) = \langle x'(t), y'(t) \rangle \]
+  </div>
+  <p class="mb-6">Same is true if \( \vec{r}(t) \) has more components.</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">Example</h1>
+  <p class="mb-6">\( \vec{r}(t) = \langle t \cos t, t \sin t, t \rangle \)</p>
+  <p class="mb-6">\( x = t \cos t, \quad y = t \sin t, \quad z = t \)</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ x^2 + y^2 = t^2 \cos^2 t + t^2 \sin^2 t = t^2(\cos^2 t + \sin^2 t) = t^2 \]
+  </div>
+  <p class="mb-6">So, \( x^2 + y^2 = z^2 \) (cone, \( z \)-axis as symmetry axis).</p>
+  <p class="mb-6">Cross sections are circles that get bigger as \( z \) increases.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a spiral curve winding around the z-axis, representing the vector function r(t).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-06-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a spiral curve winding around the z-axis, representing the vector function r(t)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a spiral curve winding around the z-axis, representing the vector function r(t).
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">\( \vec{r}(t) = \langle t \cos t, t \sin t, t \rangle \)</p>
+  <p class="mb-6">\( \vec{r}'(t) = \langle -t \sin t + \cos t, t \cos t + \sin t, 1 \rangle \)</p>
+  <p class="mb-6">at \( t = \pi/2 \):</p>
+  <p class="mb-6">\( \vec{r}'(\pi/2) = \langle -\pi/2, 1, 1 \rangle \) vector tangent to \( \vec{r}(t) \) at \( t = \pi/2 \)</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Tangent Vectors and Unit Tangent Vectors</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ |\vec{r}'(t)| = \sqrt{(-t\sin t + \cos t)^2 + (t\cos t + \sin t)^2 + (1)^2} = \dots = \sqrt{t^2+2} \]
+</div><p class="mb-6">This tells us the magnitude grows as t increases.</p><p class="mb-6">The tangent vector \(\vec{r}'(t)\) in general varies in magnitude.</p><p class="mb-6">Later in the course, the unit tangent vector becomes important:</p><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-6">\[ \vec{T} = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} \]</p><p class="mb-6">Unit vector in direction of the tangent vector</p></div><p class="mb-6">For the spiral,</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{T} = \left\langle \frac{-t\sin t + \cos t}{\sqrt{t^2+2}}, \frac{t\cos t + \sin t}{\sqrt{t^2+2}}, \frac{1}{\sqrt{t^2+2}} \right\rangle \]
+</div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Differentiation Rules for Vectors</h1><p class="mb-6">Many differentiation rules stay the same (or mostly the same).</p><p class="mb-6">For example, the product rule for dot product:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{d}{dt} [\vec{u}(t) \cdot \vec{v}(t)] = \vec{u}'(t) \cdot \vec{v}(t) + \vec{u}(t) \cdot \vec{v}'(t) = \frac{d}{dt} [\vec{v}(t) \cdot \vec{u}(t)] \]
+</div><p class="mb-6">Order doesn't matter for dot product.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{d}{dt} [\vec{u}(t) \times \vec{v}(t)] = \vec{u}'(t) \times \vec{v}(t) + \vec{u}(t) \times \vec{v}'(t) \]
+</div><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-6">Keep the order as written because order is important in cross product.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Integrals work similarly, too</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int \vec{r}'(t) dt = \vec{r}(t) + \vec{C} \]
+</div><p>Vector constant of integration</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{a}^{b} \vec{r}'(t) dt = \vec{r}(b) - \vec{r}(a) \]
+</div><p>This is the displacement vector from \( t=a \) to \( t=b \).</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A vector diagram showing a curve with position vectors r(a) and r(b) originating from the origin, with the displacement vector r(b)-r(a) connecting them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-06-4.webp" loading="lazy" decoding="async" alt="A vector diagram showing a curve with position vectors r(a) and r(b) originating from the origin, with the displacement vector r(b)-r(a) connecting them." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A vector diagram showing a curve with position vectors r(a) and r(b) originating from the origin, with the displacement vector r(b)-r(a) connecting them.
+                  </figcaption>
+                </figure>
+              <figcaption class="text-sm text-slate-600 mt-2">Figure 1: Geometric representation of displacement.</figcaption></figure><p>The sum of infinitely many \( \vec{r}'(t) \) along \( t=a \) to \( t=b \) gives us \( \vec{r}(b) - \vec{r}(a) \).</p></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>14.3 Motions in space (part 1)</h1><p>If \( \vec{r}(t) \) describes the position of an object, then \( \vec{r}'(t) \) is the velocity vector.</p><p>And \( |\vec{r}'(t)| \) is the speed.</p><p>And \( \vec{r}''(t) \) is the acceleration vector.</p><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Example: If \( \vec{a}(t) = \langle 1, t, t^2 \rangle \) is the acceleration (\( t \ge 0 \), find the velocity such that \( \vec{v}(0) = \langle 1, 2, 3 \rangle \).</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">Vector Integration</h1><p class="mb-6">Given the acceleration vector function:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{a}(t) = \langle 1, t, t^2 \rangle = \vec{v}'(t) \]</div><p class="mb-6">To find the velocity vector function \(\vec{v}(t)\), we integrate \(\vec{a}(t)\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{v}(t) = \int \vec{a}(t) dt = \int \langle 1, t, t^2 \rangle dt \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \langle \int 1 dt, \int t dt, \int t^2 dt \rangle \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \langle t + C_1, \frac{1}{2}t^2 + C_2, \frac{1}{3}t^3 + C_3 \rangle \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{v}(t) = \langle t, \frac{1}{2}t^2, \frac{1}{3}t^3 \rangle + \langle C_1, C_2, C_3 \rangle \]</div><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>This is the vector constant of integration \(\vec{C}\).</p></div><p class="mb-6">To find \(\vec{C}\), we use the initial condition \(\vec{v}(0) = \langle 1, 2, 3 \rangle\):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \langle 1, 2, 3 \rangle = \langle 0, 0, 0 \rangle + \langle C_1, C_2, C_3 \rangle \]</div><p class="mb-6">Therefore, the velocity vector is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{v}(t) = \langle t, \frac{1}{2}t^2, \frac{1}{3}t^3 \rangle + \langle 1, 2, 3 \rangle \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \langle t+1, \frac{1}{2}t^2+2, \frac{1}{3}t^3+3 \rangle \]</div></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1 class="font-black tracking-tight text-slate-900 text-3xl mt-10 mb-4">Course Reflection Submission</h1><p class="mb-6">Please submit your reflections by using the CourseMIRROR App.</p><p class="mb-6">If you are having a problem with CourseMIRROR, please send an email to <a href="mailto:coursemirror.development@gmail.com" class="text-blue-600 underline">coursemirror.development@gmail.com</a>.</p><footer class="mt-10 pt-6 border-t border-slate-200 text-sm text-slate-500"><p>Purdue University | School of Engineering Education | 12/21/2022</p></footer></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 4: Cylinders and Quadric Surfaces (13.6) - Part II</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson4.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 4: Cylinders and Quadric Surfaces (13.6) - Part II</h3>
+
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-04-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson 4 title and warm-up problems showing cylinders and quadric surfaces">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Warm-up: Recall Sketches from Last Class</h4>
+    
+    <div class="example">
+        <h5>Example 1: \(x^2 + z^2 = 1\)</h5>
+        <p>This equation represents a <strong>circular cylinder</strong>. The variable \(y\) is free (appears nowhere in the equation), which means the surface is parallel to the \(y\)-axis.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The diagram shows a circular cylinder oriented vertically along the \(y\)-axis. The cylinder has a circular cross-section with radius 1 in any plane perpendicular to the \(y\)-axis. The coordinate axes are shown with \(x\), \(y\), and \(z\) labeled. The cylinder extends infinitely in both the positive and negative \(y\) directions.</p>
+        </div>
+    </div>
+    
+    <div class="example">
+        <h5>Example 2: \(x^2 + y^2 = z^2\)</h5>
+        <p>This equation represents a <strong>circular cone</strong>. The surface consists of two nappes (upper and lower cones) meeting at the origin.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The diagram shows a double-napped circular cone centered at the origin. The upper nappe extends upward along the positive \(z\)-axis, and the lower nappe extends downward along the negative \(z\)-axis. Both nappes meet at a single point at the origin. Horizontal circular cross-sections are shown at various heights, with the circles getting larger as distance from the origin increases. The coordinate axes are clearly marked.</p>
+        </div>
+    </div>
+    
+    <div class="example">
+        <h5>Example 3: \(x^2 + y^2 = -z\)</h5>
+        <p>This equation represents a <strong>paraboloid</strong> opening downward. Note that there are no traces when \(z \geq 0\) because the right side must be non-negative (since \(x^2 + y^2 \geq 0\)), which requires \(z \leq 0\). The traces for \(z < 0\) are circles.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The diagram shows a paraboloid opening downward along the negative \(z\)-axis. The vertex is at the origin. Horizontal cross-sections for \(z < 0\) are circles, with the circles getting larger as \(z\) becomes more negative. Several circular traces are illustrated, showing parabolic curves when viewed from the side. The coordinate axes show the surface exists only below the \(xy\)-plane.</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-04-2.webp" loading="lazy" decoding="async" alt="Page 2: Parabolic cylinder example">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 4: \(y = -z^2\)</h5>
+        <p>This equation represents a <strong>parabolic cylinder</strong>. The variable \(x\) is free (does not appear in the equation), which means the surface is parallel to the \(x\)-axis.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - 2D trace:</strong> On the left, a 2D view in the \(yz\)-plane shows a parabola opening to the left (in the negative \(y\) direction). The parabola has its vertex at the origin and represents the equation \(y = -z^2\) when \(x = 0\).</p>
+            
+            <p><strong>Diagram Description - 3D surface:</strong> On the right, a 3D visualization shows the parabolic cylinder extending along the \(x\)-axis. Horizontal cross-sections parallel to the \(xz\)-plane are parabolas. The surface shows dashed elliptical traces at various \(y\) values, all identical parabolas shifted in the \(x\) direction. The coordinate axes are labeled with \(x\), \(y\), and \(z\).</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-04-3.webp" loading="lazy" decoding="async" alt="Page 3: Paraboloid with traces analysis">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 5: \(x^2 + z^2 = -y\)</h5>
+        <p>This equation can be rewritten as \(x^2 + y^2 = -z\), which represents a <strong>paraboloid</strong> opening in the negative \(y\) direction.</p>
+        
+        <h5>Analysis of Traces:</h5>
+        
+        <p><strong>Traces in the \(y\)-direction</strong> (setting \(y = c\) for various constants \(c\)):</p>
+        <p>When \(y = c\), we have \(x^2 + z^2 = -c\). For \(y \geq 0\), no traces exist because \(x^2 + z^2\) cannot be negative.</p>
+        <ul>
+            <li>For \(y = 0\): \(x^2 + z^2 = 0\), which gives only the origin (a single point)</li>
+            <li>For \(y = -1\): \(x^2 + z^2 = 1\), which is a circle of radius 1</li>
+            <li>For \(y = -2\): \(x^2 + z^2 = 2\), which is a circle of radius \(\sqrt2\)</li>
+            <li>For \(y = -5\): \(x^2 + z^2 = 5\), which is a circle of radius \(\sqrt5\)</li>
+        </ul>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - Traces in \(y\)-direction:</strong> The left side shows a view looking down the \(y\)-axis onto the \(xz\)-plane. Concentric circles are drawn representing traces at different \(y\) values: a point at \(y = 0\), a small circle at \(y = -1\), a medium circle at \(y = -2\), and a larger circle at \(y = -5\). The circles increase in radius as \(y\) becomes more negative.</p>
+        </div>
+        
+        <p><strong>Traces in the \(x\)-direction</strong> (setting \(x = c\) for various constants \(c\)):</p>
+        <p>When \(x = 0\): \(z^2 = -y\), which is a parabola in the \(yz\)-plane opening in the negative \(y\) direction.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(x\)-direction trace:</strong> The middle diagram shows the trace in the \(yz\)-plane (\(x = 0\)). A parabola opens to the left (negative \(y\) direction) with vertex at the origin. The equation \(z^2 = -y\) describes this parabolic curve.</p>
+        </div>
+        
+        <p><strong>Traces in the \(z\)-direction</strong> (setting \(z = c\) for various constants \(c\)):</p>
+        <p>When \(z = 0\): \(x^2 = -y\), which is also a parabola opening in the negative \(y\) direction.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(z\)-direction trace:</strong> The right diagram shows the trace in the \(xy\)-plane (\(z = 0\)). A parabola opens to the left (negative \(y\) direction) with vertex at the origin. The equation \(x^2 = -y\) describes this parabolic curve.</p>
+            
+            <p><strong>3D Surface Visualization:</strong> The lower portion shows a 3D perspective of the complete paraboloid. The surface opens downward along the negative \(y\)-axis. Circular cross-sections perpendicular to the \(y\)-axis are shown with dashed lines, increasing in radius as \(y\) becomes more negative. The paraboloid has rotational symmetry about the \(y\)-axis.</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-04-4.webp" loading="lazy" decoding="async" alt="Page 4: Think-Pair-Share question about graph representation">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="important">
+        <h4>Think-Pair-Share Activity</h4>
+        <p><strong>Question:</strong> In \(\mathbb{R}^2\), what does the graph of \(x^2 - y^2 = k\) represent?</p>
+        
+        <p>Consider different values of the constant \(k\):</p>
+        <ul>
+            <li>For \(k = 0\): The equation \(x^2 - y^2 = 0\) factors as \((x-y)(x+y) = 0\), giving two intersecting lines \(y = x\) and \(y = -x\)</li>
+            <li>For \(k > 0\): The equation \(x^2 - y^2 = k\) represents a hyperbola opening horizontally (left and right)</li>
+            <li>For \(k < 0\): The equation \(x^2 - y^2 = k\) can be rewritten as \(y^2 - x^2 = -k\), representing a hyperbola opening vertically (up and down)</li>
+        </ul>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The diagram shows multiple curves in the \(xy\)-plane representing \(x^2 - y^2 = k\) for different values of \(k\). At the center (\(k = 0\)), two straight lines intersect at the origin at 45° angles: \(y = x\) and \(y = -x\). For positive values of \(k\), hyperbolas open horizontally (left-right), shown in purple, blue, and green. For negative values of \(k\), hyperbolas open vertically (up-down), also shown in different colors. As \(|k|\) increases, the hyperbolas move further from the origin. All hyperbolas are asymptotic to the lines \(y = x\) and \(y = -x\).</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-04-5.webp" loading="lazy" decoding="async" alt="Page 5: Hyperbolic paraboloid example with traces">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 6: \(z = x^2 - y^2\)</h5>
+        <p>This equation represents a <strong>hyperbolic paraboloid</strong>, also known as a "saddle surface."</p>
+        
+        <h5>Analysis of Traces:</h5>
+        
+        <p><strong>Traces in the \(z\)-direction</strong> (setting \(z = k\) for various constants \(k\)):</p>
+        <p>When \(z = k\), we have \(x^2 - y^2 = k\), which gives hyperbolas as analyzed in the previous example:</p>
+        <ul>
+            <li>For \(k = 1\): \(x^2 - y^2 = 1\), a hyperbola opening horizontally</li>
+            <li>For \(k = 0\): \(x^2 - y^2 = 0\), two intersecting lines</li>
+            <li>For \(k = -1\): \(x^2 - y^2 = -1\), a hyperbola opening vertically</li>
+        </ul>
+        
+        <p><strong>Traces in the \(x\)-direction</strong> (setting \(x = c\)):</p>
+        <p>When \(x = c\), we have \(z = c^2 - y^2\), which is a parabola opening downward in the \(yz\)-plane.</p>
+        
+        <p><strong>Traces in the \(y\)-direction</strong> (setting \(y = c\)):</p>
+        <p>When \(y = c\), we have \(z = x^2 - c^2\), which is a parabola opening upward in the \(xz\)-plane.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The 3D visualization shows a saddle-shaped surface. The surface curves upward along the \(x\)-direction (forming upward-opening parabolas when \(y\) is constant) and curves downward along the \(y\)-direction (forming downward-opening parabolas when \(x\) is constant). Hyperbolic traces are shown at different heights: at \(z = 0\) (two intersecting lines forming an X), at \(z = 1\) (hyperbola opening left-right), at \(z = 2\) (larger hyperbola opening left-right), and at \(z = -1\) and \(z = -2\) (hyperbolas opening up-down). The surface has a saddle point at the origin.</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-04-6.webp" loading="lazy" decoding="async" alt="Page 6: 3D rendering of hyperbolic paraboloid">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="visual-desc">
+        <p><strong>3D Rendering Description:</strong> This page shows a computer-generated 3D visualization of the hyperbolic paraboloid \(z = x^2 - y^2\). The surface is rendered in shaded gold/orange tones to show depth and curvature. The saddle shape is clearly visible, with the surface curving upward along one diagonal direction and downward along the perpendicular diagonal direction. The surface passes through the origin, which is the saddle point. Dashed blue lines indicate cross-sections or traces at various levels. The three coordinate axes (\(x\), \(y\), and \(z\)) are shown extending from the origin, with the \(z\)-axis pointing vertically upward.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-04-7.webp" loading="lazy" decoding="async" alt="Page 7: Break slide">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="important">
+        <h4>Break!!</h4>
+        <p>Take a moment to:</p>
+        <ul>
+            <li>Stretch</li>
+            <li>Walk around</li>
+            <li>Ask Questions</li>
+            <li>Reflect</li>
+            <li>Talk to your neighbors</li>
+        </ul>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-04-8.webp" loading="lazy" decoding="async" alt="Page 8: Hyperboloid example with traces analysis">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 7: \(4x^2 + y^2 - z^2 = 36\)</h5>
+        <p>This equation represents a <strong>hyperboloid of one sheet</strong>.</p>
+        
+        <h5>Analysis of Traces:</h5>
+        
+        <p><strong>Traces in the \(z\)-direction</strong> (setting \(z = k\)):</p>
+        <p>When \(z = k\), we have \(4x^2 + y^2 = 36 + k^2\). This gives ellipses for all values of \(k\):</p>
+        <ul>
+            <li>For \(k = 0\): \(4x^2 + y^2 = 36\), or \(\frac{x^2}{9} + \frac{y^2}{36} = 1\)</li>
+            <li>For \(k = \pm 1\): \(4x^2 + y^2 = 37\)</li>
+            <li>For \(k = \pm 2\): \(4x^2 + y^2 = 40\)</li>
+        </ul>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - Elliptical traces:</strong> The upper right shows a view looking down the \(z\)-axis. Several concentric ellipses are drawn, all centered at the origin. The innermost ellipse corresponds to \(z = 0\), and the ellipses become progressively larger for \(|z| = 1, 2\), etc. All ellipses are elongated along the \(y\)-axis with a 2:1 ratio compared to the \(x\)-axis.</p>
+        </div>
+        
+        <p><strong>Traces in the \(x\)-direction</strong> (setting \(x = k\)):</p>
+        <p>When \(x = k\), we have \(y^2 - z^2 = 36 - 4k^2\).</p>
+        <p>This gives hyperbolas opening vertically (along the \(y\)-direction).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(x\)-direction traces:</strong> The lower left shows traces in planes perpendicular to the \(x\)-axis. These traces are hyperbolas in the \(yz\)-plane, opening vertically (along the \(y\)-axis). The hyperbola branches curve away from the \(z\)-axis.</p>
+        </div>
+        
+        <p><strong>Traces in the \(y\)-direction</strong> (setting \(y = k\)):</p>
+        <p>When \(y = k\), we have \(4x^2 - z^2 = 36 - k^2\).</p>
+        <p>This also gives hyperbolas, opening horizontally when \(|k| < 6\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(y\)-direction traces:</strong> The lower right shows traces in planes perpendicular to the \(y\)-axis. These are hyperbolas in the \(xz\)-plane. The hyperbola branches open horizontally (along the \(x\)-direction).</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-04-9.webp" loading="lazy" decoding="async" alt="Page 9: 3D rendering of hyperboloid of one sheet">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="visual-desc">
+        <p><strong>3D Rendering Description:</strong> This page shows a computer-generated 3D visualization of the hyperboloid of one sheet \(4x^2 + y^2 - z^2 = 36\). The surface is rendered in blue shading, showing a characteristic hourglass or cooling-tower shape. The surface is continuous, forming one connected sheet that wraps around the \(z\)-axis. The narrowest part (the "waist") occurs at \(z = 0\), where the cross-section is an ellipse. As \(|z|\) increases (moving up or down along the \(z\)-axis), the elliptical cross-sections become larger. Several horizontal dashed ellipses are shown at different heights to illustrate these circular/elliptical traces. The three coordinate axes are shown with \(x\), \(y\), and \(z\) clearly labeled.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-04-10.webp" loading="lazy" decoding="async" alt="Page 10: Hyperboloid of two sheets example">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 8: \(-x^2 - y^2 + 4z^2 = 36\)</h5>
+        <p>This equation can be rewritten as \(4z^2 - x^2 - y^2 = 36\) or \(\frac{z^2}{9} - \frac{x^2}{36} - \frac{y^2}{36} = 1\).</p>
+        <p>This represents a <strong>hyperboloid of two sheets</strong>.</p>
+        
+        <h5>Analysis of Traces:</h5>
+        
+        <p><strong>Traces in the \(z\)-direction</strong> (setting \(z = k\)):</p>
+        <p>When \(z = k\), we have \(x^2 + y^2 = 4k^2 - 36\).</p>
+        <p>Note that traces exist only when \(4k^2 - 36 \geq 0\), which means \(k^2 \geq 9\), or \(|k| \geq 3\). Therefore, there are <strong>no traces when \(-3 < k < 3\)</strong>.</p>
+        <ul>
+            <li>For \(k = \pm 3\): \(x^2 + y^2 = 0\), giving single points at \((0, 0, 3)\) and \((0, 0, -3)\)</li>
+            <li>For \(k = \pm 4\): \(x^2 + y^2 = 28\), circles of radius \(\sqrt{28} = 2\sqrt{7}\)</li>
+            <li>For \(k = \pm 5\): \(x^2 + y^2 = 64\), circles of radius 8</li>
+        </ul>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - Elliptical/circular traces:</strong> The upper right shows circular traces in planes perpendicular to the \(z\)-axis. No traces exist between \(z = -3\) and \(z = 3\). At \(z = \pm 3\), there are single points. For \(|z| > 3\), circular traces of increasing radius are shown. Concentric circles appear at \(z = 3, 4, 5\) (and their negative counterparts), with radii increasing as \(|z|\) increases.</p>
+        </div>
+        
+        <p><strong>Traces in the \(x\)-direction</strong> (setting \(x = k\)):</p>
+        <p>When \(x = k\), we have \(-y^2 + 4z^2 = 36 + k^2\), or \(4z^2 - y^2 = 36 + k^2\).</p>
+        <p>This gives hyperbolas opening vertically for all values of \(k\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(x\)-direction traces:</strong> The lower left shows hyperbolic traces in the \(yz\)-plane. These hyperbolas open vertically (along the \(z\)-direction) and represent the \(yz\)-cross-sections of the surface.</p>
+        </div>
+        
+        <p><strong>Traces in the \(y\)-direction</strong> (setting \(y = k\)):</p>
+        <p>When \(y = k\), we have \(-x^2 + 4z^2 = 36 + k^2\), or \(4z^2 - x^2 = 36 + k^2\).</p>
+        <p>This also gives hyperbolas opening vertically.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description - \(y\)-direction traces:</strong> The lower right shows hyperbolic traces in the \(xz\)-plane. These hyperbolas also open vertically (along the \(z\)-direction) and represent the \(xz\)-cross-sections of the surface.</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-04-11.webp" loading="lazy" decoding="async" alt="Page 11: 3D rendering of hyperboloid of two sheets">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="visual-desc">
+        <p><strong>3D Rendering Description:</strong> This page shows a 3D visualization of the hyperboloid of two sheets. The surface consists of two separate, disconnected sheets, both rendered in blue. The upper sheet opens upward from the point \((0, 0, 3)\) along the positive \(z\)-axis, and the lower sheet opens downward from the point \((0, 0, -3)\) along the negative \(z\)-axis. Between \(z = -3\) and \(z = 3\), there is no surface—this region is empty. Both sheets have circular cross-sections perpendicular to the \(z\)-axis, with the radius of these circles increasing as the distance from \(z = \pm 3\) increases. Dashed circular traces are shown at various heights to illustrate the circular nature of the cross-sections. The three coordinate axes are clearly labeled.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-04-12.webp" loading="lazy" decoding="async" alt="Page 12: General form of quadric surfaces">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="definition">
+        <h4>General Form of Quadric Surfaces</h4>
+        <p><strong>Definition:</strong> A quadric surface is a surface whose equation has degree 2 (the highest power of any variable or product of variables is 2).</p>
+        
+        <p>The most general form of a quadric surface equation is:</p>
+        \[Ax^2 + By^2 + Cz^2 + Dxy + Eyz + Fxz + Gx + Hy + Iz + J = 0\]
+        
+        <p>where \(A, B, C, D, E, F, G, H, I, J\) are constants.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Property:</strong> Traces of quadric surfaces are <strong>conic curves</strong> in all coordinate directions. These traces can be:</p>
+        <ul>
+            <li>Lines</li>
+            <li>Circles</li>
+            <li>Ellipses</li>
+            <li>Parabolas</li>
+            <li>Hyperbolas</li>
+        </ul>
+        <p>The type of trace depends on which plane you're intersecting the surface with and the specific coefficients in the equation.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-04-13.webp" loading="lazy" decoding="async" alt="Page 13: Table of quadric surfaces - part 1">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Standard Forms of Quadric Surfaces - Part 1</h4>
+    
+    <div class="definition">
+        <h5>1. Ellipsoid</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1\]
+        
+        <p><strong>Features:</strong> All traces are ellipses.</p>
+        
+        <p><strong>Special Case:</strong> When \(a = b = c\), the ellipsoid becomes a <strong>sphere</strong>.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The ellipsoid is a closed, bounded surface resembling a stretched sphere. It has three perpendicular axes of symmetry along the \(x\), \(y\), and \(z\) directions, with semi-axes of lengths \(a\), \(b\), and \(c\) respectively. The surface is smooth and convex, extending from \(-a\) to \(a\) in the \(x\)-direction, \(-b\) to \(b\) in the \(y\)-direction, and \(-c\) to \(c\) in the \(z\)-direction. The image shows a golden-brown rendered ellipsoid.</p>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <h5>2. Elliptic Paraboloid</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[z = \frac{x^2}{a^2} + \frac{y^2}{b^2}\]
+        
+        <p><strong>Features:</strong> Traces with \(z = z_0 > 0\) are ellipses. Traces with \(x = x_0\) or \(y = y_0\) are parabolas.</p>
+        
+        <p><strong>Special Case:</strong> When \(a = b\), the paraboloid becomes a <strong>paraboloid of revolution</strong> (circular paraboloid).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The elliptic paraboloid opens upward from a vertex at the origin. It has a bowl or cup shape. Cross-sections parallel to the \(xy\)-plane (\(z = \text{constant} > 0\)) are ellipses that grow larger as \(z\) increases. Cross-sections in planes \(x = \text{constant}\) or \(y = \text{constant}\) are upward-opening parabolas. The surface is rendered in golden-brown tones with dashed elliptical traces shown at various heights.</p>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <h5>3. Hyperboloid of One Sheet</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1\]
+        
+        <p><strong>Features:</strong> Traces with \(z = z_0\) are ellipses for all \(z_0\). Traces with \(x = x_0\) or \(y = y_0\) are hyperbolas.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The hyperboloid of one sheet has an hourglass or cooling-tower shape. It is a continuous, connected surface that wraps around the \(z\)-axis. The narrowest cross-section occurs at \(z = 0\), where it is an ellipse. As \(|z|\) increases, the elliptical cross-sections become larger. The surface extends infinitely along the \(z\)-axis in both directions. The rendering shows a golden-brown surface with smooth curvature.</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-04-14.webp" loading="lazy" decoding="async" alt="Page 14: Table of quadric surfaces - part 2">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Standard Forms of Quadric Surfaces - Part 2</h4>
+    
+    <div class="definition">
+        <h5>4. Hyperboloid of Two Sheets</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[-\frac{x^2}{a^2} - \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1\]
+        <p>or equivalently:</p>
+        \[\frac{z^2}{c^2} - \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\]
+        
+        <p><strong>Features:</strong> Traces with \(z = z_0\) where \(|z_0| > |c|\) are ellipses. Traces with \(x = x_0\) and \(y = y_0\) are hyperbolas.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The hyperboloid of two sheets consists of two separate, disconnected surfaces. There is an upper sheet opening upward from \((0, 0, c)\) and a lower sheet opening downward from \((0, 0, -c)\). Between \(z = -c\) and \(z = c\), there is no surface. Each sheet has circular or elliptical cross-sections that grow larger as the distance from \(z = \pm c\) increases. The rendering shows both sheets in golden-brown tones.</p>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <h5>5. Elliptic Cone</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}\]
+        
+        <p><strong>Features:</strong> Traces with \(z = z_0 \neq 0\) are ellipses. Traces with \(x = x_0\) or \(y = y_0\) are hyperbolas or intersecting lines.</p>
+        
+        <p><strong>Special Case:</strong> When \(a = b\), the cone becomes a <strong>circular cone</strong>.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The elliptic cone has two nappes (upper and lower cones) that meet at a point at the origin. The upper nappe extends upward along the positive \(z\)-axis, and the lower nappe extends downward along the negative \(z\)-axis. Cross-sections parallel to the \(xy\)-plane are ellipses (or circles if \(a = b\)) that grow larger with increasing \(|z|\). The surface has rotational or elliptical symmetry about the \(z\)-axis.</p>
+        </div>
+    </div>
+    
+    <div class="definition">
+        <h5>6. Hyperbolic Paraboloid</h5>
+        <p><strong>Standard Equation:</strong></p>
+        \[z = \frac{x^2}{a^2} - \frac{y^2}{b^2}\]
+        
+        <p><strong>Features:</strong> Traces with \(z = z_0 \neq 0\) are hyperbolas. Traces with \(x = x_0\) or \(y = y_0\) are parabolas.</p>
+        
+        <div class="visual-desc">
+            <p><strong>Graph Description:</strong> The hyperbolic paraboloid has a distinctive saddle shape. The surface curves upward in one direction (along the \(x\)-axis) and downward in the perpendicular direction (along the \(y\)-axis). The origin is a saddle point—neither a local maximum nor minimum. Cross-sections at \(z = 0\) give two intersecting lines, while cross-sections at \(z \neq 0\) give hyperbolas. The rendering shows an orange/golden saddle-shaped surface.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

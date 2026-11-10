@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 33: Surface Integrals - III (17.6) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson33.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 33: Surface Integrals - III (17.6)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/10/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson33.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 33: Surface Integrals - III (17.6)</h4>
+
+<p><strong>Review: Surface integrals of scalar functions</strong></p>
+<p>\(S: \vec{r}(u,v)\), \(u,v\) in Region \(R\) inside \(\mathbb{R}^2\)</p>
+
+<div class="definition">
+    \[\iint_S f \, dS = \iint_R f(\vec{r}(u,v)) |\vec{r}_u \times \vec{r}_v| \, dA\]
+</div>
+
+<p><strong>What does \(\vec{r}_u \times \vec{r}_v\) represent?</strong> <strong>Normal vector</strong>. Note that \(-(\vec{r}_u \times \vec{r}_v)\) is also a normal vector.</p>
+
+<p>\(z = f(x,y) \rightsquigarrow \vec{r}(u,v) = \langle u, v, f(u,v) \rangle\)</p>
+<ul>
+    <li>\(\vec{r}_u \times \vec{r}_v = \langle -f_u, -f_v, 1 \rangle\)</li>
+    <li>\(|\vec{r}_u \times \vec{r}_v| = \sqrt{f_u^2 + f_v^2 + 1}\)</li>
+</ul>
+
+<div class="example">
+    <p><strong>Example:</strong> \(4x + 3y + z = 12 \rightsquigarrow z = 12 - 4x - 3y = f(x,y)\)</p>
+    <div class="solution">
+        <p>\(\vec{r}(u,v) = \langle u, v, f(u,v) \rangle\)</p>
+        <p>\(\vec{r}_u \times \vec{r}_v = \langle 4, 3, 1 \rangle\)</p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Review example:</h4>
+
+<div class="example">
+    Evaluate 
+    \[ \iint_S (x^2 + 3z)^{1/2} \, dS \]
+    where \( S \) is the surface \( z = x^2 \approx f(x,y) \) with boundaries \( 0 \le x \le 2 \) and \( 0 \le y \le 4 \).
+</div>
+
+<div class="solution">
+    First, we parameterize the surface \( S \):
+    \[ r(u, v) = \langle u, v, f(u, v) \rangle = \langle u, v, u^2 \rangle \]
+    with limits \( 0 \le u \le 2 \) and \( 0 \le v \le 4 \).
+    
+    Next, we calculate the normal vector and its magnitude:
+    \[ r_u \times r_v = \langle -2u, 0, 1 \rangle \]
+    \[ |r_u \times r_v| = \sqrt{4u^2 + 1} \]
+    
+    Setting up the surface integral by substituting variables and the magnitude of the normal vector:
+    \[ \iint_S (x^2 + 3z)^{1/2} \, dS = \int_0^4 \int_0^2 \underbrace{(u^2 + 3u^2)^{1/2}}_{(x^2 + 3z)^{1/2}} \underbrace{(\sqrt{4u^2 + 1})}_{|r_u \times r_v|} \, du \, dv \]
+    
+    Simplifying the integrand:
+    \[ = \int_0^4 \int_0^2 2u \sqrt{4u^2 + 1} \, du \, dv \]
+    
+    ... evaluate by substitution.
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Integrating vector fields over a Surface</h4>
+
+<p>Flux integral or Surface integrals of vector fields</p>
+
+<div class="definition">
+    <strong>Notation:</strong>
+    \[\iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S} (\vec{F} \cdot \vec{n}) \, dS\]
+    <p>Where the term \((\vec{F} \cdot \vec{n})\) is a <strong>scalar</strong>, and \(\vec{n} = \text{unit normal}\).</p>
+</div>
+
+<p>Expanding the integral into parametric form:</p>
+\[= \iint_{\substack{u, v \\ \text{Bounds}}} (\vec{F} \cdot \vec{n}) |\vec{r}_u \times \vec{r}_v| \, dA\]
+
+
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-1.webp" loading="lazy" decoding="async" alt="A 3D diagram representing a parametric surface patch. It shows a blue curved quadrilateral surface with grid lines. At a specific point on the surface, two tangent vectors are shown: a green vector labeled \vec{r}_u and a magenta vector labeled \vec{r}_v, which follow the directions of the parametric grid lines. A third vector, the normal vector, is shown pointing outward from the surface, perpendicular to the plane formed by \vec{r}_u and \vec{r}_v. This illustrates the relationship between tangent vectors and the surface normal." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D diagram representing a parametric surface patch. It shows a blue curved quadrilateral surface with grid lines. At a specific point on the surface, two tangent vectors are shown: a green vector labeled \vec{r}_u and a magenta vector labeled \vec{r}_v, which follow the directions of the parametric grid lines. A third vector, the normal vector, is shown pointing outward from the surface, perpendicular to the plane formed by \vec{r}_u and \vec{r}_v. This illustrates the relationship between tangent vectors and the surface normal.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+<div class="definition">
+    <strong>unit normal</strong>
+    \[\vec{n} = \frac{\vec{r}_u \times \vec{r}_v}{|\vec{r}_u \times \vec{r}_v|} \quad \text{or} \quad -\frac{(\vec{r}_u \times \vec{r}_v)}{|\vec{r}_u \times \vec{r}_v|}\]
+</div>
+
+<p>Substituting the expression for the unit normal back into the flux integral, the magnitude terms \(|\vec{r}_u \times \vec{r}_v|\) cancel out, resulting in the computational formula:</p>
+
+\[\iint_{S} \vec{F} \cdot \vec{n} \, dS = \iint_{\substack{u, v \\ \text{Bounds}}} \vec{F} \cdot (\pm \vec{r}_u \times \vec{r}_v) \, dA\]
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Should I choose \(r_u \times r_v\) or \(-r_u \times r_v\)?</h3>
+
+<div class="important">
+    <p><strong>Convention!</strong> Choose normal pointing <strong>outward</strong> or <strong>upward</strong>.</p>
+    <p><strong>OR</strong> you will be asked to choose a specific one.</p>
+    <p>The above choices define the <strong>"Positive" Normal Direction</strong>.</p>
+</div>
+
+<div class="diagram-container">
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-2.webp" loading="lazy" decoding="async" alt="A diagram of a green sphere with a dashed midline indicating depth. A purple arrow points radially away from the sphere's surface and is labeled 'outward'. A blue arrow points from the surface toward the center and is labeled 'inward'. This illustrates the choice between outward and inward normal vectors on a closed surface." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A diagram of a green sphere with a dashed midline indicating depth. A purple arrow points radially away from the sphere's surface and is labeled 'outward'. A blue arrow points from the surface toward the center and is labeled 'inward'. This illustrates the choice between outward and inward normal vectors on a closed surface.</span>
+                      </div>
+                    </div>
+                  
+
+    
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-3.webp" loading="lazy" decoding="async" alt="A diagram of a green vertical cylinder with purple and blue arrows. Purple arrows point horizontally outward from the cylinder's curved surface, representing outward normals. Blue arrows point horizontally inward towards the cylinder's vertical center line, representing inward normals." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A diagram of a green vertical cylinder with purple and blue arrows. Purple arrows point horizontally outward from the cylinder's curved surface, representing outward normals. Blue arrows point horizontally inward towards the cylinder's vertical center line, representing inward normals.</span>
+                      </div>
+                    </div>
+                  
+
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-4.webp" loading="lazy" decoding="async" alt="A diagram showing a curved green surface, similar to a saddle shape, in a 3-dimensional coordinate system. A purple arrow points vertically up from a point on the surface and is labeled 'upward (+ve z coordinate)'. A blue arrow points vertically down from the same point and is labeled 'downward (-ve z coordinate)'. This illustrates the convention for upward and downward normal vectors on an open surface." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A diagram showing a curved green surface, similar to a saddle shape, in a 3-dimensional coordinate system. A purple arrow points vertically up from a point on the surface and is labeled 'upward (+ve z coordinate)'. A blue arrow points vertically down from the same point and is labeled 'downward (-ve z coordinate)'. This illustrates the convention for upward and downward normal vectors on an open surface.</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        #### Example
+
+<div class="example">
+    <p>
+        \(S: z = x^2, \quad 0 \le x \le 2, \quad 0 \le y \le 4\)
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-5.webp" loading="lazy" decoding="async" alt="A 3D coordinate plot illustrating a parabolic cylinder surface in the first octant. The coordinate system consists of a vertical z-axis, a horizontal y-axis extending to the right, and an x-axis extending toward the bottom-left. The surface is defined by the equation z = x^2 and is constrained by the domain 0 ≤ x ≤ 2 and 0 ≤ y ≤ 4. The diagram shows the surface's shape using four green parabolic arcs drawn in vertical planes parallel to the xz-plane, spaced at intervals along the y-axis. Each arc starts at the y-axis (where x=0 and z=0) and curves upward as the x-value increases. Dashed lines delineate the rectangular footprint of the surface on the xy-plane and connect the upper endpoints of the parabolic arcs to indicate the full three-dimensional extent of the cylinder segment." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate plot illustrating a parabolic cylinder surface in the first octant. The coordinate system consists of a vertical z-axis, a horizontal y-axis extending to the right, and an x-axis extending toward the bottom-left. The surface is defined by the equation z = x^2 and is constrained by the domain 0 ≤ x ≤ 2 and 0 ≤ y ≤ 4. The diagram shows the surface's shape using four green parabolic arcs drawn in vertical planes parallel to the xz-plane, spaced at intervals along the y-axis. Each arc starts at the y-axis (where x=0 and z=0) and curves upward as the x-value increases. Dashed lines delineate the rectangular footprint of the surface on the xy-plane and connect the upper endpoints of the parabolic arcs to indicate the full three-dimensional extent of the cylinder segment.</span>
+                      </div>
+                    </div>
+                  
+    </diagram-placeholder>
+
+    <div class="solution">
+        <p>
+            The surface can be parameterized as:
+            \[r(u, v) = \langle u, v, u^2 \rangle\]
+            where \(0 \le u \le 2, \quad 0 \le v \le 4\)
+        </p>
+
+        <p>
+            The normal vector is found using the cross product of the partial derivatives:
+            \[r_u \times r_v = \langle -2u, 0, 1 \rangle\]
+        </p>
+
+        <p>
+            Depending on the required orientation, the normal vector is:
+            <br>
+            <b>upward Normal</b> is \(\langle -2u, 0, 1 \rangle\)
+            <br>
+            <b>downward Normal</b> is \(\langle 2u, 0, -1 \rangle\)
+            <br><br>
+            <b>facing +ve x axis is</b> \(\langle 2u, 0, -1 \rangle\)
+            <br>
+            <b>facing -ve x axis is</b> \(\langle -2u, 0, 1 \rangle\)
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Flux Integral over a Surface</h4>
+    <p>
+        <strong>Eg:</strong> Evaluate flux integral for \(\vec{F} = \langle 1, z, -x \rangle\) over the surface \(S: z = x^2\), \(0 \le x \le 2\), \(0 \le y \le 4\) with <strong>normal</strong> pointing <strong>downward</strong>.
+    </p>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>First, we parametrize the surface \(S\):</p>
+        \[ r(u, v) = \langle u, v, u^2 \rangle \]
+        \[ r_u \times r_v = \langle -2u, 0, 1 \rangle \]
+        <p>Since the problem specifies a downward-pointing normal vector, we use:</p>
+        \[ -(r_u \times r_v) = \langle 2u, 0, -1 \rangle \]
+
+        <p>The flux integral is defined as:</p>
+        \[ \iint_S \vec{F} \cdot \vec{n} \, dS = \iint_{\substack{u,v \\ \text{Bounds}}} \vec{F}(r(u,v)) \cdot (-(r_u \times r_v)) \, du \, dv \]
+
+        <p>Substituting the field \(\vec{F}(r(u,v)) = \langle 1, u^2, -u \rangle\) and the normal vector into the integral with the given bounds:</p>
+        \[ = \int_0^4 \int_0^2 \langle 1, u^2, -u \rangle \cdot \langle +2u, 0, -1 \rangle \, du \, dv \]
+        \[ = \int_0^4 \int_0^2 3u \, du \, dv = \left. \frac{3u^2}{2} \right|_0^2 \times \left. v \right|_0^4 = 24 \]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <section class="worked-example">
+    <h2>Worked Example: Flux Integral</h2>
+
+    <div class="example">
+        <p>Evaluate the flux integral for \(\vec{F} = \langle x, y, z \rangle\) over the surface \(S: 4x + 3y + z = 12\) in the 1st octant with the <strong>normal pointing towards the positive \(x\)-axis</strong>.</p>
+    </div>
+
+    <div class="solution">
+        <p>Evaluate: \[\iint_{S} \vec{F} \cdot \vec{n} \, dS\]</p>
+
+        <p>For the surface \(S\), we can parametrize it as:
+        \[S: \vec{r}(u,v) = \langle u, v, 12 - 4u - 3v \rangle, \quad u \ge 0, \quad v \ge 0, \quad 4u + 3v \le 12\]</p>
+
+        
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-6.webp" loading="lazy" decoding="async" alt="A 2D coordinate graph illustrating the region of integration R in the uv-plane. The horizontal axis is labeled u and the vertical axis is labeled v. A straight line with a negative slope represents the equation 4u + 3v = 12. The triangular region in the first quadrant bounded by this line and the axes is shaded with diagonal lines and labeled R, representing the set of points where 4u + 3v is less than or equal to 12." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate graph illustrating the region of integration R in the uv-plane. The horizontal axis is labeled u and the vertical axis is labeled v. A straight line with a negative slope represents the equation 4u + 3v = 12. The triangular region in the first quadrant bounded by this line and the axes is shaded with diagonal lines and labeled R, representing the set of points where 4u + 3v is less than or equal to 12.</span>
+                      </div>
+                    </div>
+                  
+
+        <p>Calculating the cross product of the partial derivatives:
+        \[\vec{r}_u \times \vec{r}_v = \langle 4, 3, 1 \rangle\]
+        \[-(\vec{r}_u \times \vec{r}_v) = \langle -4, -3, -1 \rangle\]</p>
+
+        <p>Since the problem specifies the normal must point towards the positive \(x\)-axis, we choose the vector with the positive \(x\)-component: \(\langle 4, 3, 1 \rangle\).</p>
+
+        <p>Setting up the integral over the region \(R\):
+        \[\iint_{S} \vec{F} \cdot \vec{n} \, dS = \iint_{R} \vec{F}(\vec{r}(u,v)) \cdot (\vec{r}_u \times \vec{r}_v) \, dA\]
+        \[= \iint_{R} \langle u, v, 12 - 4u - 3v \rangle \cdot \langle 4, 3, 1 \rangle \, dA\]
+        \[= \iint_{R} (4u + 3v + 12 - 4u - 3v) \, dA\]
+        \[= \iint_{R} 12 \, dA\]</p>
+    </div>
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-7.webp" loading="lazy" decoding="async" alt="A coordinate graph in the uv-plane showing a triangular region R. The horizontal axis is labeled 'u' and the vertical axis is labeled 'v'. A straight line connects the v-intercept at 4 to the u-intercept at 3, labeled with the equation 4u + 3v = 12. The region R is the interior of the triangle formed by this line and the axes, and it is shaded with green diagonal lines. Green arrows point horizontally from the v-axis (u=0) to the line 4u + 3v = 12, indicating the range of u for a fixed v. A horizontal pink line segment is drawn at a fixed v value to represent the width of the region as (12 - 3v)/4." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate graph in the uv-plane showing a triangular region R. The horizontal axis is labeled 'u' and the vertical axis is labeled 'v'. A straight line connects the v-intercept at 4 to the u-intercept at 3, labeled with the equation 4u + 3v = 12. The region R is the interior of the triangle formed by this line and the axes, and it is shaded with green diagonal lines. Green arrows point horizontally from the v-axis (u=0) to the line 4u + 3v = 12, indicating the range of u for a fixed v. A horizontal pink line segment is drawn at a fixed v value to represent the width of the region as (12 - 3v)/4.</span>
+                      </div>
+                    </div>
+                  
+
+    \[ \iint_R 12 \, dA = 12 \iint_R 1 \, dA \]
+    \[ = 12 \ast \text{Area of } R \]
+    \[ = 12 \ast \frac{1}{2}(3 \times 4) \]
+    \[ = 72 \]
+
+    <h4>Alternatively</h4>
+    <p>Fix \(v\) with \(0 \le u \le \frac{12-3v}{4}\)</p>
+
+    \[ \iint_R 12 \, dA = \int_{0}^{4} \int_{0}^{\frac{12-3v}{4}} 12 \, du \, dv \]
+    \[ = \int_{0}^{4} \frac{12}{4} (12 - 3v) \, dv \]
+    \[ = 3 \left[ 12v - \frac{3v^2}{2} \right]_{0}^{4} = 72 \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+  <h4>eg: Evaluate \(\iint_S \vec{F} \cdot d\vec{S}\), where \(\vec{F} = \langle x^7, z^3, y^3 \rangle\)</h4>
+  <p>
+    The surface \(S\) is defined by \(y^2 + z^2 = 4\), for \(0 \leq x \leq 7\).<br>
+    The <strong>normal is positive outwards</strong>.
+  </p>
+
+  
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-8.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram illustrating the cylindrical surface S. The axes shown include a vertical axis and a horizontal axis to the right, forming the yz-plane, and a diagonal axis extending towards the bottom-left, representing the x-axis. A cylinder is drawn centered along this x-axis, starting from the origin (x=0) and extending to x=7. The circular ends of the cylinder have a radius of 2, based on the equation y^2 + z^2 = 4. The diagram uses solid lines for the visible exterior of the cylinder and the front circular face, while the obscured part of the circular base at the origin is indicated with a dashed line." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram illustrating the cylindrical surface S. The axes shown include a vertical axis and a horizontal axis to the right, forming the yz-plane, and a diagonal axis extending towards the bottom-left, representing the x-axis. A cylinder is drawn centered along this x-axis, starting from the origin (x=0) and extending to x=7. The circular ends of the cylinder have a radius of 2, based on the equation y^2 + z^2 = 4. The diagram uses solid lines for the visible exterior of the cylinder and the front circular face, while the obscured part of the circular base at the origin is indicated with a dashed line.</span>
+                      </div>
+                    </div>
+                  
+
+  <div class="solution">
+    <p><strong>Parametrization:</strong></p>
+    <p>
+      \(x = u\), \(0 \leq u \leq 7\)<br>
+      \(y^2 + z^2 = 4\) is a circle of Radius 2.<br>
+      \[ \left. \begin{aligned} y &amp;= 2 \cos v \\ z &amp;= 2 \sin v \end{aligned} \right\} 0 \leq v \leq 2\pi \]
+    </p>
+
+    <p>
+      \(r(u, v) = \langle u, 2 \cos v, 2 \sin v \rangle\)<br>
+      \(r_u = \langle 1, 0, 0 \rangle\)<br>
+      \(r_v = \langle 0, -2 \sin v, 2 \cos v \rangle\)<br>
+      \(r_u \times r_v = \langle 0, -2 \cos v, -2 \sin v \rangle\)<br>
+      \(-(r_u \times r_v) = \langle 0, 2 \cos v, 2 \sin v \rangle\)
+    </p>
+  </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Determining Surface Orientation and Flux Integral</h3>
+
+
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-33-9.webp" loading="lazy" decoding="async" alt="A coordinate diagram in the y-z plane showing a circle centered at the origin. A vertical axis is labeled 'z' and a horizontal axis is labeled 'y'. There is a green circle drawn on these axes. Two blue arrows represent a vector field pointing from the circle's boundary towards the center: one arrow points horizontally from the positive y-axis toward the origin, and another points vertically from the positive z-axis toward the origin. This visualizes that the calculated normal vector field points inwards." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate diagram in the y-z plane showing a circle centered at the origin. A vertical axis is labeled 'z' and a horizontal axis is labeled 'y'. There is a green circle drawn on these axes. Two blue arrows represent a vector field pointing from the circle's boundary towards the center: one arrow points horizontally from the positive y-axis toward the origin, and another points vertically from the positive z-axis toward the origin. This visualizes that the calculated normal vector field points inwards.</span>
+                      </div>
+                    </div>
+                  
+
+<section class="solution">
+    <p>To determine the orientation of the surface, we calculate the cross product of the partial derivatives of the parameterization \(\mathbf{r}(u,v)\).</p>
+
+    \[\mathbf{r}_u \times \mathbf{r}_v = \langle 0, -2\cos v, -2\sin v \rangle\]
+
+    <p>We test specific values of the parameter \(v\) to see the direction of the normal vectors:</p>
+    <ul>
+        <li>For \(v = 0 \rightarrow \langle 0, -2, 0 \rangle\)</li>
+        <li>For \(v = \frac{\pi}{2} \rightarrow \langle 0, 0, -2 \rangle\)</li>
+    </ul>
+
+    <p>As shown in the diagram, these vectors point toward the origin, meaning \(\mathbf{r}_u \times \mathbf{r}_v\) is <strong>facing inwards</strong>.</p>
+
+    <p>To orient the surface correctly (typically outwards for flux calculations), we <strong>choose</strong> the negative of the calculated cross product:</p>
+    \[-(\mathbf{r}_u \times \mathbf{r}_v) = \langle 0, 2\cos v, 2\sin v \rangle\]
+
+    <p>We then set up the surface integral for the flux of the vector field \(\mathbf{F}\) across surface \(S\):</p>
+    \[\iint_S \mathbf{F} \cdot \mathbf{n} \, dS = \int_0^{2\pi} \int_0^7 \mathbf{F}(\mathbf{r}(u,v)) \cdot (-(\mathbf{r}_u \times \mathbf{r}_v)) \, du \, dv\]
+
+    <p>Substituting the components of \(\mathbf{F}\) and our chosen normal vector into the integral:</p>
+    \[= \int_0^{2\pi} \int_0^7 \langle u^7, 8\sin^3 v, 8\cos^3 v \rangle \cdot \langle 0, 2\cos v, 2\sin v \rangle \, du \, dv\]
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Integral Calculation Continued</h4>
+
+<div class="solution">
+    \[ = \int_{0}^{2\pi} \int_{0}^{7} (16 \sin^3 v \cos v + 16 \cos^3 v \sin v) \, du \, dv \]
+
+    \[ = \int_{0}^{2\pi} \int_{0}^{7} 16 \sin v \cos v \, du \, dv \]
+
+    \[ = \int_{0}^{2\pi} (7 \times 16) \sin v \cos v \, dv \]
+
+    \[ = 7 \times 16 \times \left. \frac{(\sin v)^2}{2} \right|_{0}^{2\pi} = 0 \]
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/10/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

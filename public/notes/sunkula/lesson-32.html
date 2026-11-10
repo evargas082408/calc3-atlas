@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 32: Surface integral - II (17.6) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson32.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+                    <li><a href="#page-section-12">Page 12</a></li>
+                
+                    <li><a href="#page-section-13">Page 13</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 32: Surface integral - II (17.6)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/8/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson32.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4 style="text-align: center;">Lesson 32: Surface integral - II (17.6)</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-1.webp" loading="lazy" decoding="async" alt="A technical diagram illustrating the mapping from a 2D parameter space to a 3D surface. On the left, a 2D Cartesian coordinate system features a horizontal u-axis and a vertical v-axis. A region, labeled 'R' and outlined in blue, contains a point designated as '(a, b)'. A red arrow curves from this point to the right, labeled with the vector-valued function \(\vec{r}(u,v) = \langle x(u,v), y(u,v), z(u,v) \rangle\). On the right, a 3D Cartesian coordinate system with x, y, and z axes displays a blue curved surface labeled 'S'. The red arrow terminates at a point on surface S labeled \(\vec{r}(a,b)\). This visualization demonstrates how points from a planar region R are mapped to a surface S in three-dimensional space via parametrization." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram illustrating the mapping from a 2D parameter space to a 3D surface. On the left, a 2D Cartesian coordinate system features a horizontal u-axis and a vertical v-axis. A region, labeled 'R' and outlined in blue, contains a point designated as '(a, b)'. A red arrow curves from this point to the right, labeled with the vector-valued function \(\vec{r}(u,v) = \langle x(u,v), y(u,v), z(u,v) \rangle\). On the right, a 3D Cartesian coordinate system with x, y, and z axes displays a blue curved surface labeled 'S'. The red arrow terminates at a point on surface S labeled \(\vec{r}(a,b)\). This visualization demonstrates how points from a planar region R are mapped to a surface S in three-dimensional space via parametrization.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="definition">
+    <p><strong>Definition:</strong> The surface integral of a scalar function \(f\) over a parametric surface \(S\) is defined and computed as follows:</p>
+    \[\iint_S f \, dS = \iint_R f(\vec{r}(u,v)) |\vec{r}_u \times \vec{r}_v| \, dA\]
+    <p style="text-align: center;">\((u,v \text{ Bounds})\)</p>
+</div>
+
+<p>The surface integral has various physical interpretations depending on the nature of the function \(f\):</p>
+
+<div class="important">
+    <p>If \(f = 1 \implies \iint_S 1 \, dS = \text{Surface Area}\)</p>
+    <p>If \(f = \text{density of Surface} \implies \iint_S f \, dS = \text{Mass of Surface}\)</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Example: Surface Area Calculation</h3>
+
+<section class="example">
+    <p>Find the area of the surface parametrized by:</p>
+    \[\vec{r}(u,v) = \langle \cos u, \sin u, 2v \rangle, \quad 0 \leq u \leq \frac{3\pi}{2}, \quad 0 \leq v \leq 1\]
+</section>
+
+<section class="solution">
+    <p>To find the surface area (\(SA\)), we set up the surface integral:</p>
+    \[SA = \iint_S 1 \, dS\]
+    
+    <p>Using the parametrization \(\vec{r}(u, v)\) and its bounds:</p>
+    \[= \iint_R |\vec{r}_u \times \vec{r}_v| \, dA = \int_0^1 \int_0^{\frac{3\pi}{2}} |\vec{r}_u \times \vec{r}_v| \, du \, dv\]
+    
+    <p>First, calculate the partial derivatives:</p>
+    \[\vec{r}_u = \langle -\sin u, \cos u, 0 \rangle\]
+    \[\vec{r}_v = \langle 0, 0, 2 \rangle\]
+
+    <p>Next, calculate the cross product:</p>
+    \[\vec{r}_u \times \vec{r}_v = \langle 2\cos u, 2\sin u, 0 \rangle\]
+    
+    <p>Find the magnitude of the cross product:</p>
+    \[|\vec{r}_u \times \vec{r}_v| = \sqrt{(2\cos u)^2 + (2\sin u)^2 + 0^2} = \sqrt{4(\cos^2 u + \sin^2 u)} = 2\]
+
+    <p>Now, substitute the magnitude into the integral:</p>
+    \[SA = \int_0^1 \int_0^{\frac{3\pi}{2}} 2 \, du \, dv = 2 \times \frac{3\pi}{2} \times 1 = 3\pi\]
+</section>
+
+<aside class="important">
+    <p><strong>Geometric Verification:</strong></p>
+    <p>From the last lesson, we recognize this parametrization represents \(\frac{3}{4}\) of a cylinder with radius 1 and height 2.</p>
+    
+    <p>Using the standard geometric formula:</p>
+    \[SA = \frac{3}{4} \times 2\pi RH\]
+    \[= \frac{3}{4} \times 2\pi \times 1 \times 2 = 3\pi\]
+</aside>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="page-content">
+    <h4>Surface Area of a Cylinder</h4>
+
+    <div class="example">
+        Verify that the surface area of a cylinder of radius \(R\) and height \(H\) is \(2\pi RH\).
+    </div>
+
+    <div class="solution">
+        
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-2.webp" loading="lazy" decoding="async" alt="A hand-drawn 3D diagram of a cylinder oriented along the z-axis of a Cartesian coordinate system. The cylinder's base is centered at the origin (labeled 0) in the xy-plane, and its top reaches a height labeled H on the z-axis. Blue lines outline the cylinder's structure, with circles at the top and bottom and vertical segments for the walls. Diagonal shading lines are drawn across the side surface. A blue curved arrow on the xy-plane indicates the angular sweep around the z-axis starting from the x-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn 3D diagram of a cylinder oriented along the z-axis of a Cartesian coordinate system. The cylinder's base is centered at the origin (labeled 0) in the xy-plane, and its top reaches a height labeled H on the z-axis. Blue lines outline the cylinder's structure, with circles at the top and bottom and vertical segments for the walls. Diagonal shading lines are drawn across the side surface. A blue curved arrow on the xy-plane indicates the angular sweep around the z-axis starting from the x-axis.</span>
+                      </div>
+                    </div>
+                  
+
+        The cylinder is defined by the equations:
+        \[x^2 + y^2 = R^2, \quad 0 \leq z \leq H\]
+
+        <strong>Parametrization:</strong>
+        We can parametrize the surface of the cylinder as:
+        \[\vec{r}(u, v) = \langle R \cos u, R \sin u, v \rangle\]
+        where the bounds for the parameters are:
+        \[0 \leq u \leq 2\pi\]
+        \[0 \leq v \leq H\]
+
+        To find the surface area element \(dA\), we first calculate the partial derivatives:
+        \[\vec{r}_u = \langle -R \sin u, R \cos u, 0 \rangle\]
+        \[\vec{r}_v = \langle 0, 0, 1 \rangle\]
+
+        Next, we find the cross product:
+        \[\vec{r}_u \times \vec{r}_v = \langle R \cos u, R \sin u, 0 \rangle\]
+
+        The magnitude of the cross product is:
+        \[|\vec{r}_u \times \vec{r}_v| = \sqrt{(R \cos u)^2 + (R \sin u)^2 + 0^2} = \sqrt{R^2(\cos^2 u + \sin^2 u)} = R\]
+
+        The surface area (S.A.) is then calculated as the surface integral:
+        \[\text{S.A.} = \iint_S 1 \, dA = \int_0^H \int_0^{2\pi} |\vec{r}_u \times \vec{r}_v| \, du \, dv\]
+        \[\text{S.A.} = \int_0^H \int_0^{2\pi} R \, du \, dv = 2\pi RH\]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Example: Parametric Surface Representation</h3>
+
+<div class="example">
+  <p>
+    <strong>Example:</strong> \(\vec{r}(u,v) = \langle u \cos v, u \sin v, 3u \rangle, \quad 0 \leq u \leq 4, \quad 0 \leq v \leq 2\pi\)
+  </p>
+  <p>What does this surface represent?</p>
+
+  <div class="solution">
+    <p>From the parametric equations, we have:</p>
+    \[
+    \begin{cases}
+    x = u \cos v \\
+    y = u \sin v \\
+    z = 3u
+    \end{cases}
+    \]
+
+    <p>By squaring and adding the components for \(x\) and \(y\), we find:</p>
+    \[ x^2 + y^2 = u^2 \]
+
+    <p>From the third component, we can isolate \(u\):</p>
+    \[ u = \frac{z}{3} \]
+
+    <p>Substituting this into the relation for \(x^2 + y^2\):</p>
+    \[ x^2 + y^2 = \frac{z^2}{9} \rightarrow \text{Cone} \]
+
+    <p>Applying the given domain constraints:</p>
+    \[ 0 \leq u = \frac{z}{3} \leq 4 \rightarrow \text{part of single cone from } z=0 \text{ to } z=12 \]
+  </div>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-3.webp" loading="lazy" decoding="async" alt="A technical diagram illustrating the mapping from a 2D parametric domain to a 3D surface. On the left is the uv-plane, showing a rectangular domain bounded by 0 <= u <= 4 and 0 <= v <= 2\pi. Within this rectangle, three vertical lines are color-coded: a purple line at u=0, a red line at an intermediate u value, and a blue/green line at u=4. On the right, a 3D coordinate system (x, y, z) shows an upward-opening cone corresponding to the mapping. The purple line at u=0 maps to the origin (0,0,0). The red vertical line in the uv-plane maps to a red horizontal circular cross-section on the cone, labeled z=3u. The blue/green line at u=4 maps to the top circular rim of the cone, which is labeled at height z=12. The diagram visualizes how lines of constant 'u' in the parameter space correspond to circles of constant height and radius on the cone's surface." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram illustrating the mapping from a 2D parametric domain to a 3D surface. On the left is the uv-plane, showing a rectangular domain bounded by 0 <= u <= 4 and 0 <= v <= 2\pi. Within this rectangle, three vertical lines are color-coded: a purple line at u=0, a red line at an intermediate u value, and a blue/green line at u=4. On the right, a 3D coordinate system (x, y, z) shows an upward-opening cone corresponding to the mapping. The purple line at u=0 maps to the origin (0,0,0). The red vertical line in the uv-plane maps to a red horizontal circular cross-section on the cone, labeled z=3u. The blue/green line at u=4 maps to the top circular rim of the cone, which is labeled at height z=12. The diagram visualizes how lines of constant 'u' in the parameter space correspond to circles of constant height and radius on the cone's surface.</span>
+                      </div>
+                    </div>
+                  
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>What is its Surface Area</h4>
+
+<div class="solution">
+    \[ S.A. = \iint_S 1 \, dS = \iint_{\substack{u, v \\ \text{Bounds}}} |r_u \times r_v| \, du \, dv \]
+    \[ = \int_0^{2\pi} \int_0^4 |r_u \times r_v| \, du \, dv \]
+
+    <p>
+        \(\vec{r}(u,v) = \langle u \cos v, u \sin v, 3u \rangle,\)<br>
+        \(\Rightarrow r_u = \langle \cos v, \sin v, 3 \rangle\)<br>
+        \(r_v = \langle -u \sin v, u \cos v, 0 \rangle\)<br>
+        \(r_u \times r_v = \langle -3u \cos v, -3u \sin v, u \rangle\)<br>
+        \(|r_u \times r_v| = \sqrt{9u^2(\cos^2 v + \sin^2 v) + u^2} = \sqrt{10} u\)
+    </p>
+
+    \[ SA = \int_0^{2\pi} \int_0^4 \sqrt{10} \cdot u \, du \, dv = \sqrt{10} \times 2\pi \times \left. \frac{u^2}{2} \right|_0^4 = \sqrt{10} \times 16\pi \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h2>Review of Parametrization and Normal Vectors</h2>
+
+<div class="example">
+    <p><strong>Last class:</strong> Consider the plane \(4x + 3y + z = 12\) in the 1st octant.</p>
+
+    <p><strong>Parametrization:</strong></p>
+    \[\vec{r}(u, v) = \langle u, v, 12 - 4u - 3v \rangle\]
+    
+    <p>where the domain is defined by:</p>
+    \[u \ge 0, v \ge 0, 12 - 4u - 3v \ge 0\]
+
+    <p>The cross product of the partial derivatives is:</p>
+    \[\vec{r}_u \times \vec{r}_v = \langle 4, 3, 1 \rangle\]
+    
+    <p>This result is the <strong>Normal vector</strong> for the plane.</p>
+</div>
+
+<div class="theorem">
+    <p><strong>In general:</strong></p>
+    <p>The cross product \(\vec{r}_u \times \vec{r}_v\) evaluated at \(\vec{r}(a, b)\) represents the <strong>Normal vector</strong> to the tangent plane at the point \(\vec{r}(a, b)\).</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>What does \( \vec{r}_u \times \vec{r}_v \) represent?</h4>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-4.webp" loading="lazy" decoding="async" alt="A mathematical diagram illustrating the transformation from a 2D parameter space to a 3D surface. On the left, an irregular blue region is shown in the uv-coordinate plane. A point (a, b) is marked, with a horizontal green line representing a constant v and a vertical purple line representing a constant u passing through it. An arrow labeled with the vector function r(u, v) = <x(u,v), y(u,v), z(u,v)> indicates a mapping from this region to a 3D coordinate system on the right. In the 3D space, a blue curved surface S is shown. The point (a, b) from the uv-plane maps to the point r(a, b) on the surface. Two curves intersect at this point: a green curve (the image of the line where v is constant) and a purple curve (the image of the line where u is constant). At the intersection point, two tangent vectors are drawn: a green vector r_u tangent to the green curve and a purple vector r_v tangent to the purple curve. Additionally, a vector N is shown pointing perpendicular to the surface at that point." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A mathematical diagram illustrating the transformation from a 2D parameter space to a 3D surface. On the left, an irregular blue region is shown in the uv-coordinate plane. A point (a, b) is marked, with a horizontal green line representing a constant v and a vertical purple line representing a constant u passing through it. An arrow labeled with the vector function r(u, v) = <x(u,v), y(u,v), z(u,v)> indicates a mapping from this region to a 3D coordinate system on the right. In the 3D space, a blue curved surface S is shown. The point (a, b) from the uv-plane maps to the point r(a, b) on the surface. Two curves intersect at this point: a green curve (the image of the line where v is constant) and a purple curve (the image of the line where u is constant). At the intersection point, two tangent vectors are drawn: a green vector r_u tangent to the green curve and a purple vector r_v tangent to the purple curve. Additionally, a vector N is shown pointing perpendicular to the surface at that point.</span>
+                      </div>
+                    </div>
+                  
+
+<p>\( \vec{r}_u \to \) tangent vector of the curve we get by fixing \( v \)</p>
+<p>\( \vec{r}_v \to \) tangent vector of the curve we get by fixing \( u \)</p>
+
+<p>\( \vec{r}_u, \vec{r}_v \) lie on the <strong>tangent plane</strong> at \( \vec{r}(a, b) \).</p>
+
+<div class="important">
+    <p>\( \vec{r}_u \times \vec{r}_v \) is a <strong>Normal vector</strong>.</p>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 38%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-5.webp" loading="lazy" decoding="async" alt="A geometric diagram depicting a tangent plane represented as a parallelogram. Two vectors, labeled r_u and r_v, originate from the same point and lie within the plane. A third vector, labeled r_u x r_v, originates from the same point but is oriented vertically, perpendicular to the plane surface. This visually demonstrates that the cross product of two tangent vectors yields a vector normal to the plane." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A geometric diagram depicting a tangent plane represented as a parallelogram. Two vectors, labeled r_u and r_v, originate from the same point and lie within the plane. A third vector, labeled r_u x r_v, originates from the same point but is oriented vertically, perpendicular to the plane surface. This visually demonstrates that the cross product of two tangent vectors yields a vector normal to the plane.</span>
+                      </div>
+                    </div>
+                  
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Finding \(r_u \times r_v\) for Surface given by \(z = f(x, y)\)</h4>
+
+<p><strong>Parametrization:</strong> \(\vec{r}(u, v) = \langle u, v, f(u, v) \rangle\)</p>
+
+<p>The partial derivative vectors are calculated as follows:</p>
+\[\vec{r}_u = \langle 1, 0, f_u \rangle\]
+\[\vec{r}_v = \langle 0, 1, f_v \rangle\]
+
+<div class="important">
+    \[\vec{r}_u \times \vec{r}_v = \langle -f_u, -f_v, 1 \rangle\]
+</div>
+
+<p>The magnitude of the cross product vector is given by:</p>
+\[|\vec{r}_u \times \vec{r}_v| = \sqrt{f_u^2 + f_v^2 + 1}\]
+
+<div class="definition">
+    <p>The <strong>Surface Area (S.A.)</strong> is calculated using the following double integral:</p>
+    \[S.A. = \iint\limits_{S} 1 \, dS = \iint\limits_{u, v \text{ Bounds}} \sqrt{f_u^2 + f_v^2 + 1} \, dA\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4 id="example-surface-area-calculation">Example: Surface Area of a Plane</h4>
+
+<div class="example">
+    Find the area of the part of the plane \(2x + y + z = 8\) in the 1st octant.
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-6.webp" loading="lazy" decoding="async" alt="A two-part diagram illustrating the geometry of the surface area problem. The left part is a 2D graph in the uv-plane showing a shaded triangular region labeled R. This region R is bounded by the v-axis (where it has an intercept at (0,8)), the u-axis (where it has an intercept at (4,0)), and the diagonal line 2u + v = 8. The right part of the diagram is a 3D perspective sketch of the first octant showing a shaded triangular surface labeled S. This surface S represents the portion of the plane 2x + y + z = 8 that lies within the positive coordinate axes." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A two-part diagram illustrating the geometry of the surface area problem. The left part is a 2D graph in the uv-plane showing a shaded triangular region labeled R. This region R is bounded by the v-axis (where it has an intercept at (0,8)), the u-axis (where it has an intercept at (4,0)), and the diagonal line 2u + v = 8. The right part of the diagram is a 3D perspective sketch of the first octant showing a shaded triangular surface labeled S. This surface S represents the portion of the plane 2x + y + z = 8 that lies within the positive coordinate axes.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+<div class="solution">
+    The surface area of \(S\) is given by the integral:
+    \[\text{Surface Area of } S = \iint_S 1 \, dS = \iint_R |r_u \times r_v| \, dA\]
+
+    From the equation of the plane, we can determine the cross product of the partial derivatives:
+    \[r_u \times r_v = \langle 2, 1, 1 \rangle\]
+
+    The magnitude is \(|r_u \times r_v| = \sqrt{2^2 + 1^2 + 1^2} = \sqrt{6}\). Substituting this into the integral:
+    \[= \iint_R \sqrt{6} \, dA = \sqrt{6} \iint_R 1 \, dA\]
+
+    The term \(\iint_R 1 \, dA\) represents the <strong>Area of R</strong>, where \(R\) is the triangular projection on the base plane. Based on the 2D diagram, this is a triangle with base 4 and height 8.
+
+    \[= \sqrt{6} \times \left( \frac{1}{2} \times 4 \times 8 \right)\]
+    \[= 16\sqrt{6}\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <p><strong>Example:</strong> Find area of part of \(z = 2 - x^2 - y^2\), above \(z = 1\).</p>
+</div>
+
+<div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-7.webp" loading="lazy" decoding="async" alt="A 3D coordinate plot illustrating a downward-opening paraboloid described by the equation \(z = 2 - x^2 - y^2\). The apex of the paraboloid is located on the z-axis at \(z=2\). The surface is truncated by a horizontal plane at \(z=1\). The specific portion of the surface being analyzed is labeled \(S\), which is the dome-like section situated between the levels \(z=1\) and \(z=2\). The x, y, and z axes are clearly shown for spatial orientation." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate plot illustrating a downward-opening paraboloid described by the equation \(z = 2 - x^2 - y^2\). The apex of the paraboloid is located on the z-axis at \(z=2\). The surface is truncated by a horizontal plane at \(z=1\). The specific portion of the surface being analyzed is labeled \(S\), which is the dome-like section situated between the levels \(z=1\) and \(z=2\). The x, y, and z axes are clearly shown for spatial orientation.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        Let the surface be defined by \(f(x, y) = 2 - x^2 - y^2\). We parameterize the surface as:
+        \[ \vec{r}(u, v) = \langle u, v, f(u, v) \rangle \]
+        The cross product of the partial derivatives is:
+        \[ \vec{r}_u \times \vec{r}_v = \langle -f_u, -f_v, 1 \rangle = \langle 2u, 2v, 1 \rangle \]
+        The magnitude of this cross product, representing the differential area element, is:
+        \[ |\vec{r}_u \times \vec{r}_v| = \sqrt{4u^2 + 4v^2 + 1} \]
+    </p>
+
+    <h4>\(u, v\) Bounds:</h4>
+
+    
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-8.webp" loading="lazy" decoding="async" alt="A 2D coordinate graph showing the region of integration \(R\) in the \(uv\)-plane. The horizontal axis is labeled \(u\) and the vertical axis is labeled \(v\). The region \(R\) is a shaded unit circle centered at the origin, representing the projection of the 3D surface \(S\) onto the \(xy\)-plane. The circle is bounded by the inequality \(u^2 + v^2 \le 1\), and the interior is filled with blue diagonal hatch lines." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate graph showing the region of integration \(R\) in the \(uv\)-plane. The horizontal axis is labeled \(u\) and the vertical axis is labeled \(v\). The region \(R\) is a shaded unit circle centered at the origin, representing the projection of the 3D surface \(S\) onto the \(xy\)-plane. The circle is bounded by the inequality \(u^2 + v^2 \le 1\), and the interior is filled with blue diagonal hatch lines.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        To determine the limits for integration, we consider the condition that the surface must be above \(z=1\):
+        \[ z = 2 - x^2 - y^2 \ge 1 \]
+        Rearranging the terms, we find:
+        \[ x^2 + y^2 \le 1 \]
+        Substituting the parameters \(u=x\) and \(v=y\), we get the region \(R\) in the \(uv\)-plane:
+        \[ u^2 + v^2 \le 1 \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="solution">
+    <h4>Surface Area Calculation</h4>
+    \[ SA = \iint\limits_{\substack{u, v \\ \text{Bounds}}} |r_u \times r_v| \, dA = \iint\limits_{\substack{u, v \\ \text{Bounds}}} \sqrt{4u^2 + 4v^2 + 1} \, dA \]
+
+    <p>Use polar to compute:</p>
+    \[ u = r \cos \theta, \quad v = r \sin \theta \]
+    \[ dA = r \, dr \, d\theta \]
+    \[ 0 \leq r \leq 1 \]
+    \[ 0 \leq \theta \leq 2\pi \]
+
+    \[ = \int_{0}^{2\pi} \int_{0}^{1} \sqrt{4r^2 + 1} \cdot r \, dr \, d\theta \]
+
+    <div class="important">
+        \[
+        \begin{aligned}
+        4r^2 + 1 &amp;= t \\
+        8r \, dr &amp;= dt \\
+        r = 0 &amp;\rightsquigarrow t = 1 \\
+        r = 1 &amp;\rightsquigarrow t = 5
+        \end{aligned}
+        \]
+    </div>
+
+    \[ = \int_{0}^{2\pi} \int_{1}^{5} \frac{1}{8} t^{1/2} \, dt \, d\theta \]
+
+    \[ = 2\pi * \frac{1}{8} * \frac{2}{3} t^{3/2} \bigg|_{1}^{5} = \frac{\pi}{6} [5^{3/2} - 1] \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-12" aria-labelledby="page-title-12">
+                    <h3 id="page-title-12">Page 12</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+  <h4>Worked Example: Surface Integral over a Spherical Cap</h4>
+
+  <p>
+    <strong>eg:</strong> Evaluate \(\iint_S xz \, ds\), where \(S\) is the part of a <strong>Sphere of Radius 2</strong> (meaning \(\rho = 2\)), above \(z = 1\).
+  </p>
+
+  
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-32-9.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram illustrating a spherical cap of radius rho = 2. The cap is the portion of the sphere that lies above the plane z = 1. A vector rho is drawn from the origin to the surface of the sphere. The polar angle phi is shown being measured from the positive z-axis, and the azimuthal angle theta is shown in the xy-plane starting from the positive x-axis. A dashed line indicates the circular boundary where the sphere intersects the plane z = 1." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram illustrating a spherical cap of radius rho = 2. The cap is the portion of the sphere that lies above the plane z = 1. A vector rho is drawn from the origin to the surface of the sphere. The polar angle phi is shown being measured from the positive z-axis, and the azimuthal angle theta is shown in the xy-plane starting from the positive x-axis. A dashed line indicates the circular boundary where the sphere intersects the plane z = 1.</span>
+                      </div>
+                    </div>
+                  
+
+  <div class="solution">
+    <p>We use the standard spherical coordinate transformations:</p>
+    \[ x = \rho \sin \phi \cos \theta \]
+    \[ y = \rho \sin \phi \sin \theta \]
+    \[ z = \rho \cos \phi \]
+
+    <p><strong>Parametrization!</strong></p>
+    \[ \vec{r}(\phi, \theta) = \langle 2 \sin \phi \cos \theta, 2 \sin \phi \sin \theta, 2 \cos \phi \rangle \]
+
+    <p>To determine the limits of integration:</p>
+    \[
+    \left.
+    \begin{aligned}
+    0 &amp; \leq \theta \leq 2\pi \\
+    0 &amp; \leq \phi \leq \text{hit } z=1
+    \end{aligned}
+    \right\}
+    \begin{aligned}
+    2 \cos \phi &amp;= 1 \\
+    \cos \phi &amp;= 1/2 \\
+    \Rightarrow \phi &amp;= \pi/3
+    \end{aligned}
+    \]
+
+    <p>Setting up the integral:</p>
+    \[ \iint_S xz \, ds = \int_0^{2\pi} \int_0^{\pi/3} \underbrace{(2 \sin \phi \cos \theta)}_{x} \underbrace{(2 \cos \phi)}_{z} |\vec{r}_\phi \times \vec{r}_\theta| \, d\phi \, d\theta \]
+  </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-13" aria-labelledby="page-title-13">
+                    <h3 id="page-title-13">Page 13</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Computing \(\mathbf{r}_{\phi} \times \mathbf{r}_{\theta}\)</h4>
+
+<div class="solution">
+    \[\mathbf{r}_{\phi} = \langle 2\cos\phi \cos\theta, 2\cos\phi \sin\theta, -2\sin\phi \rangle\]
+    \[\mathbf{r}_{\theta} = \langle -2\sin\phi \sin\theta, 2\sin\phi \cos\theta, 0 \rangle\]
+
+    \[\mathbf{r}_{\phi} \times \mathbf{r}_{\theta} = \langle 4\sin^2\phi \cos\theta, 4\sin^2\phi \sin\theta, 4\sin\phi \cos\phi [\cos^2\theta + \sin^2\theta] \rangle\]
+    \[= \langle 4\sin^2\phi \cos\theta, 4\sin^2\phi \sin\theta, 4\sin\phi \cos\phi \rangle\]
+    \[= 4\sin\phi \langle \sin\phi \cos\theta, \sin\phi \sin\theta, \cos\phi \rangle\]
+
+    \[|\mathbf{r}_{\phi} \times \mathbf{r}_{\theta}| = 4\sin\phi \sqrt{\sin^2\phi [\cos^2\theta + \sin^2\theta] + \cos^2\phi} = 4\sin\phi\]
+</div>
+
+<div class="important">
+    In general, if \(\vec{r}(\phi, \theta) = \langle \rho\sin\phi \cos\theta, \rho\sin\phi \sin\theta, \rho\cos\phi \rangle\), then:
+    \[|\mathbf{r}_{\phi} \times \mathbf{r}_{\theta}| = \rho^2 \sin\phi\]
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/8/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

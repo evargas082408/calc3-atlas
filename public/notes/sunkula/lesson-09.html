@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 9: Functions of Several Variables</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson9.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 9: Functions of Several Variables (Section 15.1)</h3>
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-09-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson title and office hours">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Lesson Overview</h4>
+<p>Today's topics include functions of two or three variables, determining domains, and sketching graphs. The next lesson will cover limits and continuity.</p>
+
+<div class="important">
+<p><strong>Office Hours:</strong></p>
+<p>Monday and Friday: 9:45 PM - 11:00 PM in MATH 842</p>
+<p>Thursday: 11:00 AM - 12:00 PM in MATH 842</p>
+<p>Thursday: 12:15 PM - 1:15 PM (Windsor)</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-09-2.webp" loading="lazy" decoding="async" alt="Page 2: Warmup review of 1-variable functions">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Warmup: Review Functions of 1-Variable</h4>
+
+<div class="example">
+<h5>Example: Finding Domain and Sketching Graph</h5>
+<p>Consider the function \(f(x) = \sqrt{9 - x^2}\).</p>
+
+<div class="solution">
+<p><strong>Question 1: What is the domain of \(f\)?</strong></p>
+<p>The domain consists of all possible inputs. For this function, we need \(9 - x^2 \geq 0\), which gives us \(x^2 \leq 9\). Therefore, \(-3 \leq x \leq 3\).</p>
+
+<p><strong>Question 2: Sketch the graph of \(f(x) = \sqrt{9 - x^2}\) where \(y \geq 0\).</strong></p>
+<p>We can rewrite this as \(y = \sqrt{9 - x^2}\), which after squaring both sides (with \(y \geq 0\)) gives \(y^2 = 9 - x^2\), or \(x^2 + y^2 = 9\). This represents a semicircle with radius 3 centered at the origin, but only the upper half where \(y \geq 0\).</p>
+
+<p>Key points on the graph:</p>
+<ul>
+<li>\(f(3) = 0\)</li>
+<li>\(f(-3) = 0\)</li>
+<li>\(f(2) = \sqrt{5}\)</li>
+<li>\(f(-2) = \sqrt{5}\)</li>
+<li>\(f(1) = \sqrt{8} = 2\sqrt{2}\)</li>
+<li>\(f(-1) = 2\sqrt{2}\)</li>
+<li>\(f(0) = 3\)</li>
+</ul>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The graph shows a coordinate system with the x-axis marked from -3 to 3. A semicircular curve is drawn connecting the point (-3, 0) through the maximum at (0, 3) to the point (3, 0). The curve represents the upper half of a circle with radius 3. Several points on the semicircle are marked with dots, including the endpoints and the apex.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-09-3.webp" loading="lazy" decoding="async" alt="Page 3: Introduction to functions of two or more variables">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Functions of Two (or More) Variables</h4>
+
+<p>We now extend our understanding from single-variable functions to multivariable functions. The key distinction is in the number of inputs and whether the output is a number or a vector.</p>
+
+<div class="definition">
+<p><strong>Function Types:</strong></p>
+<p><strong>1-Variable Function:</strong> \(x \rightarrow f(x)\)</p>
+<p>Number → Number (real-valued function)</p>
+
+<p><strong>Vector-Valued Function:</strong> \(t \rightarrow \vec{r}(t)\)</p>
+<p>Number → Vector</p>
+
+<p><strong>2-Variable Function:</strong> \(x, y \rightarrow f(x, y)\)</p>
+<p>Two Numbers → Number</p>
+
+<p><strong>3-Variable Function:</strong> \(x, y, z \rightarrow f(x, y, z)\)</p>
+<p>Three Numbers → Number</p>
+</div>
+
+<p>In each case, we're mapping from some input space (either single numbers, pairs, or triples of numbers) to an output (either a single number or a vector).</p>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-09-4.webp" loading="lazy" decoding="async" alt="Page 4: Examples of evaluating multivariable functions">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Examples: Evaluating Multivariable Functions</h4>
+
+<div class="example">
+<h5>Example 1: Two-Variable Function</h5>
+<p>Let \(f(x, y) = x^2 + y^2\).</p>
+
+<div class="solution">
+<p>\(f(1, 3) = 1^2 + 3^2 = 1 + 9 = 10\)</p>
+<p>\(f(-10, 11) = (-10)^2 + 11^2 = 100 + 121 = 221\)</p>
+</div>
+</div>
+
+<div class="example">
+<h5>Example 2: Rational Function</h5>
+<p>Let \(f(x, y) = \dfrac{\sqrt{x + y + 1}}{x - 1}\).</p>
+
+<div class="solution">
+<p>\(f(-10, 13) = \dfrac{\sqrt{-10 + 13 + 1}}{-10 - 1} = \dfrac{\sqrt{4}}{-11} = \dfrac{2}{-11} = -\dfrac{2}{11}\)</p>
+
+<p>\(f(1, 5)\) is undefined because the denominator becomes \(1 - 1 = 0\), resulting in division by zero.</p>
+</div>
+</div>
+
+<div class="example">
+<h5>Example 3: Three-Variable Function</h5>
+<p>Let \(f(x, y, z) = \dfrac{\sqrt{9 - x^2 - y^2}}{\sqrt{25 - z^2}}\).</p>
+
+<div class="solution">
+<p>\(f(0, 0, 0) = \dfrac{\sqrt{9}}{\sqrt{25}} = \dfrac{3}{5}\)</p>
+<p>\(f(0, 1, 3) = \dfrac{\sqrt{9 - 0 - 1}}{\sqrt{25 - 9}} = \dfrac{\sqrt{8}}{\sqrt{16}} = \dfrac{2\sqrt{2}}{4} = \dfrac{\sqrt{2}}{2}\)</p>
+<p>\(f(0, 1, 5)\) cannot be evaluated because \(z = 5\) makes the denominator \(\sqrt{25 - 25} = 0\).</p>
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-09-5.webp" loading="lazy" decoding="async" alt="Page 5: Definition of domain for multivariable functions">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Domain of Multivariable Functions</h4>
+
+<div class="definition">
+<p><strong>Definition - Domain:</strong> The domain of a multivariable function consists of all possible inputs.</p>
+<ul>
+<li>For a function of 2 variables: Domain is a region in \(\mathbb{R}^2\)</li>
+<li>For a function of 3 variables: Domain is a region in \(\mathbb{R}^3\)</li>
+</ul>
+</div>
+
+<div class="example">
+<h5>Example: Simple Two-Variable Function</h5>
+<p>For \(f(x, y) = x^2 + y^2\), the domain is all of \(\mathbb{R}^2\) since we can square any real numbers and add them together.</p>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> The page shows a coordinate plane with x and y axes. A large, irregularly-shaped cyan region fills most of the plane, representing the domain as a region in 2-dimensional space. The region extends in all directions, illustrating that the domain can be the entire plane or a specific subset of it.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-09-6.webp" loading="lazy" decoding="async" alt="Page 6: Example of domain with excluded point">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Domain Example with Restrictions</h4>
+
+<div class="example">
+<h5>Example: Rational Function Domain</h5>
+<p>Find the domain of \(f(x, y) = \dfrac{1}{x^2 + y^2}\).</p>
+
+<div class="solution">
+<p>The denominator cannot be zero, so we need \(x^2 + y^2 \neq 0\).</p>
+<p>This means the point \((0, 0)\) is not in the domain.</p>
+<p>Therefore, the domain is all of \(\mathbb{R}^2\) except the origin.</p>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> The coordinate plane shows a large cyan-shaded region representing the domain. At the origin (0, 0), there is a small white circle with a dot in the center, indicating that this point is excluded from the domain. The notation shows an open circle (○) to represent a point not included, contrasted with a filled circle (●) which would represent a point that is included.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-09-7.webp" loading="lazy" decoding="async" alt="Page 7: Domain with linear inequality">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Domain with Linear Inequalities</h4>
+
+<div class="example">
+<h5>Example: Square Root with Linear Expression</h5>
+<p>Find the domain of \(f(x, y) = \sqrt{x + y + 1}\).</p>
+
+<div class="solution">
+<p>For the square root to be defined, we need the argument to be non-negative:</p>
+\[x + y + 1 \geq 0\]
+<p>This simplifies to:</p>
+\[x + y \geq -1\]
+<p>Equivalently, \(y \geq -x - 1\).</p>
+
+<p>The boundary line \(x + y + 1 = 0\) (or \(x + y = -1\)) is included in the domain and represented by a solid line. The domain consists of all points on or above this line.</p>
+
+<p>Testing points:</p>
+<ul>
+<li>\((0, 0)\): \(0 + 0 + 1 = 1 \geq 0\) ✓ (in domain)</li>
+<li>\((-2, 0)\): \(-2 + 0 + 1 = -1 < 0\) ✗ (not in domain)</li>
+</ul>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A coordinate plane shows a diagonal line passing through points approximately at (-1, 0) and (0, -1), representing the boundary \(x + y = -1\). The region above and to the right of this line is shaded in cyan, representing the domain. The boundary line is drawn as a solid blue line, indicating that points on the line are included in the domain. The line has a slope of -1. A vertical dashed line at \(x = -1\) is also shown, and the notation indicates that the boundary line is "included" and "represented by solid line."</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-09-8.webp" loading="lazy" decoding="async" alt="Page 8: Domain with logarithm and parabola boundary">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Domain with Parabolic Boundary</h4>
+
+<div class="example">
+<h5>Example: Logarithm with Quadratic Expression</h5>
+<p>Find the domain of \(f(x, y) = y\ln(y^2 - x)\).</p>
+
+<div class="solution">
+<p>For the natural logarithm to be defined, we need the argument to be strictly positive:</p>
+\[y^2 - x > 0\]
+<p>This gives us:</p>
+\[y^2 > x\]
+<p>or equivalently:</p>
+\[x < y^2\]
+
+<p>The boundary curve \(y^2 = x\) (a parabola opening to the right) is not included in the domain, represented by a dashed line.</p>
+
+<p>Testing points:</p>
+<ul>
+<li>\((-2, 0)\): \(0^2 - (-2) = 2 > 0\) ✓ (in domain)</li>
+<li>\((2, 0)\): \(0^2 - 2 = -2 < 0\) ✗ (not in domain)</li>
+</ul>
+
+<p>The domain consists of all points to the left of the parabola \(x = y^2\).</p>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A coordinate plane shows a parabola opening to the right with vertex at the origin, representing the curve \(x = y^2\). The region to the left of the parabola is shaded in cyan, representing the domain. The parabola itself is drawn as a dashed curve, indicating that points on the curve are not included in the domain. Two specific points are marked: (-2, 0) with a filled dot (in the domain) and (2, 0) with an open circle (not in the domain).</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-09-9.webp" loading="lazy" decoding="async" alt="Page 9: Break time and preview of next topics">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Break!</h4>
+
+<p>Take a moment to:</p>
+<ul>
+<li>Stretch</li>
+<li>Walk around</li>
+<li>Ask questions</li>
+<li>Reflect on what we've learned</li>
+<li>Talk to your neighbors</li>
+</ul>
+
+<h4>Coming Up Next</h4>
+<ul>
+<li>Domain of functions of 3 variables</li>
+<li>Graphs of multivariable functions</li>
+</ul>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-09-10.webp" loading="lazy" decoding="async" alt="Page 10: Domain of 3-variable function example">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Domain of Three-Variable Functions</h4>
+
+<div class="example">
+<h5>Example: Three-Variable Function with Multiple Constraints</h5>
+<p>Find the domain of \(f(x, y, z) = \dfrac{\sqrt{9 - x^2 - y^2}}{\sqrt{25 - z^2}}\).</p>
+
+<div class="solution">
+<p>For this function to be defined, we need two conditions:</p>
+
+<p><strong>Numerator condition:</strong> \(9 - x^2 - y^2 \geq 0\)</p>
+<p>This gives \(x^2 + y^2 \leq 9\), which describes a solid cylinder of radius 3 along the z-axis when extended in three dimensions. In the xy-plane, this is a disk of radius 3 centered at the origin.</p>
+
+<p><strong>Denominator condition:</strong> \(25 - z^2 > 0\)</p>
+<p>This gives \(z^2 < 25\), so \(-5 < z < 5\).</p>
+
+<p>The domain is the intersection of these two conditions:</p>
+<ul>
+<li>A solid cylinder with radius 3 in the xy-plane: \(x^2 + y^2 \leq 9\)</li>
+<li>Between the planes \(z = -5\) and \(z = 5\) (not including these planes): \(-5 < z < 5\)</li>
+</ul>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> Two representations are shown:
+<ol>
+<li><strong>xy-plane view:</strong> A circle of radius 3 centered at the origin, labeled with \(x^2 + y^2 \leq 9\). The origin is marked, and the boundary circle is solid indicating inclusion.</li>
+<li><strong>3D view:</strong> A solid cylinder with radius 3 is shown in cyan, with its axis along the z-direction. The cylinder extends from \(z = -5\) to \(z = 5\), with dashed lines at the top and bottom circular edges to indicate these boundaries are not included.</li>
+</ol>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-09-11.webp" loading="lazy" decoding="async" alt="Page 11: Introduction to graphing multivariable functions">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Graphs of Multivariable Functions</h4>
+
+<div class="definition">
+<p><strong>Definition - Graph of \(f(x, y)\):</strong> The graph of \(f(x, y)\) consists of all points \((x, y, f(x, y))\) in \(\mathbb{R}^3\) for all \((x, y)\) in the domain.</p>
+
+<p>The result is a surface \(z = f(x, y)\) in three-dimensional space.</p>
+</div>
+
+<h4>Techniques for Sketching Surfaces</h4>
+
+<p>To visualize and sketch the surface \(z = f(x, y)\), we can use several methods:</p>
+
+<div class="steps">
+<p><strong>Methods for Graphing:</strong></p>
+<ul>
+<li><strong>Cross sections:</strong> Fix one variable and see what curves result</li>
+<li><strong>Traces:</strong> Intersections of the surface with coordinate planes</li>
+<li><strong>Level curves (Contours):</strong> Curves in the domain where the function takes constant values</li>
+</ul>
+
+<p>We examine the surface by taking cross sections, traces, or level curves for different possible values of \(z\).</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-09-12.webp" loading="lazy" decoding="async" alt="Page 12: Example of level curves for upper hemisphere">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Level Curves and Graphing Example</h4>
+
+<div class="example">
+<h5>Example: Upper Hemisphere</h5>
+<p>Sketch the graph of \(f(x, y) = \sqrt{9 - x^2 - y^2}\).</p>
+
+<div class="solution">
+<p>We can rewrite this as \(z = \sqrt{9 - x^2 - y^2}\). Squaring both sides (with \(z \geq 0\)):</p>
+\[z^2 = 9 - x^2 - y^2\]
+\[x^2 + y^2 + z^2 = 9\]
+
+<p>This is the equation of a sphere with radius 3 centered at the origin. Since \(z \geq 0\), we have the upper hemisphere.</p>
+
+<p><strong>Level curves (contours):</strong> Set \(z\) equal to various constants and solve for the relationship between \(x\) and \(y\).</p>
+
+<ul>
+<li>\(z = 0\): \(\sqrt{9 - x^2 - y^2} = 0 \Rightarrow x^2 + y^2 = 9\) (circle of radius 3)</li>
+<li>\(z = 1\): \(\sqrt{9 - x^2 - y^2} = 1 \Rightarrow x^2 + y^2 = 8\) (circle of radius \(2\sqrt{2}\))</li>
+<li>\(z = 2\): \(x^2 + y^2 = 5\) (circle of radius \(\sqrt{5}\))</li>
+<li>\(z = 3\): \(x^2 + y^2 = 0\) (single point at origin)</li>
+</ul>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> Two representations are shown:
+<ol>
+<li><strong>Contour map (xy-plane view):</strong> Concentric circles centered at the origin are drawn in different colors. From outermost to innermost: blue circle (\(z = 0\), radius 3), purple circle (\(z = 1\)), green circle (\(z = 2\)), and a red point at the center (\(z = 3\)). The circles get smaller as \(z\) increases, representing horizontal slices of the hemisphere at different heights.</li>
+<li><strong>3D graph:</strong> A hemisphere is shown with its flat base in the xy-plane and curving up to a maximum height of 3 at the origin. The same color-coded level curves from the contour map are shown on the surface of the hemisphere, with \(z = 0\) at the base (blue), \(z = 1\) (purple), \(z = 2\) (green), and \(z = 3\) at the top (red point).</li>
+</ol>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-09-13.webp" loading="lazy" decoding="async" alt="Page 13: Example of level curves for paraboloid">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Paraboloid Example</h4>
+
+<div class="example">
+<h5>Example: Circular Paraboloid</h5>
+<p>Sketch the graph of \(f(x, y) = x^2 + y^2\).</p>
+
+<div class="solution">
+<p>We have \(z = x^2 + y^2\), which is a paraboloid opening upward.</p>
+
+<p><strong>Level curves:</strong> Set \(z\) equal to various constants.</p>
+
+<ul>
+<li>\(z = 0\): \(x^2 + y^2 = 0\) (single point at origin)</li>
+<li>\(z = 1\): \(x^2 + y^2 = 1\) (circle of radius 1)</li>
+<li>\(z = 2\): \(x^2 + y^2 = 2\) (circle of radius \(\sqrt{2}\))</li>
+<li>\(z = 3\): \(x^2 + y^2 = 3\) (circle of radius \(\sqrt{3}\))</li>
+</ul>
+
+<p>As \(z\) increases, the level curves are circles with increasing radius. The surface is a bowl-shaped paraboloid.</p>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> Two representations are shown:
+<ol>
+<li><strong>Contour map (xy-plane view):</strong> Concentric circles centered at the origin are drawn in different colors. From innermost to outermost: a blue point at the origin (\(z = 0\)), purple circle (\(z = 1\), radius 1), green circle (\(z = 2\)), and red circle (\(z = 3\)). The circles get larger as \(z\) increases.</li>
+<li><strong>3D graph:</strong> A paraboloid opening upward is shown with its vertex at the origin. The same color-coded level curves are shown on the surface: the vertex at \(z = 0\) (blue point), \(z = 1\) (purple circle), \(z = 2\) (green circle), and \(z = 3\) (red circle). The surface has a bowl or cup shape, extending upward indefinitely as we move away from the z-axis.</li>
+</ol>
+<p>Note: \(z < 0\) is marked with an X, indicating that there are no points on the surface where \(z\) is negative.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-09-14.webp" loading="lazy" decoding="async" alt="Page 14: Example of plane with level curves">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Linear Function Example</h4>
+
+<div class="example">
+<h5>Example: Plane in Three-Dimensional Space</h5>
+<p>Sketch the graph of \(f(x, y) = 6 - 3x - 2y\).</p>
+
+<div class="solution">
+<p>We have \(z = 6 - 3x - 2y\), which can be rewritten as:</p>
+\[3x + 2y + z = 6\]
+
+<p>This is the equation of a plane with normal vector \(\langle 3, 2, 1 \rangle\).</p>
+
+<p><strong>Level curves:</strong> Set \(z\) equal to various constants.</p>
+
+<ul>
+<li>\(z = 0\): \(3x + 2y = 6\) (line through \((2, 0)\) and \((0, 3)\))</li>
+<li>\(z = 6\): \(3x + 2y = 0\) (line through origin with slope \(-3/2\))</li>
+<li>\(z = -6\): \(3x + 2y = 12\) (line through \((4, 0)\) and \((0, 6)\))</li>
+<li>\(z = 12\): \(3x + 2y = -6\) (line through \((-2, 0)\) and \((0, -3)\))</li>
+</ul>
+
+<p>All level curves are parallel lines in the xy-plane, which is characteristic of a planar surface.</p>
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A contour map (xy-plane view) shows several parallel lines representing level curves of the plane. The lines are colored differently to indicate different z-values: green line (\(z = -6\)), blue line (\(z = 0\)), purple line (\(z = 6\)), and red line (\(z = 12\)). All lines have the same slope (\(-3/2\)) and are evenly spaced, indicating a constant rate of change in z. The spacing between contour lines is uniform, confirming that the surface is a plane rather than a curved surface.</p>
+</div>
+
+<div class="important">
+<p><strong>Key Observation:</strong> For linear functions \(f(x, y) = ax + by + c\), the graph is always a plane, and the level curves are parallel straight lines in the xy-plane.</p>
+</div>
+</div>
+
+<hr>
+
+
+</body>
+</html>

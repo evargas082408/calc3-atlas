@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.6 Surface Integrals (part 3) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2033%20%2817.6-3%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 33 (17.6-3).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-slate-900 pb-2">17.6 Surface Integrals (part 3)</h1><p class="mb-6">Last two times: surface integrals in scalar fields</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center"><p class="mb-2">\[ \iint_S f(x,y,z) dS = \iint_R f(u,v) |\vec{r}_u \times \vec{r}_v| dA \]</p><p class="text-sm text-slate-600 italic">area of small patch of surface S</p></div><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10"><div class="space-y-4"><p>Consider a surface in the 3D coordinate system with parameters \(u\) and \(v\). A small patch on the surface is bounded by curves of constant \(u\) and constant \(v\).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D axes showing a surface patch with tangent vectors r_u du and r_v dv forming a parallelogram area.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-1.webp" loading="lazy" decoding="async" alt="3D axes showing a surface patch with tangent vectors r_u du and r_v dv forming a parallelogram area." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D axes showing a surface patch with tangent vectors r_u du and r_v dv forming a parallelogram area.
+                  </figcaption>
+                </figure>
+              </div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><p class="font-bold mb-2">Area of the patch:</p><p>\[ \text{area} = |\vec{r}_u \times \vec{r}_v| du dv \]</p></div></div><p class="mb-6">But \(\vec{r}_u \times \vec{r}_v\) is also the normal vector (so is \(\vec{r}_v \times \vec{r}_u\)).</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram of a parallelogram with two opposite normal vectors: r_u cross r_v and r_v cross r_u.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-2.webp" loading="lazy" decoding="async" alt="Diagram of a parallelogram with two opposite normal vectors: r_u cross r_v and r_v cross r_u." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram of a parallelogram with two opposite normal vectors: r_u cross r_v and r_v cross r_u.
+                  </figcaption>
+                </figure>
+              <div class="space-y-4"><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>In a scalar field, we work with the magnitude of the normal, so the order of the cross product doesn't matter.</li><li>In a vector field, direction matters. So, which one to choose?</li></ul></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><p class="mb-6">By convention, we choose the normal vector that is pointing <span class="border-b-2 border-red-500">upward</span> or <span class="border-b-2 border-red-500">outward</span> unless otherwise specified.</p><p class="mb-6">A surface with the "correct" normal is said to be <span class="font-bold text-blue-800">positively-oriented</span>.</p><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Surface integral in vector field:</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="mb-4">\[ \iint_S \vec{F} \cdot d\vec{S} \]</p><ul class="text-sm space-y-1 text-slate-700"><li>\(\vec{F}\): vector field</li><li>\(d\vec{S}\): denotes an oriented surface</li></ul><p class="mt-6 mb-4">\[ = \iint_S \vec{F} \cdot \vec{n} dS \]</p><ul class="text-sm space-y-1 text-slate-700"><li>\(dS\): same \(dS\) as in scalar field version</li><li>\(\vec{n}\): unit normal in the correct direction</li></ul></div><p class="mb-6">This integral accumulates the component of \(\vec{F}\) that is in the same direction as \(\vec{n}\). This integral is also called the <span class="underline decoration-green-600 decoration-2 font-bold">Flux integral</span>.</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D graph showing a surface S, its unit normal vector n, and vector field F passing through the surface.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-3.webp" loading="lazy" decoding="async" alt="3D graph showing a surface S, its unit normal vector n, and vector field F passing through the surface." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D graph showing a surface S, its unit normal vector n, and vector field F passing through the surface.
+                  </figcaption>
+                </figure>
+              <div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>\(\vec{F} \cdot \vec{n}\) (the component perpendicularly thru surface)</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Calculating Surface Integrals of Vector Fields</h1><p class="mb-6">How to calculate 
+</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+\[ \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S} \vec{F} \cdot \vec{n} \, dS \]
+</div>
+?<p></p><section class="mb-10"><h2 class="text-xl font-bold mb-4">Unit Normal Vector</h2><p class="mb-6">Unit normal \( \vec{n} = \frac{\vec{r}_u \times \vec{r}_v}{|\vec{r}_u \times \vec{r}_v|} \) or \( \frac{\vec{r}_v \times \vec{r}_u}{|\vec{r}_v \times \vec{r}_u|} \) depending on which is in the positive direction.</p><p class="mb-6">\( dS = |\vec{r}_u \times \vec{r}_v| \, du \, dv \) or \( |\vec{r}_v \times \vec{r}_u| \, dA \)</p></section><section class="mb-10"><h2 class="text-xl font-bold mb-4">Simplification</h2><p class="mb-6">Then \( \iint_{S} \vec{F} \cdot \vec{n} \, dS \) becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+\[ \iint_{S} \vec{F} \cdot \frac{\vec{r}_u \times \vec{r}_v}{|\vec{r}_u \times \vec{r}_v|} |\vec{r}_u \times \vec{r}_v| \, dA = \iint_{R} \vec{F} \cdot (\vec{r}_u \times \vec{r}_v) \, dA \]
+</div><div class="notebox border-2 border-slate-400 p-4 rounded-lg mb-6"><p class="italic">or \( \vec{r}_v \times \vec{r}_u \) depending on which one is positively oriented</p></div></section><section class="mb-10"><h2 class="text-xl font-bold mb-4">Alternative (Explicit) Form</h2><p class="mb-6">Alternative (explicit) form if \( z = z(x, y) \)</p><p class="mb-4">\( \vec{F} = \langle f, g, h \rangle \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+\[ \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{R} (-f z_x - g z_y + h) \, dA \]
+</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Surface Integral Calculation</h1><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 mb-10"><div class="content-column"><p class="mb-4"><strong>Example:</strong> \( \vec{F} = \langle x, y, z \rangle \)</p><p class="mb-4">\( S \): plane \( 3x + 2y + z = 6 \) in the first octant.</p><p class="mb-6">The normal vector is considered <span class="underline decoration-red-500">positive upward</span>.</p></div><div class="figure-column flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D graph of the plane 3x+2y+z=6 in the first octant with normal vector arrows.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-4.webp" loading="lazy" decoding="async" alt="3D graph of the plane 3x+2y+z=6 in the first octant with normal vector arrows." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D graph of the plane 3x+2y+z=6 in the first octant with normal vector arrows.
+                  </figcaption>
+                </figure>
+              
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D projection of the surface onto the xy-plane, showing a triangular region R.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-5.webp" loading="lazy" decoding="async" alt="2D projection of the surface onto the xy-plane, showing a triangular region R." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D projection of the surface onto the xy-plane, showing a triangular region R.
+                  </figcaption>
+                </figure>
+              </div></div><section class="mb-10"><h2 class="text-xl font-bold mb-4">1. Parametrize Surface</h2><p class="mb-4">Let \( u = x, v = y, z = 6 - 3x - 2y = 6 - 3u - 2v \)</p><p class="mb-4">Bounds:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( 0 \le u \le 2 \)</li><li>\( 0 \le v \le 3 - \frac{3}{2}u \)</li></ul><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+\[ \vec{r}(u, v) = \langle u, v, 6 - 3u - 2v \rangle \]
+\[ \vec{r}_u = \langle 1, 0, -3 \rangle \]
+\[ \vec{r}_v = \langle 0, 1, -2 \rangle \]
+\[ \vec{r}_u \times \vec{r}_v = \langle 3, 2, 1 \rangle \]
+</div><div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>Stop. Is this pointing in the correct direction? Is this pointing upward? Yes, because z-component \( &gt; 0 \).</p></div><p class="font-bold">So, use \( \langle 3, 2, 1 \rangle \) as correct normal.</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_{S} \vec{F} \cdot (\vec{r}_u \times \vec{r}_v) \, dA \]</div><p class="mb-6">Given the vector field and parametrization:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \langle x, y, z \rangle \quad \vec{r}(u,v) = \langle u, v, 6 - 3u - 2v \rangle \]</div><p class="mb-6">Substituting the components of \(\vec{r}(u,v)\) into \(\vec{F}\):</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(x = u\)</li><li>\(y = v\)</li><li>\(z = 6 - 3u - 2v\)</li></ul><p class="mb-6">The integral becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \int_{0}^{2} \int_{0}^{3 - \frac{3}{2}u} \underbrace{\langle u, v, 6 - 3u - 2v \rangle}_{\vec{F}} \cdot \underbrace{\langle 3, 2, 1 \rangle}_{\vec{r}_u \times \vec{r}_v} \, dv \, du \]</div><p class="mb-6">Evaluating the integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \dots = \boxed{18} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Example</h1><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2">\(\vec{F} = \langle -y, x, 1 \rangle\)</p><p class="mb-2">\(S\): cylinder \(y = z^2\), \(0 \le x \le 3\), \(0 \le z \le 1\)</p><p>Normal is considered positive pointing toward positive \(y\)-axis</p></div><div class="grid-layout"><div class="mb-6">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D graph showing axes x, y, z and a green surface y=z^2 with red normal vectors pointing in the positive y direction.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-33-6.webp" loading="lazy" decoding="async" alt="3D graph showing axes x, y, z and a green surface y=z^2 with red normal vectors pointing in the positive y direction." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D graph showing axes x, y, z and a green surface y=z^2 with red normal vectors pointing in the positive y direction.
+                  </figcaption>
+                </figure>
+              <p class="italic text-sm mt-2">This is the one with component in pos. \(y\)-axis direction (we want this one)</p></div></div><h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">Parametrize \(S\):</h2><p class="mb-6">\(y = z^2\). We are given bounds in \(x\) and \(z\), so it's convenient to use them as parameters.</p><p class="mb-6">Let \(u = x\), \(v = z\), then \(y = z^2 = v^2\).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}(u,v) = \langle \underbrace{u}_{x}, \underbrace{v^2}_{y}, \underbrace{v}_{z} \rangle \]</div><p class="mb-6">With parameter bounds:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(0 \le u \le 3\)</li><li>\(0 \le v \le 1\)</li></ul></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white shadow-lg rounded-lg max-w-4xl mx-auto"><section class="mb-8"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}_u = \langle 1, 0, 0 \rangle \]\[ \vec{r}_v = \langle 0, 2v, 1 \rangle \]\[ \vec{r}_u \times \vec{r}_v = \langle 0, -1, 2v \rangle \]</div><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2">is this normal pointing in the "positive" direction?</p><p>no, the y-component is negative so this points in negative y-axis direction</p></div></section><section class="mb-8"><h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">Fixing the Orientation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \text{fix: } \vec{r}_v \times \vec{r}_u = \langle 0, 1, -2v \rangle \]</div><p class="mb-6">Calculating the surface integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_S \vec{F} \cdot (\vec{r}_v \times \vec{r}_u) \, dA = \int_0^3 \int_0^1 \langle -v^2, u, 1 \rangle \cdot \langle 0, 1, -2v \rangle \, dv \, du \]</div><div class="flex items-center gap-4 my-8"><span class="text-xl">\( = \dots = \)</span><div class="notebox border-2 border-slate-900 p-4 inline-block font-bold text-2xl">\( \frac{3}{2} \)</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white shadow-lg rounded-lg max-w-4xl mx-auto"><header class="mb-10"><h1 class="font-black tracking-tight text-slate-900 text-3xl mb-4">Example: Flux through a Sphere</h1></header><section class="grid-layout mb-8"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \frac{-\langle x, y, z \rangle}{(x^2 + y^2 + z^2)^{3/2}} \]</div><div class="border-l-4 border-slate-400 pl-6 my-8 text-slate-700"><ul><li><strong>S:</strong> sphere radius a</li><li>normal positive pointing <strong>outward</strong></li></ul></div></section><section class="mb-8"><h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">Parametrization of S</h2><p class="mb-4">Using spherical coordinates:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \rho = a, \quad u = \phi, \quad v = \theta \]\[ 0 \le u \le \pi, \quad 0 \le v \le 2\pi \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}(u,v) = \langle a \sin u \cos v, \, a \sin u \sin v, \, a \cos u \rangle \]</div><p class="text-sm text-slate-500 italic ml-4">Note: \( a \sin u \cos v \) corresponds to \( \rho \sin \phi \cos \theta \).</p></section><section class="mb-8"><h2 class="font-black tracking-tight text-slate-900 text-2xl mt-10 mb-4">Partial Derivatives and Cross Product</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}_u = \langle a \cos u \cos v, \, a \cos u \sin v, \, -a \sin u \rangle \]\[ \vec{r}_v = \langle -a \sin u \sin v, \, a \sin u \cos v, \, 0 \rangle \]\[ \vec{r}_u \times \vec{r}_v = \langle a^2 \sin^2 u \cos v, \, a^2 \sin^2 u \sin v, \, a^2 \cos u \sin u \rangle \]</div><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>"out" \( \rightarrow \) all components positive in first octant</p><p>here, all correct</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \frac{-\langle x, y, z \rangle}{(x^2 + y^2 + z^2)^{3/2}} = \frac{-\langle a \sin u \cos v, \ a \sin u \sin v, \ a \cos u \rangle}{a^3} \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_S \vec{F} \cdot (\vec{r}_u \times \vec{r}_v) \, dA = \dots = \boxed{-4\pi} \]</div><p class="text-slate-700 italic mt-4">see last page</p></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam 2: Review - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Exam2Review.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Exam 2: Review</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/20/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Exam2Review.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4 style="color: #d0021b; text-align: center;">Exam 2: Review</h4>
+
+<div class="important">
+    <ul>
+        <li><strong>Exam 2:</strong> Tomorrow (Tuesday 04/21), 8 PM</li>
+        <li>
+            <strong>Office Hours:</strong>
+            <ul style="list-style-type: none;">
+                <li>Today (04/20): 10:15 AM – 11:45 AM (MATH 842)</li>
+                <li style="padding-left: 9.5em;">12:15 PM – 1:15 PM (Windsor)</li>
+                <li style="margin-top: 1em;">Tomorrow (04/21): 12:00 PM – 1:15 PM (MATH 842)</li>
+            </ul>
+        </li>
+        <li style="margin-top: 1.5em;">No Class on Friday (04/24)</li>
+    </ul>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Constrained Optimization</h4>
+
+<div class="example">
+    Find minimum value of \( 2x + 3y + 2 \) given \( 2x^2 + 5xy + 4y^2 = 28 \).
+
+    <p>
+        <strong>Objective:</strong> \( f(x, y) = 2x + 3y + 2 \)<br>
+        <strong>Constraint:</strong> \( g(x, y) = 2x^2 + 5xy + 4y^2 = 28 \)
+    </p>
+
+    <div class="solution">
+        <p><strong>Lagrange Multipliers:</strong> \( \vec{\nabla} f = \lambda \vec{\nabla} g \rightsquigarrow \langle f_x, f_y \rangle = \lambda \langle g_x, g_y \rangle \)</p>
+
+        <ol>
+            <li>\( f_x = \lambda g_x \rightsquigarrow 2 = \lambda (4x + 5y) \)</li>
+            <li>\( f_y = \lambda g_y \rightsquigarrow 3 = \lambda (5x + 8y) \)</li>
+            <li>\( g(x, y) = 28 \)</li>
+        </ol>
+
+        <p>
+            Divide equation (1) by equation (2):<br>
+            \[ \frac{2}{3} = \frac{4x + 5y}{5x + 8y} \]
+            \[ 10x + 16y = 12x + 15y \]
+            \[ y = 2x \]
+        </p>
+
+        <p>
+            Plug into equation (3):<br>
+            \[ 2x^2 + 5x(2x) + 4(2x)^2 = 28 \]
+            \[ 2x^2 + 10x^2 + 16x^2 = 28 \]
+            \[ 28x^2 = 28 \]
+            \[ x = \pm 1 \]
+        </p>
+
+        <p>
+            <strong>Points:</strong> \( (1, 2) \) and \( (-1, -2) \)
+        </p>
+
+        <p>
+            Evaluate the objective function at these points:
+            </p><ul>
+                <li>\( f(1, 2) = 2(1) + 3(2) + 2 = 2 + 6 + 2 = 10 \)</li>
+                <li>\( f(-1, -2) = 2(-1) + 3(-2) + 2 = -2 - 6 + 2 = -6 \)</li>
+            </ul>
+        <p></p>
+
+        <div class="important">
+            The minimum value is <strong>-6</strong>.
+        </div>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Change of Order of Integration Example</h4>
+
+<div class="example">
+Evaluate \[ \int_{0}^{1} \int_{\sqrt{x}}^{1} e^{y^3} \, dy \, dx \]
+</div>
+
+<div class="important">
+\( e^{y^3} \) is not easy to integrate with respect to \( y \). Switch the order of integration.
+</div>
+
+<strong>Given bounds:</strong> \( \sqrt{x} \le y \le 1, 0 \le x \le 1 \)
+
+
+                    <div class="inline-diagram-container" style="width: 41%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-1.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate graph showing the region of integration. The x-axis is labeled from 0 to 1. A blue curve is plotted, defined by the equation y = sqrt(x), which is also labeled as x = y squared. A horizontal blue line is drawn at y = 1. The region bounded between the y-axis (x=0), the horizontal line y=1, and the curve x = y squared is shaded with diagonal lines. A purple horizontal line segment with markers at both ends is drawn across the shaded region at a representative height 'y', indicating a horizontal slice starting at the y-axis (x=0) and ending at the curve (x=y squared). This visualizes the new integration limits for x." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate graph showing the region of integration. The x-axis is labeled from 0 to 1. A blue curve is plotted, defined by the equation y = sqrt(x), which is also labeled as x = y squared. A horizontal blue line is drawn at y = 1. The region bounded between the y-axis (x=0), the horizontal line y=1, and the curve x = y squared is shaded with diagonal lines. A purple horizontal line segment with markers at both ends is drawn across the shaded region at a representative height 'y', indicating a horizontal slice starting at the y-axis (x=0) and ending at the curve (x=y squared). This visualizes the new integration limits for x.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+From the region shown above, the new bounds are:
+\[ 0 \le x \le y^2, 0 \le y \le 1 \]
+
+<div class="solution">
+The integral with the changed order of integration is:
+\[ \int_{0}^{1} \int_{0}^{y^2} e^{y^3} \, dx \, dy \]
+
+Evaluating the inner integral with respect to \( x \):
+\[ = \int_{0}^{1} \left[ x e^{y^3} \right]_{0}^{y^2} \, dy \]
+\[ = \int_{0}^{1} y^2 e^{y^3} \, dy \]
+
+To solve the remaining integral, use substitution. Let \( u = y^3 \), then \( du = 3y^2 \, dy \), which implies \( y^2 \, dy = \frac{1}{3} du \).
+The limits of integration for \( u \) remain \( 0 \) to \( 1 \).
+
+\[ = \frac{1}{3} \int_{0}^{1} e^u \, du \]
+\[ = \frac{1}{3} [e^u]_{0}^{1} \]
+\[ = \frac{1}{3} [e - 1] \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Rewrite in polar</h4>
+
+<div class="example">
+  \[ \int_{0}^{1} \int_{-\sqrt{1-y^2}}^{0} (x^2+y^2)^{1/2} dx dy \]
+
+  
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-2.webp" loading="lazy" decoding="async" alt="Coordinate plane diagram showing a region of integration in the second quadrant. The x and y axes are clearly labeled. A quarter-circle region with a radius of 1 is shaded with diagonal blue lines, extending from the positive y-axis to the negative x-axis. A red radius line starts from the origin (0,0) and extends to a point on the circular arc. A red curved arrow indicates the angle theta, starting from the positive x-axis and rotating counter-clockwise to the red radius line, showing that the angular range for this region is from pi/2 to pi." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Coordinate plane diagram showing a region of integration in the second quadrant. The x and y axes are clearly labeled. A quarter-circle region with a radius of 1 is shaded with diagonal blue lines, extending from the positive y-axis to the negative x-axis. A red radius line starts from the origin (0,0) and extends to a point on the circular arc. A red curved arrow indicates the angle theta, starting from the positive x-axis and rotating counter-clockwise to the red radius line, showing that the angular range for this region is from pi/2 to pi.</span>
+                      </div>
+                    </div>
+                  
+  </diagram-placeholder>
+
+  <p>Based on the limits of the original double integral, we identify the region in Cartesian coordinates as:</p>
+  \[ -\sqrt{1-y^2} \leq x \leq 0, \quad 0 \leq y \leq 1 \]
+
+  <p>To determine the region's geometry for the polar conversion, we analyze the lower boundary of \( x \):</p>
+  \[ -\sqrt{1-y^2} = x \]
+  \[ x^2 + y^2 = 1 \]
+
+  <p>Using the visual representation from the diagram, we establish the limits of integration in polar coordinates:</p>
+  <div class="important">
+    \[ 0 \leq r \leq 1, \quad \frac{\pi}{2} \leq \theta \leq \pi \]
+  </div>
+
+  <p>The standard substitutions for polar coordinates are applied:</p>
+  \[ dx dy = r dr d\theta \]
+  \[ x^2 + y^2 = r^2 \]
+
+  <div class="solution">
+    <p>Substituting these values into the integral and evaluating the result:</p>
+    \[ \int_{\frac{\pi}{2}}^{\pi} \int_{0}^{1} (r^2)^{1/2} \cdot r \, dr d\theta = \frac{1}{3} \cdot \frac{\pi}{2} = \frac{\pi}{6} \]
+  </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Triple Integrals: Volume in Spherical and Cylindrical Coordinates</h4>
+
+<div class="example">
+    Find the volume of the region inside \( x^2 + y^2 + z^2 = 4 \) (Sphere of radius 2) and \( z = \sqrt{3x^2 + 3y^2} \) (Cone).
+
+    <div class="solution">
+        
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram showing a sphere and a cone. The sphere, defined by \( x^2 + y^2 + z^2 = 4 \), has a radius of 2 and is centered at the origin. An upward-opening cone, defined by \( z = \sqrt{3x^2 + 3y^2} \), intersects the sphere. The volume shared by the interior of the cone and the sphere is shaded with horizontal lines. A red vertical line segment with points at the boundary indicates the z-bounds for a point within the region, extending from the cone surface up to the spherical cap. Dashed lines project the circular intersection of the cone and sphere onto the xy-plane." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram showing a sphere and a cone. The sphere, defined by \( x^2 + y^2 + z^2 = 4 \), has a radius of 2 and is centered at the origin. An upward-opening cone, defined by \( z = \sqrt{3x^2 + 3y^2} \), intersects the sphere. The volume shared by the interior of the cone and the sphere is shaded with horizontal lines. A red vertical line segment with points at the boundary indicates the z-bounds for a point within the region, extending from the cone surface up to the spherical cap. Dashed lines project the circular intersection of the cone and sphere onto the xy-plane.</span>
+                      </div>
+                    </div>
+                  
+
+        To find the volume using Cartesian or Cylindrical coordinates, we first determine the bounds for \( z \). From the equations given:
+        \[ \sqrt{3x^2 + 3y^2} \le z \le \sqrt{4 - x^2 - y^2} \]
+
+        The <strong>xy bounds</strong> are determined by the "shadow" of the region, which is a disk with a boundary formed by the intersection of the sphere and the cone. We find this intersection by setting the \( z \)-expressions equal:
+        
+        \[ \sqrt{3x^2 + 3y^2} = \sqrt{4 - x^2 - y^2} \]
+        \[ 3x^2 + 3y^2 = 4 - x^2 - y^2 \]
+        \[ 4x^2 + 4y^2 = 4 \]
+        \[ x^2 + y^2 = 1 \]
+
+        
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-4.webp" loading="lazy" decoding="async" alt="A 2D coordinate plane diagram showing the projection of the intersection region onto the xy-plane. It depicts a shaded unit circle centered at the origin, labeled with the equation \( x^2 + y^2 = 1 \). The x and y axes are clearly marked, and the circle intersects the axes at 1 and -1." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D coordinate plane diagram showing the projection of the intersection region onto the xy-plane. It depicts a shaded unit circle centered at the origin, labeled with the equation \( x^2 + y^2 = 1 \). The x and y axes are clearly marked, and the circle intersects the axes at 1 and -1.</span>
+                      </div>
+                    </div>
+                  
+
+        Converting to polar coordinates for the \( xy \)-plane:
+        \[ dx \, dy = r \, dr \, d\theta \]
+        
+        The limits for the disk \( x^2 + y^2 \le 1 \) are:
+        \[ 0 \le r \le 1 \]
+        \[ 0 \le \theta \le 2\pi \]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Cartesian!</h4>
+<div class="example">
+    \[ \int_{-1}^{1} \int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}} \int_{\sqrt{3x^2+3y^2}}^{\sqrt{4-x^2-y^2}} 1 \, dz \, dy \, dx \]
+</div>
+
+<h4>Cylindrical!</h4>
+<div class="example">
+    \[ \int_{0}^{2\pi} \int_{0}^{1} \int_{\sqrt{3}r}^{\sqrt{4-r^2}} 1 \cdot r \, dz \, dr \, d\theta \]
+</div>
+
+<h4>Spherical!</h4>
+<div class="definition">
+    \( dV = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \)
+</div>
+
+<div class="important">
+    <strong>Bounds:</strong>
+    <ul>
+        <li>\( 0 \leq \rho \leq 2 \)</li>
+        <li>\( 0 \leq \phi \leq \) <strong>hit cone</strong></li>
+        <li>\( 0 \leq \theta \leq 2\pi \)</li>
+    </ul>
+</div>
+
+<div class="solution">
+    <strong>Derivation of the cone boundary angle \(\phi\):</strong>
+    <p>Given the Cartesian equation for the cone boundary:</p>
+    \[ z = \sqrt{3(x^2+y^2)} \]
+    <p>Using spherical coordinate substitutions:</p>
+    <ul>
+        <li>\( z = \rho \cos \phi \)</li>
+        <li>\( x^2 + y^2 = \rho^2 \sin^2 \phi \)</li>
+    </ul>
+    <p>Substituting these into the cone equation gives:</p>
+    \[ \rho \cos \phi = \sqrt{3(\rho^2 \sin^2 \phi)} \]
+    \[ \cos \phi = \sqrt{3} \sin \phi \]
+    \[ \tan \phi = 1/\sqrt{3} \]
+    \[ \Rightarrow \phi = \pi/6. \]
+</div>
+
+<div class="example">
+    \[ \int_{0}^{2\pi} \int_{0}^{\pi/6} \int_{0}^{2} \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+    <!-- Left Column: Line Integrals -->
+    <section style="flex: 1; min-width: 300px;">
+        <h4>Line integrals</h4>
+
+        
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-5.webp" loading="lazy" decoding="async" alt="Diagram showing a smooth curve labeled C in space. The curve begins at an origin point and ends at a terminal point marked with a solid dot. At an arbitrary point on the curve, three vectors are shown: a blue unit tangent vector T pointing in the direction of the curve, a green unit normal vector N pointing perpendicular to the curve, and a pink vector F representing a field vector." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram showing a smooth curve labeled C in space. The curve begins at an origin point and ends at a terminal point marked with a solid dot. At an arbitrary point on the curve, three vectors are shown: a blue unit tangent vector T pointing in the direction of the curve, a green unit normal vector N pointing perpendicular to the curve, and a pink vector F representing a field vector.</span>
+                      </div>
+                    </div>
+                  
+
+        <p>\(C: \vec{r}(t), \quad a \le t \le b\)</p>
+
+        <div class="definition">
+            <p><strong>Scalar Line Integral:</strong></p>
+            \[ \int_C f \, dr = \int_a^b f(\vec{r}(t)) |\vec{r}'(t)| \, dt \]
+            <p>Note: \(f\) is a <strong>scalar</strong>.</p>
+        </div>
+
+        <div class="definition">
+            <p><strong>Vector Line Integrals:</strong></p>
+            <p>Tangential component:</p>
+            \[ \int_C (\vec{F} \cdot \vec{T}) \, dr \]
+            <p>Normal component:</p>
+            \[ \int_C (\vec{F} \cdot \vec{N}) \, dr \]
+            <p>Note: The dot products \((\vec{F} \cdot \vec{T})\) and \((\vec{F} \cdot \vec{N})\) are <strong>scalars</strong>.</p>
+        </div>
+
+        <div class="important">
+            <p><strong>Choice for \(\vec{N}\):</strong> The normal vector \(\vec{N}\) is defined as the vector \(90^\circ\) counter-clockwise (CCW) from the tangent vector.</p>
+        </div>
+    </section>
+
+    <!-- Right Column: Surface Integrals -->
+    <section style="flex: 1; min-width: 300px; border-left: 1px solid #ccc; padding-left: 20px;">
+        <h4>Surface integral</h4>
+
+        
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-6.webp" loading="lazy" decoding="async" alt="Diagram illustrating a curved surface sheet S. At a point on the surface, two vectors are originating: a green unit normal vector N pointing vertically upwards from the surface, and a pink field vector F pointing diagonally." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram illustrating a curved surface sheet S. At a point on the surface, two vectors are originating: a green unit normal vector N pointing vertically upwards from the surface, and a pink field vector F pointing diagonally.</span>
+                      </div>
+                    </div>
+                  
+
+        <p>\(S: \vec{r}(u,v), \quad u, v \in R \subset \mathbb{R}^2\)</p>
+
+        <div class="definition">
+            <p><strong>Scalar Surface Integral:</strong></p>
+            \[ \underbrace{\iint_S f \, dS}_{\text{Surface Integral}} = \underbrace{\iint_R f(\vec{r}(u,v)) |\vec{r}_u \times \vec{r}_v| \, dA}_{\text{Double Integral}} \]
+        </div>
+
+        <div class="definition">
+            <p><strong>Vector Surface Integral (Flux):</strong></p>
+            \[ \iint_S \vec{F} \cdot d\vec{S} = \iint_S (\vec{F} \cdot \vec{N}) \, dS \]
+            <p>Note: The dot product \((\vec{F} \cdot \vec{N})\) is a <strong>scalar</strong>.</p>
+        </div>
+
+        <div class="important">
+            <p>\(\vec{N} = \text{unit normal pointing upwards or outwards}\)</p>
+        </div>
+    </section>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h1>Line integrals: Which theorem to use</h1>
+
+<p>For <strong>scalar functions</strong>, we use the definition.</p>
+
+<p>For <strong>vector fields</strong>, the primary question to address is: <strong>is \( C \) a closed curve in 2D?</strong></p>
+
+
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-7.webp" loading="lazy" decoding="async" alt="Hand-drawn diagram of a simple closed curve in a 2D plane. The curve is labeled 'C' and encloses a region labeled 'R'. The region 'R' is filled with diagonal blue hash marks. This visual represents the setup for Green's Theorem, where a line integral around a closed boundary is related to a double integral over the interior region." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Hand-drawn diagram of a simple closed curve in a 2D plane. The curve is labeled 'C' and encloses a region labeled 'R'. The region 'R' is filled with diagonal blue hash marks. This visual represents the setup for Green's Theorem, where a line integral around a closed boundary is related to a double integral over the interior region.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="important">
+    <h2>Case 1: Yes, \( C \) is a closed curve.</h2>
+    <p>Use <strong>Green's Theorem</strong>:</p>
+    \[ \oint_C \vec{F} \cdot \vec{T} dr = \iint_S \text{2D curl } dA \]
+    \[ \oint_C \vec{F} \cdot \vec{n} dr = \iint_S \text{2D div } dA \]
+</div>
+
+<div class="important">
+    <h2>Case 2: No, \( C \) is not a closed curve.</h2>
+    <p>Check: <strong>is \( \vec{F} = \vec{\nabla} \phi \) (conservative?)</strong></p>
+
+    <div class="solution">
+        <p><strong>Yes (Conservative):</strong> Use <strong>FTCLI</strong> (Fundamental Theorem of Calculus for Line Integrals)</p>
+        \[ \int_C \vec{\nabla} \phi \cdot d\vec{r} = \phi(\text{end}) - \phi(\text{start}) \]
+    </div>
+
+    <div class="solution">
+        <p><strong>No (Not Conservative):</strong> Use the <strong>definition</strong>.</p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Example: Line Integral over a Triangular Region</h3>
+
+<div class="example">
+    <p>
+        Let \( R \) be a triangle with vertices \( (0,0), (2,0), (1,1) \) and \( C \) be its boundary oriented counter-clockwise (CCW).
+    </p>
+    <p>
+        Evaluate:
+        \[ \int_{C} \cos^3(x) \, dx + e^x \, dy \]
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/exam2review-8.webp" loading="lazy" decoding="async" alt="Line graph on a coordinate grid illustrating the triangular region R. The triangle's vertices are at (0,0), (2,0), and (1,1). The boundary C is marked with arrows showing a counter-clockwise orientation. The left boundary line is labeled y = x, and the right boundary line is labeled y = -x + 2. The interior of the triangle is shaded with horizontal lines. A pink horizontal line segment is drawn across the region at a constant y-level, spanning from the left boundary x = y to the right boundary x = 2 - y, visually representing the limits of integration for x. Points (0,0) and (2,0) are labeled on the x-axis, and the peak vertex (1,1) is also labeled." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Line graph on a coordinate grid illustrating the triangular region R. The triangle's vertices are at (0,0), (2,0), and (1,1). The boundary C is marked with arrows showing a counter-clockwise orientation. The left boundary line is labeled y = x, and the right boundary line is labeled y = -x + 2. The interior of the triangle is shaded with horizontal lines. A pink horizontal line segment is drawn across the region at a constant y-level, spanning from the left boundary x = y to the right boundary x = 2 - y, visually representing the limits of integration for x. Points (0,0) and (2,0) are labeled on the x-axis, and the peak vertex (1,1) is also labeled.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <p>
+            Since \( C \) is a simple closed curve, we can apply Green's Theorem. Define the vector field:
+            \[ \vec{F} = \langle \cos^3 x, e^x \rangle \]
+        </p>
+        
+        <p>
+            By Green's Theorem:
+            \[ \int_{C} \vec{F} \cdot d\vec{r} = \iint_{R} (\text{curl}_z \vec{F}) \, dA \]
+        </p>
+
+        <p>
+            Calculating the integrand (\( g_x - f_y \)):
+            \[ \frac{\partial}{\partial x}(e^x) - \frac{\partial}{\partial y}(\cos^3 x) = e^x - 0 = e^x \]
+            So the integral becomes:
+            \[ \iint_{R} e^x \, dA \]
+        </p>
+
+        <p>
+            To set up the double integral over region \( R \), we determine the bounds for a Type II region (integrating with respect to \( x \) first):
+            \[ y \le x \le 2 - y \]
+            \[ 0 \le y \le 1 \]
+        </p>
+
+        <p>
+            The integral is:
+            \[ \int_{0}^{1} \int_{y}^{2-y} e^x \, dx \, dy \]
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/20/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

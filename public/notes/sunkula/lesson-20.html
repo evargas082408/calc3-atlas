@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 20: Double Integrals in Polar Coordinates</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        h3 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 8px; margin-top: 30px; font-size: 1.5em; }
+        h4 { color: #34495e; border-left: 4px solid #3498db; padding-left: 15px; margin-top: 25px; font-size: 1.3em; }
+        h5 { color: #5a6c7d; font-size: 1.1em; margin-top: 20px; }
+        .definition { background-color: #e8f5e8; padding: 15px; border: 1px solid #28a745; border-radius: 8px; margin: 15px 0; border-left: 5px solid #28a745; }
+        .theorem { background-color: #fff3cd; padding: 15px; border: 1px solid #ffc107; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .example { background-color: #f8f9fa; padding: 15px; border: 1px solid #6c757d; border-radius: 8px; margin: 15px 0; border-left: 5px solid #007bff; }
+        .important { background-color: #d1ecf1; padding: 15px; border: 1px solid #17a2b8; border-radius: 8px; margin: 15px 0; border-left: 5px solid #17a2b8; }
+        .warning { background-color: #f8d7da; padding: 15px; border: 1px solid #dc3545; border-radius: 8px; margin: 15px 0; border-left: 5px solid #dc3545; }
+        .visual-desc { background-color: #e9ecef; padding: 12px; border-left: 4px solid #6c757d; font-style: italic; margin: 15px 0; border-radius: 0 5px 5px 0; }
+        .steps { background-color: #f1f3f4; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .solution { background-color: #f0f8f0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #28a745; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 8px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
+        th { background-color: #e9ecef; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .mjx-chtml { font-size: 1.1em !important; }
+        .page-content { background-color: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        figure { margin: 20px 0; text-align: center; }
+        figure img { max-width: 100%; height: auto; border: 2px solid #dee2e6; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 4px; }
+        figcaption { margin-top: 8px; color: #6c757d; font-size: 0.95em; }
+        hr { margin: 40px 0; border: none; border-top: 2px solid #3498db; }
+        @media (max-width: 768px) { body { padding: 15px; } h3 { font-size: 1.3em; } h4 { font-size: 1.2em; } h5 { font-size: 1.1em; } }
+        @media print { body { background-color: white; color: black; } .definition, .theorem, .example, .important, .warning { border: 1px solid #000; background-color: white; } }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson20.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 20: Double Integrals in Polar Coordinates</h3>
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-20-1.webp" loading="lazy" decoding="async" alt="Page 1: Title page with lesson title and announcements about exam scores, office hours">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Lesson 20: Double Integrals in Polar Coordinates</h4>
+
+<div class="important">
+<p><strong>Announcements:</strong></p>
+<ul>
+    <li>Exam 1 scores posted on Brightspace</li>
+    <li>Exam 1 key will be posted soon</li>
+    <li>Feasting with Faculty to continue from tomorrow (12:15 pm &ndash; 1:15 pm, Windsor)</li>
+</ul>
+<p><strong>Office Hours:</strong></p>
+<ul>
+    <li>Monday, Friday: 9:45 am &ndash; 11:15 am</li>
+    <li>Thursday: 11 am &ndash; 12 pm</li>
+</ul>
+</div>
+</div>
+
+<hr>
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-20-2.webp" loading="lazy" decoding="async" alt="Page 2: Review of double integrals showing region D between y=sin(x) and y=cos(x) set up as a Type II integral">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Review: Double Integrals</h4>
+
+<p>Given a region \(D\) in the \(xy\)-plane, we want to evaluate \(\displaystyle \iint_D f(x,y)\,dA\). The process involves two key steps:</p>
+
+<div class="steps">
+<h5>Steps to Set Up a Double Integral:</h5>
+<ol>
+    <li>Determine whether \(D\) is a Type I or Type II region.</li>
+    <li>Write \(\displaystyle \iint_D f(x,y)\,dA = \int_c^d \int_a^b f(x,y)\,dx\,dy\) and find the limits \(a, b, c, d\).</li>
+</ol>
+</div>
+
+<div class="example">
+<h5>Example: Type II Region</h5>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The region \(D\) lies in the first quadrant, bounded above by the curves \(y = \sin x\) and \(y = \cos x\). These curves intersect at \(x = \frac{\pi}{4}\). The region is shaded in gray beneath both curves. A horizontal strip (blue) is drawn to illustrate the Type II setup, sweeping from left to right across the region. The \(x\)-axis runs from \(0\) to \(\frac{\pi}{2}\), and the \(y\)-axis runs from \(0\) upward.</p>
+</div>
+
+<p>To set this up as a Type II integral (integrating with respect to \(x\) first, then \(y\)):</p>
+
+<p>Fix \(y\) between \(0\) and \(\dfrac{\sqrt{2}}{2}\). For a given \(y\), the horizontal strip enters the region at the left curve \(x = \sin^{-1} y\) and exits at the right curve \(x = \cos^{-1} y\).</p>
+
+\[\iint_D f(x,y)\,dA = \int_0^{\sqrt{2}/2} \int_{\sin^{-1} y}^{\cos^{-1} y} f(x,y)\,dx\,dy\]
+
+</div>
+</div>
+
+<hr>
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-20-3.webp" loading="lazy" decoding="async" alt="Page 3: Setting up the same region as a Type I integral, requiring two sub-regions split at x=pi/4">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Alternate Setup: Integrating with Respect to \(y\) First (Type I)</h4>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> The same region \(D\) from Page 2 is shown, but now with vertical strips drawn to illustrate the Type I setup. The region is split at \(x = \frac{\pi}{4}\) into two sub-regions. In the left sub-region (red hatching, \(0 \le x \le \frac{\pi}{4}\)), vertical strips run from \(y = 0\) up to \(y = \sin x\). In the right sub-region (purple hatching, \(\frac{\pi}{4} \le x \le \frac{\pi}{2}\)), vertical strips run from \(y = 0\) up to \(y = \cos x\).</p>
+</div>
+
+<p>If you want to integrate with respect to \(y\) first, you must split the region at \(x = \frac{\pi}{4}\) because the upper boundary changes from \(y = \sin x\) to \(y = \cos x\).</p>
+
+<div class="warning">
+<p><strong>Warning:</strong> When the boundary curves change, the region must be split into sub-regions, each requiring its own iterated integral.</p>
+</div>
+
+<p><strong>Left sub-region:</strong> Fix \(x\) between \(0\) and \(\frac{\pi}{4}\). Then \(0 \le y \le \sin x\).</p>
+
+<p><strong>Right sub-region:</strong> Fix \(x\) between \(\frac{\pi}{4}\) and \(\frac{\pi}{2}\). Then \(0 \le y \le \cos x\).</p>
+
+\[\iint_D f(x,y)\,dA = \int_0^{\pi/4} \int_0^{\sin x} f(x,y)\,dy\,dx + \int_{\pi/4}^{\pi/2} \int_0^{\cos x} f(x,y)\,dy\,dx\]
+
+<div class="important">
+<p><strong>Important:</strong> The Type II setup (Page 2) required only a single integral, while the Type I setup requires two integrals. Choosing the right order of integration can simplify the computation significantly.</p>
+</div>
+</div>
+
+<hr>
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-20-4.webp" loading="lazy" decoding="async" alt="Page 4: Review of polar coordinates showing the relationship between Cartesian and polar coordinates with a diagram">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Review: Polar Coordinates</h4>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A standard Cartesian coordinate system is shown. A point \((x, y)\) is plotted in the first quadrant. A line segment of length \(r\) (drawn in red) connects the origin \((0,0)\) to the point \((x,y)\). The horizontal leg is labeled \(x\) and the vertical leg is labeled \(y\), forming a right triangle. The angle \(\theta\) is marked in blue between the positive \(x\)-axis and the line segment \(r\).</p>
+</div>
+
+<div class="definition">
+<p><strong>Definition:</strong> In polar coordinates, a point is described by:</p>
+<ul>
+    <li>\(r\) = distance between the origin \((0,0)\) and the point \((x,y)\)</li>
+    <li>\(\theta\) = angle between the positive \(x\)-axis and the ray connecting \((0,0)\) to \((x,y)\)</li>
+</ul>
+</div>
+
+<div class="theorem">
+<p><strong>Conversion Formulas:</strong></p>
+\[r = \sqrt{x^2 + y^2}\]
+\[x = r\cos\theta, \qquad y = r\sin\theta\]
+\[\theta = \tan^{-1}\!\left(\frac{y}{x}\right)\]
+</div>
+
+<div class="important">
+<p><strong>Important:</strong> Angles measured counter-clockwise from the positive \(x\)-axis are positive. Angles measured clockwise are negative.</p>
+</div>
+</div>
+
+<hr>
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-20-5.webp" loading="lazy" decoding="async" alt="Page 5: Double integrals in polar coordinates showing a polar region D bounded by r=g1(theta) and r=g2(theta), with derivation of dA=r dr dtheta">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Double Integrals in Polar Coordinates</h4>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A polar region \(D\) (shaded in pink) is shown in the plane, bounded by two curves \(r = g_1(\theta)\) (inner boundary) and \(r = g_2(\theta)\) (outer boundary), and by two rays \(\theta = \alpha\) and \(\theta = \beta\). Blue lines from the origin show a fixed angle \(\theta\), with \(r\) sweeping from the inner curve to the outer curve. A small polar "rectangle" element is highlighted in red at the bottom of the page, with sides \(\Delta r\) (radial direction) and arc length \(\ell = r\,\Delta\theta\). The element is approximately rectangular for small \(\Delta r\) and \(\Delta\theta\).</p>
+</div>
+
+<p>Consider a region \(D\) in polar coordinates bounded by \(r = g_1(\theta)\) (inner curve) and \(r = g_2(\theta)\) (outer curve), with \(\alpha \le \theta \le \beta\).</p>
+
+<p>To set up the double integral, fix \(\theta\) between \(\alpha\) and \(\beta\). For that fixed angle, \(r\) ranges from \(g_1(\theta)\) to \(g_2(\theta)\).</p>
+
+<div class="theorem">
+<p><strong>Double Integral in Polar Coordinates:</strong></p>
+\[\iint_D f(x,y)\,dA = \int_\alpha^\beta \int_{g_1(\theta)}^{g_2(\theta)} f(r\cos\theta,\, r\sin\theta)\; r\,dr\,d\theta\]
+</div>
+
+<div class="important">
+<p><strong>Important &mdash; The Area Element in Polar Coordinates:</strong></p>
+<p>A small polar "rectangle" has radial width \(\Delta r\) and arc length \(\ell = r\,\Delta\theta\). Its area is approximately:</p>
+\[\Delta A = \ell \cdot \Delta r = r\,\Delta r\,\Delta\theta\]
+<p>In the limit, the infinitesimal area element becomes:</p>
+\[dA = r\,dr\,d\theta\]
+</div>
+
+<div class="warning">
+<p><strong>Warning:</strong> Do not forget the extra factor of \(r\) in \(dA = r\,dr\,d\theta\). This is the most common mistake when converting to polar coordinates.</p>
+</div>
+</div>
+
+<hr>
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-20-6.webp" loading="lazy" decoding="async" alt="Page 6: Continuation of the polar double integral formula with a cleaner diagram of the polar region">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Double Integrals in Polar Coordinates (Continued)</h4>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A cleaner version of the polar region \(D\) from Page 5 is shown. The region (shaded pink) is bounded by the inner curve \(r = g_1(\theta)\) and outer curve \(r = g_2(\theta)\), between rays \(\theta = \alpha\) and \(\theta = \beta\). Blue lines from the origin show a fixed angle \(\theta\), sweeping radially from the inner to the outer boundary.</p>
+</div>
+
+<p>Restating the key formula for reference:</p>
+
+\[\iint_D f(x,y)\,dA = \int_\alpha^\beta \int_{g_1(\theta)}^{g_2(\theta)} f(r\cos\theta,\, r\sin\theta)\; r\,dr\,d\theta\]
+
+</div>
+
+<hr>
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-20-7.webp" loading="lazy" decoding="async" alt="Page 7: Example evaluating the double integral of sin(x^2+y^2) over a quarter-disk in the third quadrant">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+<h5>Example 1: Evaluate \(\displaystyle \iint_D \sin(x^2 + y^2)\,dA\)</h5>
+
+<p>\(D\) is the shaded region shown below.</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> A circle of radius 2 centered at the origin is drawn, with equation \(x^2 + y^2 = 4\). The shaded region (pink) is the portion of the disk in the third quadrant &mdash; that is, where both \(x \le 0\) and \(y \le 0\). A blue ray from the origin shows a typical angle \(\theta\) sweeping through the region.</p>
+</div>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>First, identify the polar bounds. Fix \(\theta\) in the region. Since the shaded region is the third quadrant portion of the disk:</p>
+
+<p>For \(r\): the region extends from the origin to the circle, so \(0 \le r \le 2\).</p>
+
+<p>For \(\theta\): the third quadrant corresponds to \(\pi \le \theta \le \dfrac{3\pi}{2}\) (equivalently, \(-\pi \le \theta \le -\dfrac{\pi}{2}\)).</p>
+
+<p>Also note that \(x^2 + y^2 = r^2\), so \(\sin(x^2 + y^2) = \sin(r^2)\).</p>
+
+<p>Setting up the integral:</p>
+
+\[\iint_D \sin(x^2+y^2)\,dA = \int_\pi^{3\pi/2} \int_0^2 \sin(r^2)\cdot r\,dr\,d\theta\]
+
+<p>Evaluate the inner integral first. Let \(u = r^2\), so \(du = 2r\,dr\), which gives \(r\,dr = \frac{1}{2}\,du\):</p>
+
+\[\int_0^2 \sin(r^2)\,r\,dr = \left[\frac{-\cos(r^2)}{2}\right]_0^2 = \frac{-\cos 4}{2} + \frac{1}{2} = \frac{1 - \cos 4}{2}\]
+
+<p>Now evaluate the outer integral:</p>
+
+\[\int_\pi^{3\pi/2} \frac{1 - \cos 4}{2}\,d\theta = \frac{1 - \cos 4}{2} \cdot \frac{\pi}{2}\]
+
+<p>Therefore:</p>
+
+\[\iint_D \sin(x^2+y^2)\,dA = \frac{(1 - \cos 4)\,\pi}{4}\]
+</div>
+</div>
+</div>
+
+<hr>
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-20-8.webp" loading="lazy" decoding="async" alt="Page 8: Example evaluating the double integral of e^(x^2+y^2) over a disk of radius 3 with angle bounds determined by y=-x">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+<h5>Example 2: Evaluate \(\displaystyle \iint_D e^{x^2+y^2}\,dA\)</h5>
+
+<p>\(D\) is the shaded region shown below.</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> A circle of radius 3 centered at the origin is drawn, with equation \(x^2 + y^2 = 9\). The line \(y = -x\) passes through the origin, dividing the plane. The shaded region (pink) is the portion of the disk swept from \(\theta = -\frac{\pi}{4}\) to \(\theta = \frac{3\pi}{4}\). A blue radial line shows a typical value of \(r\) sweeping from 0 to 3.</p>
+</div>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>Fix \(\theta\). For \(r\): the region extends from the origin to the circle, so \(0 \le r \le 3\).</p>
+
+<p>For \(\theta\): the line \(y = -x\) has slope \(-1\). To find the angle:</p>
+
+\[\theta = \tan^{-1}\!\left(\frac{y}{x}\right) = \tan^{-1}(-1)\]
+
+<p>In the second quadrant, this gives \(\theta = \frac{3\pi}{4}\). In the fourth quadrant, this gives \(\theta = -\frac{\pi}{4}\) (equivalently \(\frac{7\pi}{4}\)).</p>
+
+<p>The shaded region sweeps from \(\theta = -\frac{\pi}{4}\) to \(\theta = \frac{3\pi}{4}\).</p>
+
+<p>Since \(x^2 + y^2 = r^2\), the integrand becomes \(e^{r^2}\). Setting up the integral:</p>
+
+\[\iint_D e^{x^2+y^2}\,dA = \int_{-\pi/4}^{3\pi/4} \int_0^3 e^{r^2} \cdot r\,dr\,d\theta\]
+
+</div>
+</div>
+</div>
+
+<hr>
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-20-9.webp" loading="lazy" decoding="async" alt="Page 9: Example evaluating the double integral of 4x+3y over a half-annulus in the upper half-plane">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+<h5>Example 3: Evaluate \(\displaystyle \iint_D (4x + 3y)\,dA\)</h5>
+
+<p>\(D\) is the shaded region shown below.</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> Two concentric circles centered at the origin are drawn: the inner circle has equation \(x^2 + y^2 = 1\) (radius 1) and the outer circle has equation \(x^2 + y^2 = 4\) (radius 2). The shaded region (pink) is the upper half of the annulus (ring) between these two circles &mdash; the region where \(1 \le r \le 2\) and \(y \ge 0\). Blue radial lines show the sweep of \(\theta\) from \(0\) to \(\pi\).</p>
+</div>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>Fix \(\theta\). For \(r\): the region lies between the two circles, so \(1 \le r \le 2\).</p>
+
+<p>For \(\theta\): the upper half-plane corresponds to \(0 \le \theta \le \pi\).</p>
+
+<p>Convert the integrand using \(x = r\cos\theta\) and \(y = r\sin\theta\):</p>
+\[4x + 3y = 4r\cos\theta + 3r\sin\theta\]
+
+<p>Setting up the integral:</p>
+
+\[\iint_D (4x+3y)\,dA = \int_0^\pi \int_1^2 (4r\cos\theta + 3r\sin\theta)\cdot r\,dr\,d\theta\]
+
+<p>Simplify the integrand:</p>
+
+\[= \int_0^\pi \int_1^2 r^2(4\cos\theta + 3\sin\theta)\,dr\,d\theta\]
+
+<p>Evaluate the inner integral:</p>
+
+\[\int_1^2 r^2\,dr = \left[\frac{r^3}{3}\right]_1^2 = \frac{8}{3} - \frac{1}{3} = \frac{7}{3}\]
+
+<p>Now evaluate the outer integral:</p>
+
+\[\frac{7}{3} \int_0^\pi (4\cos\theta + 3\sin\theta)\,d\theta = \frac{7}{3} \Big[4\sin\theta - 3\cos\theta\Big]_0^\pi\]
+
+<p>Evaluating at the bounds:</p>
+
+\[= \frac{7}{3}\Big[(4\sin\pi - 3\cos\pi) - (4\sin 0 - 3\cos 0)\Big] = \frac{7}{3}\Big[(0 + 3) - (0 - 3)\Big] = \frac{7}{3} \cdot 6 = 14\]
+
+<p>Therefore:</p>
+
+\[\iint_D (4x+3y)\,dA = 14\]
+</div>
+</div>
+</div>
+
+<hr>
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-20-10.webp" loading="lazy" decoding="async" alt="Page 10: Example evaluating the double integral of y over a region between two circles, one centered at the origin and one centered at (0,2)">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+<h5>Example 4: Evaluate \(\displaystyle \iint_D y\,dA\)</h5>
+
+<p>\(D\) is the shaded region shown below.</p>
+
+<div class="visual-desc">
+<p><strong>Graph Description:</strong> Two circles are drawn. The larger circle has equation \(x^2 + y^2 = 4\) (radius 2, centered at the origin). The smaller circle has equation \(x^2 + y^2 - 4y = 0\), which can be rewritten as \(x^2 + (y-2)^2 = 4\) (radius 2, centered at \((0,2)\)). The shaded region (pink) is the area inside the larger circle but outside the smaller circle, in the first quadrant (where \(x \ge 0\) and \(y \ge 0\)). A radial ray from the origin shows that for a fixed \(\theta\), \(r\) ranges from the inner boundary \(r = 4\sin\theta\) to the outer boundary \(r = 2\).</p>
+</div>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>First, convert the inner boundary to polar coordinates. Starting from \(x^2 + y^2 - 4y = 0\):</p>
+
+\[r^2\cos^2\theta + r^2\sin^2\theta - 4r\sin\theta = 0\]
+\[r^2 - 4r\sin\theta = 0\]
+\[r(r - 4\sin\theta) = 0\]
+
+<p>So the inner boundary is \(r = 4\sin\theta\) (excluding \(r = 0\)).</p>
+
+<p>Fix \(\theta\). For \(r\): the region extends from the smaller circle to the larger circle, so \(4\sin\theta \le r \le 2\).</p>
+
+<p>For \(\theta\): the region is in the first quadrant with \(0 \le \theta \le \frac{\pi}{2}\).</p>
+
+<p>The integrand is \(y = r\sin\theta\). Setting up the integral:</p>
+
+\[\iint_D y\,dA = \int_0^{\pi/2} \int_{4\sin\theta}^{2} (r\sin\theta)\cdot r\,dr\,d\theta = \int_0^{\pi/2} \int_{4\sin\theta}^{2} r^2\sin\theta\,dr\,d\theta\]
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

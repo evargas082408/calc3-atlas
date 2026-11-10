@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.1 - 13.4 Review of Vectors - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%201%20%2813.1-13.4%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 1 (13.1-13.4).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8 border-b-2 border-slate-200 pb-2">13.1 - 13.4 Review of Vectors</h1><section class="mb-10"><div class="flex flex-col md:flex-row md:items-start md:justify-between"><div class="flex-1"><p class="mb-6">\( P(x_1, y_1), \quad Q(x_2, y_2) \)</p><p class="mb-4">vector from \( P \) to \( Q \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{PQ} = \langle x_2 - x_1, y_2 - y_1 \rangle \]\[ = (x_2 - x_1)\vec{i} + (y_2 - y_1)\vec{j} \]</div></div><div class="md:ml-8 mt-4 md:mt-0">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate plane showing points P and Q with their respective x and y coordinates labeled on the axes.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-1.webp" loading="lazy" decoding="async" alt="Coordinate plane showing points P and Q with their respective x and y coordinates labeled on the axes." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate plane showing points P and Q with their respective x and y coordinates labeled on the axes.
+                  </figcaption>
+                </figure>
+              </div></div><p class="italic text-slate-700 mb-6">destination \( x \) or \( y \) minus starting \( x \) or \( y \)</p></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">for example,</h2><p class="mb-4">\( P(1, 2) \quad Q(3, -5) \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{PQ} = \langle 3-1, -5-2 \rangle = \langle 2, -7 \rangle \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>2 "steps" right</li><li>7 "steps" down</li></ul></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">notice \( \vec{QP} = -\vec{PQ} \)</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{QP} = \langle 1-3, 2 - (-5) \rangle = \langle -2, 7 \rangle \]</div><p class="mb-6">minus reverses direction</p><div class="flex justify-center my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram showing two opposite vectors between points P and Q: vector PQ in red and vector QP in green.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-2.webp" loading="lazy" decoding="async" alt="Diagram showing two opposite vectors between points P and Q: vector PQ in red and vector QP in green." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram showing two opposite vectors between points P and Q: vector PQ in red and vector QP in green.
+                  </figcaption>
+                </figure>
+              </div></section><p class="text-lg font-semibold">higher dimensions, same idea</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-6">magnitude / length of vector:</h2><div class="flex flex-col md:flex-row md:items-center gap-8"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector u in a 2D coordinate system with components 1 and 2, forming a right triangle.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-3.webp" loading="lazy" decoding="async" alt="Vector u in a 2D coordinate system with components 1 and 2, forming a right triangle." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector u in a 2D coordinate system with components 1 and 2, forming a right triangle.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="text-xl mb-4">\( \vec{u} = \langle 1, 2 \rangle \)</p><p class="mb-4">its length is</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ |\vec{u}| = \sqrt{1^2 + 2^2} = \sqrt{5} \]</div><p class="italic text-slate-700">same idea in higher dimensions</p></div></div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-6">Addition / Subtraction:</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"><p>\( \vec{v} = \langle 1, 2, 3 \rangle \)</p><p>\( \vec{w} = \langle 4, 5, 6 \rangle \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{v} + \vec{w} = \langle 1+4, 2+5, 3+6 \rangle = \langle 5, 7, 9 \rangle \]\[ \vec{v} - \vec{w} = \langle 1-4, 2-5, 3-6 \rangle = \langle -3, -3, -3 \rangle \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ \vec{v} - \vec{w} = \vec{v} + (-\vec{w}) \]</div><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector addition diagram showing vector v and vector w placed tip-to-tail to result in vector v+w.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-4.webp" loading="lazy" decoding="async" alt="Vector addition diagram showing vector v and vector w placed tip-to-tail to result in vector v+w." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector addition diagram showing vector v and vector w placed tip-to-tail to result in vector v+w.
+                  </figcaption>
+                </figure>
+              </div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector subtraction diagram showing vector v plus negative vector w resulting in vector v-w.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-5.webp" loading="lazy" decoding="async" alt="Vector subtraction diagram showing vector v plus negative vector w resulting in vector v-w." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector subtraction diagram showing vector v plus negative vector w resulting in vector v-w.
+                  </figcaption>
+                </figure>
+              </div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Unit Vectors</h1><section class="mb-8"><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-2"><strong>Unit vector:</strong> a vector with magnitude of 1</p></div><p class="mb-6">\[ \vec{v} = \langle 1, 2, 3 \rangle \text{ is NOT a unit vector} \]</p><p class="mb-6">because</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ |\vec{v}| = \sqrt{1^2 + 2^2 + 3^2} = \sqrt{14} \neq 1 \]</div></section><section class="mb-8"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Finding Vectors in Specific Directions</h2><p class="mb-4">A unit vector in the same direction as \( \vec{v} \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{\vec{v}}{|\vec{v}|} = \frac{\langle 1, 2, 3 \rangle}{\sqrt{14}} = \left\langle \frac{1}{\sqrt{14}}, \frac{2}{\sqrt{14}}, \frac{3}{\sqrt{14}} \right\rangle \]</div><p class="mb-4">Opposite direction as \( \vec{v} \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ -\frac{\vec{v}}{|\vec{v}|} \]</div><p class="mb-4">Vector with length 3 in the same direction as \( \vec{v} \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 3 \frac{\vec{v}}{|\vec{v}|} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Shapes in 3D Space</h1><p class="mb-6">Most shapes in 3D (\( \mathbb{R}^3 \)) are very similar to their counterparts in 2D (\( \mathbb{R}^2 \)).</p><section class="mb-8"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example in 2D</h2><p class="mb-4">For example, \( x = 5 \) in \( \mathbb{R}^2 \rightarrow \) all points with \( x \) of 5 and all possible \( y \).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D Cartesian coordinate system showing a vertical dashed line at x=5 parallel to the y-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-6.webp" loading="lazy" decoding="async" alt="A 2D Cartesian coordinate system showing a vertical dashed line at x=5 parallel to the y-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D Cartesian coordinate system showing a vertical dashed line at x=5 parallel to the y-axis.
+                  </figcaption>
+                </figure>
+              </section><section class="mb-8"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example in 3D</h2><p class="mb-4">In 3D, \( x = 5 \) is a collection of all points with \( x = 5 \), and \( y, z \) all reals. This is a <strong>plane</strong>.</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system with x, y, and z axes showing a vertical plane intersecting the x-axis at 5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-7.webp" loading="lazy" decoding="async" alt="A 3D coordinate system with x, y, and z axes showing a vertical plane intersecting the x-axis at 5." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system with x, y, and z axes showing a vertical plane intersecting the x-axis at 5.
+                  </figcaption>
+                </figure>
+              </section><section class="mb-8"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Equation of a Sphere</h2><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-4"><strong>Sphere:</strong></p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ (x-h)^2 + (y-k)^2 + (z-l)^2 = r^2 \]</div><ul class="list-none space-y-2 mb-6"><li><strong>Center:</strong> \( (h, k, l) \)</li><li><strong>Radius:</strong> \( r \)</li></ul></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-slate-900 pb-2">vector dot product:</h1><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-2">\(\vec{u} = \langle 1, 2, 3 \rangle\)</p><p class="mb-2">\(\vec{v} = \langle 4, 5, 6 \rangle\)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\(\vec{u} \cdot \vec{v} = 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 = 32\) <span class="ml-4 text-red-600 font-bold underline">a scalar</span></p></div><p class="mb-6">notice \(\vec{v} \cdot \vec{u} = \vec{u} \cdot \vec{v}\)</p></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">another formula:</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\(\vec{u} \cdot \vec{v} = |\vec{u}| |\vec{v}| \cos \theta\)</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram showing two vectors u and v originating from the same point with an angle theta between them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-01-8.webp" loading="lazy" decoding="async" alt="Diagram showing two vectors u and v originating from the same point with an angle theta between them." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram showing two vectors u and v originating from the same point with an angle theta between them.
+                  </figcaption>
+                </figure>
+              </section><section class="mb-10"><p class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">notice if \(\vec{u} \cdot \vec{v} = 0\), then \(\vec{u} \perp \vec{v}\)</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-slate-900 pb-2">vector cross product</h1><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="mb-2">\(\vec{u} = \langle 2, 1, 1 \rangle\) &nbsp;&nbsp;&nbsp; \(\vec{v} = \langle 5, 0, 1 \rangle\)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\[ \vec{u} \times \vec{v} = \begin{vmatrix} \vec{i} &amp; \vec{j} &amp; \vec{k} \\ 2 &amp; 1 &amp; 1 \\ 5 &amp; 0 &amp; 1 \end{vmatrix} \]</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\[ = \vec{i} \begin{vmatrix} 1 &amp; 1 \\ 0 &amp; 1 \end{vmatrix} - \vec{j} \begin{vmatrix} 2 &amp; 1 \\ 5 &amp; 1 \end{vmatrix} + \vec{k} \begin{vmatrix} 2 &amp; 1 \\ 5 &amp; 0 \end{vmatrix} \]</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p>\[ = \vec{i} (1 \cdot 1 - 0 \cdot 1) - \vec{j} (2 - 5) + \vec{k} (0 - 5) \]</p><p>\[ = \vec{i} + 3\vec{j} - 5\vec{k} = \langle 1, 3, -5 \rangle \]</p></div></section><section class="mb-10"><div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>\(\vec{v} \times \vec{u} = - (\vec{u} \times \vec{v})\)</p></div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

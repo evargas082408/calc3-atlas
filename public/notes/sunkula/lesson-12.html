@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 12: Chain Rule</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Figure Styles */
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        /* Horizontal Rule */
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+            figure img {
+                border: 1px solid #000;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson12.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<!-- Main Title -->
+<h3>MA 261 - Lesson 12: Chain Rule (Section 15.4)</h3>
+
+<p>This lesson covers the multivariable chain rule, including applications to functions of two or more variables, tree diagrams for visualizing dependencies, and implicit differentiation techniques.</p>
+
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-12-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson 12 title, review example of partial derivatives">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Review Example: Partial Derivatives</h4>
+    
+    <div class="example">
+        <h5>Example: Find partial derivatives of \(F(x, y, z) = e^{2y^2z^3}\)</h5>
+        
+        <p>To find each partial derivative, we treat the other variables as constants.</p>
+        
+        <div class="solution">
+            <p><strong>Finding \(\frac{\partial F}{\partial x}\):</strong></p>
+            <p>When differentiating with respect to \(x\), both \(y\) and \(z\) are treated as constants. Since the function \(e^{2y^2z^3}\) contains no \(x\) terms:</p>
+            \[\frac{\partial}{\partial x}\left(e^{2y^2z^3}\right) = 0\]
+            
+            <p><strong>Finding \(\frac{\partial F}{\partial y}\):</strong></p>
+            <p>When differentiating with respect to \(y\), we treat \(x\) and \(z\) as constants. Using the chain rule:</p>
+            \[\frac{\partial}{\partial y}\left(e^{2y^2z^3}\right) = e^{2y^2z^3} \cdot \frac{\partial}{\partial y}(2y^2z^3) = e^{2y^2z^3} \cdot 4yz^3 = 4yz^3e^{2y^2z^3}\]
+            
+            <p><strong>Finding \(\frac{\partial F}{\partial z}\):</strong></p>
+            <p>When differentiating with respect to \(z\), we treat \(x\) and \(y\) as constants:</p>
+            \[\frac{\partial}{\partial z}\left(e^{2y^2z^3}\right) = e^{2y^2z^3} \cdot \frac{\partial}{\partial z}(2y^2z^3) = e^{2y^2z^3} \cdot 6y^2z^2 = 6y^2z^2e^{2y^2z^3}\]
+        </div>
+    </div>
+    
+    <p>Additionally, there is a single-variable derivative example shown:</p>
+    \[\frac{d}{dx}\left(e^{5x}\right) = e^{5x} \cdot 5 = 5e^{5x}\]
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-12-2.webp" loading="lazy" decoding="async" alt="Page 2: Review of single-variable chain rule with tree diagram">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Review: Single-Variable Chain Rule</h4>
+    
+    <div class="example">
+        <h5>Example: Composite function with parameter \(t\)</h5>
+        
+        <p>Given \(f(x) = e^x\), \(g(t) = 3t^2\), and \(h(t) = f(g(t))\), find \(h'(t)\).</p>
+        
+        <div class="solution">
+            <p>We have:</p>
+            <p>\(f(x) = e^x\), so \(f'(x) = e^x\)</p>
+            <p>\(g(t) = 3t^2\), so \(g'(t) = 6t\)</p>
+            
+            <p>Using the chain rule:</p>
+            \[h'(t) = f'(g(t)) \cdot g'(t) = e^{3t^2} \cdot 6t = 6te^{3t^2}\]
+        </div>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Tree Diagram Description:</strong> A dependency tree is shown with \(h\) at the top, an arrow pointing down to \(f\), which has two branches: one labeled \(\frac{df}{dx}\) pointing to \(x\), and from \(x\) an arrow labeled \(\frac{dx}{dt}\) pointing to \(t\) at the bottom. This illustrates the chain of dependencies in the composite function.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Tree with a Branch:</strong> The chain rule can be visualized as a product of derivatives that appear on the branches of the dependency tree.</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-12-3.webp" loading="lazy" decoding="async" alt="Page 3: Chain rule for two or more variables with tree diagram">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Chain Rule: Two or More Variables</h4>
+    
+    <div class="example">
+        <h5>Example: \(z = x^2 - y^2\), \(x = \tan t\), \(y = \sec t\), find \(\frac{dz}{dt}\)</h5>
+        
+        <p>We have:</p>
+        <p>\(\frac{\partial z}{\partial x} = 2x\), \(\frac{\partial z}{\partial y} = -2y\)</p>
+        <p>\(\frac{dx}{dt} = \sec^2 t\), \(\frac{dy}{dt} = \sec t \tan t\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> At the top is \(z\), with two branches descending. The left branch goes to \(x\) (labeled \(\frac{\partial z}{\partial x}\)), and the right branch goes to \(y\) (labeled \(\frac{\partial z}{\partial y}\)). From both \(x\) and \(y\), arrows labeled \(\frac{dx}{dt}\) and \(\frac{dy}{dt}\) respectively point down to \(t\) at the bottom.</p>
+        </div>
+        
+        <div class="theorem">
+            <p><strong>Chain Rule (1-Variable Case):</strong> Apply the single-variable chain rule along each of the branches and add them:</p>
+            \[\frac{dz}{dt} = \frac{\partial z}{\partial x} \cdot \frac{dx}{dt} + \frac{\partial z}{\partial y} \cdot \frac{dy}{dt}\]
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            \[\frac{dz}{dt} = (2x)(\sec^2 t) + (-2y)(\sec t \tan t)\]
+            \[= 2\tan t \sec^2 t - 2\sec^2 t \tan t = 0\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-12-4.webp" loading="lazy" decoding="async" alt="Page 4: Example with z equals x squared y plus 3xy to the fourth power">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Find \(\frac{dz}{dt}\) at \(t = 0\)</h5>
+        
+        <p>Given: \(z = x^2y + 3xy^4\), \(x = \sin t\), \(y = \cos t\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> At the top is \(z\), with two branches going to \(x\) (labeled \(\frac{\partial z}{\partial x}\)) and \(y\) (labeled \(\frac{\partial z}{\partial y}\)). From \(x\), an arrow labeled \(\frac{dx}{dt}\) points to \(t\). From \(y\), an arrow labeled \(\frac{dy}{dt}\) points to \(t\). The note "at \(t = 0\)" with \(x = 0\), \(y = 1\) appears in the upper right.</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Using the chain rule:</p>
+            \[\frac{dz}{dt} = \frac{\partial z}{\partial x} \cdot \frac{dx}{dt} + \frac{\partial z}{\partial y} \cdot \frac{dy}{dt}\]
+            
+            <p>Computing partial derivatives:</p>
+            <p>\(\frac{\partial z}{\partial x} = 2xy + 3y^4\)</p>
+            <p>\(\frac{\partial z}{\partial y} = x^2 + 12xy^3\)</p>
+            
+            <p>Computing derivatives with respect to \(t\):</p>
+            <p>\(\frac{dx}{dt} = \cos t\), \(\frac{dy}{dt} = -\sin t\)</p>
+            
+            <p>Therefore:</p>
+            \[\frac{dz}{dt} = (2xy + 3y^4)\cos t + (x^2 + 12xy^3)(-\sin t)\]
+            
+            <p>At \(t = 0\), we have \(x = \sin(0) = 0\) and \(y = \cos(0) = 1\):</p>
+            \[\frac{dz}{dt}\bigg|_{t=0} = (2 \cdot 0 \cdot 1 + 3 \cdot 1^4)\cos(0) + (0^2 + 12 \cdot 0 \cdot 1^3)(-\sin(0))\]
+            \[= (0 + 3)(1) + (0 + 0)(0) = 3\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-12-5.webp" loading="lazy" decoding="async" alt="Page 5: Example with z equals e to the x sine y, finding partial derivatives">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Find \(\frac{\partial z}{\partial s}\) and \(\frac{\partial z}{\partial t}\)</h5>
+        
+        <p>Given: \(z = e^{x} \sin y\), \(x = st^2\), \(y = s^2t\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description (for \(\frac{\partial z}{\partial s}\)):</strong> At the top is \(z\), with branches to \(x\) and \(y\). From \(x\), branches go to both \(s\) and \(t\). From \(y\), branches go to both \(s\) and \(t\). The relevant paths for \(\frac{\partial z}{\partial s}\) are highlighted: \(z \to x \to s\) and \(z \to y \to s\).</p>
+            
+            <p><strong>Tree Diagram Description (for \(\frac{\partial z}{\partial t}\)):</strong> Similar structure, but the relevant paths for \(\frac{\partial z}{\partial t}\) are: \(z \to x \to t\) and \(z \to y \to t\).</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Finding \(\frac{\partial z}{\partial s}\):</strong></p>
+            \[\frac{\partial z}{\partial s} = \frac{\partial z}{\partial x} \cdot \frac{\partial x}{\partial s} + \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial s}\]
+            
+            <p>Computing partial derivatives:</p>
+            <p>\(\frac{\partial z}{\partial x} = e^{x} \cdot \sin y\)</p>
+            <p>\(\frac{\partial z}{\partial y} = e^{x} \cdot \cos y\)</p>
+            <p>\(\frac{\partial x}{\partial s} = t^2\), \(\frac{\partial y}{\partial s} = 2st\)</p>
+            
+            <p>Therefore:</p>
+            \[\frac{\partial z}{\partial s} = (e^{x} \sin y)(t^2) + (e^{x} \cos y)(2st)\]
+          
+            
+            <p><strong>Finding \(\frac{\partial z}{\partial t}\):</strong></p>
+            \[\frac{\partial z}{\partial t} = \frac{\partial z}{\partial x} \cdot \frac{\partial x}{\partial t} + \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial t}\]
+            
+            <p>\(\frac{\partial x}{\partial t} = 2st\), \(\frac{\partial y}{\partial t} = s^2\)</p>
+            
+            <p>Therefore:</p>
+            \[\frac{\partial z}{\partial t} = (e^{x} \sin y)(2st) + (e^{x} \cos y)(s^2)\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-12-6.webp" loading="lazy" decoding="async" alt="Page 6: Chain rule when you have more than 2 functions">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Chain Rule with More Than 2 Functions</h4>
+    
+    <div class="example">
+        <h5>Example: Three-level composition</h5>
+        
+        <p>Find \(\frac{d}{dx}\left[\sin(e^{x^3})\right]\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> A vertical chain showing \(f \to u \to t \to x\). Each arrow is labeled with the corresponding derivative: \(\frac{df}{du}\), \(\frac{du}{dt}\), \(\frac{dt}{dx}\). At the right, the formula \(\frac{df}{dx} = \frac{df}{du} \cdot \frac{du}{dt} \cdot \frac{dt}{dx}\) is shown.</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Let \(t = x^3\), \(u = e^t\), and \(f = \sin(u)\).</p>
+            
+            <p>Then:</p>
+            <p>\(\frac{dt}{dx} = 3x^2\)</p>
+            <p>\(\frac{du}{dt} = e^t\)</p>
+            <p>\(\frac{df}{du} = \cos(u)\)</p>
+            
+            <p>By the chain rule:</p>
+            \[\frac{d}{dx}\left[\sin(e^{x^3})\right] = \cos(e^{x^3}) \cdot e^{x^3} \cdot 3x^2\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-12-7.webp" loading="lazy" decoding="async" alt="Page 7: Complex chain rule with multiple levels of dependencies">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Multi-Level Chain Rule</h4>
+    
+    <div class="example">
+        <h5>Example: Finding \(\frac{\partial z}{\partial u}\)</h5>
+        
+        <p>Suppose \(z = f(x, y)\), \(x = g(s, t)\), \(y = h(s, t)\), \(s = m(u, v)\), \(t = n(u, v)\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> A complex dependency tree with \(z\) at the top branching to \(x\) and \(y\). Each of \(x\) and \(y\) branches to both \(s\) and \(t\). Finally, both \(s\) and \(t\) branch to both \(u\) and \(v\) at the bottom level. This creates multiple paths from \(z\) to \(u\).</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>To find \(\frac{\partial z}{\partial u}\), we trace all paths from \(z\) to \(u\) through the dependency tree and sum the products of derivatives along each path:</p>
+            
+            \[\frac{\partial z}{\partial u} = \frac{\partial z}{\partial x} \cdot \frac{\partial x}{\partial s} \cdot \frac{\partial s}{\partial u} + \frac{\partial z}{\partial x} \cdot \frac{\partial x}{\partial t} \cdot \frac{\partial t}{\partial u} + \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial s} \cdot \frac{\partial s}{\partial u} + \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial t} \cdot \frac{\partial t}{\partial u}\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-12-8.webp" loading="lazy" decoding="async" alt="Page 8: Another complex multi-level chain rule example">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Extended dependency chain</h5>
+        
+        <p>Given: \(w = f_1(x, y, z, t)\), \(x = f_2(u, v)\), \(y = f_3(u, v)\), \(z = f_4(u, v, p)\), \(t = f_5(u, v, p)\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> An even more complex dependency tree. At the top is \(w\), with four branches to \(x\), \(y\), \(z\), and \(t\). Variables \(x\) and \(y\) each branch to both \(u\) and \(v\). Variables \(z\) and \(t\) each branch to \(u\), \(v\), and \(p\). A pink shaded region highlights one particular path through the tree.</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Finding \(\frac{\partial w}{\partial u}\):</strong></p>
+            \[\frac{\partial w}{\partial u} = \frac{\partial w}{\partial x} \cdot \frac{\partial x}{\partial u} + \frac{\partial w}{\partial y} \cdot \frac{\partial y}{\partial u} + \frac{\partial w}{\partial z} \cdot \frac{\partial z}{\partial u} + \frac{\partial w}{\partial t} \cdot \frac{\partial t}{\partial u}\]
+            
+            <p><strong>Finding \(\frac{\partial w}{\partial v}\):</strong></p>
+            \[\frac{\partial w}{\partial v} = \frac{\partial w}{\partial x} \cdot \frac{\partial x}{\partial v} + \frac{\partial w}{\partial y} \cdot \frac{\partial y}{\partial v} + \frac{\partial w}{\partial z} \cdot \frac{\partial z}{\partial v} + \frac{\partial w}{\partial t} \cdot \frac{\partial t}{\partial v}\]
+            
+            <p><strong>Finding \(\frac{\partial w}{\partial p}\):</strong></p>
+            \[\frac{\partial w}{\partial p} = \frac{\partial w}{\partial z} \cdot \frac{\partial z}{\partial p} + \frac{\partial w}{\partial t} \cdot \frac{\partial t}{\partial p}\]
+            
+            <p>Note that \(x\) and \(y\) don't depend on \(p\), so they don't contribute to \(\frac{\partial w}{\partial p}\).</p>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-12-9.webp" loading="lazy" decoding="async" alt="Page 9: Implicit differentiation using chain rule">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Implicit Differentiation Using Chain Rule</h4>
+    
+    <div class="example">
+        <h5>Example: \(y\) is a function of \(x\) given implicitly by \(x^3 + y^3 - 6xy = 0\), find \(\frac{dy}{dx}\)</h5>
+        
+        <div class="important">
+            <p><strong>Two Methods:</strong> We can solve this using either Calculus I implicit differentiation or the multivariable chain rule.</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Method 1: Calculus I Approach</strong></p>
+            <p>Differentiate both sides with respect to \(x\):</p>
+            \[\frac{d}{dx}(x^3 + y^3 - 6xy) = \frac{d}{dx}(0)\]
+            \[3x^2 + 3y^2\frac{dy}{dx} - 6y - 6x\frac{dy}{dx} = 0\]
+            
+            <p>Solving for \(\frac{dy}{dx}\):</p>
+            \[3y^2\frac{dy}{dx} - 6x\frac{dy}{dx} = 6y - 3x^2\]
+            \[\frac{dy}{dx}(3y^2 - 6x) = 6y - 3x^2\]
+            \[\frac{dy}{dx} = \frac{6y - 3x^2}{3y^2 - 6x} = \frac{2y - x^2}{y^2 - 2x}\]
+        </div>
+        
+        <div class="solution">
+            <p><strong>Method 2: Using Chain Rule</strong></p>
+            <p>Write the equation as \(F(x, y) = x^3 + y^3 - 6xy = 0\)</p>
+            
+            <div class="visual-desc">
+                <p><strong>Tree Diagram Description:</strong> A simple tree with \(F\) at the top, branching to both \(x\) and \(y\), and both \(x\) and \(y\) pointing down to a common \(x\) variable at the bottom.</p>
+            </div>
+            
+            <p>Using the chain rule, since \(F(x, y(x)) = 0\) for all \(x\):</p>
+            \[F_x + F_y \cdot \frac{dy}{dx} = 0\]
+            
+            <p>Computing partial derivatives:</p>
+            <p>\(F_x = 3x^2 - 6y\)</p>
+            <p>\(F_y = 3y^2 - 6x\)</p>
+            
+            <p>Therefore:</p>
+            \[(3x^2 - 6y) + (3y^2 - 6x)\frac{dy}{dx} = 0\]
+            \[\frac{dy}{dx} = -\frac{F_x}{F_y} = -\frac{3x^2 - 6y}{3y^2 - 6x} = \frac{6y - 3x^2}{3y^2 - 6x} = \frac{2y - x^2}{y^2 - 2x}\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-12-10.webp" loading="lazy" decoding="async" alt="Page 10: Implicit differentiation example with xyz equation">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: \(z\) is a function of \(x\) and \(y\) given implicitly</h5>
+        
+        <p>Given: \(xyz = x^2y^2 + y^2z\), find \(\frac{\partial z}{\partial x}\)</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Write the equation as \(F(x, y, z) = 0\):</p>
+            \[F(x, y, z) = xyz - x^2y^2 - y^2z = 0\]
+            
+            <div class="visual-desc">
+                <p><strong>Tree Diagram Description:</strong> At the top is \(F\), with three branches to \(x\), \(y\), and \(z\). From \(z\), two arrows point down to both \(x\) and \(y\) at the bottom level.</p>
+            </div>
+            
+            <p>Using the chain rule formula:</p>
+            \[F_x + F_z \cdot \frac{\partial z}{\partial x} = 0\]
+            
+            <p>Computing partial derivatives:</p>
+            <p>\(F_x = yz - 2xy^2\)</p>
+            <p>\(F_z = xy - 2y^2z\)</p>
+            
+            <p>Therefore:</p>
+            \[(yz - 2xy^2) + (xy - 2y^2z)\frac{\partial z}{\partial x} = 0\]
+            \[\frac{\partial z}{\partial x} = -\frac{F_x}{F_z} = -\frac{yz - 2xy^2}{xy - 2y^2z} = \frac{2xy^2 - yz}{xy - 2y^2z}\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-12-11.webp" loading="lazy" decoding="async" alt="Page 11: Finding partial derivative with respect to y">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example (continued): Find \(\frac{\partial z}{\partial y}\)</h5>
+        
+        <p>Using the same equation \(F(x, y, z) = xyz - x^2y^2 - y^2z = 0\)</p>
+        
+        <div class="visual-desc">
+            <p><strong>Tree Diagram Description:</strong> Similar to the previous page, with \(F\) at the top branching to \(x\), \(y\), and \(z\). The paths from \(F\) through \(y\) and through \(z\) to \(y\) are highlighted in teal.</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Using the chain rule:</p>
+            \[F_y + F_z \cdot \frac{\partial z}{\partial y} = 0\]
+            
+            <p>Computing \(F_y\):</p>
+            <p>\(F_y = xz - 2x^2y - 2yz\)</p>
+            
+            <p>We already know \(F_z = xy - 2y^2z\)</p>
+            
+            <p>Therefore:</p>
+            \[\frac{\partial z}{\partial y} = -\frac{F_y}{F_z} = -\frac{xz - 2x^2y - 2yz}{xy - 2y^2z} = \frac{2x^2y + 2yz - xz}{xy - 2y^2z}\]
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-12-12.webp" loading="lazy" decoding="async" alt="Page 12: Summary of implicit differentiation process">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Summary: Implicit Differentiation</h4>
+    
+    <div class="important">
+        <p><strong>Summary:</strong> When \(z\) is implicitly given as a function of \(x\) and \(y\):</p>
+    </div>
+    
+    <div class="steps">
+        <h5>Steps for Finding Partial Derivatives:</h5>
+        <ol>
+            <li>Write the given equation as a function of 3 variables: \(F(x, y, z) = 0\)</li>
+            <li>Apply the chain rule:
+                <ul>
+                    <li>For \(\frac{\partial z}{\partial x}\): Use \(\displaystyle \frac{\partial z}{\partial x} = -\frac{F_x}{F_z}\)</li>
+                    <li>For \(\frac{\partial z}{\partial y}\): Use \(\displaystyle \frac{\partial z}{\partial y} = -\frac{F_y}{F_z}\)</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Tree Diagram Description:</strong> Multiple tree diagrams showing the dependencies. For \(\frac{\partial z}{\partial x}\), the tree shows \(F\) branching to \(x\), \(y\), and \(z\), with \(z\) then connecting to \(x\). A similar diagram shows the dependencies for \(\frac{\partial z}{\partial y}\).</p>
+    </div>
+</div>
+
+<hr style="margin: 40px 0; border: 2px solid #3498db;">
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-12-13.webp" loading="lazy" decoding="async" alt="Page 13: Example problem finding partial derivative at a specific point">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Find \(\frac{\partial z}{\partial x}\) at \((2, 0, 1)\)</h5>
+        
+        <p>Given: \(z\) is a function of \(x\) and \(y\) given implicitly by</p>
+        \[x^2z + 3\cos(y)z^2 + 2xyz = 11\]
+        
+        <p>Find \(\frac{\partial z}{\partial x}\) at the point \((2, 0, 1)\) where \(x = 2\), \(y = 0\), \(z = 1\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p><strong>Step 1:</strong> Write as \(F(x, y, z) = 0\):</p>
+            \[F(x, y, z) = x^2z + 3\cos(y) \cdot z^2 + 2xyz - 11 = 0\]
+            
+            <div class="visual-desc">
+                <p><strong>Tree Diagram Description:</strong> At the top is \(F\), with branches to \(x\), \(y\), and \(z\). From \(z\), arrows point to both \(x\) and \(y\).</p>
+            </div>
+            
+            <p><strong>Step 2:</strong> Apply chain rule \(F_x + F_z \frac{\partial z}{\partial x} = 0\)</p>
+            
+            <p>\(\implies \frac{\partial z}{\partial x} = -\frac{F_x}{F_z}\)</p>
+            
+            <p><strong>Step 3:</strong> Compute partial derivatives:</p>
+            <p>\(F_x = 2xz + 2yz\)</p>
+            <p>\(F_z = x^2 + 6\cos(y) \cdot z + 2xy\)</p>
+            
+            <p><strong>Step 4:</strong> Substitute the point \((2, 0, 1)\):</p>
+            \[\frac{\partial z}{\partial x}\bigg|_{(2,0,1)} = -\frac{(2 \cdot 2 \cdot 1 + 2 \cdot 0 \cdot 1)}{(2^2 + 6\cos(0) \cdot 1 + 2 \cdot 2 \cdot 0)}\]
+            \[= -\frac{4 + 0}{4 + 6 \cdot 1 + 0} = -\frac{4}{10} = -\frac{2}{5}\]
+            
+            <p>At the point \((2, 0, 1)\), we have \(\displaystyle \frac{\partial z}{\partial x} = -\frac{12}{14} \).</p>
+            
+           
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 13: Directional Derivative & Gradient</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        /* Header Styles */
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        /* Content Containers */
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .steps {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* List Styles */
+        ul, ol { 
+            padding-left: 25px; 
+            margin: 10px 0;
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Figure styles */
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        /* Math Display */
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.2em; }
+            h5 { font-size: 1.1em; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .definition, .theorem, .example, .important, .warning {
+                border: 1px solid #000;
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson13.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<!-- Main Title -->
+<h3>MA 261 - Lesson 13: Directional Derivative & Gradient (Section 15.5)</h3>
+
+
+<!-- Page 1 -->
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-13-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson title and announcements">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="important">
+        <p><strong>Announcements:</strong></p>
+        <ul>
+            <li>Exam 1 on 02/25</li>
+            <li>Instructions and study guide available</li>
+            <li>Feasting with Faculty will resume on 02/26</li>
+        </ul>
+    </div>
+    
+    <div class="important">
+        <p><strong>Office Hours:</strong></p>
+        <ul>
+            <li>Monday, Friday: 9:45 AM - 11:00 AM</li>
+            <li>Thursday: 11:00 AM - 12:00 PM</li>
+        </ul>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 2 -->
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-13-2.webp" loading="lazy" decoding="async" alt="Page 2: Review example of chain rule with multiple variables">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Review Example: Chain Rule</h4>
+    
+    <div class="example">
+        <h5>Example: Apply the Chain Rule</h5>
+        <p>Given \(f(x,y,z) = xy^2 + z^3\), where \(x = \cos u + t^3\), \(y = \sin t + u^3\), and \(z = t^2\), find \(\frac{\partial f}{\partial u}\) and \(\frac{\partial f}{\partial t}\).</p>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The page shows a dependency tree diagram illustrating how the function \(f\) depends on intermediate variables \(x\), \(y\), and \(z\), which in turn depend on the independent variables \(u\) and \(t\). The tree has \(f\) at the top, branching down to \(x\), \(y\), and \(z\), with each of these further branching to show their dependencies on \(u\) and \(t\).</p>
+        </div>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <p>Using the multivariable chain rule:</p>
+            \[\frac{\partial f}{\partial u} = \frac{\partial f}{\partial x} \cdot \frac{\partial x}{\partial u} + \frac{\partial f}{\partial y} \cdot \frac{\partial y}{\partial u} + \frac{\partial f}{\partial z} \cdot \frac{\partial z}{\partial u}\]
+            
+            <p>Computing the partial derivatives:</p>
+            <ul>
+                <li>\(\frac{\partial f}{\partial x} = y^2\)</li>
+                <li>\(\frac{\partial f}{\partial y} = 2xy\)</li>
+                <li>\(\frac{\partial f}{\partial z} = 3z^2\)</li>
+                <li>\(\frac{\partial x}{\partial u} = -\sin u\)</li>
+                <li>\(\frac{\partial y}{\partial u} = 3u^2\)</li>
+                <li>\(\frac{\partial z}{\partial u} = 0\)</li>
+            </ul>
+            
+            <p>Therefore:</p>
+            \[\frac{\partial f}{\partial u} = y^2(-\sin u) + 2xy \cdot 3u^2\]
+            
+            <p>Similarly, for \(\frac{\partial f}{\partial t}\):</p>
+            \[\frac{\partial f}{\partial t} = \frac{\partial f}{\partial x} \cdot \frac{\partial x}{\partial t} + \frac{\partial f}{\partial y} \cdot \frac{\partial y}{\partial t} + \frac{\partial f}{\partial z} \cdot \frac{\partial z}{\partial t}\]
+            
+            <p>With:</p>
+            <ul>
+                <li>\(\frac{\partial x}{\partial t} = 3t^2\)</li>
+                <li>\(\frac{\partial y}{\partial t} = \cos t\)</li>
+                <li>\(\frac{\partial z}{\partial t} = 2t\)</li>
+            </ul>
+            
+            <p>Therefore:</p>
+            \[\frac{\partial f}{\partial t} = y^2 \cdot 3t^2 + 2xy \cdot \cos t + 3z^2 \cdot 2t\]
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 3 -->
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-13-3.webp" loading="lazy" decoding="async" alt="Page 3: Recall of partial derivatives and their interpretation">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Recall: Partial Derivatives</h4>
+    
+    <p>For a function \(z = f(x,y)\), we can visualize level curves \(f(x,y) = k\).</p>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> The page displays a contour plot showing level curves of a function in the \(xy\)-plane. The curves are labeled with values like \(z=0\), \(z=1\), \(z=5\), representing different heights on the surface. A point in the interior is marked, with arrows indicating the \(x\) and \(y\) directions.</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> The partial derivative with respect to \(x\) is:</p>
+        \[f_x = \frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h, y) - f(x,y)}{h}\]
+        <p>This represents how fast you are climbing the hill if you walk in the \(x\)-direction.</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> The partial derivative with respect to \(y\) is:</p>
+        \[f_y = \frac{\partial f}{\partial y} = \lim_{h \to 0} \frac{f(x, y+h) - f(x,y)}{h}\]
+        <p>This represents how fast you are climbing if you walk in the \(y\)-direction.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 4 -->
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-13-4.webp" loading="lazy" decoding="async" alt="Page 4: Introduction to directional derivatives">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Directional Derivative for Two Variable Functions</h4>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> The page shows the same contour plot as the previous page, with level curves labeled \(z=0\), \(z=1\), \(z=5\). At a point in the plot, there is an arrow labeled \(\vec{u}\) pointing in an arbitrary direction (not aligned with the \(x\) or \(y\) axes), illustrating a directional derivative in that direction.</p>
+    </div>
+    
+    <p>For a function \(f(x,y)\), we have seen that partial derivatives tell us the rate of change in the coordinate directions. But what if we want to know the rate of change in an arbitrary direction?</p>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> Let \(\vec{u} = \langle u_1, u_2 \rangle\) be a unit vector. The directional derivative of \(f(x,y)\) in the direction of \(\vec{u}\) is:</p>
+        \[D_{\vec{u}} f = \lim_{h \to 0} \frac{f(x + hu_1, y + hu_2) - f(x,y)}{h}\]
+        <p>This represents the rate of change of \(f(x,y)\) in the direction of \(\vec{u}\).</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Algebra:</strong></p>
+        <p>The directional derivative can be computed using the formula:</p>
+        \[D_{\vec{u}} f = f_x u_1 + f_y u_2\]
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 5 -->
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-13-5.webp" loading="lazy" decoding="async" alt="Page 5: Directional derivative for three variable functions">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>3 Variable Function</h4>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> For a function \(f(x,y,z)\), let \(\vec{u} = \langle u_1, u_2, u_3 \rangle\) be a unit vector. The directional derivative in the direction of \(\vec{u}\) is:</p>
+        \[D_{\vec{u}} f = f_x u_1 + f_y u_2 + f_z u_3\]
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 6 -->
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-13-6.webp" loading="lazy" decoding="async" alt="Page 6: Example problem finding directional derivative">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 1: Directional Derivative</h5>
+        <p>Given \(f(x,y) = \sin(x^3 + 7y)\), find the directional derivative at \((0, \frac{\pi}{4})\) in the direction of \(\langle 2, 5 \rangle\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <div class="steps">
+                <h5>Step 1: Find the unit vector</h5>
+                <p>First, we need to convert \(\langle 2, 5 \rangle\) to a unit vector:</p>
+                \[\vec{u} = \frac{\langle 2, 5 \rangle}{|\langle 2, 5 \rangle|} = \frac{\langle 2, 5 \rangle}{\sqrt{29}} = \left\langle \frac{2}{\sqrt{29}}, \frac{5}{\sqrt{29}} \right\rangle\]
+                <p>So \(u_1 = \frac{2}{\sqrt{29}}\) and \(u_2 = \frac{5}{\sqrt{29}}\).</p>
+            </div>
+            
+            <div class="steps">
+                <h5>Step 2: Compute the partial derivatives</h5>
+                \[f_x = 3x^2 \cos(x^3 + 7y)\]
+                \[f_y = 7 \cos(x^3 + 7y)\]
+            </div>
+            
+            <div class="steps">
+                <h5>Step 3: Apply the directional derivative formula</h5>
+                \[D_{\vec{u}} f = f_x u_1 + f_y u_2 = 3x^2 \cos(x^3 + 7y) \cdot \frac{2}{\sqrt{29}} + 7 \cos(x^3 + 7y) \cdot \frac{5}{\sqrt{29}}\]
+                
+                <p>Evaluating at \((0, \frac{\pi}{4})\):</p>
+                \[D_{\vec{u}} f\left(0, \frac{\pi}{4}\right) = \frac{-35}{\sqrt{29}}\]
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 7 -->
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-13-7.webp" loading="lazy" decoding="async" alt="Page 7: Another example of directional derivative">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example 2: Directional Derivative</h5>
+        <p>Given \(f(x,y) = x^2y + xy^2\), find the directional derivative at \((1,2)\) in the direction of \(\langle -1, -1 \rangle\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <div class="steps">
+                <h5>Step 1: Find the unit vector</h5>
+                \[\vec{u} = \frac{\langle -1, -1 \rangle}{|\langle -1, -1 \rangle|} = \frac{\langle -1, -1 \rangle}{\sqrt{2}} = \left\langle \frac{-1}{\sqrt{2}}, \frac{-1}{\sqrt{2}} \right\rangle\]
+            </div>
+            
+            <div class="steps">
+                <h5>Step 2: Compute the partial derivatives</h5>
+                \[f_x = 2xy + y^2\]
+                \[f_y = x^2 + 2xy\]
+            </div>
+            
+            <div class="steps">
+                <h5>Step 3: Apply the directional derivative formula</h5>
+                \[D_{\vec{u}} f = f_x u_1 + f_y u_2 = (2xy + y^2)\left(\frac{-1}{\sqrt{2}}\right) + (x^2 + 2xy)\left(\frac{-1}{\sqrt{2}}\right)\]
+                
+                <p>Evaluating at \((1,2)\):</p>
+                \[D_{\vec{u}} f(1,2) = (10)\left(\frac{-1}{\sqrt{2}}\right) + (5)\left(\frac{-1}{\sqrt{2}}\right) = \frac{-15}{\sqrt{2}}\]
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 8 -->
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-13-8.webp" loading="lazy" decoding="async" alt="Page 8: Visualization of directional derivatives on level curves">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> The page shows a contour plot with several level curves labeled \(k=5\), \(k=6\), and \(k=7\). At a point \(C(1,2)\) on one of the curves, there are two vectors drawn: one labeled \(\langle 1, 1 \rangle\) pointing upward and to the right, and another labeled \(\langle -1, -1 \rangle\) pointing downward and to the left (in the opposite direction). The curve \(k=7\) is at the top of the diagram.</p>
+    </div>
+    
+    <p>This visualization shows how the directional derivative varies depending on the direction of travel. Moving in the direction of \(\langle -1, -1 \rangle\) from point \((1,2)\) results in a negative rate of change (descending), while moving in the opposite direction \(\langle 1, 1 \rangle\) would result in a positive rate of change (ascending).</p>
+</div>
+
+<hr>
+
+<!-- Page 9 -->
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-13-9.webp" loading="lazy" decoding="async" alt="Page 9: Introduction to gradient vector">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Gradient Vector</h4>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> For a function \(f(x,y)\), the gradient of \(f\) is the vector:</p>
+        \[\nabla f = \langle f_x, f_y \rangle\]
+        <p>The symbol \(\nabla\) is read as "nabla" or "del".</p>
+    </div>
+    
+    <div class="definition">
+        <p><strong>Definition:</strong> Similarly, for \(f(x,y,z)\), the gradient is:</p>
+        \[\nabla f = \langle f_x, f_y, f_z \rangle\]
+    </div>
+    
+    <div class="important">
+        <p><strong>Directional Derivative using Gradient:</strong></p>
+        <p>Let \(\vec{u} = \langle u_1, u_2 \rangle\) be a unit vector. Then:</p>
+        \[D_{\vec{u}} f = f_x u_1 + f_y u_2 = \nabla f \cdot \vec{u}\]
+        <p>This shows that the directional derivative equals the dot product of the gradient with the unit direction vector.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 10 -->
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-13-10.webp" loading="lazy" decoding="async" alt="Page 10: Question about maximizing directional derivative">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Maximizing the Directional Derivative</h4>
+    
+    <div class="important">
+        <p><strong>Question:</strong> Given \(f(x,y) = x^2y + xy^2\) at \((1,2)\), can we find the direction \(\vec{u}\) such that \(D_{\vec{u}} f(1,2)\) is maximum?</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The page shows two parallel vectors: \(\vec{u}\) and \(\nabla f\), illustrating that when these vectors are parallel, the directional derivative is maximized. Below this are vectors \(\vec{u}\) and \(-\nabla f\) pointing in opposite directions, illustrating the minimum case.</p>
+    </div>
+    
+    <div class="solution">
+        <p><strong>Analysis:</strong></p>
+        <p>We have:</p>
+        \[D_{\vec{u}} f = \nabla f \cdot \vec{u} = |\nabla f| \cdot |\vec{u}| \cdot \cos \theta\]
+        
+        <p>where \(\theta\) is the angle between \(\vec{u}\) and \(\nabla f\).</p>
+        
+        <p>Since \(|\vec{u}| = 1\) (unit vector), we have:</p>
+        \[D_{\vec{u}} f = |\nabla f| \cos \theta\]
+        
+        <div class="important">
+            <p><strong>Maximum:</strong> \(\cos \theta\) is maximum when \(\cos \theta = 1\), which occurs when \(\theta = 0\). This means \(\vec{u}\) and \(\nabla f\) are parallel.</p>
+            <p>Therefore, the directional derivative is maximum when \(\vec{u}\) points in the direction of \(\nabla f\).</p>
+        </div>
+        
+        <div class="important">
+            <p><strong>Minimum:</strong> \(\cos \theta\) is minimum when \(\cos \theta = -1\), which occurs when \(\theta = \pi\). This means \(\vec{u}\) and \(\nabla f\) are in opposite directions.</p>
+            <p>Therefore, the directional derivative is minimum when \(\vec{u}\) points in the direction of \(-\nabla f\).</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 11 -->
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-13-11.webp" loading="lazy" decoding="async" alt="Page 11: Properties of gradient and example application">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Properties of the Gradient</h4>
+    
+    <div class="theorem">
+        <p><strong>Theorem:</strong> Given \(f(x,y)\):</p>
+        <ul>
+            <li>The directional derivative is maximum in the direction of the gradient vector \(\nabla f\)</li>
+            <li>The maximum rate of change is \(|\nabla f|\)</li>
+            <li>The directional derivative is minimum in the direction of \(-\nabla f\)</li>
+            <li>The minimum rate of change is \(-|\nabla f|\)</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <h5>Example: Maximum and Minimum Rates of Change</h5>
+        <p>For \(f(x,y) = x^2y + xy^2\) at \((1,2)\):</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p>First, compute the gradient:</p>
+            \[\nabla f = \langle 2xy + y^2, x^2 + 2xy \rangle\]
+            
+            <p>At \((1,2)\):</p>
+            \[\nabla f(1,2) = \langle 10, 5 \rangle\]
+            
+            <div class="important">
+                <p><strong>Maximum rate of increase:</strong> \(f(x,y)\) increases the fastest in the direction of \(\langle 10, 5 \rangle\).</p>
+            </div>
+            
+            <div class="important">
+                <p><strong>Maximum rate of decrease:</strong> \(f(x,y)\) decreases the fastest in the direction of \(-\langle 10, 5 \rangle = \langle -10, -5 \rangle\).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 12 -->
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-13-12.webp" loading="lazy" decoding="async" alt="Page 12: Gradient is perpendicular to level curves">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Gradient is Perpendicular to Level Curves</h4>
+    
+    <div class="theorem">
+        <p><strong>Theorem:</strong> The gradient \(\nabla f\) is perpendicular to the level curves at each point.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Proof:</strong></p>
+        <p>Suppose \(\vec{r}(t) = \langle x(t), y(t) \rangle\) represents a level curve \(f(x,y) = k\).</p>
+        
+        <p>Then \(\vec{r}'(t) = \langle x'(t), y'(t) \rangle\) is a tangent vector to the curve.</p>
+        
+        <p>Since \(\vec{r}(t)\) satisfies \(f(x,y) = k\), we have \(f(x(t), y(t)) = k\) for all \(t\).</p>
+        
+        <p>Differentiating both sides with respect to \(t\):</p>
+        \[\frac{d}{dt}[f(x(t), y(t))] = \frac{d}{dt}[k]\]
+        \[f_x \frac{dx}{dt} + f_y \frac{dy}{dt} = 0\]
+        \[\nabla f \cdot \vec{r}'(t) = 0\]
+        
+        <p>This shows that \(\nabla f\) is perpendicular to the tangent vector \(\vec{r}'(t)\), meaning the gradient is perpendicular to the level curve.</p>
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The page shows a level curve \(f=k\) in blue. At a point on the curve, the gradient vector \(\nabla f\) is drawn in red, pointing perpendicular to the curve. The tangent vector to the curve is also shown, demonstrating that it is orthogonal to the gradient.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 13 -->
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-13-13.webp" loading="lazy" decoding="async" alt="Page 13: Geometric interpretation of tangent and gradient directions">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <h4>Geometric Interpretation</h4>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> The page shows several parallel level curves labeled \(k=0\), \(k=1\), \(k=3\). At a point \(x(t)\) on one of the curves, there are three vectors drawn: the tangent vector to the level curve (in black), the gradient vector \(\nabla f\) (in red) pointing perpendicular to the curve, and another vector in purple showing a different direction.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Insight:</strong> Going in the tangent direction (along the level curve), you are stuck on the same level curve. The directional derivative in this direction is zero.</p>
+    </div>
+    
+    <div class="important">
+        <p><strong>Key Insight:</strong> Going in the gradient direction, you jump between level curves the fastest. This is the direction of steepest ascent.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- Page 14 -->
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-13-14.webp" loading="lazy" decoding="async" alt="Page 14: Example finding slope of tangent line to level curve">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+    <div class="example">
+        <h5>Example: Find the Slope of the Tangent Line to a Level Curve</h5>
+        <p>Given \(f(x,y) = x^2y^3\), find the slope of the tangent line to the level curve at \((-1, 1)\).</p>
+        
+        <p>The tangent line is perpendicular to \(\nabla f\).</p>
+        
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            
+            <p>First, compute the gradient:</p>
+            \[\nabla f = \langle 2xy^3, 3x^2y^2 \rangle\]
+            
+            <p>At \((-1, 1)\):</p>
+            \[\nabla f(-1,1) = \langle -2, 3 \rangle\]
+            
+            <p>The tangent vector to the level curve is perpendicular to \(\langle -2, 3 \rangle\).</p>
+            
+            <p>A vector perpendicular to \(\langle -2, 3 \rangle\) is \(\langle 3, 2 \rangle\).</p>
+            
+            <p>Therefore, the slope of the tangent line is:</p>
+            \[\text{slope} = \frac{2}{3}\]
+        </div>
+        
+        <div class="visual-desc">
+            <p><strong>Diagram Description:</strong> The page includes a coordinate system showing a level curve passing through the point \((-1,1)\). The gradient vector \(\langle -2, 3 \rangle\) is drawn perpendicular to the curve, and the tangent vector \(\langle 3, 2 \rangle\) is drawn along the curve. A dashed line with slope \(\frac{2}{3}\) represents the tangent line to the level curve.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

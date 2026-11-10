@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.6 Surface Integrals (part 1) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2031%20%2817.6-1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 31 (17.6-1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-10 border-b-4 border-slate-900 pb-2">17.6 Surface Integrals (part 1)</h1><div class="grid-layout mb-10"><div class="space-y-4"><p class="text-lg"><span class="font-bold">line integral:</span> \(\int_C f(x, y, z) ds\)</p><p class="italic text-slate-600">accumulation of \(f(x, y, z)\) along a curve \(C\) parametrized</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A smooth curve labeled C in space with a small segment ds highlighted by arrows.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-1.webp" loading="lazy" decoding="async" alt="A smooth curve labeled C in space with a small segment ds highlighted by arrows." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A smooth curve labeled C in space with a small segment ds highlighted by arrows.
+                  </figcaption>
+                </figure>
+              </div><section class="mt-12"><p class="text-lg mb-6"><span class="font-bold">surface integral:</span> accumulation of \(f(x, y, z)\) all over a surface \(S\) (capital S)</p><div class="grid-layout mb-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a surface S with a small patch labeled ds.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-2.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a surface S with a small patch labeled ds." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a surface S with a small patch labeled ds.
+                  </figcaption>
+                </figure>
+              <div class="flex flex-col justify-center space-y-4"><p class="italic text-slate-700">tiny patch of the surface \(S\)</p><p class="font-semibold">call this \(dS\)</p><p class="text-sm text-slate-500">(capital S)</p></div></div><p class="text-xl font-medium mb-4">the total accumulation over this surface looks like</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center"><p class="text-3xl font-serif">\[ \iint_S f(x, y, z) dS \]</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><section class="mb-12"><p class="text-lg mb-6">to compute a line integral \(\int_C f ds\), we need to parametrize the curve \(C\)</p><div class="border-l-4 border-slate-400 pl-6 my-8 bg-slate-50 py-4 rounded-r-lg"><p class="font-bold mb-2">example: line from \((-1, 1)\) to \((2, 4)\)</p><div class="my-4 overflow-x-auto">\[ \vec{r}(t) = \langle -1, 1 \rangle + t \langle 3, 3 \rangle = \langle -1 + 3t, 1 + 3t \rangle \]</div><p class="text-center font-mono">\(0 \le t \le 1\)</p></div><p class="italic text-slate-700 mt-4">parametrization is not unique</p></section><section class="mt-16"><p class="text-lg mb-6">to compute a surface integral \(\iint_S f dS\), we need to parametrize \(S\)</p><p class="mb-6">this is one dimension higher than curve, so one more parameter</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center"><p class="text-2xl">\[ \text{surface: } \vec{r}(u, v) \]</p><p class="text-slate-600 mt-2">then the domains of \(u, v\)</p><div class="notebox mt-4 inline-block px-4 py-1 border border-slate-300 rounded bg-white text-sm">parameters</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example: Parametrizing a Plane in the First Octant</h1><p class="mb-6">Parametrize the part of \(3x + 2y + z = 6\) in the first octant.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6) in the first octant.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-3.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6) in the first octant." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a plane intersecting axes at (2,0,0), (0,3,0), and (0,0,6) in the first octant.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-sm italic text-slate-600">Figure 1: Visualization of the plane in the first octant.</p></div><div class="flex-1"><p class="mb-4"><strong>parametrize:</strong> how to locate points on the surface</p><p class="mb-4"><strong>one possible way:</strong> specify \(x, y\), then \(z = 6 - 3x - 2y\)</p><p class="mb-4">so, we can let \(u = x, v = y\), then</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ z = f(x, y) = f(u, v) = 6 - 3u - 2v \]</div></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">One Possible Parametrization</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}(u, v) = \langle u, v, 6 - 3u - 2v \rangle \]</div><p class="mb-6">Where \(u\) corresponds to \(x\) and \(v\) corresponds to \(y\).</p><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Determining Bounds for \(u, v\)</h2><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D graph in the xy-plane showing a line from (0,3) to (2,0) representing the boundary of the region.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-4.webp" loading="lazy" decoding="async" alt="2D graph in the xy-plane showing a line from (0,3) to (2,0) representing the boundary of the region." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D graph in the xy-plane showing a line from (0,3) to (2,0) representing the boundary of the region.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-sm italic text-slate-600">Figure 2: Projection onto the xy-plane to find bounds.</p></div><div class="flex-1"><p class="mb-4">From the projection:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(y = 3 - \frac{3}{2}x\)</li><li>\(v = 3 - \frac{3}{2}u\)</li></ul><p class="mb-4">Bounds:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ 0 \le u \le 2, \quad 0 \le v \le 3 - \frac{3}{2}u \]</div></div></div><div class="notebox border-2 border-slate-900 p-6 rounded-lg bg-white shadow-md"><h3 class="text-xl font-bold mb-2">Final Parametrization:</h3><div class="overflow-x-auto">\[ \vec{r}(u, v) = \langle u, v, 6 - 3u - 2v \rangle \]\[ 0 \le u \le 2, \quad 0 \le v \le 3 - \frac{3}{2}u \]</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example: Parametrizing a Sphere Above a Plane</h1><p class="mb-6">\(x^2 + y^2 + z^2 = 9\) above \(z = 1\) in the first octant.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D sketch of a sphere portion in the first octant above the plane z=1, showing a circular boundary.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-5.webp" loading="lazy" decoding="async" alt="3D sketch of a sphere portion in the first octant above the plane z=1, showing a circular boundary." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D sketch of a sphere portion in the first octant above the plane z=1, showing a circular boundary.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-sm italic text-slate-600">Figure 3: Sphere portion in the first octant.</p></div><div class="flex-1"><h2 class="text-2xl font-black tracking-tight mb-4">One choice of parametrization</h2><p class="mb-4">\(x = u, y = v, z = \sqrt{9 - x^2 - y^2} = \sqrt{9 - u^2 - v^2}\)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}(u, v) = \langle u, v, \sqrt{9 - u^2 - v^2} \rangle \]</div></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Finding the Bounds</h2><p class="mb-6">At \(z = 1 \rightarrow x^2 + y^2 = 8\), which is a circle of radius \(\sqrt{8}\).</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D graph of a quarter circle in the first quadrant with radius square root of 8.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-6.webp" loading="lazy" decoding="async" alt="2D graph of a quarter circle in the first quadrant with radius square root of 8." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D graph of a quarter circle in the first quadrant with radius square root of 8.
+                  </figcaption>
+                </figure>
+              <p class="mt-4 text-sm italic text-slate-600">Figure 4: Projection of the boundary onto the xy-plane.</p></div><div class="flex-1"><p class="mb-4">Boundary equations:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(y = \sqrt{8 - x^2}\)</li><li>\(v = \sqrt{8 - u^2}\)</li></ul><p class="mb-4">Bounds for parameters:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ 0 \le u \le \sqrt{8}, \quad 0 \le v \le \sqrt{8 - u^2} \]</div></div></div><div class="notebox border-2 border-slate-900 p-6 rounded-lg bg-white shadow-md"><h3 class="text-xl font-bold mb-2">Final Parametrization:</h3><div class="overflow-x-auto">\[ \vec{r}(u, v) = \langle u, v, \sqrt{9 - u^2 - v^2} \rangle \]\[ 0 \le u \le \sqrt{8}, \quad 0 \le v \le \sqrt{8 - u^2} \]</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Parametrization in Cylindrical Coordinates</h1><p class="mb-6">Can we do this in another coord. system, for example, cylindrical?</p><div class="grid-layout flex flex-wrap gap-8 items-start mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot of a spherical surface segment in the first octant with axes x, y, and z.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-7.webp" loading="lazy" decoding="async" alt="3D plot of a spherical surface segment in the first octant with axes x, y, and z." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot of a spherical surface segment in the first octant with axes x, y, and z.
+                  </figcaption>
+                </figure>
+              
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D projection on the xy-plane showing a quarter circle of radius sqrt(8) in the first quadrant.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-8.webp" loading="lazy" decoding="async" alt="2D projection on the xy-plane showing a quarter circle of radius sqrt(8) in the first quadrant." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D projection on the xy-plane showing a quarter circle of radius sqrt(8) in the first quadrant.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm"><p class="mb-2">onto xy-plane</p><div class="space-y-2">\[ 0 \le r \le \sqrt{8} \]\[ 0 \le \theta \le \frac{\pi}{2} \]\[ 1 \le z \le \sqrt{9-r^2} \]</div></div></div><p class="mb-6">choose two to be parameters: <span class="font-semibold">\( u = r, v = \theta \)</span></p><div class="grid-layout flex flex-wrap gap-8 mb-10"><div class="flex-1"><p class="mb-4">then</p><div class="space-y-4">\[ x = r \cos \theta = u \cos v \]\[ y = r \sin \theta = u \sin v \]</div></div><div class="flex-1"><div class="space-y-4">\[ 0 \le u \le \sqrt{8} \]\[ 0 \le v \le \frac{\pi}{2} \]</div></div></div><div class="notebox border-2 border-slate-900 p-8 rounded-xl my-8 shadow-md bg-white"><div class="text-center mb-6">\[ \vec{r}(u,v) = \langle u \cos v, u \sin v, \sqrt{9-u^2} \rangle \]</div><div class="grid grid-cols-3 text-center text-sm italic text-slate-600 mb-6"><div>\( x = r \cos \theta \)</div><div>\( y = r \sin \theta \)</div><div>\( z = z \)</div></div><div class="flex justify-around font-semibold">\[ 0 \le u \le \sqrt{8}, \quad 0 \le v \le \frac{\pi}{2} \]</div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Surface Integrals and Area Elements</h1><div class="space-y-6 mb-10"><div class="flex items-center gap-4"><div class="text-xl">\[ \int_C f \, ds \]</div><div>line integral \( ds = |\vec{r}'| \, dt \)</div><div class="italic text-slate-600">length of small segment</div></div><div class="flex items-center gap-4"><div class="text-xl">\[ \iint_S f \, dS \]</div><div>surf. integral \( dS = ? \)</div><div class="italic text-slate-600">area of small patch of surface</div></div></div><div class="grid-layout flex flex-wrap gap-12 items-center mb-12"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot showing a surface S in xyz-space with a differential area element dS highlighted.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-9.webp" loading="lazy" decoding="async" alt="3D plot showing a surface S in xyz-space with a differential area element dS highlighted." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot showing a surface S in xyz-space with a differential area element dS highlighted.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Detailed view of a surface patch as a parallelogram defined by vectors a and b at point r(u,v).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-10.webp" loading="lazy" decoding="async" alt="Detailed view of a surface patch as a parallelogram defined by vectors a and b at point r(u,v)." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Detailed view of a surface patch as a parallelogram defined by vectors a and b at point r(u,v).
+                  </figcaption>
+                </figure>
+              </div></div><div class="grid-layout flex flex-wrap gap-8 items-start mb-10"><div class="flex-1"><p class="text-xl font-bold mb-6">area of \( dS \) is \( |\vec{a} \times \vec{b}| \)</p><div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700"><p class="mb-4">recall:</p>\[ \frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h, y) - f(x,y)}{h} = f_x \]</div><p class="mb-4">so, \( f_x \approx \frac{f(x+\Delta x, y) - f(x,y)}{h} \)</p><p>or \( f(x+\Delta x, y) - f(x,y) \approx f_x h \)</p></div><div class="w-1/3">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Geometric diagram of a parallelogram with sides a and b, labeled with area equals magnitude of a cross b.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-11.webp" loading="lazy" decoding="async" alt="Geometric diagram of a parallelogram with sides a and b, labeled with area equals magnitude of a cross b." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Geometric diagram of a parallelogram with sides a and b, labeled with area equals magnitude of a cross b.
+                  </figcaption>
+                </figure>
+              </div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans leading-relaxed"><section><p class="mb-6">now using the above, we got</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{a} = \vec{r}(u, v+\Delta v) - \vec{r}(u,v) \approx \vec{r}_v \Delta v \]\[ \vec{b} = \vec{r}(u+\Delta u, v) - \vec{r}(u,v) \approx \vec{r}_u \Delta u \]\[ dS = |\vec{a} \times \vec{b}| = |\vec{r}_v \Delta v \times \vec{r}_u \Delta u| \]\[ = |\vec{r}_u \times \vec{r}_v| \Delta u \Delta v \]</div><div class="flex justify-end mb-6"><p class="italic text-slate-700">\( \vec{r}_v = \frac{\partial}{\partial v}(\vec{r}(u,v)) \)</p></div><p class="mb-6">now let \( \Delta u, \Delta v \to du, dv \)</p><div class="notebox border-2 border-slate-900 p-4 inline-block mb-6"><p class="font-bold">so, \( dS = |\vec{r}_u \times \vec{r}_v| du dv \)</p></div><p class="mt-4">this goes in \( \iint_S f dS \)</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans leading-relaxed"><section><h1 class="text-2xl font-black tracking-tight text-slate-900 mb-6">Example</h1><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-start"><div class="space-y-4"><p class="text-lg">\( \iint_S (x+y) dS \)</p><p>\( S \): part of plane \( 3x + 2y + z = 6 \) in the first octant above \( 0 \le x \le 1, 0 \le y \le 3/2 \)</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate graph showing a plane segment in the first octant bounded by x=1 and y=1.5.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-31-12.webp" loading="lazy" decoding="async" alt="3D coordinate graph showing a plane segment in the first octant bounded by x=1 and y=1.5." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate graph showing a plane segment in the first octant bounded by x=1 and y=1.5.
+                  </figcaption>
+                </figure>
+              </div></div><div class="mt-10"><p class="mb-6">let's reuse parametrization from earlier: \( u=x, v=y, z=6-3u-2v \)</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="space-y-4"><p>\( \vec{r}(u,v) = \langle u, v, 6-3u-2v \rangle \)</p><p>\( 0 \le u \le 1, \quad 0 \le v \le 3/2 \)</p><p class="mt-6">now, \( dS = |\vec{r}_u \times \vec{r}_v| du dv \)</p><p class="font-bold">\( dS = \sqrt{14} du dv \)</p></div><div class="space-y-2 border-l-4 border-slate-200 pl-6 italic text-slate-700"><p>\( \vec{r}_u = \langle 1, 0, -3 \rangle \)</p><p>\( \vec{r}_v = \langle 0, 1, -2 \rangle \)</p><p>\( \vec{r}_u \times \vec{r}_v = \langle 3, 2, 1 \rangle \)</p><p>\( |\vec{r}_u \times \vec{r}_v| = \sqrt{14} \)</p></div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-8">Surface Integral Calculation</h1><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_{S} (x+y) \, dS \]</div><p class="mb-4">Where the components are defined as:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( dS \rightarrow \sqrt{14} \, du \, dv \)</li><li>\( x \)-component of \( \vec{r}(u,v) \rightarrow u \)</li><li>\( y \)-component of \( \vec{r}(u,v) \rightarrow v \)</li></ul></section><section class="grid-layout mb-10"><div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><h2 class="text-xl font-bold mb-2">Bounds:</h2><p class="mb-2">\( 0 \le u \le 1 \)</p><p class="mb-2">\( 0 \le v \le 3/2 \)</p><p>Here, any order is ok since both are constant-bounded.</p></div></section><section class="mb-10"><p class="mb-4">Substituting the components and bounds into the integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \int_{0}^{3/2} \int_{0}^{1} (u+v) \sqrt{14} \, du \, dv \]</div><p class="text-sm text-slate-600 mt-2">Note: The inner integral is with respect to \( u \) and the outer integral is with respect to \( v \).</p></section><section class="mb-10"><div class="flex items-center gap-4"><span class="text-lg">\( = \dots = \)</span><div class="notebox border-2 border-slate-900 p-4 font-bold text-2xl">\[ \frac{15\sqrt{14}}{8} \]</div></div></section><section class="mt-12 pt-6 border-t border-slate-200"><h2 class="text-xl font-bold mb-4">Possible Interpretation:</h2><p class="italic text-slate-700">If \( (x+y) \) is the density of a material, then this integral represents the <strong>mass</strong>.</p></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.5 Directional Derivative and the Gradient - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2013%20%2815.5%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 13 (15.5).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight mb-8 border-b-4 border-indigo-500 pb-2">15.5 Directional Derivative and the Gradient</h1><p class="mb-6">If \( z = f(x, y) \)</p><p class="mb-6">we know \( \frac{\partial f}{\partial x} = f_x \) is the rate of change of \( f \) with respect to \( x \) while \( y \) is constant</p><p class="mb-6">\( \frac{\partial f}{\partial y} = f_y \) same idea, but \( x \) is fixed and \( y \) varies.</p><h2 class="text-2xl font-bold mt-10 mb-4">There is a physical interpretation of \( f_x \) and \( f_y \)</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Contour plot on x-y axes showing concentric level curves labeled with heights 1100 to 1400.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-1.webp" loading="lazy" decoding="async" alt="Contour plot on x-y axes showing concentric level curves labeled with heights 1100 to 1400." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Contour plot on x-y axes showing concentric level curves labeled with heights 1100 to 1400.
+                  </figcaption>
+                </figure>
+              <figcaption class="text-sm text-slate-500 mt-2 text-center">Level curves of height of a hill</figcaption></figure><div><p class="mb-4">Here, \( f_x \) tells us how fast the height changes if we walk in \( x \) direction (East)</p><p class="mb-4">\( f_y \) tells us how \( f \) changes if we go in \( y \) direction (North)</p></div></div><p class="mt-8 font-semibold italic">But what if we go in a direction such as North-East?</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><figure class="my-8 overflow-hidden rounded-2xl shadow-lg border border-slate-200">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D topographical map of a mountain with horizontal slices projected onto a 2D plane as level curves.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-2.webp" loading="lazy" decoding="async" alt="A 3D topographical map of a mountain with horizontal slices projected onto a 2D plane as level curves." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D topographical map of a mountain with horizontal slices projected onto a 2D plane as level curves.
+                  </figcaption>
+                </figure>
+              </figure><div class="mt-10 space-y-4"><p class="text-xl font-bold text-indigo-700">level curves</p><p class="text-lg italic">each curve \( \rightarrow \) particular \( z \)</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="text-lg mb-6">The directional derivative tells us how \( f \) changes given a direction</p><p class="mb-6">Let \( \vec{u} = \langle a, b \rangle \) be a <span class="underline decoration-red-500 decoration-2">unit vector</span></p><p class="mb-6">then the rate of change of \( f(x, y) \) in the direction of \( \vec{u} \) is</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-8 border-2 border-indigo-200 shadow-sm"><p class="text-center text-xl font-mono">\[ D_{\vec{u}} f(x, y) = \lim_{h \to 0} \frac{f(x + ah, y + bh) - f(x, y)}{h} \]</p></div><div class="notebox bg-slate-100 p-6 rounded-lg border-l-4 border-slate-400 my-6"><p class="mb-2">note if \( \vec{u} = \langle 1, 0 \rangle \) then \( D_{\vec{u}} f(x, y) = f_x \)</p><p>\( \vec{u} = \langle 0, 1 \rangle \) then \( D_{\vec{u}} f(x, y) = f_y \)</p></div><p class="mt-10 mb-4">With some algebra, we can rewrite the formula as</p><div class="my-8 overflow-x-auto py-6 bg-indigo-50 rounded-xl px-8 border-2 border-green-500 shadow-md relative"><p class="text-xl">\[ D_{\vec{u}} f(x, y) = \frac{\partial f}{\partial x}(x, y) a + \frac{\partial f}{\partial y}(x, y) b \]</p><p class="text-xl mt-4">\[ = f_x a + f_y b \]</p><div class="absolute bottom-4 right-4 text-sm italic text-slate-600">where \( \vec{u} = \langle a, b \rangle \) is the unit vector specifying direction</div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h2 class="text-2xl font-black mb-6">Example</h2><p class="mb-4">\( f(x, y) = \cos(2x + 3y) \)</p><p class="mb-6">Find the rate of change of \( f(x, y) \) at \( (2, 1) \) in the direction toward the origin.</p><p class="mb-8 font-bold text-indigo-600">\( \vec{u} \) is very important</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10"><figure>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D coordinate system showing a vector u pointing from the point (2,1) towards the origin (0,0).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-3.webp" loading="lazy" decoding="async" alt="A 2D coordinate system showing a vector u pointing from the point (2,1) towards the origin (0,0)." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D coordinate system showing a vector u pointing from the point (2,1) towards the origin (0,0).
+                  </figcaption>
+                </figure>
+              </figure><div class="space-y-4"><p>from \( (2, 1) \) to origin \( \rightarrow \langle -2, -1 \rangle \)</p><p class="text-lg">\[ \vec{u} = \frac{\langle -2, -1 \rangle}{|\langle -2, -1 \rangle|} = \frac{\langle -2, -1 \rangle}{\sqrt{5}} = \left\langle \frac{-2}{\sqrt{5}}, \frac{-1}{\sqrt{5}} \right\rangle \]</p></div></div><div class="border-l-4 border-indigo-500 pl-6 my-8 space-y-4"><p>\( D_{\vec{u}} f(x, y) = f_x(x, y) a + f_y(x, y) b \)</p><div class="grid grid-cols-2 gap-4"><p>\( f_x = -2 \sin(2x + 3y) \)<br>\( f_x(2, 1) = -2 \sin(7) \)</p><p>\( f_y = -3 \sin(2x + 3y) \)<br>\( f_y(2, 1) = -3 \sin(7) \)</p></div><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-xl">\[ D_{\vec{u}} f(2, 1) = -2 \sin(7) \cdot \frac{-2}{\sqrt{5}} - 3 \sin(7) \cdot \frac{-1}{\sqrt{5}} = \boxed{\frac{7}{\sqrt{5}} \sin(7)} \]</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="mb-6">back to \( D_{\vec{u}} f = f_x a + f_y b \)</p><p class="mb-6">note this is also \( D_{\vec{u}} f = \langle f_x, f_y \rangle \cdot \langle a, b \rangle \)</p><div class="flex flex-wrap gap-8 mb-10"><div class="notebox p-4 bg-slate-50 border border-slate-200 rounded-lg"><p class="text-sm font-bold">this vector contains rates of change</p><p class="text-indigo-600 font-bold">we call this vector the Gradient</p></div><div class="notebox p-4 bg-slate-50 border border-slate-200 rounded-lg"><p class="text-sm font-bold">\( \vec{u} \) : unit vector giving direction</p></div></div><div class="my-8 overflow-x-auto py-8 bg-white rounded-xl px-8 border-2 border-indigo-600 shadow-lg"><h2 class="text-xl font-black mb-4">gradient of \( f(x, y) \) :</h2><p class="text-2xl">\[ \nabla f(x, y) = \langle f_x(x, y), f_y(x, y) \rangle \]</p><p class="text-2xl mt-4">\[ = \frac{\partial f}{\partial x}(x, y) \vec{i} + \frac{\partial f}{\partial y}(x, y) \vec{j} \]</p><p class="text-sm italic mt-2">"del"</p></div><div class="my-12 overflow-x-auto py-6 bg-slate-50 rounded-xl px-8 border border-slate-200 shadow-sm flex justify-between items-center"><p class="text-3xl font-bold">\[ D_{\vec{u}} f = \nabla f \cdot \vec{u} \]</p><div class="text-right"><p class="font-bold text-indigo-700">directional deriv: scalar projection onto \( \vec{u} \)</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8">Directional Derivatives and the Gradient Vector</h1><p class="mb-6">What does its magnitude and direction mean?</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ D_{\vec{u}} f = \vec{\nabla} f \cdot \vec{u} \]</div><p class="mb-6 italic">Recall: \( \vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta \)</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram showing two vectors a and b with an angle theta between them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-4.webp" loading="lazy" decoding="async" alt="Diagram showing two vectors a and b with an angle theta between them." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram showing two vectors a and b with an angle theta between them.
+                  </figcaption>
+                </figure>
+              <p class="mb-6">Since \( \vec{u} \) is a unit vector, its magnitude is 1.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ D_{\vec{u}} f = |\vec{\nabla} f| |\vec{u}| \cos \theta \]\[ = |\vec{\nabla} f| \cos \theta \]</div><p class="mb-6">Since \( -1 \le \cos \theta \le 1 \), we have:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ -|\vec{\nabla} f| \le D_{\vec{u}} f \le |\vec{\nabla} f| \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>This means the magnitude of the gradient is the maximum directional derivative.</p></div><p class="mb-6">If \( \vec{u} \) is in the same direction as \( \vec{\nabla} f \), then \( \theta = 0 \) and \( \cos \theta = 1 \).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Two parallel vectors u and grad f pointing in the same direction.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-5.webp" loading="lazy" decoding="async" alt="Two parallel vectors u and grad f pointing in the same direction." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Two parallel vectors u and grad f pointing in the same direction.
+                  </figcaption>
+                </figure>
+              <p class="mb-6">So \( D_{\vec{u}} f = |\vec{\nabla} f| \) (max) \( \rightarrow \) \( \vec{u} \) is in the direction of maximum or greatest ascent.</p><p class="mb-6">If \( \vec{u} \) is opposite to \( \vec{\nabla} f \), then \( \vec{u} \) is the direction of greatest descent.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><p class="mb-6"><strong>Note:</strong> \( D_{\vec{u}} f = \vec{\nabla} f \cdot \vec{u} = 0 \) if \( \vec{\nabla} f \perp \vec{u} \) (if the gradient is orthogonal to \( \vec{u} \)).</p><p class="mb-6">Remember, a level curve is where \( z = f(x,y) = \text{constant} \).</p><p class="mb-6">So if \( \vec{u} \) is along a level curve (\( \vec{u} \parallel \) tangent of level curve), then \( D_{\vec{u}} f = 0 \).</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Therefore, the gradient is orthogonal to a level curve.</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Concentric level curves on a coordinate plane with gradient vectors perpendicular to them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-6.webp" loading="lazy" decoding="async" alt="Concentric level curves on a coordinate plane with gradient vectors perpendicular to them." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Concentric level curves on a coordinate plane with gradient vectors perpendicular to them.
+                  </figcaption>
+                </figure>
+              
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A single level curve with a tangent line and an orthogonal gradient vector.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-7.webp" loading="lazy" decoding="async" alt="A single level curve with a tangent line and an orthogonal gradient vector." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A single level curve with a tangent line and an orthogonal gradient vector.
+                  </figcaption>
+                </figure>
+              </div><p class="mt-10 mb-4">We can use the gradient and \( D_{\vec{u}} f \) to find the slope of the level curve.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><div class="flex flex-col md:flex-row gap-8"><div class="w-full md:w-1/3">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A level curve z=z0 on a coordinate plane with a point (x0, y0) marked.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-8.webp" loading="lazy" decoding="async" alt="A level curve z=z0 on a coordinate plane with a point (x0, y0) marked." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A level curve z=z0 on a coordinate plane with a point (x0, y0) marked.
+                  </figcaption>
+                </figure>
+              </div><div class="w-full md:w-2/3"><p class="mb-6">We can "parametrize" the level curve as:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{r}(t) = \langle x(t), y(t) \rangle \]</div><p class="mb-6">At the point \( (x_0, y_0) \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ D_{\vec{u}} f(x_0, y_0) = \vec{\nabla} f(x_0, y_0) \cdot \vec{u} \]</div><p class="mb-6">If \( \vec{u} \) is along a level curve, then it's tangent to the level curve \( \vec{r}(t) \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \text{So, } \vec{u} = \frac{\vec{r}'(t)}{|\vec{r}'(t)|} = \frac{\langle \frac{dx}{dt}, \frac{dy}{dt} \rangle}{|\langle \frac{dx}{dt}, \frac{dy}{dt} \rangle|} \]</div></div></div><p class="mb-6">Along level curve, \( D_{\vec{u}} f = 0 \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \text{So, } \langle f_x, f_y \rangle \cdot \frac{\langle \frac{dx}{dt}, \frac{dy}{dt} \rangle}{|\langle \frac{dx}{dt}, \frac{dy}{dt} \rangle|} = 0 \rightarrow f_x \frac{dx}{dt} + f_y \frac{dy}{dt} = 0 \]</div><div class="notebox border-2 border-slate-900 p-4 my-8 inline-block"><div class="my-4 overflow-x-auto">\[ \text{Then, } \frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{dy}{dx} = -\frac{f_x}{f_y} \]</div></div><p class="inline-block align-middle ml-4">This is the slope of a level curve.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h2 class="text-2xl font-black tracking-tight mb-6">Example</h2><p class="mb-6">\( f(x,y) = x e^y \)</p><p class="mb-6">Find the slope of level curve at \( x=1, y=2 \).</p><p class="mb-6">From last page,</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{dy}{dx} = -\frac{f_x}{f_y} \]\[ = -\frac{e^y}{x e^y} = -\frac{1}{x} \]</div><p class="mb-6">At \( (1,2) \),</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \frac{dy}{dx} = -\frac{1}{1} = -1 \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of a level curve passing through (1,2) with a tangent line of slope -1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-13-9.webp" loading="lazy" decoding="async" alt="Graph of a level curve passing through (1,2) with a tangent line of slope -1." class="max-w-full h-auto" data-figure-id="fig_6">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of a level curve passing through (1,2) with a tangent line of slope -1.
+                  </figcaption>
+                </figure>
+              </article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="p-12 font-sans text-slate-900 bg-slate-100 min-h-screen flex flex-col justify-center items-center text-center"><h1 class="text-5xl font-black tracking-tight text-slate-800 mb-12">Please submit your reflections by using the CourseMIRROR App</h1><p class="text-xl mb-12">If you are having a problem with CourseMIRROR, please send an email to <a href="mailto:coursemirror.development@gmail.com" class="text-indigo-600 underline">coursemirror.development@gmail.com</a></p><footer class="mt-20 w-full flex justify-between items-end border-t border-slate-300 pt-8"><div class="flex items-center gap-4"><span class="text-2xl font-bold tracking-tighter">PURDUE UNIVERSITY</span><span class="text-sm text-slate-600">School of Engineering Education</span></div><div class="text-sm text-slate-600">12/21/2022 | 1</div></footer></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

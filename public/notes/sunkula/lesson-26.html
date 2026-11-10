@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 26: Line integrals of functions (17.2 - Part I) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson26.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 26: Line integrals of functions (17.2 - Part I)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 3/25/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson26.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h1 style="text-align: center;">Lesson 26: Line integrals of functions (17.2 - Part I)</h1>
+
+<section>
+    <h2>Review</h2>
+
+    <article class="review-item">
+        <p><strong>1) What is a Vector Field?</strong></p>
+        <div class="definition">
+            <p>A function that assigns a vector at each point.</p>
+            <p><strong>eg:</strong> Wind, Acceleration due to gravity</p>
+            <p>\[ \vec{F} = \langle y, x \rangle, \quad \vec{F} = \langle z, x, -1 \rangle \]</p>
+        </div>
+    </article>
+
+    <article class="review-item">
+        <p><strong>2) What is a Gradient Field? Is every vector field a Gradient Field?</strong></p>
+        <div class="definition">
+            <p>\[ \vec{F} = \vec{\nabla}\phi, \text{ for some } \phi, \qquad \text{NO} \]</p>
+            <p>Example of a non-gradient field: \[ \vec{F} = \langle y, -x \rangle \]</p>
+        </div>
+    </article>
+
+    <article class="review-item">
+        <p><strong>3) Is \( \vec{F} = \langle 2x, -1 \rangle \) a Gradient field?</strong></p>
+        <div class="solution">
+            <p>
+                \( \phi_x = 2x \leadsto \phi(x,y) = x^2 + K(y) \)<br>
+                \( -1 = \phi_y = K'(y) \Rightarrow K(y) = -y + C \)<br>
+                \( \phi(x,y) = x^2 - y + C \leadsto \vec{\nabla}\phi = \langle 2x, -1 \rangle = \vec{F} \)
+            </p>
+        </div>
+    </article>
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <section>
+    <h4>Recall: Definition of Definite Integral</h4>
+
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-1.webp" loading="lazy" decoding="async" alt="A 2D Cartesian coordinate system showing a blue curve labeled y = f(x). The horizontal x-axis has two points marked, 'a' and 'b'. A shaded vertical rectangular strip with diagonal lines is shown under the curve at an arbitrary point between 'a' and 'b', representing a single rectangle in a Riemann sum. Dashed vertical lines extend from points 'a' and 'b' on the x-axis up to the curve to define the boundaries of the integration area." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D Cartesian coordinate system showing a blue curve labeled y = f(x). The horizontal x-axis has two points marked, 'a' and 'b'. A shaded vertical rectangular strip with diagonal lines is shown under the curve at an arbitrary point between 'a' and 'b', representing a single rectangle in a Riemann sum. Dashed vertical lines extend from points 'a' and 'b' on the x-axis up to the curve to define the boundaries of the integration area.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="definition">
+        \[ \int_{a}^{b} f(x) \, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i) \Delta x \]
+        <p>In this Riemann sum definition, \( f(x_i) \) is the <strong>height</strong> of the rectangular sub-intervals, and \( \Delta x \) is the <strong>width</strong>.</p>
+    </div>
+</section>
+
+<section>
+    <h4>Generalize: Integrating \( f \) over a Line Segment on an Axis</h4>
+
+    <p>Integrating a function can be generalized to three-dimensional space where the domain is a segment along one of the coordinate axes.</p>
+
+    <div class="diagram-group">
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-2.webp" loading="lazy" decoding="async" alt="A 3D coordinate system with axes labeled x, y, and z. In the xz-plane, a blue curve is labeled z = f(x). A specific segment of the x-axis is highlighted in green. Above this green segment, a vertical rectangular strip, shaded purple with diagonal lines, extends upwards to meet the curve z = f(x). This illustrates the concept of integrating a function over a segment that lies specifically on the x-axis within a 3D context." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system with axes labeled x, y, and z. In the xz-plane, a blue curve is labeled z = f(x). A specific segment of the x-axis is highlighted in green. Above this green segment, a vertical rectangular strip, shaded purple with diagonal lines, extends upwards to meet the curve z = f(x). This illustrates the concept of integrating a function over a segment that lies specifically on the x-axis within a 3D context.</span>
+                      </div>
+                    </div>
+                  
+
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system with x, y, and z axes. In the yz-plane, a blue curve is labeled z = f(y). A segment of the y-axis is highlighted in green. A vertical rectangular strip, bounded by purple dashed lines and filled with purple diagonal shading, extends from the green segment on the y-axis up to the curve z = f(y). This represents the generalization of integration over a line segment located on the y-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system with x, y, and z axes. In the yz-plane, a blue curve is labeled z = f(y). A segment of the y-axis is highlighted in green. A vertical rectangular strip, bounded by purple dashed lines and filled with purple diagonal shading, extends from the green segment on the y-axis up to the curve z = f(y). This represents the generalization of integration over a line segment located on the y-axis.</span>
+                      </div>
+                    </div>
+                  
+    </div>
+</section>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Line integrals</h4>
+
+<p>Integrate \(f(x,y)\) over a <strong>curve \(C\)</strong> parametrized by \(\vec{r}(t) = \langle x(t), y(t) \rangle\), \(a \le t \le b\).</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-4.webp" loading="lazy" decoding="async" alt="A 3D coordinate system graph illustrating the geometric interpretation of a line integral. The diagram shows the x, y, and z axes. In the xy-plane, there is a green curve labeled C. Directly above it, a blue curve represents the function z = f(x,y). Vertical dashed lines connect the curve C in the xy-plane to the curve z = f(x,y), forming a vertical 'curtain' or 'fence' shape. A single thin vertical slice of this curtain is highlighted and shaded with diagonal purple lines to represent a differential element. This element's height is defined by the function value f(x,y) at a point along the curve, and its width is a small segment of the arc length of curve C. The visualization demonstrates that the line integral represents the area of this vertical surface above the curve." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system graph illustrating the geometric interpretation of a line integral. The diagram shows the x, y, and z axes. In the xy-plane, there is a green curve labeled C. Directly above it, a blue curve represents the function z = f(x,y). Vertical dashed lines connect the curve C in the xy-plane to the curve z = f(x,y), forming a vertical 'curtain' or 'fence' shape. A single thin vertical slice of this curtain is highlighted and shaded with diagonal purple lines to represent a differential element. This element's height is defined by the function value f(x,y) at a point along the curve, and its width is a small segment of the arc length of curve C. The visualization demonstrates that the line integral represents the area of this vertical surface above the curve.</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+
+<p>
+    \[ \sum_{i=1}^{n} \underbrace{f(x(t_i), y(t_i))}_{\text{height}} \underbrace{\Delta s}_{\substack{\text{width} \\ = \text{infinitesimal} \\ \text{arc length}}} \]
+</p>
+
+<div class="important">
+    <p><strong>Notation:</strong></p>
+    \[ \int_C f \, ds = \lim_{n \to \infty} \sum_{i=1}^{n} f(x(t_i), y(t_i)) \Delta s \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Line integral of \(f\) over Curve \(C: \vec{r}(t) = \langle x(t), y(t) \rangle, a \le t \le b.\)</h3>
+
+<div class="definition">
+    \[\int_C f \, ds = \lim_{n \to \infty} \sum_{i=1}^{n} f(x(t_i), y(t_i)) \Delta s\]
+</div>
+
+<p>If we can write \(\Delta s\) as a function of \(t\), we can write the \(\Sigma\) as a definite integral.</p>
+
+<div class="important">
+    <strong>Recall:</strong> Arc length function 
+    \[s(t) = \int_{a}^{t} |r'(u)| \, du\]
+</div>
+
+<p>From the arc length function, we can derive the relationship between \(s\) and \(t\):</p>
+
+\[\frac{ds}{dt} = |r'(t)|\]
+\[ds = |r'(t)| \, dt\]
+\[\Delta s = |r'(t)| \Delta t\]
+
+<p>By substituting these values back into the limit definition, we obtain:</p>
+
+\[\int_C f \, ds = \lim_{n \to \infty} \sum_{i=1}^{n} f(x(t_i), y(t_i)) \Delta s = \lim_{n \to \infty} \sum_{i=1}^{n} f(x(t_i), y(t_i)) |r'(t_i)| \Delta t\]
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Derivation of the Line Integral Formula</h4>
+
+\[ \int_{C} f \, ds = \lim_{n \rightarrow \infty} \sum_{i=1}^{n} f(x(t_i), y(t_i)) \Delta s = \lim_{n \rightarrow \infty} \sum_{i=1}^{n} \underbrace{(f(x(t_i), y(t_i)) |r'(t_i)|)}_{g(t_i)} \Delta t \]
+
+\[ = \int_{a}^{b} f(x(t), y(t)) |r'(t)| \, dt \]
+
+<div class="theorem">
+    <strong>Theorem:</strong>
+    \[ \int_{C} f \, ds = \int_{a}^{b} f(r(t)) |r'(t)| \, dt \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>eg ①: Evaluate \(\int_C x \, ds\), \(C\) is Parabola \(y = x^2\) on from \((0,0)\) to \((1,1)\)</h4>
+
+<div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-5.webp" loading="lazy" decoding="async" alt="A 2D Cartesian coordinate system graph showing a segment of the parabola y = x^2. The x and y axes intersect at the origin (0,0), marked with a green dot. A curve representing the parabola starts at this origin and extends upwards into the first quadrant, ending at the point (1,1), which is also marked with a green dot. This arc represents the path C used for the line integral." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 2D Cartesian coordinate system graph showing a segment of the parabola y = x^2. The x and y axes intersect at the origin (0,0), marked with a green dot. A curve representing the parabola starts at this origin and extends upwards into the first quadrant, ending at the point (1,1), which is also marked with a green dot. This arc represents the path C used for the line integral.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>parametrize: \(\vec{r}(t) = \langle x(t), y(t) \rangle\)</p>
+
+    <p>let \(x(t) = t\)<br>
+    \(y(t) = (x(t))^2 = t^2\)<br>
+    \(\vec{r}(t) = \langle t, t^2 \rangle, \ 0 \leq t \leq 1\)</p>
+
+    \[\int_C x \, ds = \int_0^1 x(t) |\vec{r}'(t)| \, dt\]
+
+    <p>\(x(t) = t\)<br>
+    \(\vec{r}'(t) = \langle 1, 2t \rangle\)<br>
+    \(|\vec{r}'(t)| = \sqrt{1 + 4t^2}\)</p>
+
+    \[\int_C x \, ds = \int_0^1 t \cdot \sqrt{1 + 4t^2} \, dt\]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="solution">
+    \[ \int_C x \, ds = \int_0^1 t \cdot \sqrt{1 + 4t^2} \, dt \]
+
+    Using u-substitution for the integral:
+    \[ 1 + 4t^2 = u \]
+    \[ 8t \, dt = du \]
+
+    Updating the limits of integration:
+    \[ t = 0 \implies u = 1 \]
+    \[ t = 1 \implies u = 5 \]
+
+    Substituting these values into the integral:
+    \[ = \frac{1}{8} \int_{1}^{5} u^{1/2} \, du \]
+    \[ = \frac{1}{8} \cdot \frac{2}{3} u^{3/2} \bigg|_1^5 \]
+    \[ = \frac{1}{12} \left[ 5^{3/2} - 1 \right] \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example 2</h4>
+    <p>Evaluate \(\int_C y e^{x^2} ds\), where \(C\) is the line from \((0,0)\) to \((1,3)\).</p>
+</div>
+
+<div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-26-6.webp" loading="lazy" decoding="async" alt="A Cartesian coordinate plane graph showing the path of integration C. A solid line segment starts at the origin, labeled (0,0), and ends at a point in the first quadrant labeled (1,3). Both endpoints are marked with solid dots. The x and y axes are clearly drawn as intersecting perpendicular lines." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A Cartesian coordinate plane graph showing the path of integration C. A solid line segment starts at the origin, labeled (0,0), and ends at a point in the first quadrant labeled (1,3). Both endpoints are marked with solid dots. The x and y axes are clearly drawn as intersecting perpendicular lines.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        <strong>Slope:</strong> 3<br>
+        <strong>Equation:</strong> \(y = 3x\)
+    </p>
+
+    <p><strong>Parametrize:</strong> \(\vec{r}(t) = \langle t, 3t \rangle\), \(0 \le t \le 1\)</p>
+
+    <p><strong><u>OR</u></strong></p>
+
+    <p><strong>Vector form of Line:</strong></p>
+    \[ \vec{r}(t) = \vec{r}_0 + t \vec{v} \]
+    <p>Where \(\vec{r}_0 = \langle 0,0 \rangle\) is a point on the line and \(\vec{v} = \langle 1,3 \rangle\) is the direction vector.</p>
+    
+    \[ \vec{r}(t) = \langle 0,0 \rangle + t \langle 1,3 \rangle = t \langle 1,3 \rangle \]
+    \[ \vec{r}'(t) = \langle 1, 3 \rangle \implies |\vec{r}'(t)| = \sqrt{10} \]
+
+    <p>The line integral is evaluated as follows:</p>
+    \[ \int_C y e^{x^2} ds = \int_0^1 y(t) e^{(x(t))^2} |\vec{r}'(t)| dt = \int_0^1 3t e^{t^2} \cdot \sqrt{10} dt \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Line Integral Calculation</h4>
+
+<div class="solution">
+    <p>
+        \[ \int_C y e^{x^2} \, ds = \int_0^1 y(t) e^{(x(t))^2} |r'(t)| \, dt = \int_0^1 3t \cdot e^{t^2} \cdot \sqrt{10} \, dt \]
+    </p>
+
+    <p>To solve the integral, we perform a substitution:</p>
+    
+    <div class="important">
+        <strong>Substitution:</strong><br>
+        \( u = t^2 \)<br>
+        \( du = 2t \, dt \)<br>
+        When \( t = 0 \rightsquigarrow u = 0 \)<br>
+        When \( t = 1 \rightsquigarrow u = 1 \)
+    </div>
+
+    <p>
+        Applying the substitution:
+        \[ = \frac{1}{2} \int_0^1 3 \cdot \sqrt{10} \cdot e^u \, du \]
+        \[ = \frac{3\sqrt{10}}{2} \left[ e^1 - e^0 \right] \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Line Integrals in 3D</h4>
+
+<p>Integral of \(f(x, y, z)\), over curve \(C\) parameterized by \(\vec{r}(t) = \langle x(t), y(t), z(t) \rangle\), \(a \le t \le b\)</p>
+
+<div class="definition">
+    \[ \int_C f \, ds = \int_a^b f(x(t), y(t), z(t)) |\vec{r}'(t)| \, dt = \int_a^b f(\vec{r}(t)) |\vec{r}'(t)| \, dt \]
+</div>
+
+<p><strong>Physical Meaning:</strong></p>
+
+<div class="important">
+    <p>\(f = 1 \implies \int_C 1 \, ds = \int_a^b |\vec{r}'(t)| \, dt = \text{Arc Length}\)</p>
+
+    <p>Suppose \(f = \rho\) represents density \(\implies \int_C \rho \, ds = \text{Mass of the curve}\)</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Find the mass of a helix</h4>
+    <p>Find the mass of the helix defined by \(\vec{r}(t) = \langle 5 \cos t, 5 \sin t, t \rangle\), for \(0 \le t \le 3\pi\), with a density function \(\rho(x, y, z) = x + z\).</p>
+</div>
+
+<div class="solution">
+    <p>The mass is calculated using the line integral of the density over the curve \(C\):</p>
+    \[ \text{Mass} = \int_{C} \rho \, ds = \int_{0}^{3\pi} \rho(\vec{r}(t)) |\vec{r}'(t)| \, dt \]
+
+    <p>First, we determine the derivative of the position vector \(\vec{r}(t)\):</p>
+    \[ \vec{r}'(t) = \langle -5 \sin t, 5 \cos t, 1 \rangle \]
+
+    <p>Next, we calculate the magnitude of the velocity vector (the speed):</p>
+    \[ |\vec{r}'(t)| = \sqrt{25 \sin^2 t + 25 \cos^2 t + 1} = \sqrt{26} \]
+
+    <p>Now, we substitute the components of \(\vec{r}(t)\) into the density function \(\rho(x, y, z) = x + z\), where \(x = 5 \cos t\) and \(z = t\), and set up the integral:</p>
+    \[ \text{Mass} = \int_{0}^{3\pi} (5 \cos t + t) \sqrt{26} \, dt \]
+
+    <p>Evaluating the integral gives:</p>
+    \[ = \left( 5 \sin t + \frac{t^2}{2} \right) \sqrt{26} \bigg|_{0}^{3\pi} \]
+    \[ = \frac{9\pi^2}{2} \sqrt{26} \]
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 3/25/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

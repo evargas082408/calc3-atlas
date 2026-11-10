@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.4 Green's Theorem - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2029%20%2817.4%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 29 (17.4).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><h1 class="text-3xl font-black tracking-tight text-slate-900 border-b-4 border-slate-900 pb-2 mb-8">17.4 Green's Theorem</h1><p class="mb-6">Let \(\vec{F} = \langle f, g \rangle\)</p><p class="mb-6">The vector quantity \(\left( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \right) \vec{k} = \langle 0, 0, g_x - f_y \rangle\) is called the <span class="font-bold underline">curl of \(\vec{F}\)</span>, written as \(\text{curl } \vec{F}\).</p><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>\(|\text{curl } \vec{F}| = |g_x - f_y|\) is a measure of rotation in \(\vec{F}\).</p></div><div class="grid-layout flex flex-col md:flex-row items-center gap-8 mb-10"><div class="flex-1"><p class="mb-4">For example, \(\vec{F} = \langle x, y \rangle\)</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector field plot of F = &lt;x, y&gt; showing arrows pointing radially outward from the origin with no rotation.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-1.webp" loading="lazy" decoding="async" alt="Vector field plot of F = &lt;x, y&gt; showing arrows pointing radially outward from the origin with no rotation." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector field plot of F = <x, y=""> showing arrows pointing radially outward from the origin with no rotation.
+                  </x,></figcaption>
+                </figure>
+               showing arrows pointing radially outward from the origin with no rotation." class="mx-auto"&gt;</div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="mb-2">\(\text{curl } \vec{F} = \langle 0, 0, 0 - 0 \rangle = \vec{0}\)</p><p class="mb-2">\(|\text{curl } \vec{F}| = 0\)</p></div><p class="text-right font-semibold text-slate-700">indicating no rotation<br>confirmed by visual inspection</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><div class="grid-layout flex flex-col md:flex-row items-center gap-8 mb-10"><div class="flex-1"><p class="text-xl font-bold mb-4">\(\vec{F} = \langle -y, x \rangle\)</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector field plot of F = &lt;-y, x&gt; showing arrows circulating counter-clockwise around the origin.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-2.webp" loading="lazy" decoding="async" alt="Vector field plot of F = &lt;-y, x&gt; showing arrows circulating counter-clockwise around the origin." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector field plot of F = &lt;-y, x&gt; showing arrows circulating counter-clockwise around the origin.
+                  </figcaption>
+                </figure>
+               showing arrows circulating counter-clockwise around the origin." class="mx-auto"&gt;</div><div class="flex-1"><p class="font-semibold text-slate-700">we see rotation</p></div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="mb-4">\(\text{curl } \vec{F} = \langle 0, 0, g_x - f_y \rangle = \langle 0, 0, 1 - (-1) \rangle = \langle 0, 0, 2 \rangle\)</p><p>\(|\text{curl } \vec{F}| = 2 \neq 0\), indicating a rotation</p></div><section class="mt-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">From last time,</h2><p class="mb-4">if \(\vec{F} = \langle f, g \rangle\), then \(\vec{F}\) is conservative</p><p class="mb-6">if \(g_x = f_y \rightarrow g_x - f_y = 0\)</p><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2">this means if \(\vec{F}\) is conservative, then \(|\text{curl } \vec{F}| = 0\)</p><p>or a conservative vector field is <span class="font-bold">irrotational</span></p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight mb-8 border-b-4 border-slate-900 pb-2">Green's Theorem</h1><p class="text-xl mb-6">If \(\vec{F} = \langle f, g \rangle\) and \(C\) is a simple closed path traversed once in the counterclockwise direction, then</p><div class="grid-layout"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \oint_C \vec{F} \cdot d\vec{r} = \oint_C f dx + g dy = \iint_R \left( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \right) dA \]</div><div class="notebox border-l-4 border-slate-400 pl-4 my-4 italic text-slate-700">Circle means closed path</div><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A region R in the xy-plane bounded by a closed curve C with counterclockwise orientation arrows.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-3.webp" loading="lazy" decoding="async" alt="A region R in the xy-plane bounded by a closed curve C with counterclockwise orientation arrows." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A region R in the xy-plane bounded by a closed curve C with counterclockwise orientation arrows.
+                  </figcaption>
+                </figure>
+              </figure></div><h2 class="text-2xl font-bold mt-10 mb-4">Why is this true?</h2><p class="mb-6">\(\oint_C \vec{F} \cdot d\vec{r}\) is a line integral accumulating \(\vec{F}\) along the path.</p><p class="italic text-slate-700 ml-8">→ circulation on the boundary</p></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><div class="grid-layout"><p class="text-xl mb-6">right side: \(\iint_R (g_x - f_y) dA\)</p><div class="notebox border-l-4 border-slate-400 pl-4 my-4 italic text-slate-700">\(| \text{curl } \vec{F} |\)</div><p class="mb-6">So this is accumulating rotation on region \(R\).</p><p class="mb-6">inside each grid there is rotation</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A region in the xy-plane divided into a grid, with small red circular arrows indicating rotation in each cell.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-4.webp" loading="lazy" decoding="async" alt="A region in the xy-plane divided into a grid, with small red circular arrows indicating rotation in each cell." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A region in the xy-plane divided into a grid, with small red circular arrows indicating rotation in each cell.
+                  </figcaption>
+                </figure>
+              </figure></div><div class="grid-layout"><p class="mb-6">rotations cancel on boundary of two boxes</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram showing four adjacent square cells with internal rotations where internal boundary arrows cancel out.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-5.webp" loading="lazy" decoding="async" alt="Diagram showing four adjacent square cells with internal rotations where internal boundary arrows cancel out." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram showing four adjacent square cells with internal rotations where internal boundary arrows cancel out.
+                  </figcaption>
+                </figure>
+              </figure></div><div class="grid-layout"><p class="mb-6">after canceling inside, ends up like</p><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A single square boundary with net counterclockwise flow after internal cancellations.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-6.webp" loading="lazy" decoding="async" alt="A single square boundary with net counterclockwise flow after internal cancellations." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A single square boundary with net counterclockwise flow after internal cancellations.
+                  </figcaption>
+                </figure>
+              </figure></div><div class="grid-layout"><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Final region in xy-plane showing only the boundary circulation remaining.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-7.webp" loading="lazy" decoding="async" alt="Final region in xy-plane showing only the boundary circulation remaining." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Final region in xy-plane showing only the boundary circulation remaining.
+                  </figcaption>
+                </figure>
+              </figure><p class="italic text-slate-700 ml-8">accumulates \(\vec{F}\) along boundary → left side of theorem</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Example: Line Integral and Green's Theorem</h1><section class="mb-8"><p class="text-lg mb-4">Given the vector field:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \langle y+2, x^2+1 \rangle \]</div><p class="mb-4">And the curve \( C \): from \( (-1, 1) \) to \( (1, 1) \) along \( y = x^2 \) then back to \( (-1, 1) \) along \( y = 2 - x^2 \).</p><div class="grid-layout flex flex-col md:flex-row items-center gap-8"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a closed region bounded by y=x^2 (C1) and y=2-x^2 (C2) from x=-1 to x=1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-8.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a closed region bounded by y=x^2 (C1) and y=2-x^2 (C2) from x=-1 to x=1." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a closed region bounded by y=x^2 (C1) and y=2-x^2 (C2) from x=-1 to x=1.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-8"><p class="italic text-slate-700 mb-6">Let's do this as a line integral, then try the Green's Theorem way.</p><h2 class="text-xl font-bold mb-4">Method 1: Line Integral</h2><ul class="list-none space-y-4 mb-6"><li>\( C_1: \vec{r}(t) = \langle t, t^2 \rangle \) for \( -1 \le t \le 1 \)</li><li>\( C_2: \vec{r}(t) = \langle -t, 2-t^2 \rangle \) for \( -1 \le t \le 1 \)</li></ul><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_C \vec{F} \cdot \vec{r}' dt = \underbrace{\int_{-1}^{1} \langle t^2+2, t^2+1 \rangle \cdot \langle 1, 2t \rangle dt}_{C_1} + \underbrace{\int_{-1}^{1} \langle 4-t^2, t^2+1 \rangle \cdot \langle -1, -2t \rangle dt}_{C_2} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section class="mb-8"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \int_{-1}^{1} (2t^3 + t^2 + 2t + 2) dt + \int_{-1}^{1} (-2t^3 + t^2 - 2t - 4) dt = \dots = \frac{14}{3} - \frac{22}{3} = \boxed{-\frac{8}{3}} \]</div></section><section class="mb-8"><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Method 2: Green's Theorem</h2><p class="mb-6">Green's Theorem says we can trade a line integral for a double integral over the region \( R \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_R (g_x - f_y) dA \]</div><div class="grid-layout flex flex-col md:flex-row items-start gap-8"><div class="flex-1"><p class="mb-2">\( \vec{F} = \langle y+2, x^2+1 \rangle \)</p><p class="mb-4">\( g_x - f_y = 2x - 1 \)</p><p class="mb-2">Region \( R \):</p><ul class="list-none ml-4"><li>\( -1 \le x \le 1 \)</li><li>\( x^2 \le y \le 2 - x^2 \)</li></ul></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of the region R bounded by the parabolas y=x^2 and y=2-x^2 between x=-1 and x=1.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-9.webp" loading="lazy" decoding="async" alt="Graph of the region R bounded by the parabolas y=x^2 and y=2-x^2 between x=-1 and x=1." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of the region R bounded by the parabolas y=x^2 and y=2-x^2 between x=-1 and x=1.
+                  </figcaption>
+                </figure>
+              </div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_R (g_x - f_y) dA = \int_{-1}^{1} \int_{x^2}^{2-x^2} (2x - 1) dy dx \]\[ = \int_{-1}^{1} (2x - 1)(2 - 2x^2) dx = \int_{-1}^{1} (-4x^3 + 2x^2 + 4x - 2) dx \]\[ = \dots = \boxed{-\frac{8}{3}} \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-6">Green's Theorem for Area</h1><p class="mb-6">Green's Theorem can also find area of \( R \) as a line integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \oint f dx + g dy = \iint_R (g_x - f_y) dA \]</div><p class="mb-6">If \( g_x - f_y = 1 \), then the right side is \( \iint_R dA = \text{area of } R \).</p><p class="mb-6">Now come up with a vector field \( \vec{F} = \langle f, g \rangle \) such that \( g_x - f_y = 1 \).</p><p class="mb-6">One possibility: \( \vec{F} = \langle -\frac{1}{2}y, \frac{1}{2}x \rangle \)</p><div class="notebox border-l-4 border-slate-400 pl-4 my-4 italic text-slate-700">Note: Here \( f = -\frac{1}{2}y \) and \( g = \frac{1}{2}x \).</div><p class="mt-10 mb-4">Use these on the left side:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \oint f dx + g dy = \oint -\frac{1}{2}y dx + \frac{1}{2}x dy \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm border-2 border-slate-900">\[ = \frac{1}{2} \oint x dy - y dx \]</div><p class="text-right font-bold">This gives area of \( R \)</p></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-6">Green's Theorem: Alternative Form</h1><p class="mb-6">Green's Theorem \( \oint f dx + g dy = \iint_R (g_x - f_y) dA \) is based on \( \int \vec{F} \cdot \vec{T} ds \) on the left side, where \( \vec{T} \) is the unit tangent.</p><p class="mb-6">If we use the unit normal \( \vec{N} \) instead of unit tangent \( \vec{T} \), we end up with:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \oint f dy - g dx = \iint_R (f_x + g_y) dA \]</div><div class="notebox border-l-4 border-slate-400 pl-4 my-4 italic text-slate-700"><p class="mb-2">This is called the <strong>Divergence of \( \vec{F} = \text{div } \vec{F} \)</strong>.</p><p>(In "standard" Green's Theorem, the right side is \( \text{curl } \vec{F} \)).</p></div><p class="mt-10 mb-4">The divergence measures the change of a small volume as it travels in the vector field, and in this alternate Green's Theorem form we get the <strong>flux</strong>.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white max-w-4xl mx-auto font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Illustration of Divergence</h1><section class="mb-8"><div class="flex flex-wrap items-baseline gap-x-8 mb-6"><p class="text-xl font-semibold">\(\vec{F} = \langle x, 0 \rangle\)</p><p class="text-xl font-semibold">\(\text{div } \vec{F} = f_x + g_y = 1 + 0 = 1\)</p></div><div class="notebox border-l-4 border-slate-400 pl-4 italic text-slate-700 mb-8"><p>\(\rightarrow\) this means the rate of increase in volume of a small box as it moves in \(\vec{F}\) is positive</p></div></section><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10"><div class="flex flex-col justify-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Vector field plot of \vec{F} = \langle x, 0 \rangle with horizontal arrows growing longer as they move right.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-10.webp" loading="lazy" decoding="async" alt="Vector field plot of \vec{F} = \langle x, 0 \rangle with horizontal arrows growing longer as they move right." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Vector field plot of \(\vec{F} = \langle x, 0 \rangle\) with horizontal arrows growing longer as they move right.
+                  </figcaption>
+                </figure>
+              </div><div class="space-y-4"><p>Small magnitude on left than right so it ends being stretched, so volume increases (positive divergence)</p></div></div><section class="mt-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm flex flex-col items-center gap-6">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A small blue box is shown being stretched into a longer rectangle by a larger vector on the right side.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-29-11.webp" loading="lazy" decoding="async" alt="A small blue box is shown being stretched into a longer rectangle by a larger vector on the right side." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A small blue box is shown being stretched into a longer rectangle by a larger vector on the right side.
+                  </figcaption>
+                </figure>
+              </div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

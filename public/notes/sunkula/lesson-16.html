@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 16: Max and Min Problems II (Section 15.7)</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: { enableAssistiveMml: true }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 960px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #212529; }
+        h3 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 8px; margin-top: 30px; font-size: 1.5em; }
+        h4 { color: #34495e; border-left: 4px solid #3498db; padding-left: 15px; margin-top: 25px; font-size: 1.3em; }
+        h5 { color: #5a6c7d; font-size: 1.1em; margin-top: 20px; }
+        .definition { background-color: #e8f5e8; padding: 15px; border: 1px solid #28a745; border-radius: 8px; margin: 15px 0; border-left: 5px solid #28a745; }
+        .theorem { background-color: #fff3cd; padding: 15px; border: 1px solid #ffc107; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .example { background-color: #f8f9fa; padding: 15px; border: 1px solid #6c757d; border-radius: 8px; margin: 15px 0; border-left: 5px solid #007bff; }
+        .important { background-color: #d1ecf1; padding: 15px; border: 1px solid #17a2b8; border-radius: 8px; margin: 15px 0; border-left: 5px solid #17a2b8; }
+        .warning { background-color: #f8d7da; padding: 15px; border: 1px solid #dc3545; border-radius: 8px; margin: 15px 0; border-left: 5px solid #dc3545; }
+        .visual-desc { background-color: #e9ecef; padding: 12px; border-left: 4px solid #6c757d; font-style: italic; margin: 15px 0; border-radius: 0 5px 5px 0; }
+        .solution { background-color: #f0f8f0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #28a745; }
+        .steps { background-color: #f1f3f4; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .page-content { background-color: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        figure { margin: 20px 0; }
+        figure img { max-width: 100%; height: auto; border: 2px solid #dee2e6; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 4px; }
+        figcaption { font-style: italic; color: #6c757d; margin-top: 8px; }
+        hr { margin: 40px 0; border: none; border-top: 2px solid #3498db; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 10px 14px; text-align: center; }
+        th { background-color: #e9ecef; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 6px 0; }
+        @media (max-width: 768px) { body { padding: 15px; } }
+        @media print { body { background-color: white; } }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson16.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+<h3>MA 261 &mdash; Lesson 16: Max and Min Problems II (Section 15.7)</h3>
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-16-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson 16 title and course announcements for Exam 1">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Announcements</h4>
+    <div class="important">
+        <p><strong>Exam 1</strong> is on <strong>February 25th (Wednesday)</strong> in <strong>ELTT 116</strong> at <strong>6:30 pm</strong>.</p>
+        <p>The following items are posted on <strong>Brightspace</strong>: instructions, seating chart, study guide, and office hours for Exam 1.</p>
+    </div>
+</div>
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-16-2.webp" loading="lazy" decoding="async" alt="Page 2: Review example testing understanding of second derivative test when f_xx is nonzero, gradient is zero, and f_xx plus f_yy equals zero">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Review Example: Applying the Second Derivative Test</h4>
+    <div class="example">
+        <h5>Review Question</h5>
+        <p>Suppose \(f_{xx}(a,b) \neq 0\), \(\nabla f(a,b) = \vec{0}\) (so \((a,b)\) is a critical point), and \(f_{xx}(a,b) + f_{yy}(a,b) = 0\). What can you say about the point \((a,b)\)?</p>
+        <p><strong>Options:</strong> A) Saddle &nbsp;&nbsp; B) Local Max &nbsp;&nbsp; C) Local Min &nbsp;&nbsp; D) Cannot be Determined &nbsp;&nbsp; E) I don't know</p>
+        <div class="solution">
+            <p><strong>Answer: A) Saddle.</strong></p>
+            <p>The condition \(f_{xx} + f_{yy} = 0\) means \(f_{xx} = -f_{yy}\). Substituting into the discriminant:</p>
+            \[D = f_{xx}f_{yy} - (f_{xy})^2 = -(f_{yy})^2 - (f_{xy})^2 \leq 0\]
+            <p>Since \(f_{xx} \neq 0\), we have \(f_{yy} \neq 0\), so \(D = -(f_{yy})^2 - (f_{xy})^2 < 0\). Therefore \((a,b)\) is a <strong>saddle point</strong>.</p>
+        </div>
+    </div>
+    <div class="theorem">
+        <p><strong>Reminder &mdash; Second Derivative Test summary:</strong></p>
+        <ul>
+            <li>\(D > 0\) and \(f_{xx} > 0\): <strong>local min</strong></li>
+            <li>\(D > 0\) and \(f_{xx} < 0\): <strong>local max</strong></li>
+            <li>\(D < 0\): <strong>saddle point</strong></li>
+            <li>\(D = 0\): <strong>inconclusive</strong></li>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-16-3.webp" loading="lazy" decoding="async" alt="Page 3: Introduction to absolute max and min on a closed interval for single-variable functions, with a graph and the three-step process">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Absolute Max/Min for \(y = f(x)\) on \([a,b]\)</h4>
+    <div class="visual-desc">
+        <p><strong>Graph description:</strong> A continuous curve on the interval \([-4, 5]\) showing multiple local extrema. The graph rises steeply from a minimum near \((-4, -4)\) to a local maximum near \((-2, 5)\), then oscillates through additional local extrema. Two highlighted points (shown as filled dots) appear at the global minimum around \((-4, -4)\) and a boundary point near \((5, 2.5)\). A horizontal dashed red line at \(y = 5\) marks the global maximum level.</p>
+    </div>
+    <div class="theorem">
+        <p>The <strong>absolute maximum and minimum</strong> of \(f(x)\) on a closed interval \([a,b]\) occur either at <strong>critical points inside \((a,b)\)</strong> or at the <strong>endpoints/boundary points</strong>.</p>
+    </div>
+    <div class="steps">
+        <h5>Process for Finding Absolute Extrema on \([a,b]\):</h5>
+        <ol>
+            <li>Find all critical points of \(f(x)\) inside \((a,b)\).</li>
+            <li>Evaluate \(f(x)\) at the critical points and at the endpoints \(x = a\) and \(x = b\).</li>
+            <li>Compare all values &mdash; the largest is the absolute maximum and the smallest is the absolute minimum.</li>
+        </ol>
+    </div>
+</div>
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-16-4.webp" loading="lazy" decoding="async" alt="Page 4: Single-variable absolute extrema example for g(x) = 2x squared minus 1 on the interval [-1, 1]">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Example: \(g(x) = 2x^2 - 1\) on \([-1, 1]\)</h4>
+    <div class="example">
+        <div class="solution">
+            <p><strong>Step 1 &mdash; Critical points:</strong> \(g'(x) = 4x = 0 \implies x = 0\).</p>
+            <p><strong>Step 2 &mdash; Evaluate:</strong></p>
+            <ul>
+                <li>\(g(0) = -1\)</li>
+                <li>\(g(-1) = 2(1) - 1 = 1\)</li>
+                <li>\(g(1) = 2(1) - 1 = 1\)</li>
+            </ul>
+            <p><strong>Step 3 &mdash; Compare:</strong></p>
+            <ul>
+                <li><strong>Absolute minimum \(= -1\)</strong> at \(x = 0\).</li>
+                <li><strong>Absolute maximum \(= 1\)</strong> at \(x = 1\) and \(x = -1\).</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-16-5.webp" loading="lazy" decoding="async" alt="Page 5: Introduction to absolute max and min of z = f(x,y) over a two-dimensional region, with a blob-shaped region diagram and the three-step process">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Absolute Max/Min of \(z = f(x,y)\) Over a Region</h4>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> A closed, bounded region in the \(xy\)-plane drawn as an irregular blob shape (similar to an amoeba or figure-eight). The interior is filled with blue diagonal lines (hatching) indicating the region, and the boundary is drawn as a purple curve. This represents a generic closed bounded region \(D\) over which we seek the absolute maximum and minimum of \(f\).</p>
+    </div>
+    <div class="theorem">
+        <p>For a continuous function \(f(x,y)\) on a closed bounded region, the <strong>absolute maximum and minimum</strong> occur either at <strong>critical points inside</strong> the region or on the <strong>boundary</strong> of the region.</p>
+    </div>
+    <div class="steps">
+        <h5>Process for Finding Absolute Extrema Over a Region:</h5>
+        <ol>
+            <li>Find all critical points <em>inside</em> the region (where \(\nabla f = \vec{0}\)).</li>
+            <li>Use the boundary to write \(f(x,y)\) as a function of one variable, then apply Calculus I techniques to find additional candidates along each boundary segment.</li>
+            <li>Evaluate \(f\) at all candidates and compare &mdash; the largest value is the absolute maximum and the smallest is the absolute minimum.</li>
+        </ol>
+    </div>
+</div>
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-16-6.webp" loading="lazy" decoding="async" alt="Page 6: Finding absolute max and min of f(x,y) = x squared minus y squared on the disk x squared plus y squared less than or equal to 1, showing the critical point inside and beginning the boundary analysis">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Example: \(f(x,y) = x^2 - y^2\) on \(x^2 + y^2 \leq 1\)</h4>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> A unit circle \(x^2 + y^2 = 1\) drawn in purple, with the interior region \(x^2 + y^2 \leq 1\) filled with blue diagonal hatching. A red dot marks the origin \((0,0)\) as the only interior critical point. The labels indicate the boundary circle and the closed disk region.</p>
+    </div>
+    <div class="example">
+        <h5>Step 1 &mdash; Critical Points Inside the Disk</h5>
+        <div class="solution">
+            <p>\(f_x = 2x = 0\) and \(f_y = -2y = 0\), so \((0,0)\) is the <strong>only critical point</strong>.</p>
+        </div>
+        <h5>Step 2 &mdash; On the Boundary \(x^2 + y^2 = 1\)</h5>
+        <div class="solution">
+            <p>On the boundary, \(y^2 = 1 - x^2\). Substitute into \(f\) to eliminate \(y\):</p>
+            \[g(x) = x^2 - (1 - x^2) = 2x^2 - 1, \quad -1 \leq x \leq 1\]
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-16-7.webp" loading="lazy" decoding="async" alt="Page 7: Continuing the boundary analysis on the unit disk, finding critical points of g(x) = 2x squared minus 1 and identifying the four candidate points on the boundary circle">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Boundary Analysis (continued): \(g(x) = 2x^2 - 1\) on \([-1,1]\)</h4>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> The unit circle with four red dots highlighted at the cardinal points: top \((0,1)\), bottom \((0,-1)\), left \((-1,0)\), and right \((1,0)\). These are the boundary candidate points identified from the analysis of \(g(x)\).</p>
+    </div>
+    <div class="example">
+        <div class="solution">
+            <p><strong>Critical point of \(g\):</strong> \(g'(x) = 4x = 0 \implies x = 0\). Substituting \(x = 0\) into the boundary equation \(x^2 + y^2 = 1\) gives \(y = \pm 1\), yielding boundary points \((0, 1)\) and \((0, -1)\).</p>
+            <p><strong>Endpoints of \(g\):</strong></p>
+            <ul>
+                <li>\(x = -1\): \((-1)^2 + y^2 = 1 \implies y = 0\), giving point \((-1, 0)\).</li>
+                <li>\(x = 1\): \(1 + y^2 = 1 \implies y = 0\), giving point \((1, 0)\).</li>
+            </ul>
+            <p>The four boundary candidate points are \((0,1)\), \((0,-1)\), \((-1,0)\), and \((1,0)\).</p>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-16-8.webp" loading="lazy" decoding="async" alt="Page 8: Final evaluation and comparison for f(x,y) = x squared minus y squared on the unit disk, concluding absolute max equals 1 and absolute min equals negative 1">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Evaluate &amp; Compare for \(f(x,y) = x^2 - y^2\)</h4>
+    <div class="solution">
+        <p>All possible candidates for the absolute max/min: \((0,0)\), \((1,0)\), \((-1,0)\), \((0,1)\), \((0,-1)\).</p>
+        <table>
+            <thead><tr><th>Point</th><th>\(f(x,y) = x^2 - y^2\)</th></tr></thead>
+            <tbody>
+                <tr><td>\((0,0)\)</td><td>\(0\)</td></tr>
+                <tr><td>\((1,0)\)</td><td>\(1\)</td></tr>
+                <tr><td>\((-1,0)\)</td><td>\(1\)</td></tr>
+                <tr><td>\((0,1)\)</td><td>\(-1\)</td></tr>
+                <tr><td>\((0,-1)\)</td><td>\(-1\)</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Absolute maximum \(= 1\)</strong> at \((1,0)\) and \((-1,0)\).</p>
+        <p><strong>Absolute minimum \(= -1\)</strong> at \((0,1)\) and \((0,-1)\).</p>
+    </div>
+</div>
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-16-9.webp" loading="lazy" decoding="async" alt="Page 9: Setting up absolute max and min for f(x,y) = 4x plus 6y minus x squared minus y squared plus 9 on the rectangle 0 to 4 by 0 to 5, identifying the interior critical point and labeling the four boundary segments">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Example: \(f(x,y) = 4x + 6y - x^2 - y^2 + 9\) on \(\{(x,y): 0 \leq x \leq 4,\; 0 \leq y \leq 5\}\)</h4>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> A rectangle in the \(xy\)-plane with corners at \((0,0)\), \((4,0)\), \((4,5)\), and \((0,5)\) drawn in purple. The interior is filled with blue hatching. A red dot at the interior critical point \((2,3)\) is visible. The four boundary segments are labeled: \(L_1\) (bottom, \(y=0\)), \(L_2\) (right, \(x=4\)), \(L_3\) (top, \(y=5\)), and \(L_4\) (left, \(x=0\)).</p>
+    </div>
+    <div class="example">
+        <h5>Step 1 &mdash; Critical Points Inside the Rectangle</h5>
+        <div class="solution">
+            <p>\(f_x = 4 - 2x = 0 \implies x = 2\)</p>
+            <p>\(f_y = 6 - 2y = 0 \implies y = 3\)</p>
+            <p>Critical point: \((2, 3)\) &mdash; this lies inside the rectangle since \(0 < 2 < 4\) and \(0 < 3 < 5\). ✓</p>
+        </div>
+        <h5>Step 2 &mdash; Identify Boundary Segments</h5>
+        <div class="solution">
+            <ul>
+                <li>\(L_1\): \(y = 0\), \(0 \leq x \leq 4\)</li>
+                <li>\(L_2\): \(x = 4\), \(0 \leq y \leq 5\)</li>
+                <li>\(L_3\): \(y = 5\), \(0 \leq x \leq 4\)</li>
+                <li>\(L_4\): \(x = 0\), \(0 \leq y \leq 5\)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-16-10.webp" loading="lazy" decoding="async" alt="Page 10: Analyzing boundary segment L1 (y=0) for f(x,y) = 4x plus 6y minus x squared minus y squared plus 9, finding critical point x=2 and endpoint candidates">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Boundary Analysis: \(L_1\) — \(y = 0\), \(0 \leq x \leq 4\)</h4>
+    <div class="example">
+        <div class="solution">
+            <p>Substituting \(y = 0\) into \(f\):</p>
+            \[g_1(x) = 4x - x^2 + 9, \quad 0 \leq x \leq 4\]
+            <p><strong>Critical point:</strong> \(g_1'(x) = 4 - 2x = 0 \implies x = 2\). This gives candidate point \((2, 0)\).</p>
+            <p><strong>Endpoints:</strong></p>
+            <ul>
+                <li>\(x = 0 \implies (0, 0)\)</li>
+                <li>\(x = 4 \implies (4, 0)\)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> The rectangle with boundary segments labeled \(L_1\) through \(L_4\). Three red dots are visible along the bottom edge (\(L_1\)) at \(x = 0\), \(x = 2\), and \(x = 4\), corresponding to the two endpoints and the critical point found along this segment.</p>
+    </div>
+</div>
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-16-11.webp" loading="lazy" decoding="async" alt="Page 11: Analyzing boundary segment L2 (x=4) for f(x,y), finding critical point y=3 and boundary candidates (4,3), (4,0), and (4,5)">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Boundary Analysis: \(L_2\) — \(x = 4\), \(0 \leq y \leq 5\)</h4>
+    <div class="example">
+        <div class="solution">
+            <p>Substituting \(x = 4\) into \(f\):</p>
+            \[g_2(y) = 16 + 6y - 16 - y^2 + 9 = 6y - y^2 + 9, \quad 0 \leq y \leq 5\]
+            <p><strong>Critical point:</strong> \(g_2'(y) = 6 - 2y = 0 \implies y = 3\). Candidate: \((4, 3)\).</p>
+            <p><strong>Endpoints:</strong></p>
+            <ul>
+                <li>\(y = 0 \implies (4, 0)\)</li>
+                <li>\(y = 5 \implies (4, 5)\)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-16-12.webp" loading="lazy" decoding="async" alt="Page 12: Analyzing boundary segments L3 (y=5) and L4 (x=0) for f(x,y), finding candidates (2,5), (0,5), (4,5) on L3 and (0,3), (0,0), (0,5) on L4">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Boundary Analysis: \(L_3\) and \(L_4\)</h4>
+    <div class="example">
+        <h5>\(L_3\): \(y = 5\), \(0 \leq x \leq 4\)</h5>
+        <div class="solution">
+            <p>Substituting \(y = 5\):</p>
+            \[g_3(x) = 4x + 30 - x^2 - 25 + 9 = 4x - x^2 + 14, \quad 0 \leq x \leq 4\]
+            <p><strong>Critical point:</strong> \(g_3'(x) = 4 - 2x = 0 \implies x = 2\). Candidate: \((2, 5)\).</p>
+            <p><strong>Endpoints:</strong> \(x = 0 \implies (0,5)\); &nbsp; \(x = 4 \implies (4,5)\).</p>
+        </div>
+
+        <h5>\(L_4\): \(x = 0\), \(0 \leq y \leq 5\)</h5>
+        <div class="solution">
+            <p>Substituting \(x = 0\):</p>
+            \[g_4(y) = 6y - y^2 + 9, \quad 0 \leq y \leq 5\]
+            <p><strong>Critical point:</strong> \(g_4'(y) = 6 - 2y = 0 \implies y = 3\). Candidate: \((0, 3)\).</p>
+            <p><strong>Endpoints:</strong> \(y = 0 \implies (0,0)\); &nbsp; \(y = 5 \implies (0,5)\).</p>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-16-13.webp" loading="lazy" decoding="async" alt="Page 13: Final evaluation table for all candidate points of f(x,y) = 4x plus 6y minus x squared minus y squared plus 9, concluding absolute min equals 9 and absolute max equals 22">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Evaluate &amp; Compare for \(f(x,y) = 4x + 6y - x^2 - y^2 + 9\)</h4>
+    <div class="visual-desc">
+        <p><strong>Diagram description:</strong> The rectangle showing all candidate points plotted as labeled red dots: interior point \((2,3)\), boundary points \((2,0)\), \((4,3)\), \((2,5)\), \((0,3)\), and corner points \((0,0)\), \((4,0)\), \((0,5)\), \((4,5)\).</p>
+    </div>
+    <div class="solution">
+        <table>
+            <thead><tr><th>Point</th><th>\(f(x,y)\)</th></tr></thead>
+            <tbody>
+                <tr><td>\((0,0)\)</td><td>\(9\)</td></tr>
+                <tr><td>\((2,0)\)</td><td>\(13\)</td></tr>
+                <tr><td>\((4,0)\)</td><td>\(9\)</td></tr>
+                <tr><td>\((0,3)\)</td><td>\(18\)</td></tr>
+                <tr><td>\((2,3)\)</td><td>\(22\)</td></tr>
+                <tr><td>\((4,3)\)</td><td>\(18\)</td></tr>
+                <tr><td>\((0,5)\)</td><td>\(14\)</td></tr>
+                <tr><td>\((2,5)\)</td><td>\(18\)</td></tr>
+                <tr><td>\((4,5)\)</td><td>\(14\)</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Absolute minimum \(= 9\)</strong> at \((0,0)\) and \((4,0)\).</p>
+        <p><strong>Absolute maximum \(= 22\)</strong> at \((2,3)\).</p>
+    </div>
+</div>
+<hr>
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-16-14.webp" loading="lazy" decoding="async" alt="Page 14: Setting up the optimization problem to find the point on the plane x plus 2y plus z equals 10 closest to the origin, reducing to minimizing a two-variable function">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Example: Closest Point on a Plane to the Origin</h4>
+    <p>Find the point on the plane \(x + 2y + z = 10\) that is closest to the origin.</p>
+    <div class="example">
+        <h5>Setting Up the Optimization</h5>
+        <div class="solution">
+            <p>The distance from the origin \((0,0,0)\) to a point \((x,y,z)\) is</p>
+            \[d = \sqrt{x^2 + y^2 + z^2}\]
+            <p>Since \((x,y,z)\) must lie on the plane \(x + 2y + z = 10\), we can express \(z = 10 - x - 2y\) and substitute:</p>
+            \[d = \sqrt{x^2 + y^2 + (10-x-2y)^2}\]
+        </div>
+        <div class="important">
+            <p><strong>Key trick:</strong> Minimizing \(d\) is equivalent to minimizing \(d^2\) (since the square root is increasing). This avoids the square root in our calculus computations.</p>
+            <p><strong>Rephrase:</strong> Find the minimum of \(f(x,y) = x^2 + y^2 + (10-x-2y)^2\) on \(\mathbb{R}^2\).</p>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3>Page 15</h3>
+<figure>
+    <img src="img/lesson-16-15.webp" loading="lazy" decoding="async" alt="Page 15: Solving the optimization to find the minimum of f(x,y) = x squared plus y squared plus (10 minus x minus 2y) squared, determining the critical point and verifying it is a minimum">
+    <figcaption><strong>Original handwritten page 15</strong></figcaption>
+</figure>
+<div class="page-content">
+    <h4>Solving: Minimum of \(f(x,y) = x^2 + y^2 + (10-x-2y)^2\)</h4>
+    <div class="example">
+        <div class="solution">
+            <p>Setting partial derivatives to zero:</p>
+            \[f_x = 2x + 2(10-x-2y)(-1) = 4x + 4y - 20 = 0 \tag{1}\]
+            \[f_y = 2y + 2(10-x-2y)(-2) = 4x + 10y - 40 = 0 \tag{2}\]
+            <p>Subtract (1) from (2): \(6y - 20 = 0 \implies y = \dfrac{20}{6} = \dfrac{10}{3}\).</p>
+            <p>Substitute \(y = \tfrac{10}{3}\) into (1): \(4x + \tfrac{40}{3} - 20 = 0 \implies 4x = \tfrac{20}{3} \implies x = \dfrac{5}{3}\).</p>
+            <p>One critical point: \(\left(\dfrac{5}{3},\, \dfrac{10}{3}\right)\).</p>
+            <p><strong>Verification that this is a minimum:</strong></p>
+            <ul>
+                <li>\(f_{xx} = 4 > 0\)</li>
+                <li>\(f_{yy} = 10 > 0\)</li>
+                <li>\(f_{xy} = 4\)</li>
+                <li>\(D = (4)(10) - 4^2 = 40 - 16 = 24 > 0\)</li>
+            </ul>
+            <p>Since \(D > 0\) and \(f_{xx} > 0\), the critical point is a <strong>local (and global) minimum</strong>.</p>
+            <p><strong>Finding \(z\):</strong></p>
+            \[z = 10 - x - 2y = 10 - \frac{5}{3} - \frac{20}{3} = 10 - \frac{25}{3} = \frac{5}{3}\]
+            <p>The point on the plane closest to the origin is</p>
+            \[\left(\frac{5}{3},\; \frac{10}{3},\; \frac{5}{3}\right)\]
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

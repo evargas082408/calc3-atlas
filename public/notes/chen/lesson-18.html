@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.1 Double Integrals over Rectangular Regions - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2018%20%2816.1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 18 (16.1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8 border-b-4 border-indigo-600 pb-2">16.1 Double Integrals over Rectangular Regions</h1><div class="grid-layout flex flex-col md:flex-row items-start gap-8 mb-10"><div class="flex-1"><p class="mb-6">If \( y = f(x) \), \( a \leq x \leq b \)</p><p class="mb-6">then \( \int_{a}^{b} f(x) dx \) gives us the net area between \( f(x) \) and the x-axis</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph of a function f(x) over the interval [a, b] showing shaded areas between the curve and the x-axis.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-1.webp" loading="lazy" decoding="async" alt="Graph of a function f(x) over the interval [a, b] showing shaded areas between the curve and the x-axis." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph of a function f(x) over the interval [a, b] showing shaded areas between the curve and the x-axis.
+                  </figcaption>
+                </figure>
+              </div></div><p class="mb-6">but remember \( \int_{a}^{b} f(x) dx \) really sums up infinitely-many rectangle areas</p><div class="grid-layout flex flex-col md:flex-row items-start gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Riemann sum visualization with rectangles of width delta x approximating the area under a curve f(x).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-2.webp" loading="lazy" decoding="async" alt="Riemann sum visualization with rectangles of width delta x approximating the area under a curve f(x)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Riemann sum visualization with rectangles of width delta x approximating the area under a curve f(x).
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>total area = sum of rectangles</li><li>each rectangle has height \( f(x_i^*) \)</li></ul><div class="notebox bg-slate-50 p-4 rounded-lg border border-slate-200 italic mb-4">Sample point (left/right/midpoint)</div></div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-center">then \( \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i^*) \Delta x = \int_{a}^{b} f(x) dx \)</p></div><p class="text-sm text-slate-600 italic">Note: \( n \) represents the # of rectangles.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans max-w-4xl mx-auto"><div class="flex justify-between items-start mb-6"><p class="text-xl font-bold">\( z = f(x, y) \) is a surface</p><div class="notebox bg-slate-50 p-3 rounded-lg border border-slate-200">\( [a, b] \times [c, d] \)</div></div><p class="mb-6">if we want the volume under the surface above \( a \leq x \leq b, c \leq y \leq d \)</p><p class="mb-10">we can use the same idea as in one-variable case</p><div class="grid-layout flex flex-col md:flex-row items-start gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D diagram showing a surface f(x,y) above a rectangular region in the xy-plane with a sample volume element.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-3.webp" loading="lazy" decoding="async" alt="3D diagram showing a surface f(x,y) above a rectangular region in the xy-plane with a sample volume element." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D diagram showing a surface f(x,y) above a rectangular region in the xy-plane with a sample volume element.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4 font-semibold">we want volume under \( f(x, y) \) above the rectangle</p><p class="mb-2">subdivide \( x \) into \( n \) parts</p><p class="mb-6">subdivide \( y \) into \( m \) parts</p><p class="italic text-slate-700">use a particular choice of sample points to find height of a rectangular box</p></div></div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>the rectangle box has volume \( f(x_i^*, y_j^*) \underbrace{\Delta x \Delta y}_{\Delta A} \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-center">then sum up all \( \sum_{i=1}^{n} \sum_{j=1}^{m} f(x_i^*, y_j^*) \Delta A \)</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-8">Double Integrals over Rectangular Regions</h1><p class="mb-6">Now let \( n \to \infty \), \( m \to \infty \), \( \Delta x \to dx \), \( \Delta y \to dy \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \lim_{n,m \to \infty} \sum_{i=1}^{n} \sum_{j=1}^{m} f(x_i, y_j) \Delta x \Delta y \]</div><p class="mb-6">For the region defined by \( a \le x \le b \) and \( c \le y \le d \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \int_{a}^{b} \int_{c}^{d} f(x,y) \, dy \, dx = \int_{a}^{b} \int_{c}^{d} f(x,y) \, dA \]</div><p class="mb-6">Volume of box: \( f(x,y) \, dy \, dx = f(x,y) \, dx \, dy \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{c}^{d} \int_{a}^{b} f(x,y) \, dx \, dy \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="font-bold text-red-700">If the region is rectangular (\( a \le x \le b \), \( c \le y \le d \)) then the order does NOT matter.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Evaluating a Double Integral</h1><div class="grid-layout"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} \int_{0}^{2} (3 - x - y) \, dy \, dx \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a rectangle in the first quadrant with vertices at (0,0), (1,0), (1,2), and (0,2).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-4.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a rectangle in the first quadrant with vertices at (0,0), (1,0), (1,2), and (0,2)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a rectangle in the first quadrant with vertices at (0,0), (1,0), (1,2), and (0,2).
+                  </figcaption>
+                </figure>
+              </div><p class="mb-6">Region bounds: \( 0 \le y \le 2 \) and \( 0 \le x \le 1 \).</p><h2 class="text-2xl font-bold mt-10 mb-4">Basic Idea: Work Inside-Out</h2><h3 class="text-xl font-bold mt-8 mb-4">Inner Integral:</h3><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{2} (3 - x - y) \, dy \]</div><p class="mb-6">Note: In this step, \( x \) is treated as a <strong>constant</strong>, and \( y \) is the <strong>"live" variable</strong> (others are constants).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \left[ 3y - xy - \frac{1}{2}y^2 \right]_{y=0}^{y=2} = 6 - 2x - 2 = 4 - 2x \]</div><h3 class="text-xl font-bold mt-8 mb-4">Outside Integral:</h3><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} (4 - 2x) \, dx = \left[ 4x - x^2 \right]_{x=0}^{x=1} = 3 \]</div><div class="notebox border-2 border-slate-900 p-4 inline-block font-bold text-xl">3</div></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-6">Double Integrals over Rectangular Regions</h1><p class="mb-6">This is a rectangular region, order doesn't matter.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{2} \int_{0}^{1} (3 - x - y) \, dx \, dy \]</div><section><h2 class="text-2xl font-bold mb-4">Step 1: Inside Integral</h2><p class="mb-4">Inside: \( \int_{0}^{1} (3 - x - y) \, dx \) <span class="text-red-600 ml-2">others are constants</span></p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = 3x - \frac{1}{2}x^2 - yx \Big|_{x=0}^{x=1} = 3 - \frac{1}{2} - y = \frac{5}{2} - y \]</div></section><section><h2 class="text-2xl font-bold mb-4">Step 2: Outside Integral</h2><p class="mb-4">Outside:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{2} (\frac{5}{2} - y) \, dy = \frac{5}{2}y - \frac{1}{2}y^2 \Big|_{y=0}^{y=2} = 5 - 2 = 3 \]</div></section><div class="grid-layout"><section><h2 class="text-2xl font-bold mb-4">Interpretation</h2><p class="mb-6">Interpretation: volume under \( z = 3 - x - y \) above \( 0 \le x \le 1 \), \( 0 \le y \le 2 \).</p></section><figure class="my-8">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a plane intersecting axes at (3,0,0), (0,3,0), and (0,0,3) with a rectangular region highlighted.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-5.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a plane intersecting axes at (3,0,0), (0,3,0), and (0,0,3) with a rectangular region highlighted." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a plane intersecting axes at (3,0,0), (0,3,0), and (0,0,3) with a rectangular region highlighted.
+                  </figcaption>
+                </figure>
+              </figure></div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-6">Example: Double Integral with Substitution</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} \int_{0}^{2} y^5 x^2 e^{x^3 y^3} \, dx \, dy \]</div><section><h2 class="text-2xl font-bold mb-4">Step 1: Inside Integral</h2><p class="mb-4">Inside: \( \int_{0}^{2} y^5 x^2 e^{x^3 y^3} \, dx \) <span class="text-red-600 ml-2">y is constant</span></p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = y^5 \int_{0}^{2} x^2 e^{y^3 x^3} \, dx \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Substitution:</p><p>\( u = y^3 x^3 \)</p><p>\( du = 3y^3 x^2 \, dx \)</p><p>\( x^2 \, dx = \frac{1}{3y^3} \, du \)</p></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = y^5 \int_{x=0}^{x=2} e^u \cdot \frac{1}{3y^3} \, du = \frac{y^5}{3y^3} \int_{x=0}^{x=2} e^u \, du \]\[ = \frac{1}{3} y^2 (e^u \Big|_{x=0}^{x=2}) = \frac{1}{3} y^2 (e^{y^3 x^3} \Big|_{x=0}^{x=2}) \]\[ = \frac{1}{3} y^2 e^{8y^3} - \frac{1}{3} y^2 \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section class="mb-10"><p class="mb-6">outside: </p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} (\frac{1}{3} y^2 e^{8y^3} - \frac{1}{3} y^2) dy \]</div><p></p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \underbrace{\int_{0}^{1} \frac{1}{3} y^2 e^{8y^3} dy}_{\begin{matrix} u = 8y^3 \\ du = 24y^2 dy \\ \vdots \end{matrix}} - \underbrace{\int_{0}^{1} \frac{1}{3} y^2 dy}_{easy} = \dots = \begin{array}{|c|} \hline \frac{1}{72} e^8 - \frac{1}{8} \\ \hline \end{array} \]</div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">what if we had reversed the order?</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{2} \int_{0}^{1} y^5 x^2 e^{x^3 y^3} dy dx \]</div><p class="mb-6">inside: </p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} y^5 x^2 e^{x^3 y^3} dy \]</div><p></p><p class="italic text-slate-700 mb-4">x is constant</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = x^2 \int_{0}^{1} y^5 e^{x^3 y^3} dy \]</div><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>by parts</p><p>\[ uv - \int v du \]</p><p>\[ u = y^5 \quad dv = e^{x^3 y^3} dy \]</p><p>etc</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section class="mb-10"><p class="mb-6">recall if \( y = f(x) \), \( a \le x \le b \)</p><p class="mb-6">then the average value of \( f(x) \) over \( a \le x \le b \) is</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f_{avg} = \frac{1}{b-a} \int_{a}^{b} f(x) dx \]</div><p class="mb-6">because \( (b-a) f_{avg} = \int_{a}^{b} f(x) dx \)</p><div class="grid-layout">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Two coordinate graphs: one showing a rectangle area and one showing the area under a curve f(x) from a to b.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-18-6.webp" loading="lazy" decoding="async" alt="Two coordinate graphs: one showing a rectangle area and one showing the area under a curve f(x) from a to b." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Two coordinate graphs: one showing a rectangle area and one showing the area under a curve f(x) from a to b.
+                  </figcaption>
+                </figure>
+              </div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">same idea for \( z = f(x,y) \)</h2><p class="mb-6">\( a \le x \le b \) \( c \le y \le d \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ f_{avg} = \frac{1}{A} \int_{a}^{b} \int_{c}^{d} f(x,y) dy dx = \frac{1}{A} \int_{c}^{d} \int_{a}^{b} f(x,y) dx dy \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \frac{1}{A} \iint_{R} f(x,y) dA \]</div><p class="italic text-slate-700">A = area of \( [a,b] \times [c,d] \)</p><p class="italic text-slate-700">R = region we integrate over</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-8">Example: Changing Order of Integration</h1><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} \int_{0}^{\pi/3} x^2 \cos(xy) \, dx \, dy \]</div><p class="mb-6">Order as given, inside:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{\pi/3} x^2 \cos(xy) \, dx \]</div><p class="italic text-slate-700 mb-4">Note: \( y \) is constant</p><p class="mb-6">This requires two rounds of integration by parts. It is not "easy".</p></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Try Switching Order</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{\pi/3} \int_{0}^{1} x^2 \cos(xy) \, dy \, dx \]</div><div class="grid-layout"><p class="font-bold mb-2">Inside:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} x^2 \cos(xy) \, dy \]</div></div><p class="italic text-slate-700 mb-4">Note: \( x \) is constant</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = x^2 \sin(xy) \cdot \frac{1}{x} \Big|_{y=0}^{y=1} = x \sin x \]</div><div class="grid-layout"><p class="font-bold mb-2">Outside:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{\pi/3} x \sin x \, dx \]</div></div><p class="mb-6">This requires only one round of integration by parts.</p></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

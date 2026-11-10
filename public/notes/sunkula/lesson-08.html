@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 261 - Lesson 8: Length of Curves and Curvature</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\(', '\)']],
+                displayMath: [['\[', '\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        h3 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 8px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        h4 { 
+            color: #34495e; 
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 25px;
+            font-size: 1.3em;
+        }
+        h5 { 
+            color: #5a6c7d; 
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        
+        .definition {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .theorem {
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #007bff;
+        }
+        
+        .important {
+            background-color: #d1ecf1;
+            padding: 15px;
+            border: 1px solid #17a2b8;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #17a2b8;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .visual-desc {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-left: 4px solid #6c757d;
+            font-style: italic;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .solution {
+            background-color: #f0f8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #dee2e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        
+        figcaption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #3498db;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson8.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+
+<h3>MA 261 - Lesson 8: Length of Curves (14.4) and Curvature (14.5)</h3>
+
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/lesson-08-1.webp" loading="lazy" decoding="async" alt="Page 1: Lesson title page">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<p>This lesson covers sections 14.4 (Length of Curves) and 14.5 (Curvature) from the textbook.</p>
+
+<h4>Today's Topics</h4>
+<ul>
+    <li>Arc length</li>
+    <li>Arc length parametrization</li>
+    <li>Curvature</li>
+</ul>
+
+<p><strong>Next:</strong> Functions of several variables</p>
+
+<div class="important">
+    <p><strong>Office Hours:</strong></p>
+    <ul>
+        <li>Monday, Friday: 9:45 PM – 11:00 PM</li>
+        <li>Thursday: 11:00 AM – 12:00 PM</li>
+    </ul>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/lesson-08-2.webp" loading="lazy" decoding="async" alt="Page 2: Warmup problems with vectors">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Warmup</h4>
+
+<div class="example">
+    <h5>Problem 1</h5>
+    <p>Given vectors \(\vec{u}\), \(\vec{v}\), and \(\vec{w}\) as shown in the diagram, find \(\vec{w} - \vec{u} = \vec{v}\).</p>
+    
+    <div class="visual-desc">
+        <p><strong>Diagram Description:</strong> A coordinate system showing three vectors. Vector \(\vec{u}\) points from the origin in one direction, vector \(\vec{v}\) forms another direction, and vector \(\vec{w}\) is shown as the resultant such that \(\vec{w} - \vec{u} = \vec{v}\).</p>
+    </div>
+</div>
+
+<div class="example">
+    <h5>Problem 2</h5>
+    <p>Given \(F(x) = \int_a^x f(t)\,dt\).</p>
+    
+    <div class="solution">
+        
+        <p>By the Fundamental Theorem of Calculus:</p>
+        \[F'(x) = f(x)\]
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/lesson-08-3.webp" loading="lazy" decoding="async" alt="Page 3: Review of arc length from Calculus 2">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Review: Arc Length (from Calc 2)</h4>
+
+<p>For a function \(y = f(x)\) with \(a \leq x \leq b\), the arc length formula is:</p>
+
+\[\text{Arc Length} = \int_a^b \sqrt{1 + \left(\frac{dy}{dx}\right)^2}\,dx\]
+
+<div class="example">
+    <h5>Example: \(y = x^2\), \(0 \leq x \leq 1\)</h5>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>First, compute \(\frac{dy}{dx} = 2x\)</p>
+        
+        <p>Then:</p>
+        \[\text{Arc length} = \int_0^1 \sqrt{1 + (2x)^2}\,dx = \int_0^1 \sqrt{1 + 4x^2}\,dx\]
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A coordinate plane showing the parabola \(y = x^2\) from \(x = 0\) to \(x = 1\). The curve starts at the origin and rises to the point (1, 1).</p>
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/lesson-08-4.webp" loading="lazy" decoding="async" alt="Page 4: Parametrizing the curve">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<p>For \(y = x^2\) with \(0 \leq x \leq 1\), we found:</p>
+\[\text{Arc length} = \int_0^1 \sqrt{1+4x^2}\,dx\]
+
+<h4>Parametrize the Curve</h4>
+<p>We can parametrize this curve as:</p>
+\[\vec{r}(t) = \langle t, t^2 \rangle, \quad 0 \leq t \leq 1\]
+
+<p>Then \(\vec{r}'(t) = \langle 1, 2t \rangle\)</p>
+
+<p>And \(|\vec{r}'(t)| = \sqrt{1 + 4t^2}\)</p>
+
+<p>Therefore, the arc length becomes:</p>
+\[\text{Arc length} = \int_0^1 |\vec{r}'(t)|\,dt = \int_0^1 \sqrt{1+4t^2}\,dt\]
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/lesson-08-5.webp" loading="lazy" decoding="async" alt="Page 5: Arc length formula for parametrized curves">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="theorem">
+    <p><strong>Arc Length Formula:</strong></p>
+    <p>For a parametrized curve in 3D space:</p>
+    \[\vec{r}(t) = \langle f(t), g(t), h(t) \rangle\]
+    
+    <p>The arc length of the curve from \(t = a\) to \(t = b\) is:</p>
+    \[\int_a^b |\vec{r}'(t)|\,dt\]
+</div>
+
+
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/lesson-08-6.webp" loading="lazy" decoding="async" alt="Page 6: Vector visualization and arc length">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<p>We can interpret the arc length formula in two ways:</p>
+
+<div class="important">
+    <p><strong>As a Vector:</strong></p>
+    \[\vec{r}(b) - \vec{r}(a)\]
+    <p>This represents the displacement vector from the starting point \(\vec{r}(a)\) to the ending point \(\vec{r}(b)\).</p>
+</div>
+
+<div class="important">
+    <p><strong>As a Scalar (Length):</strong></p>
+    \[\int_a^b |\vec{r}'(t)|\,dt\]
+    <p>This represents the actual length of the curve traveled from \(t = a\) to \(t = b\).</p>
+</div>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> Two curved paths are shown. The first (in red) shows a vector arc with endpoints labeled, demonstrating \(\vec{r}(a)\) and \(\vec{r}(b)\) with notation "(0,0,0)" at the origin. The second (in purple) shows the length of the curve from \(t = a\) to \(t = b\), emphasizing the scalar nature of arc length.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/lesson-08-7.webp" loading="lazy" decoding="async" alt="Page 7: Summary of vector notation">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Summary</h4>
+
+<p>For a curve \(\vec{r}(t) = \langle f(t), g(t), h(t) \rangle\) in 3D space:</p>
+
+<div class="definition">
+    <p><strong>Displacement Vector:</strong></p>
+    \[\int_a^b \vec{r}'(t)\,dt\]
+    <p>This represents the vector from \(\vec{r}(a)\) to \(\vec{r}(b)\).</p>
+</div>
+
+<div class="definition">
+    <p><strong>Arc Length:</strong></p>
+    \[\int_a^b |\vec{r}'(t)|\,dt\]
+    <p>This represents the length of the curve from \(t = a\) to \(t = b\).</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/lesson-08-8.webp" loading="lazy" decoding="async" alt="Page 8: Example computing arc length">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+    <h5>Example: Compute arc length</h5>
+    <p>Given \(\vec{r}(t) = \langle \cos t, \sin t \rangle\), compute \(\int_0^{\pi/2} |\vec{r}'(t)|\,dt\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>First, find the derivative:</p>
+        \[\vec{r}'(t) = \langle -\sin t, \cos t \rangle\]
+        
+        <p>Evaluate at \(t = \frac{\pi}{2}\):</p>
+        \[\vec{r}\left(\frac{\pi}{2}\right) - \vec{r}(0) = \langle 0,1 \rangle - \langle 1,0 \rangle = \langle -1, 1 \rangle\]
+        
+        <p>Compute the magnitude:</p>
+        \[|\vec{r}'(t)| = \sqrt{\sin^2 t + \cos^2 t} = 1\]
+        
+        <p>Therefore:</p>
+        \[\int_0^{\pi/2} |\vec{r}'(t)|\,dt = \int_0^{\pi/2} 1\,dt = \frac{\pi}{2}\]
+    </div>
+    
+    <div class="visual-desc">
+        <p><strong>Graph Description:</strong> A unit circle centered at the origin with coordinate axes shown. The curve traces from \((1,0)\) to \((0,1)\), representing the first quarter of the circle (from \(t=0\) to \(t=\pi/2\)). The position vectors \(\vec{r}(0)\) and \(\vec{r}(\pi/2)\) are labeled.</p>
+    </div>
+    
+    <p><strong>Interpretation:</strong> The length of the curve from \(t = 0\) to \(t = \frac{\pi}{2}\) is \(\frac{\pi}{2}\), which is exactly one quarter of the circle's circumference.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/lesson-08-9.webp" loading="lazy" decoding="async" alt="Page 9: Example with 3D helix">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+    <h5>Example: Compute arc length from \(t=0\) to \(t=2\pi\)</h5>
+    <p>Given \(\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle\), compute the arc length.</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>Find the derivative:</p>
+        \[\vec{r}'(t) = \langle -\sin t, \cos t, 2 \rangle\]
+        
+        <p>Compute the magnitude:</p>
+        \[|\vec{r}'(t)| = \sqrt{\sin^2 t + \cos^2 t + 4} = \sqrt{1 + 4} = \sqrt{5}\]
+        
+        <p>Calculate the arc length:</p>
+        \[\text{Arc length} = \int_0^{2\pi} \sqrt{5}\,dt = \sqrt{5} \cdot 2\pi = 2\pi\sqrt{5}\]
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/lesson-08-10.webp" loading="lazy" decoding="async" alt="Page 10: Finding arc length formula">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+    <h5>Find a formula to compute arc length from 0 to \(t\)</h5>
+    <p>Given \(\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle\)</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>From the previous example, we know \(|\vec{r}'(u)| = \sqrt{5}\)</p>
+        
+        <p>The arc length from 0 to \(t\) is:</p>
+        \[s(t) = \int_0^t |\vec{r}'(u)|\,du = \int_0^t \sqrt{5}\,du = \sqrt{5}t\]
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 11</h3>
+<figure>
+    <img src="img/lesson-08-11.webp" loading="lazy" decoding="async" alt="Page 11: Arc length function definition">
+    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Arc Length Function</h4>
+
+<div class="definition">
+    <p><strong>Definition:</strong> For a curve \(\vec{r}(t) = \langle f(t), g(t), h(t) \rangle\), we define \(s(t)\) as the <strong>arc length function</strong>:</p>
+    
+    <p><strong>Input:</strong> \(t\)</p>
+    <p><strong>Output:</strong> Arc length from \(a\) to \(t\)</p>
+    
+    \[s(t) = \int_a^t |\vec{r}'(u)|\,du\]
+</div>
+
+<div class="important">
+    <p><strong>Note:</strong> By the Fundamental Theorem of Calculus:</p>
+    \[s'(t) = |\vec{r}'(t)|\]
+</div>
+
+
+</div>
+
+<hr>
+
+<h3>Page 12</h3>
+<figure>
+    <img src="img/lesson-08-12.webp" loading="lazy" decoding="async" alt="Page 12: Arc length parametrization">
+    <figcaption><strong>Original handwritten page 12</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Arc Length Parametrization</h4>
+
+<p>For \(\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle\):</p>
+<p>We found \(s(t) = \int_0^t |\vec{r}'(u)|\,du = \sqrt{5}t\)</p>
+
+<p>This gives us the arc length measured from \(t = 0\).</p>
+
+<h4>Reparametrization</h4>
+<p>Using this relationship, we can reparametrize \(\vec{r}\) with \(s\) as the new parameter.</p>
+
+<p>Since \(s = \sqrt{5}t\), we have \(t = \frac{s}{\sqrt{5}}\)</p>
+
+<p>Substituting this into \(\vec{r}(t)\):</p>
+\[\vec{r}(s) = \left\langle \cos\left(\frac{s}{\sqrt{5}}\right), \sin\left(\frac{s}{\sqrt{5}}\right), \frac{2s}{\sqrt{5}} \right\rangle\]
+
+<div class="definition">
+    <p><strong>Arc Length Parametrization:</strong> A parametrization where the parameter represents the arc length along the curve measured from a starting point.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 13</h3>
+<figure>
+    <img src="img/lesson-08-13.webp" loading="lazy" decoding="async" alt="Page 13: Comparison of regular vs arc length parametrization">
+    <figcaption><strong>Original handwritten page 13</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Regular Parametrization vs Arc Length Parametrization</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>Regular Parametrization</th>
+            <th>Arc Length Parametrization</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Parameter = "time"</td>
+            <td>Parameter = length of curve</td>
+        </tr>
+        <tr>
+            <td>Given \(t\), \(\vec{r}(t)\) represents position on the curve at time \(t\)</td>
+            <td>Given \(s\), \(\vec{r}(s)\) represents position on curve when you travel \(s\) units from start</td>
+        </tr>
+        <tr>
+            <td>Speed = \(|\vec{r}'(t)|\) (varies)</td>
+            <td>Speed = \(|\vec{r}'(s)| = 1\)</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="important">
+    <p><strong>Key Property:</strong> In arc length parametrization, the speed is always constant and equal to 1.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 14</h3>
+<figure>
+    <img src="img/lesson-08-14.webp" loading="lazy" decoding="async" alt="Page 14: Verifying speed equals 1">
+    <figcaption><strong>Original handwritten page 14</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Verification: Speed = \(|\vec{r}'(s)| = 1\) in Arc Length Parametrization</h4>
+
+<div class="example">
+    <p>For \(\vec{r}(s) = \left\langle \cos\left(\frac{s}{\sqrt{5}}\right), \sin\left(\frac{s}{\sqrt{5}}\right), \frac{2s}{\sqrt{5}} \right\rangle\)</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        <p>Find the derivative with respect to \(s\):</p>
+        \[\vec{r}'(s) = \left\langle -\frac{1}{\sqrt{5}}\sin\left(\frac{s}{\sqrt{5}}\right), \frac{1}{\sqrt{5}}\cos\left(\frac{s}{\sqrt{5}}\right), \frac{2}{\sqrt{5}} \right\rangle\]
+        
+        <p>Compute the magnitude:</p>
+        \[|\vec{r}'(s)| = \sqrt{\frac{1}{5}\sin^2\left(\frac{s}{\sqrt{5}}\right) + \frac{1}{5}\cos^2\left(\frac{s}{\sqrt{5}}\right) + \frac{4}{5}}\]
+        
+        \[= \sqrt{\frac{1}{5}\left(\sin^2\left(\frac{s}{\sqrt{5}}\right) + \cos^2\left(\frac{s}{\sqrt{5}}\right)\right) + \frac{4}{5}}\]
+        
+        \[= \sqrt{\frac{1}{5} + \frac{4}{5}} = \sqrt{1} = 1\]
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 15</h3>
+<figure>
+    <img src="img/lesson-08-15.webp" loading="lazy" decoding="async" alt="Page 15: Example reparametrization problem">
+    <figcaption><strong>Original handwritten page 15</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+    <h5>Example: Reparametrize with respect to arc length</h5>
+    <p>Reparametrize \(\vec{r}(t) = \langle \cos t, \sin t, 2t \rangle\) with respect to arc length as measured from \(\langle -1, 0, 2\pi \rangle\) in the \(t\) direction (\(t\) increasing).</p>
+    
+    <p><strong>Note:</strong> At \(t = \pi\), we have \(\vec{r}(\pi) = \langle -1, 0, 2\pi \rangle\), which is the starting point.</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <h5>Step 1: Find the arc length function</h5>
+        <p>Compute \(\vec{r}'(t) = \langle -\sin t, \cos t, 2 \rangle\)</p>
+        
+        <p>Find the magnitude:</p>
+        \[|\vec{r}'(t)| = \sqrt{\sin^2 t + \cos^2 t + 4} = \sqrt{5}\]
+        
+        <p>The arc length function from \(\pi\) is:</p>
+        \[s(t) = \int_\pi^t \sqrt{5}\,du = \sqrt{5}(t - \pi)\]
+        
+        <h5>Step 2: Write \(t\) in terms of \(s\)</h5>
+        <p>From \(s = \sqrt{5}(t - \pi)\), we get:</p>
+        \[t = \frac{s}{\sqrt{5}} + \pi\]
+        
+        <h5>Step 3: Plug into \(\vec{r}(t)\)</h5>
+        \[\vec{r}(s) = \left\langle \cos\left(\frac{s}{\sqrt{5}} + \pi\right), \sin\left(\frac{s}{\sqrt{5}} + \pi\right), 2\left(\frac{s}{\sqrt{5}} + \pi\right) \right\rangle\]
+        
+        \[= \left\langle \cos\left(\frac{s}{\sqrt{5}} + \pi\right), \sin\left(\frac{s}{\sqrt{5}} + \pi\right), \frac{2s}{\sqrt{5}} + \pi \right\rangle\]
+    </div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 16</h3>
+<figure>
+    <img src="img/lesson-08-16.webp" loading="lazy" decoding="async" alt="Page 16: Introduction to curvature">
+    <figcaption><strong>Original handwritten page 16</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Curvature: How Much a Curve is Bending</h4>
+
+<div class="visual-desc">
+    <p><strong>Diagram Description:</strong> Three curves are shown to illustrate different amounts of bending:</p>
+    <ul>
+        <li><strong>Left (straight line):</strong> A straight diagonal line with tangent vectors pointing in the same direction. Label: "No Bending"</li>
+        <li><strong>Middle (circle):</strong> A perfect circle with evenly distributed tangent vectors around the circumference. Label: "Bends Uniformly"</li>
+        <li><strong>Right (parabola):</strong> A U-shaped parabola with tangent vectors showing less bending at the top and more bending at the bottom. Labels: "Bends less at top" and "Bends more at Bottom"</li>
+    </ul>
+</div>
+
+<div class="definition">
+    <p><strong>Curvature \(\kappa\):</strong> The magnitude of the rate of change of the unit tangent vector.</p>
+    
+    \[\kappa = \left|\frac{d\vec{T}}{ds}\right| = |\vec{T}'(s)|\]
+    
+    <p>where \(\vec{T}\) is the unit tangent vector and \(s\) is the arc length parameter.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 17</h3>
+<figure>
+    <img src="img/lesson-08-17.webp" loading="lazy" decoding="async" alt="Page 17: Alternative curvature formulas">
+    <figcaption><strong>Original handwritten page 17</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Other Formulae for Curvature</h4>
+
+<div class="theorem">
+    <p><strong>Curvature with arc length parameter:</strong></p>
+    \[\kappa = |\vec{T}'(s)| = |\vec{r}''(s)|\]
+    
+    <p>where \(s\) is the arc length parameter.</p>
+</div>
+
+<div class="theorem">
+    <p><strong>Curvature with general parameter \(t\):</strong></p>
+    \[\kappa = \frac{|\vec{T}'(t)|}{|\vec{r}'(t)|}\]
+    
+    <p>Using the chain rule: \(\frac{d\vec{T}}{dt} = \frac{d\vec{T}}{ds} \cdot \frac{ds}{dt}\)</p>
+    
+    <p>Since \(\frac{ds}{dt} = |\vec{r}'(t)|\), we get:</p>
+    \[\left|\frac{d\vec{T}}{dt}\right| = \left|\frac{d\vec{T}}{ds}\right| \cdot \left|\frac{ds}{dt}\right|\]
+</div>
+
+<div class="theorem">
+    <p><strong>Practical formula (most useful for computation):</strong></p>
+    \[\kappa = \frac{|\vec{r}'(t) \times \vec{r}''(t)|}{|\vec{r}'(t)|^3}\]
+    
+    <p>Proof of this formula is in the textbook.</p>
+</div>
+
+
+</div>
+
+<hr>
+
+<h3>Page 18</h3>
+<figure>
+    <img src="img/lesson-08-18.webp" loading="lazy" decoding="async" alt="Page 18: Example computing curvature">
+    <figcaption><strong>Original handwritten page 18</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<div class="example">
+    <h5>Example: Find curvature at \(t = 0\)</h5>
+    <p>Given \(\vec{r}(t) = \langle 3, -4t, 5t^2 \rangle\), find the curvature at \(t = 0\).</p>
+    
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        
+        <p>Find the first derivative:</p>
+        \[\vec{r}'(t) = \langle 0, -4, 10t \rangle\]
+        
+        <p>At \(t = 0\): \(\vec{r}'(0) = \langle 0, -4, 0 \rangle\)</p>
+        
+        <p>Find the second derivative:</p>
+        \[\vec{r}''(t) = \langle 0, 0, 10 \rangle\]
+        
+        <p>At \(t = 0\): \(\vec{r}''(0) = \langle 0, 0, 10 \rangle\)</p>
+        
+        <p>Compute the cross product:</p>
+        \[\vec{r}'(0) \times \vec{r}''(0) = \langle 0, -4, 0 \rangle \times \langle 0, 0, 10 \rangle = \langle -40, 0, 0 \rangle\]
+        
+        <p>Find the magnitudes:</p>
+        \[|\vec{r}'(0) \times \vec{r}''(0)| = \sqrt{1600} = 40\]
+        \[|\vec{r}'(0)| = \sqrt{16} = 4\]
+        \[|\vec{r}'(0)|^3 = 64\]
+        
+        <p>Calculate the curvature:</p>
+        \[\kappa = \frac{|\vec{r}' \times \vec{r}''|}{|\vec{r}'|^3} = \frac{40}{64} = \frac{5}{8}\]
+        
+        <p>Therefore, \(\kappa\) at \(t = 0\) is \(\frac{5}{8}\).</p>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

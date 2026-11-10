@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.3 Double Integrals in Polar Coordinates - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 20;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+            .grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 400px;
+                gap: 0 4rem;
+                align-items: start;
+            }
+            .grid-layout > *:not(figure) {
+                grid-column: 1;
+            }
+            .grid-layout > figure {
+                grid-column: 2;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2020%20%2816.3%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 20 (16.3).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-indigo-500 pb-2">16.3 Double Integrals in Polar Coordinates</h1><section class="mb-10"><p class="text-lg mb-6">In rectangular coordinates, a point is located as 
+<span class="font-semibold">(x, y)</span>.</p><div class="grid-layout flex flex-wrap items-center gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Cartesian plot with a point at (3, 4).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-1.webp" loading="lazy" decoding="async" alt="Cartesian plot with a point at (3, 4)." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Cartesian plot with a point at (3, 4).
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">Polar Coordinates</h2><p class="mb-6">Polar: <span class="italic text-indigo-700 font-bold">(r, θ)</span></p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li><span class="font-semibold">r:</span> displacement from origin</li><li><span class="font-semibold">θ:</span> angle of line thru origin and the point</li></ul><div class="grid-layout flex flex-wrap items-center gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Polar plot showing a point at (1, pi/4) with angle and radius labeled.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-2.webp" loading="lazy" decoding="async" alt="Polar plot showing a point at (1, pi/4) with angle and radius labeled." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Polar plot showing a point at (1, pi/4) with angle and radius labeled.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">Conversion</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm"><p class="text-xl font-mono">\[x^2 + y^2 = r^2\]</p><p class="text-xl font-mono">\[x = r \cos \theta\]</p><p class="text-xl font-mono">\[y = r \sin \theta\]</p></div></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">In Cartesian</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[\iint_R f(x,y) dA\]</div><p class="italic text-slate-600 mb-4">dA = area of small patch of region R from change in x and change in y</p><div class="grid-layout flex flex-wrap items-center gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram of a region R with a differential area element dA = dx dy.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-3.webp" loading="lazy" decoding="async" alt="Diagram of a region R with a differential area element dA = dx dy." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram of a region R with a differential area element dA = dx dy.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><div class="notebox border-2 border-indigo-200 p-4 rounded-lg bg-indigo-50"><p class="font-bold text-center">dA = dx dy or dy dx</p></div></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">In Polar</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[\iint_R f(r, \theta) dA\]</div><p class="italic text-slate-600 mb-6">dA = area of a small patch of R from change in r, θ</p><div class="grid-layout flex flex-wrap items-center gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Polar sector showing a differential area element dA.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-4.webp" loading="lazy" decoding="async" alt="Polar sector showing a differential area element dA." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Polar sector showing a differential area element dA.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="font-semibold text-indigo-800">Note: this is not a rectangle</p></div></div></section><section class="mb-10"><h2 class="text-2xl font-bold text-slate-800 mb-4">Area of this?</h2><div class="grid-layout flex flex-wrap items-center gap-8 mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Close-up of a polar area element with curved sides r1 d&amp;theta; and r2 d&amp;theta;.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-5.webp" loading="lazy" decoding="async" alt="Close-up of a polar area element with curved sides r1 d&amp;theta; and r2 d&amp;theta;." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Close-up of a polar area element with curved sides r1 dθ and r2 dθ.
+                  </figcaption>
+                </figure>
+              </div></div><p class="mb-6">When we integrate we sum up infinitely-many of these so <span class="italic">dθ</span> is small and <span class="italic">dr</span> is small → <span class="font-mono">r<sub>1</sub> ≈ r<sub>2</sub> = r</span></p><div class="flex items-center gap-6 mb-10">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Rectangular approximation of the polar area element with dimensions dr and r d&amp;theta;.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-6.webp" loading="lazy" decoding="async" alt="Rectangular approximation of the polar area element with dimensions dr and r d&amp;theta;." class="max-w-full h-auto" data-figure-id="fig_6">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Rectangular approximation of the polar area element with dimensions dr and r dθ.
+                  </figcaption>
+                </figure>
+              <div class="notebox border-4 border-indigo-600 p-6 rounded-xl bg-white shadow-lg"><p class="text-2xl font-bold">area is <span class="text-indigo-700">dA = r dθ dr = r dr dθ</span></p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Double Integral in Cartesian Coordinates</h1><section class="mb-10"><p class="mb-6">Evaluate the double integral:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \iint_R \cos(x^2 + y^2) \, dA \]</div><p class="mb-6">where \( R \) is the region defined as a circle centered at \( (0,0) \) with radius 2 in the 3rd quadrant.</p></section><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1"><h2 class="text-xl font-bold mb-4">Region Analysis</h2><p class="mb-4">The boundary of the circle is given by:</p><div class="my-4 font-mono text-indigo-700">\[ x^2 + y^2 = 4 \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>Upper half: \( y = \sqrt{4 - x^2} \)</li><li>Lower half: \( y = -\sqrt{4 - x^2} \)</li></ul></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph of a circle with radius 2, with the third quadrant region shaded.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-7.webp" loading="lazy" decoding="async" alt="Coordinate graph of a circle with radius 2, with the third quadrant region shaded." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph of a circle with radius 2, with the third quadrant region shaded.
+                  </figcaption>
+                </figure>
+              </div></div><section class="mb-10"><h2 class="text-xl font-bold mb-4">Setting up as a Type I Region</h2><p class="mb-6">The region \( R \) can be expressed in Cartesian coordinates as:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ R = \{ (x, y) : -2 \le x \le 0, -\sqrt{4 - x^2} \le y \le 0 \} \]</div><p class="mb-6">The integral in Cartesian coordinates is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{-2}^{0} \int_{-\sqrt{4 - x^2}}^{0} \cos(x^2 + y^2) \, dy \, dx \]</div><div class="notebox bg-amber-50 border border-amber-200 p-4 rounded-lg text-amber-900 font-semibold">This is hard to evaluate.</div><p class="mt-6 font-bold text-indigo-600">Try this in polar coordinates.</p></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-8">Conversion to Polar Coordinates</h1><section class="mb-10"><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1"><p class="mb-6">In polar coordinates, the region \( R \) (the 3rd quadrant of a circle with radius 2) is defined as:</p><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">\[ R = \{ (r, \theta) : 0 \le r \le 2, \pi \le \theta \le \frac{3\pi}{2} \} \]</div></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Polar plot showing the third quadrant region from pi to 3 pi over 2 with radius 2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-8.webp" loading="lazy" decoding="async" alt="Polar plot showing the third quadrant region from pi to 3 pi over 2 with radius 2." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Polar plot showing the third quadrant region from pi to 3 pi over 2 with radius 2.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><h2 class="text-xl font-bold mb-4">Integral Transformation</h2><p class="mb-4">Recall the polar substitutions:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( x^2 + y^2 \) in polar is \( r^2 \)</li><li>\( dA \) in polar is \( r \, dr \, d\theta \)</li></ul><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \iint_R \cos(x^2 + y^2) \, dA = \int_{\pi}^{\frac{3\pi}{2}} \int_{0}^{2} \cos(r^2) \, r \, dr \, d\theta \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \int_{\pi}^{\frac{3\pi}{2}} \int_{0}^{2} r \cos(r^2) \, dr \, d\theta \]</div></section><section class="mb-10"><h2 class="text-xl font-bold mb-4">Evaluation</h2><p class="mb-4">Using u-substitution for the inner integral:</p><div class="notebox bg-slate-50 border border-slate-200 p-4 rounded-lg mb-6">\[ u = r^2, \quad du = 2r \, dr \]</div><p class="mb-4">Continuing the calculation:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-indigo-200 shadow-sm text-center text-2xl font-bold">\[ = \dots = \frac{\pi}{4} (\sin 4) \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Double Integral in Cartesian Coordinates</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{1} \int_{\sqrt{x-x^2}}^{\sqrt{1-x^2}} (x^2 + y^2)^{3/2} \, dy \, dx \]</div><p class="mb-6">In Cartesian, this is terrible. Let's examine the region \( R \):</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p class="mb-4">\( 0 \le x \le 1 \)</p><p class="mb-4">\( \sqrt{x-x^2} \le y \le \sqrt{1-x^2} \)</p></div><h2 class="text-xl font-bold mb-4">Analyzing the Upper Bound</h2><p class="mb-6">\( y = \sqrt{1-x^2} \) is the upper half circle centered at the origin with radius 1.</p><h2 class="text-xl font-bold mb-4">Analyzing the Lower Bound</h2><p class="mb-4">\( y = \sqrt{x-x^2} \)</p><p class="mb-4">\( y^2 = x - x^2 \)</p><p class="mb-4">\( x^2 - x + y^2 = 0 \)</p><p class="mb-4">\( (x - \frac{1}{2})^2 + y^2 = \frac{1}{4} \)</p><p class="mb-6">This is the upper half of a circle with radius \( \frac{1}{2} \) centered at \( (\frac{1}{2}, 0) \).</p></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Coordinate graph showing a large blue circle and a smaller green circle. Shaded region R is between them.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-9.webp" loading="lazy" decoding="async" alt="Coordinate graph showing a large blue circle and a smaller green circle. Shaded region R is between them." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Coordinate graph showing a large blue circle and a smaller green circle. Shaded region R is between them.
+                  </figcaption>
+                </figure>
+              </div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Rewrite \( R \) in Polar</h2></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 bg-white text-slate-900 font-sans leading-relaxed"><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Graph in the first quadrant showing region R bounded by two circular arcs with a radial line segment.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-10.webp" loading="lazy" decoding="async" alt="Graph in the first quadrant showing region R bounded by two circular arcs with a radial line segment." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Graph in the first quadrant showing region R bounded by two circular arcs with a radial line segment.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><h2 class="text-xl font-bold mb-4">Determining Bounds</h2><p class="mb-4">Bounds for \( \theta \) is easy: \( 0 \le \theta \le \pi/2 \)</p><p class="mb-6">Bounds for \( r \): draw a line from origin to outer edge of \( R \) and see the portion of line inside \( R \).</p></div></div><div class="my-8 p-6 bg-slate-50 border border-slate-200 rounded-xl"><p class="text-center font-bold">Small circle \( \le r \le \) big circle</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><section><h3>Small Circle: Equation in Polar</h3><p class="mb-2">\( y^2 = x - x^2 \)</p><p class="mb-2">\( x^2 + y^2 = x \)</p><p class="mb-2">\( r^2 = r \cos \theta \)</p><div class="notebox border-2 border-green-600 p-2 inline-block font-bold">\( r = \cos \theta \)</div></section><section><h3>Big Circle: Equation in Polar</h3><div class="notebox border-2 border-green-600 p-2 inline-block font-bold">\( r = 1 \)</div></section></div><div class="mt-12 p-6 border-4 border-blue-600 rounded-xl shadow-lg"><p class="text-xl font-mono">\( R = \{ (r, \theta), \quad 0 \le \theta \le \pi/2, \quad \cos \theta \le r \le 1 \} \)</p></div><div class="mt-4 text-red-700 italic font-bold"><p>Integrate this first because not bounded by constants.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Integral in Polar Coordinates</h1><p class="mb-6">The following integral is evaluated by converting to polar coordinates. Note that the term 
+<span class="italic">dA</span> is replaced by <span class="italic">r dr dθ</span> and the expression <span class="italic">x<sup>2</sup> + y<sup>2</sup></span> is replaced by <span class="italic">r<sup>2</sup></span>.</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \int_{0}^{\pi/2} \int_{\cos \theta}^{1} (r^2)^{3/2} \, r \, dr \, d\theta \]</div><p class="mb-6">Simplifying the integrand:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ = \int_{0}^{\pi/2} \int_{\cos \theta}^{1} r^4 \, dr \, d\theta = \dots = \begin{array}{|c|} \hline \frac{\pi}{10} - \frac{8}{75} \\ \hline \end{array} \]</div></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8">Example: Volume of a Solid</h1><section class="mb-10"><p class="mb-6"><span class="font-bold underline">Example</span>: Find the volume of the solid bounded above by <span class="italic text-indigo-700">z = 4 - x<sup>2</sup> - y<sup>2</sup></span> (a paraboloid) and below by <span class="italic text-indigo-700">z = 3</span> (a plane).</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><p class="mb-4">Integrate over <span class="italic">R</span> which is the "shadow" of the solid on the <span class="italic">xy</span>-plane.</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a paraboloid opening downwards from z=4, intersected by a plane at z=3.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-11.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a paraboloid opening downwards from z=4, intersected by a plane at z=3." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a paraboloid opening downwards from z=4, intersected by a plane at z=3.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-4">Finding the Region of Integration</h2><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1"><p class="mb-4">To find the circle radius, find the intersection of <span class="italic">z = 3</span> and <span class="italic">z = 4 - x<sup>2</sup> - y<sup>2</sup></span>:</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ 3 = 4 - x^2 - y^2 \]\[ x^2 + y^2 = 1 \]</div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D xy-plane showing a shaded unit circle labeled R, representing the projection of the solid.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-20-12.webp" loading="lazy" decoding="async" alt="2D xy-plane showing a shaded unit circle labeled R, representing the projection of the solid." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D xy-plane showing a shaded unit circle labeled R, representing the projection of the solid.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-4">Integration Bounds</h2><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>Bounds: \( 0 \le \theta \le 2\pi \)</li><li>Radius: \( 0 \le r \le 1 \)</li></ul><div class="border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">Integrate top (paraboloid) - bottom (plane z=3) over R.</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans">
+  <section class="mb-10">
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ (4 - x^2 - y^2) - (3) \]
+      \[ = 4 - r^2 - 3 = 1 - r^2 \]
+    </div>
+  </section>
+  <section>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+      \[ \int_{0}^{2\pi} \int_{0}^{1} (1 - r^2) r \, dr \, d\theta = \dots = \boxed{\frac{\pi}{2}} \]
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

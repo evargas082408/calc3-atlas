@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.7 Stokes' Theorem (part 1) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2034%20%2817.7-1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 34 (17.7-1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><h1 class="text-4xl font-black tracking-tight text-slate-900 mb-8 border-b-4 border-slate-900 pb-2">17.7 Stokes' Theorem (part 1)</h1><p class="text-lg mb-6">Stokes' Theorem allows us to trade the <span class="underline decoration-green-600 decoration-2">surface integral of the curl of vector field</span> for a <span class="underline decoration-green-600 decoration-2">line integral on the boundary</span> of the surface.</p><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10"><div class="space-y-4">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A green hemispherical surface S with a red boundary curve C outlining the open base.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-1.webp" loading="lazy" decoding="async" alt="A green hemispherical surface S with a red boundary curve C outlining the open base." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A green hemispherical surface S with a red boundary curve C outlining the open base.
+                  </figcaption>
+                </figure>
+              <p class="text-center font-semibold italic">Surface \(S\) and curve \(C\) outlining the open part.</p></div><div class="space-y-6"><p class="text-xl font-bold">The surface must be <span class="underline decoration-blue-600 decoration-2">open</span> for Stokes' Theorem (has a hole).</p><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A small green cup-like surface S with an open top boundary C.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-2.webp" loading="lazy" decoding="async" alt="A small green cup-like surface S with an open top boundary C." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A small green cup-like surface S with an open top boundary C.
+                  </figcaption>
+                </figure>
+              <p class="text-sm italic">cup w/o lid is open</p></div></div></div><div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700 bg-slate-50 py-4 rounded-r-lg"><p>Both the surface and the boundary curve are oriented; they obey the <strong>right-hand rule</strong>.</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 max-w-4xl mx-auto bg-white shadow-lg font-sans text-slate-800"><h2 class="text-3xl font-black tracking-tight text-slate-900 mt-10 mb-6">Surface oriented by the normal vector</h2><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10"><div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A green circular boundary curve C with counter-clockwise arrows and a red normal vector n pointing up.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-3.webp" loading="lazy" decoding="async" alt="A green circular boundary curve C with counter-clockwise arrows and a red normal vector n pointing up." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A green circular boundary curve C with counter-clockwise arrows and a red normal vector n pointing up.
+                  </figcaption>
+                </figure>
+              </div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm"><p class="mb-4">Align thumb of right hand w/ \(\vec{n}\). The other fingers naturally curl in the direction that is the <strong>positive orientation</strong> for the curve.</p><p class="text-center font-bold">boundary curve \(C\)</p></div></div><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-10"><div class="order-2 md:order-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A green bowl-shaped surface with a red normal vector n pointing downwards.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-4.webp" loading="lazy" decoding="async" alt="A green bowl-shaped surface with a red normal vector n pointing downwards." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A green bowl-shaped surface with a red normal vector n pointing downwards.
+                  </figcaption>
+                </figure>
+              </div><div class="order-1 md:order-2 space-y-4"><h3 class="text-2xl font-bold text-slate-900">Another way to orient both:</h3><p>Imagine walking along the boundary w/ head pointing toward positive normal, then the enclosed region is on your <strong>left</strong>.</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A green hemisphere with a person walking on the boundary curve, head aligned with the normal vector n.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-5.webp" loading="lazy" decoding="async" alt="A green hemisphere with a person walking on the boundary curve, head aligned with the normal vector n." class="max-w-full h-auto" data-figure-id="fig_5">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A green hemisphere with a person walking on the boundary curve, head aligned with the normal vector n.
+                  </figcaption>
+                </figure>
+              </div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><section class="mb-12"><div class="notebox border-2 border-blue-600 p-6 rounded-lg shadow-md mb-8"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-4">Stokes' Theorem</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center">\[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} \]</div><ul class="list-none space-y-2 ml-4"><li class="font-semibold">\( S \): Surface</li><li class="font-semibold">\( C \): boundary curve</li></ul></div><div class="my-8"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ d\vec{S} = \vec{n} dS \]\[ = (\vec{r}_u \times \vec{r}_v) dA \text{ or } (\vec{r}_v \times \vec{r}_u) dA \]</div><p class="italic text-slate-700 ml-4">whichever is the positive normal (convention: upward or outward unless otherwise stated)</p></div></section><section><h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-6">Why is \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} \]</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8"><div class="p-4 border-l-4 border-slate-300 bg-slate-50 rounded-r-lg"><p class="font-bold text-slate-900">\( \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} \)</p><p class="mt-2">accumulation of curl of vector field on surface</p></div><div class="p-4 border-l-4 border-slate-300 bg-slate-50 rounded-r-lg"><p class="font-bold text-slate-900">\( \oint_{C} \vec{F} \cdot d\vec{r} \)</p><p class="mt-2">circulation on boundary</p></div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><section class="mb-12"><h2 class="text-2xl font-black tracking-tight text-slate-900 mb-6">left side: \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} \]</h2><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10"><div class="space-y-4">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2x3 grid of squares with internal arrows showing circulation that cancels at common edges.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-6.webp" loading="lazy" decoding="async" alt="A 2x3 grid of squares with internal arrows showing circulation that cancels at common edges." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2x3 grid of squares with internal arrows showing circulation that cancels at common edges.
+                  </figcaption>
+                </figure>
+              <p class="font-medium">In each grid, we accumulate curl.</p><p class="font-medium">Along common edge \( \rightarrow \) cancellation of flow.</p></div><div class="space-y-4">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A single large square boundary with arrows showing net circulation along the outer perimeter.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-7.webp" loading="lazy" decoding="async" alt="A single large square boundary with arrows showing net circulation along the outer perimeter." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A single large square boundary with arrows showing net circulation along the outer perimeter.
+                  </figcaption>
+                </figure>
+              <div class="notebox p-4 bg-slate-50 border border-slate-200 rounded-lg"><p class="font-bold">just the flow along the boundary \( \rightarrow \) line integral</p><div class="text-2xl mt-2">\[ \oint_{C} \vec{F} \cdot d\vec{r} \]</div></div></div></div></section><section class="border-t border-slate-200 pt-10"><div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700 space-y-4"><p>Stokes' works just like how Green's works.</p><p>In fact, Green's is a special case of Stokes'.</p><ul class="list-disc list-inside space-y-2 ml-4"><li><span class="font-bold">Stokes'</span> \( \rightarrow \) works for curved surface (e.g. hemisphere)</li><li><span class="font-bold">Green's</span> \( \rightarrow \) flat surface only</li></ul></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-6">Example: Verifying Stokes' Theorem</h1><section class="mb-8"><p class="text-xl mb-4">Given the vector field:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \langle y, -x, 0 \rangle \]</div><p class="mb-4">Let \( S \) be the part of a sphere of radius 3 where \( z \geq 3/2 \). The normal is positive pointing outward.</p><p class="mb-6">Verify Stokes' Theorem:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_S \text{curl } \vec{F} \cdot d\vec{S} = \oint_C \vec{F} \cdot d\vec{r} \]</div></section><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1"><h2 class="text-2xl font-bold mb-4">Left Side</h2><p class="mb-4">Parametrize \( S \) first. Let's use spherical coordinates with \( \rho = 3 \). We will use parameters \( u = \phi \) and \( v = \theta \).</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \begin{aligned} x &amp;= \rho \sin \phi \cos \theta = 3 \sin u \cos v \\ y &amp;= \rho \sin \phi \sin \theta = 3 \sin u \sin v \\ z &amp;= \rho \cos \phi = 3 \cos u \end{aligned} \]</div></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D plot of a spherical cap with radius 3, cut at z=3/2, showing an outward normal vector.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-8.webp" loading="lazy" decoding="async" alt="3D plot of a spherical cap with radius 3, cut at z=3/2, showing an outward normal vector." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D plot of a spherical cap with radius 3, cut at z=3/2, showing an outward normal vector.
+                  </figcaption>
+                </figure>
+              </div></div><div class="grid-layout flex flex-col md:flex-row gap-8 items-start mb-10"><div class="flex-1"><p class="mb-4">To find the bounds for \( u \) (which is \( \phi \)):</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \begin{aligned} z &amp;= \rho \cos \phi = 3 \cos \phi \\ \frac{3}{2} &amp;= 3 \cos \phi \implies \cos \phi = \frac{1}{2} \implies \phi = \frac{\pi}{3} \end{aligned} \]</div><p class="mb-4">Thus, the parameter ranges are:</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ 0 \leq u \leq \frac{\pi}{3}, \quad 0 \leq v \leq 2\pi \]</div></div><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Geometric diagram showing the vertical cross-section of the sphere to determine the angle phi.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-9.webp" loading="lazy" decoding="async" alt="Geometric diagram showing the vertical cross-section of the sphere to determine the angle phi." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Geometric diagram showing the vertical cross-section of the sphere to determine the angle phi.
+                  </figcaption>
+                </figure>
+              </div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-8"><h2 class="text-2xl font-bold mb-4">Surface Parametrization and Normal Vector</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}(u,v) = \langle 3 \sin u \cos v, 3 \sin u \sin v, 3 \cos u \rangle \]</div><p class="mb-4">Partial derivatives:</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \begin{aligned} \vec{r}_u &amp;= \langle 3 \cos u \cos v, 3 \cos u \sin v, -3 \sin u \rangle \\ \vec{r}_v &amp;= \langle -3 \sin u \sin v, 3 \sin u \cos v, 0 \rangle \end{aligned} \]</div><p class="mb-4">Cross product (normal vector):</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{r}_u \times \vec{r}_v = \langle 9 \sin^2 u \cos v, 9 \sin^2 u \sin v, 9 \sin u \cos u \rangle \]</div><div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>Is this "outward"? If so, \( z &gt; 0 \).</p><p>Since \( 0 \leq u \leq \frac{\pi}{3} \implies \cos u, \sin u &gt; 0 \), so \( z &gt; 0 \). So, yes.</p></div></section><section class="mb-8"><h2 class="text-2xl font-bold mb-4">Evaluating the Surface Integral</h2><p class="mb-4">Vector field and its curl:</p><div class="my-6 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \langle y, -x, 0 \rangle, \quad \text{curl } \vec{F} = \nabla \times \vec{F} = \dots = \langle 0, 0, -2 \rangle \]</div><p class="mb-4">The surface integral becomes:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \begin{aligned} \iint_S \text{curl } \vec{F} \cdot d\vec{S} &amp;= \iint_R \text{curl } \vec{F} \cdot (\vec{r}_u \times \vec{r}_v) \, dA \\ &amp;= \int_0^{2\pi} \int_0^{\pi/3} \langle 0, 0, -2 \rangle \cdot \langle \dots, \dots, 9 \sin u \cos u \rangle \, du \, dv \\ &amp;= \int_0^{2\pi} \int_0^{\pi/3} -18 \sin u \cos u \, du \, dv = \dots = -27\pi/2 \end{aligned} \]</div><div class="notebox border-2 border-slate-900 p-4 inline-block font-bold text-xl">\[ -27\pi/2 \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans">
+  <h1 class="text-3xl font-black tracking-tight mb-6">Stokes' Theorem Application</h1>
+  <p class="mb-6">Stokes' says we can do \(\oint_C \vec{F} \cdot d\vec{r}\) instead.</p>
+  <div class="grid-layout">
+    <div>
+      <p class="mb-6">Boundary is counterclockwise if viewed from above because \(\vec{n}\) is out/up.</p>
+      <p class="mb-6">\(C\): circle radius \(\frac{\sqrt{27}}{2}\)</p>
+    </div>
+    
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a spherical cap with a boundary curve C and normal vector n pointing outwards.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-10.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a spherical cap with a boundary curve C and normal vector n pointing outwards." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a spherical cap with a boundary curve C and normal vector n pointing outwards.
+                  </figcaption>
+                </figure>
+              
+  </div>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+    \[\vec{r}(t) = \left\langle \frac{\sqrt{27}}{2} \cos t, \frac{\sqrt{27}}{2} \sin t, \frac{3}{2} \right\rangle\]
+    \[0 \le t \le 2\pi\]
+  </div>
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-4">Surface and Boundary Equations</h2>
+    <p class="mb-4">\(x^2 + y^2 + z^2 = 3^2\)</p>
+    <p class="mb-4">at \(z = 3/2\)</p>
+    <p class="mb-6">\(x^2 + y^2 = 9 - \frac{9}{4} = \frac{27}{4}\)</p>
+  </section>
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-4">Vector Field and Differential</h2>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[\vec{F} = \langle y, -x, 0 \rangle = \left\langle \frac{\sqrt{27}}{2} \sin t, -\frac{\sqrt{27}}{2} \cos t, 0 \right\rangle\]
+      \[d\vec{r} = \vec{r}' dt = \left\langle -\frac{\sqrt{27}}{2} \sin t, \frac{\sqrt{27}}{2} \cos t, 0 \right\rangle\]
+    </div>
+  </section>
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-4">Line Integral Calculation</h2>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[\oint_C \vec{F} \cdot d\vec{r} = \int_0^{2\pi} \left( -\frac{27}{4} \sin^2 t - \frac{27}{4} \cos^2 t \right) dt = -\frac{27}{4} \int_0^{2\pi} dt\]
+      \[= -\frac{27}{4} \cdot 2\pi = -\frac{27}{2} \pi\]
+    </div>
+    <div class="notebox border-2 border-slate-900 p-4 inline-block font-bold">
+      Result: \(-\frac{27}{2} \pi\)
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans">
+  <h1 class="text-3xl font-black tracking-tight mb-6">Stokes' Theorem</h1>
+  <div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700">
+    \[\iint_S \text{curl } \vec{F} \cdot d\vec{S} = \oint_C \vec{F} \cdot d\vec{r}\]
+  </div>
+  <p class="mb-6">If different surfaces have the same boundary curve \(C\), then \(\iint_S \text{curl } \vec{F} \cdot d\vec{S}\) will be the same for all.</p>
+  <div class="grid-layout">
+    <div class="flex space-x-8 items-center">
+      
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram of a cone with a circular boundary curve C and a normal vector n.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-11.webp" loading="lazy" decoding="async" alt="Diagram of a cone with a circular boundary curve C and a normal vector n." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram of a cone with a circular boundary curve C and a normal vector n.
+                  </figcaption>
+                </figure>
+              
+      
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram of a hemisphere with the same circular boundary curve C and a normal vector n.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-12.webp" loading="lazy" decoding="async" alt="Diagram of a hemisphere with the same circular boundary curve C and a normal vector n." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram of a hemisphere with the same circular boundary curve C and a normal vector n.
+                  </figcaption>
+                </figure>
+              
+      
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Diagram of a flat disk with the same circular boundary curve C and a normal vector n.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-34-13.webp" loading="lazy" decoding="async" alt="Diagram of a flat disk with the same circular boundary curve C and a normal vector n." class="max-w-full h-auto" data-figure-id="fig_4">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Diagram of a flat disk with the same circular boundary curve C and a normal vector n.
+                  </figcaption>
+                </figure>
+              
+    </div>
+    <div class="mt-4">
+      <p class="font-bold">same boundary</p>
+      <p class="mt-4">all those surfaces have the same \(\iint_S \text{curl } \vec{F} \cdot d\vec{S}\)</p>
+    </div>
+  </div>
+  <section class="mt-10">
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mb-4">Alternative Strategy</h2>
+    <p class="mb-6">Another option: trade for a simpler surface w/ the same \(C\).</p>
+    <p class="mb-6">In previous example, we could have used a flat circle surface at \(z = 3/2\).</p>
+  </section>
+</article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

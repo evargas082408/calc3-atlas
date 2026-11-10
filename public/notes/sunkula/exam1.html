@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam 1 Review</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                tags: 'ams'
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; color: #212529; }
+        h3 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 8px; margin-top: 30px; font-size: 1.5em; }
+        h4 { color: #34495e; border-left: 4px solid #3498db; padding-left: 15px; margin-top: 25px; font-size: 1.3em; }
+        h5 { color: #5a6c7d; font-size: 1.1em; margin-top: 20px; }
+        .definition { background-color: #e8f5e8; padding: 15px; border: 1px solid #28a745; border-radius: 8px; margin: 15px 0; border-left: 5px solid #28a745; }
+        .theorem { background-color: #fff3cd; padding: 15px; border: 1px solid #ffc107; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .example { background-color: #f8f9fa; padding: 15px; border: 1px solid #6c757d; border-radius: 8px; margin: 15px 0; border-left: 5px solid #007bff; }
+        .important { background-color: #d1ecf1; padding: 15px; border: 1px solid #17a2b8; border-radius: 8px; margin: 15px 0; border-left: 5px solid #17a2b8; }
+        .warning { background-color: #f8d7da; padding: 15px; border: 1px solid #dc3545; border-radius: 8px; margin: 15px 0; border-left: 5px solid #dc3545; }
+        .visual-desc { background-color: #e9ecef; padding: 12px; border-left: 4px solid #6c757d; font-style: italic; margin: 15px 0; border-radius: 0 5px 5px 0; }
+        .solution { background-color: #f0f8f0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #28a745; }
+        .page-content { background-color: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        figure { margin: 20px 0; }
+        figure img { border: 2px solid #dee2e6; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 100%; height: auto; display: block; }
+        figcaption { font-style: italic; color: #6c757d; margin-top: 8px; text-align: center; }
+        hr { margin: 40px 0; border: none; border-top: 2px solid #3498db; }
+        ul, ol { padding-left: 25px; margin: 10px 0; }
+        li { margin: 8px 0; }
+        @media (max-width: 768px) { body { padding: 15px; } }
+        @media print { body { background-color: white; } .definition, .theorem, .example, .important, .warning { border: 1px solid #000; background-color: white; } }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Exam1.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+<h3>Exam 1 Review</h3>
+<p>Accessible HTML conversion of handwritten Exam 1 Review notes. Each page shows the original handwritten image followed by a screen-reader-compatible conversion.</p>
+
+<h3>Page 1</h3>
+<figure>
+    <img src="img/exam1-1.webp" loading="lazy" decoding="async" alt="Page 1: Title page reading Exam 1 Review in red handwriting on graph paper" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Title Page</h4>
+<p>This page contains the title: <strong>Exam 1 Review</strong>, written in red handwriting on graph paper.</p>
+</div>
+
+<hr>
+
+<h3>Page 2</h3>
+<figure>
+    <img src="img/exam1-2.webp" loading="lazy" decoding="async" alt="Page 2: Handwritten solution finding the equation of a plane through (0,1,2) perpendicular to two given planes, using cross products" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Finding the Equation of a Plane</h4>
+
+<div class="example">
+<h5>Example: Plane through a Point, Perpendicular to Two Given Planes</h5>
+<p>Find the equation of the plane through the point \((0, 1, 2)\) and perpendicular to both \(x - y + 2z = 1\) and \(3x + 2z = -4\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+<p>The normal vectors to the given planes are read from their coefficients:</p>
+\[\vec{n}_1 = \langle 1, -1, 2 \rangle \qquad \vec{n}_2 = \langle 3, 0, 2 \rangle\]
+
+<div class="important">
+<p><strong>Key Idea:</strong> If two planes are perpendicular, their normal vectors are also perpendicular. The normal vector \(\vec{n}\) of our desired plane must be perpendicular to <em>both</em> \(\vec{n}_1\) and \(\vec{n}_2\). We therefore use the cross product \(\vec{n} = \vec{n}_1 \times \vec{n}_2\).</p>
+</div>
+
+<p>Computing the cross product via the determinant formula:</p>
+\[\vec{n} = \vec{n}_1 \times \vec{n}_2 = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & -1 & 2 \\ 3 & 0 & 2 \end{vmatrix} = \langle (-1)(2)-(2)(0),\; (2)(3)-(1)(2),\; (1)(0)-(-1)(3) \rangle = \langle -2, 4, 3 \rangle\]
+
+<p>Writing the equation of the plane through \((0, 1, 2)\) with normal \(\vec{n} = \langle -2, 4, 3 \rangle\):</p>
+\[-2(x - 0) + 4(y - 1) + 3(z - 2) = 0\]
+\[-2x + 4y + 3z - 10 = 0\]
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A three-dimensional sketch shows two intersecting planes. Normal vectors \(\vec{n}_1\) and \(\vec{n}\) are drawn as arrows emanating from the planes. The cross product vector \(\vec{n}\) is perpendicular to both planes, illustrating why it serves as the normal for the desired plane.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 3</h3>
+<figure>
+    <img src="img/exam1-3.webp" loading="lazy" decoding="async" alt="Page 3: Handwritten implicit differentiation problem finding partial derivative of z given cos(xyz)=x+3y+2z" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Implicit Differentiation with Three Variables</h4>
+
+<div class="example">
+<h5>Example: Implicit Partial Derivative</h5>
+<p>Given \(\cos(xyz) = x + 3y + 2z\), where \(z\) is implicitly a function of \(x\) and \(y\), evaluate \(\dfrac{\partial z}{\partial y}\) at the point \((0, 1)\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>First, find \(z\) at \((x, y) = (0, 1)\). Substituting:</p>
+\[\cos(0) = 0 + 3(1) + 2z \implies 1 = 3 + 2z \implies z = -1\]
+
+<p>Define \(F(x, y, z) = \cos(xyz) - x - 3y - 2z = 0\). The implicit differentiation formula gives:</p>
+\[\frac{\partial z}{\partial y} = -\frac{F_y}{F_z}\]
+
+<p>This arises from differentiating \(F = 0\) with respect to \(y\) and applying the chain rule: \(F_y + F_z \cdot \dfrac{\partial z}{\partial y} = 0\).</p>
+
+<p>Computing the partial derivatives of \(F\):</p>
+\[F_y = -\sin(xyz) \cdot xz - 3\]
+\[F_z = -\sin(xyz) \cdot xy - 2\]
+
+<p>Therefore:</p>
+\[\frac{\partial z}{\partial y} = -\frac{-\sin(xyz) \cdot xz - 3}{-\sin(xyz) \cdot xy - 2}\]
+
+<p>Evaluating at \((x, y, z) = (0, 1, -1)\):</p>
+\[\frac{\partial z}{\partial y}\bigg|_{(0,1)} = -\frac{-\sin(0)\cdot(0)(-1) - 3}{-\sin(0)\cdot(0)(1) - 2} = -\frac{0 - 3}{0 - 2} = -\frac{-3}{-2} = -\frac{3}{2}\]
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 4</h3>
+<figure>
+    <img src="img/exam1-4.webp" loading="lazy" decoding="async" alt="Page 4: Handwritten critical point analysis of f(x,y), concluding local minimum at (-3,3)" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Critical Points and the Second Derivative Test</h4>
+
+<div class="example">
+<h5>Example: Classifying Critical Points</h5>
+<p>For \(f(x, y) = x^2 + xy + y^2 + 3x - 3y + 4\), find and classify all critical points.</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+<p>Set both partial derivatives to zero:</p>
+\[f_x = 2x + y + 3 = 0 \tag{I}\]
+\[f_y = x + 2y - 3 = 0 \tag{II}\]
+
+<p>From (I): \(y = -3 - 2x\). Substituting into (II):</p>
+\[x + 2(-3 - 2x) - 3 = 0 \implies x - 6 - 4x - 3 = 0 \implies -3x - 9 = 0 \implies x = -3\]
+
+<p>Then \(y = -3 - 2(-3) = 3\). The only critical point is \((-3, 3)\).</p>
+
+<p>Apply the <strong>Second Derivative Test</strong>:</p>
+\[f_{xx} = 2, \qquad f_{yy} = 2, \qquad f_{xy} = 1\]
+\[D = f_{xx}f_{yy} - (f_{xy})^2 = (2)(2) - (1)^2 = 3 > 0\]
+
+<p>Since \(D > 0\) and \(f_{xx} = 2 > 0\), the point \((-3, 3)\) is a <strong>local minimum</strong>.</p>
+</div>
+</div>
+
+<div class="theorem">
+<p><strong>Second Derivative Test:</strong> At a critical point \((a,b)\), let \(D = f_{xx}f_{yy} - (f_{xy})^2\). If \(D > 0\) and \(f_{xx} > 0\): local minimum. If \(D > 0\) and \(f_{xx} < 0\): local maximum. If \(D < 0\): saddle point. If \(D = 0\): test is inconclusive.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 5</h3>
+<figure>
+    <img src="img/exam1-5.webp" loading="lazy" decoding="async" alt="Page 5: Handwritten critical point analysis finding saddle points and one inconclusive case" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Critical Points — Saddle Points and Inconclusive Cases</h4>
+
+<div class="example">
+<h5>Example: \(f(x,y) = xy^4 - x - \frac{1}{2}x^2\) on \(\mathbb{R}^2\)</h5>
+<p>Find all local maxima and minima of \(f(x,y) = xy^4 - x - \tfrac{1}{2}x^2\) on \(\mathbb{R}^2\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+<p>Set partial derivatives to zero:</p>
+\[f_x = y^4 - 1 - x = 0 \tag{I}\]
+\[f_y = 4xy^3 = 0 \tag{II}\]
+
+<p>From (II): \(x = 0\) or \(y = 0\).</p>
+
+<p><strong>Case 1 (\(x = 0\)):</strong> Substituting into (I): \(y^4 - 1 = 0 \implies y = \pm 1\). Critical points: \((0,1)\) and \((0,-1)\).</p>
+
+<p><strong>Case 2 (\(y = 0\)):</strong> Substituting into (I): \(-1 - x = 0 \implies x = -1\). Critical point: \((-1, 0)\).</p>
+
+<p>Compute second partials and the discriminant:</p>
+\[f_{xx} = -1, \qquad f_{yy} = 12xy^2, \qquad f_{xy} = 4y^3\]
+\[D = f_{xx}f_{yy} - (f_{xy})^2 = (-1)(12xy^2) - (4y^3)^2 = -12xy^2 - 16y^6\]
+
+<p>Evaluating \(D\) at each critical point:</p>
+<p>At \((0, 1)\): \(D = 0 - 16 = -16 < 0\) &rarr; <strong>saddle point.</strong></p>
+<p>At \((0, -1)\): \(D = 0 - 16 = -16 < 0\) &rarr; <strong>saddle point.</strong></p>
+<p>At \((-1, 0)\): \(D = 0 - 0 = 0\) &rarr; <strong>test is inconclusive.</strong></p>
+</div>
+</div>
+
+<div class="warning">
+<p><strong>Warning:</strong> When \(D = 0\), the Second Derivative Test gives no conclusion. The point \((-1, 0)\) requires further analysis beyond the test.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 6</h3>
+<figure>
+    <img src="img/exam1-6.webp" loading="lazy" decoding="async" alt="Page 6: Handwritten absolute extrema problem on disk x squared plus y squared leq 4" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Absolute Extrema on a Closed Bounded Region</h4>
+
+<div class="example">
+<h5>Example: \(f(x,y) = x^2 - 2x + y^2 + 4\) on the disk \(x^2 + y^2 \leq 4\)</h5>
+<p>Find the absolute maximum \(M\) and absolute minimum \(m\) on the closed disk \(x^2 + y^2 \leq 4\), and compute \(M + m\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<h5>Step 1: Interior Critical Points</h5>
+\[f_x = 2x - 2 = 0 \implies x = 1\]
+\[f_y = 2y = 0 \implies y = 0\]
+<p>Interior critical point: \((1, 0)\). Since \(1^2 + 0^2 = 1 \leq 4\), it lies inside the disk.</p>
+
+<h5>Step 2: Boundary (\(x^2 + y^2 = 4\))</h5>
+<p>On the boundary, \(y^2 = 4 - x^2\) where \(-2 \leq x \leq 2\). Substituting into \(f\):</p>
+\[f = x^2 - 2x + (4 - x^2) + 4 = 8 - 2x =: g(x)\]
+<p>Since \(g(x) = 8 - 2x\) is linear (and decreasing), its extrema on \([-2, 2]\) occur at the endpoints \(x = 2\) and \(x = -2\), giving points \((2, 0)\) and \((-2, 0)\).</p>
+
+<h5>Step 3: Compare All Candidate Values</h5>
+\[f(1, 0) = 1 - 2 + 0 + 4 = 3 \quad \text{(minimum } m\text{)}\]
+\[f(2, 0) = 4 - 4 + 0 + 4 = 4\]
+\[f(-2, 0) = 4 + 4 + 0 + 4 = 12 \quad \text{(maximum } M\text{)}\]
+\[M + m = 12 + 3 = 15\]
+</div>
+</div>
+
+<div class="visual-desc">
+<p><strong>Diagram Description:</strong> A circle of radius 2 is drawn centered at the origin. Three candidate points are marked in red: \((-2, 0)\) on the far left of the boundary, \((1, 0)\) in the interior, and \((2, 0)\) on the far right of the boundary. Green arrows on the boundary indicate the gradient direction of \(f\) restricted to the circle.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 7</h3>
+<figure>
+    <img src="img/exam1-7.webp" loading="lazy" decoding="async" alt="Page 7: Handwritten tangent plane problem finding parameter a so that (8,a,1) lies on the tangent plane" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Tangent Planes — Finding an Unknown Parameter</h4>
+
+<div class="example">
+<h5>Example: Point on a Tangent Plane</h5>
+<p>Find \(a\) such that \((8, a, 1)\) lies on the tangent plane to \(z^2 = e^{xy} - 4x^2y + 3y^2\) at the point \((0, 1, 2)\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>Rewrite as a level surface \(F(x, y, z) = 0\):</p>
+\[F(x, y, z) = e^{xy} - 4x^2y + 3y^2 - z^2 = 0\]
+
+<div class="important">
+<p><strong>Key Principle:</strong> For a level surface \(F(x,y,z) = 0\), the gradient \(\nabla F\) evaluated at a point is the normal vector to the tangent plane at that point.</p>
+</div>
+
+<p>Compute the gradient:</p>
+\[\nabla F = \langle ye^{xy} - 8xy,\; xe^{xy} - 4x^2 + 6y,\; -2z \rangle\]
+
+<p>Evaluate at \((0, 1, 2)\):</p>
+\[\vec{n} = \nabla F(0,1,2) = \langle (1)e^{0} - 0,\; (0)e^{0} - 0 + 6(1),\; -2(2) \rangle = \langle 1, 6, -4 \rangle\]
+
+<p>Equation of the tangent plane through \((0, 1, 2)\) with normal \(\langle 1, 6, -4 \rangle\):</p>
+\[1(x - 0) + 6(y - 1) - 4(z - 2) = 0 \implies x + 6y - 4z + 2 = 0\]
+
+<p>Since \((8, a, 1)\) lies on this plane:</p>
+\[8 + 6a - 4(1) + 2 = 0 \implies 6 + 6a = 0 \implies a = -1\]
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 8</h3>
+<figure>
+    <img src="img/exam1-8.webp" loading="lazy" decoding="async" alt="Page 8: Handwritten arc length and arc length parametrization problem" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Arc Length and Arc Length Parametrization</h4>
+
+<div class="example">
+<h5>Example</h5>
+<p>Given \(\vec{r}(t) = \langle 3\sin(2t),\; 4,\; 3\cos(2t) \rangle\):</p>
+<ol>
+<li>Find the arc length from \(t = 0\) to \(t = \dfrac{\pi}{3}\).</li>
+<li>Find the arc length parametrization starting at \(t = 0\).</li>
+</ol>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<h5>Part 1: Arc Length</h5>
+<p>Differentiate \(\vec{r}(t)\):</p>
+\[\vec{r}'(t) = \langle 6\cos(2t),\; 0,\; -6\sin(2t) \rangle\]
+\[|\vec{r}'(t)| = \sqrt{36\cos^2(2t) + 0 + 36\sin^2(2t)} = \sqrt{36} = 6\]
+
+<p>Arc length:</p>
+\[L = \int_0^{\pi/3} |\vec{r}'(u)|\, du = \int_0^{\pi/3} 6\, du = \frac{6\pi}{3} = 2\pi\]
+
+<h5>Part 2: Arc Length Parametrization</h5>
+<p>Compute the arc length function:</p>
+\[s(t) = \int_0^t |\vec{r}'(u)|\, du = \int_0^t 6\, du = 6t\]
+
+<p>Solve for \(t\): \(s = 6t \implies t = \dfrac{s}{6}\). Replace \(t\) with \(\dfrac{s}{6}\):</p>
+\[\vec{r}\!\left(\frac{s}{6}\right) = \left\langle 3\sin\!\left(\frac{s}{3}\right),\; 4,\; 3\cos\!\left(\frac{s}{3}\right) \right\rangle\]
+</div>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 9</h3>
+<figure>
+    <img src="img/exam1-9.webp" loading="lazy" decoding="async" alt="Page 9: Handwritten Leibniz rule problem computing partial derivatives of an integral" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Differentiating an Integral with Variable Limits (Leibniz Rule)</h4>
+
+<div class="example">
+<h5>Example: Partial Derivatives via the Fundamental Theorem of Calculus</h5>
+<p>Given \(\displaystyle f(x, y) = \int_{7}^{\sin(xy)} \ln(t)\, dt\), find \(f_x\) and \(f_y\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<p>By the Fundamental Theorem of Calculus combined with the chain rule, if \(f(x,y) = \displaystyle\int_{c}^{g(x,y)} \ln(t)\, dt\) (with \(c\) constant), then the partial derivative with respect to \(x\) is:</p>
+\[\frac{\partial f}{\partial x} = \ln(g(x,y)) \cdot \frac{\partial g}{\partial x}\]
+
+<p>Here \(g(x,y) = \sin(xy)\), so \(\dfrac{\partial g}{\partial x} = \cos(xy) \cdot y\). Thus:</p>
+\[\frac{\partial f}{\partial x} = \ln(\sin(xy)) \cdot \cos(xy) \cdot y\]
+
+<p>Similarly:</p>
+\[\frac{\partial f}{\partial y} = \ln(\sin(xy)) \cdot \cos(xy) \cdot x\]
+</div>
+</div>
+
+<div class="important">
+<p><strong>Note:</strong> The lower limit \(7\) is a constant, so it contributes zero to either partial derivative.</p>
+</div>
+</div>
+
+<hr>
+
+<h3>Page 10</h3>
+<figure>
+    <img src="img/exam1-10.webp" loading="lazy" decoding="async" alt="Page 10: Handwritten gradient problem finding direction of maximum increase" style="max-width:100%;height:auto;">
+    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+</figure>
+
+<div class="page-content">
+<h4>Gradient and Direction of Steepest Ascent</h4>
+
+<div class="example">
+<h5>Example: Direction of Maximum Increase</h5>
+<p>For \(f(x, y, z) = x^2y + y^2z\), find the direction in which the function increases most rapidly at \((1, 2, 3)\).</p>
+
+<div class="solution">
+<p><strong>Solution:</strong></p>
+
+<div class="theorem">
+<p><strong>Gradient Facts:</strong> \(\nabla f\) points in the direction of steepest ascent (maximum increase). \(-\nabla f\) points in the direction of steepest descent (maximum decrease).</p>
+</div>
+
+<p>Compute the gradient:</p>
+\[\nabla f = \langle 2xy,\; x^2 + 2yz,\; y^2 \rangle\]
+
+<p>Evaluate at \((1, 2, 3)\):</p>
+\[\nabla f(1, 2, 3) = \langle 2(1)(2),\; (1)^2 + 2(2)(3),\; (2)^2 \rangle = \langle 4, 13, 4 \rangle\]
+
+<p>The function increases most rapidly in the direction \(\langle 4, 13, 4 \rangle\) at \((1, 2, 3)\).</p>
+</div>
+</div>
+</div>
+
+<hr>
+</body>
+</html>

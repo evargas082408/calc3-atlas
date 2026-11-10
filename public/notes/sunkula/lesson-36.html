@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 36: Divergence Theorem - I (17.8) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson36.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 36: Divergence Theorem - I (17.8)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/17/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson36.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 36: Divergence Theorem - I (17.8)</h4>
+
+<h5>Announcements:</h5>
+
+<ul>
+    <li>Exam 2 on Tuesday (04/21), 8PM-9PM, Elliot Hall</li>
+    <li>SI Session exam review on Sunday</li>
+    <li>No lecture on 04/24 (compensation for evening exam)</li>
+    <li>Final exam on Tuesday (05/05), 1PM-3PM.</li>
+</ul>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Review example:</h4>
+
+<div class="example">
+  <p>\[ \phi = xyz \sin(x^2 y z) \]</p>
+  <p>\[ \vec{F} = \vec{\nabla} \phi \]</p>
+  <p>\( S \): \( z = 10 - x^2 - y^2 \) above \( z = 2 \)</p>
+  <p>What is \( \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} \)?</p>
+</div>
+
+
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-1.webp" loading="lazy" decoding="async" alt="A 3D sketch showing a surface S defined by a downward-opening paraboloid, which is shaded with red diagonal lines. The base of this surface is cut off at a certain level, forming a closed circular boundary curve labeled C and highlighted in green. This diagram provides a visual representation of the domain for the surface integral problem." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D sketch showing a surface S defined by a downward-opening paraboloid, which is shaded with red diagonal lines. The base of this surface is cut off at a certain level, forming a closed circular boundary curve labeled C and highlighted in green. This diagram provides a visual representation of the domain for the surface integral problem.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+  <p>① Apply Stokes' Theorem:</p>
+  \[ \iint_{S} \text{curl } \vec{F} \cdot d\vec{S} = \oint_{C} \vec{F} \cdot d\vec{r} \]
+  \[ = \oint_{C} \vec{\nabla} \phi \cdot d\vec{r} = 0 \]
+  
+  <div class="important">
+    Note: The integral equals 0 according to the FTCLI (Fundamental Theorem of Calculus for Line Integrals), which states that the line integral of a gradient field over a closed loop is zero.
+  </div>
+
+  <p>② \( \text{curl}(\vec{\nabla} \phi) = 0 \)</p>
+  <p>The gradient of the scalar field is:</p>
+  \[ \vec{\nabla} \phi = \langle \phi_x, \phi_y, \phi_z \rangle \]
+  <p>Calculating the curl of this gradient field:</p>
+  \[ \text{curl}(\vec{\nabla} \phi) = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \\ \phi_x &amp; \phi_y &amp; \phi_z \end{vmatrix} = \langle 0, 0, 0 \rangle \]
+  <p>Since the curl of the vector field \( \vec{F} \) is the zero vector everywhere, the surface integral is zero.</p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Divergence Theorem</h4>
+<p>Relates surface integral to triple integral.</p>
+
+<div class="important">
+    <p>Following the same theme: integral "cancels" derivative, compute on boundary.</p>
+</div>
+
+<p>
+    \( S \) is a closed surface, with normal outwards.<br>
+    \( S \) is the boundary of Region \( D \)
+</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-2.webp" loading="lazy" decoding="async" alt="A technical diagram showing three examples of closed regions in 3D space, all shaded green with red outlines to represent surfaces (S) enclosing regions (D). The first shape on the left is an irregular, amoeboid volume. The second shape in the middle is a cube. The third shape on the right is a sphere, with a dashed line across its center to provide a sense of three-dimensional depth. These shapes represent valid domains for the Divergence Theorem, where S is the boundary of region D and the normal vectors are oriented outwards." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram showing three examples of closed regions in 3D space, all shaded green with red outlines to represent surfaces (S) enclosing regions (D). The first shape on the left is an irregular, amoeboid volume. The second shape in the middle is a cube. The third shape on the right is a sphere, with a dashed line across its center to provide a sense of three-dimensional depth. These shapes represent valid domains for the Divergence Theorem, where S is the boundary of region D and the normal vectors are oriented outwards.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="theorem">
+    \[ \iiint_D \text{div} \vec{F} \, dV = \iint_S \vec{F} \cdot d\vec{S}  \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example</h4>
+    <p>
+        Evaluate \[ \iint_{S} \vec{F} \cdot d\vec{S} \] where \( \vec{F} = \langle x, y, z \rangle \) and \( S \) is the upper half of a sphere of radius 2 and the base at \( z = 0 \), with outward normal.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system diagram illustrating a closed hemisphere surface S. The z-axis is the vertical axis, while the x and y axes form the horizontal plane. The surface S is partitioned into two components: S1, which is the upper spherical shell of radius 2, and S2, which is the flat circular base lying in the xy-plane at z=0. The interior volume enclosed by these two surfaces is labeled D. The hemisphere is depicted with green shading and red outlines to differentiate the curved and flat parts." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate system diagram illustrating a closed hemisphere surface S. The z-axis is the vertical axis, while the x and y axes form the horizontal plane. The surface S is partitioned into two components: S1, which is the upper spherical shell of radius 2, and S2, which is the flat circular base lying in the xy-plane at z=0. The interior volume enclosed by these two surfaces is labeled D. The hemisphere is depicted with green shading and red outlines to differentiate the curved and flat parts.</span>
+                      </div>
+                    </div>
+                  
+
+    <div class="solution">
+        <p>
+            <strong>Direct Method:</strong><br>
+            Parametrize \( S \rightarrow \) sphere part (\( S_1 \)) and flat part (\( S_2 \)).
+            \[ \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S_1} \vec{F} \cdot d\vec{S} + \iint_{S_2} \vec{F} \cdot d\vec{S} \]
+        </p>
+
+        <p>
+            <strong>Divergence Theorem Method:</strong><br>
+            Using the Divergence Theorem:
+            \[ \iint_{S} \vec{F} \cdot d\vec{S} = \iiint_{D} \text{div} \vec{F} \, dV \]
+            
+            First, calculate the divergence of \( \vec{F} \):
+            \[ \text{div} \vec{F} = \frac{\partial}{\partial x}(x) + \frac{\partial}{\partial y}(y) + \frac{\partial}{\partial z}(z) = 1 + 1 + 1 = 3 \]
+
+            Now, substitute the divergence back into the triple integral:
+            \[ \iiint_{D} 3 \, dV = 3 \iiint_{D} 1 \, dV \]
+            \[ = 3 \times \text{Volume of } D \]
+            \[ = 3 \times \frac{1}{2} \times (\text{Volume of sphere of radius 2}) \]
+            \[ = 3 \times \frac{1}{2} \times \frac{4}{3} \pi (2)^3 \]
+            \[ = 3 \times \frac{1}{2} \times \frac{4}{3} \pi \times 8 \]
+            \[ = 16\pi \]
+        </p>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>What if you do not know the volume of sphere?</h4>
+
+\[ \iiint_D 1 \, dV \]
+
+
+                    <div class="inline-diagram-container" style="width: 44%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-4.webp" loading="lazy" decoding="async" alt="A 3D coordinate diagram illustrating a hemisphere in a Cartesian coordinate system. The diagram shows the x, y, and z axes. A red-outlined hemisphere sits on the xy-plane, centered at the origin, with its curved surface extending into the positive z-space. Shaded diagonal lines fill the interior volume of the hemisphere. A solid black vector representing the radial distance \(\rho\) is drawn from the origin to a point on the spherical surface. The polar angle \(\phi\) is indicated as the angle between the positive vertical z-axis and the radial vector. The azimuthal angle \(\theta\) represents the rotation around the z-axis within the xy-plane. This visual setup is used to determine the integration limits for finding the volume." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate diagram illustrating a hemisphere in a Cartesian coordinate system. The diagram shows the x, y, and z axes. A red-outlined hemisphere sits on the xy-plane, centered at the origin, with its curved surface extending into the positive z-space. Shaded diagonal lines fill the interior volume of the hemisphere. A solid black vector representing the radial distance \(\rho\) is drawn from the origin to a point on the spherical surface. The polar angle \(\phi\) is indicated as the angle between the positive vertical z-axis and the radial vector. The azimuthal angle \(\theta\) represents the rotation around the z-axis within the xy-plane. This visual setup is used to determine the integration limits for finding the volume.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="solution">
+    <p>find bounds using spherical coordinate</p>
+
+    <p>
+        \( 0 \le \rho \le 2 \) <br>
+        \( 0 \le \phi \le \pi/2 \) <br>
+        \( 0 \le \theta \le 2\pi \)
+    </p>
+
+    <p>\( dV = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \)</p>
+
+    \[ \iiint_D 1 \, dV = \int_0^{2\pi} \int_0^{\pi/2} \int_0^2 \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \]
+
+    \[ = \left( \left. \frac{\rho^3}{3} \right|_0^2 \right) \left( \left. -\cos \phi \right|_0^{\pi/2} \right) \left( \left. \theta \right|_0^{2\pi} \right) = \frac{8}{3} \times 1 \times 2\pi = \frac{16\pi}{3} \]
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Verify by Direct Computation:</h4>
+
+<div class="solution">
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-5.webp" loading="lazy" decoding="async" alt="3D coordinate system diagram showing a red hemisphere, labeled S1, located in the upper half-space where z is greater than or equal to 0. The hemisphere is centered at the origin (0,0,0). There are three blue arrows pointing radially outward from different points on the surface of the hemisphere, representing normal vectors. The left side of the hemisphere is shaded with diagonal red lines. The axes are labeled with the vertical axis pointing up as z, the horizontal axis pointing to the right as y, and the third axis pointing out towards the viewer as x." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">3D coordinate system diagram showing a red hemisphere, labeled S1, located in the upper half-space where z is greater than or equal to 0. The hemisphere is centered at the origin (0,0,0). There are three blue arrows pointing radially outward from different points on the surface of the hemisphere, representing normal vectors. The left side of the hemisphere is shaded with diagonal red lines. The axes are labeled with the vertical axis pointing up as z, the horizontal axis pointing to the right as y, and the third axis pointing out towards the viewer as x.</span>
+                      </div>
+                    </div>
+                  
+
+    \[ \vec{F} = \langle x, y, z \rangle \]
+    \[ S_1: x^2 + y^2 + z^2 = 4, \quad z \ge 0 \]
+    \[ z = \sqrt{4 - x^2 - y^2} \]
+
+    Parameterizing the surface:
+    \[ \vec{r}(u, v) = \langle u, v, \sqrt{4 - u^2 - v^2} \rangle \]
+    on \( R \): \( 4 - u^2 - v^2 \ge 0 \)
+
+    Calculating partial derivatives:
+    \[ \vec{r}_u = \left\langle 1, 0, \frac{-u}{\sqrt{4 - u^2 - v^2}} \right\rangle \]
+    \[ \vec{r}_v = \left\langle 0, 1, \frac{-v}{\sqrt{4 - u^2 - v^2}} \right\rangle \]
+
+    Finding the normal vector via the cross product:
+    \[ \vec{r}_u \times \vec{r}_v = \left\langle \frac{u}{\sqrt{4 - u^2 - v^2}}, \frac{v}{\sqrt{4 - u^2 - v^2}}, 1 \right\rangle \]
+
+    Since the \( z \)-component is \( 1 \), and \( 1 &gt; 0 \), the vector field points in the upward orientation.
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Surface Integral Calculation</h4>
+
+<div class="solution">
+    <p>
+        The parameterization of the surface is given by:
+        \[ \vec{r}(u, v) = \left\langle u, v, \sqrt{4 - u^2 - v^2} \right\rangle \]
+    </p>
+
+    <p>
+        The surface integral of a vector field \( \vec{F} \) over surface \( S_1 \) is defined as:
+        \[ \iint_{S_1} \vec{F} \cdot d\vec{S} = \iint_{R} \vec{F}(\vec{r}(u, v)) \cdot (\vec{r}_u \times \vec{r}_v) \, dA \]
+    </p>
+
+    <p>
+        Substituting the components into the integral over the region \( R \):
+        \[ = \iint_{R} \left( \frac{u^2 + v^2}{\sqrt{4 - u^2 - v^2}} + \sqrt{4 - u^2 - v^2} \right) \, dA \]
+    </p>
+
+    <p>
+        Combining the terms simplifies the integrand:
+        \[ = \iint_{R} \frac{4}{\sqrt{4 - u^2 - v^2}} \, dA \]
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 52%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-6.webp" loading="lazy" decoding="async" alt="A coordinate plane diagram showing the region R in the uv-plane. The region is a circle centered at the origin, with the horizontal axis labeled 'u' and the vertical axis labeled 'v'. The interior of the circle is shaded with diagonal blue lines. The boundary of the circle is labeled with the equation u^2 + v^2 = 4. A point is marked on the circle's boundary, and a radius line is drawn from the origin to that point. The polar angle theta is indicated with a curved arrow starting from the positive u-axis." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A coordinate plane diagram showing the region R in the uv-plane. The region is a circle centered at the origin, with the horizontal axis labeled 'u' and the vertical axis labeled 'v'. The interior of the circle is shaded with diagonal blue lines. The boundary of the circle is labeled with the equation u^2 + v^2 = 4. A point is marked on the circle's boundary, and a radius line is drawn from the origin to that point. The polar angle theta is indicated with a curved arrow starting from the positive u-axis.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        <strong>Use polar on R:</strong>
+        <br>
+        \( dA = r \, dr \, d\theta \)
+        <br>
+        \( 0 \leq r \leq 2, \quad 0 \leq \theta \leq 2\pi \)
+        <br>
+        \( u^2 + v^2 = r^2 \)
+    </p>
+
+    <p>
+        The integral in polar coordinates becomes:
+        \[ = \int_{0}^{2\pi} \int_{0}^{2} \frac{4}{\sqrt{4 - r^2}} \cdot r \, dr \, d\theta \]
+    </p>
+
+    <div class="important">
+        <p>
+            <strong>Substitution:</strong>
+            <br>
+            Let \( 4 - r^2 = t \), then \( -2r \, dr = dt \).
+            <br>
+            Bounds for \( t \):
+            <br>
+            \( r = 0 \Rightarrow t = 4 \)
+            <br>
+            \( r = 2 \Rightarrow t = 0 \)
+        </p>
+    </div>
+
+    <p>
+        Completing the calculation:
+        \[ = -\frac{1}{2} \int_{0}^{2\pi} \int_{4}^{0} \frac{4}{\sqrt{t}} \, dt \, d\theta = -\frac{1}{2} \cdot 2\pi \cdot 4 \left. \frac{t^{1/2}}{1/2} \right|_{4}^{0} = 16\pi \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Surface Integral Calculation over \( S_2 \)</h4>
+
+<div class="solution">
+    <p>on \( S_2 \): Disk of radius 2 on <strong>xy plane</strong> (\( z = 0 \))</p>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-7.webp" loading="lazy" decoding="async" alt="3D coordinate system diagram showing a disk in the xy-plane. The disk is shaded with red diagonal lines. A blue arrow points downward from the center of the disk along the negative z-axis, representing the downward-pointing normal vector n." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">3D coordinate system diagram showing a disk in the xy-plane. The disk is shaded with red diagonal lines. A blue arrow points downward from the center of the disk along the negative z-axis, representing the downward-pointing normal vector n.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        \[ \vec{F} = \langle x, y, z \rangle \xrightarrow{\text{on } S_2} \vec{F} = \langle x, y, 0 \rangle \]
+    </p>
+
+    <p>
+        \[ \vec{n} = \langle 0, 0, -1 \rangle \]
+    </p>
+
+    <p>
+        \[ \iint_{S_2} \vec{F} \cdot d\vec{S} = \iint_{S_2} \vec{F} \cdot \vec{n} \, dS = 0 \]
+    </p>
+
+    <p>
+        \[ \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S_1} \vec{F} \cdot d\vec{S} + \iint_{S_2} \vec{F} \cdot d\vec{S} = 16\pi + 0 \]
+        \[ = 16\pi \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Flux through a Cylinder</h4>
+    <p>
+        Consider the vector field \(\vec{F} = \left\langle \frac{xy^2}{2}, \frac{y^3}{6}, zx^2 \right\rangle\) and the surface \(S\), which is a cylinder defined by \(x^2 + y^2 = 1\), capped at \(z = \pm 1\), with an outward-pointing normal.
+    </p>
+
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-8.webp" loading="lazy" decoding="async" alt="A 3D sketch of a solid cylinder centered on the z-axis of a Cartesian coordinate system. The main body of the cylinder is shaded green and is labeled S1. The top cap is labeled S2 and the bottom cap is labeled S3. Blue arrows point outward from each of these three surfaces to represent the outward-pointing unit normal vectors. The cylinder is bounded by z = 1 and z = -1. The volume enclosed by the surface is labeled D." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D sketch of a solid cylinder centered on the z-axis of a Cartesian coordinate system. The main body of the cylinder is shaded green and is labeled S1. The top cap is labeled S2 and the bottom cap is labeled S3. Blue arrows point outward from each of these three surfaces to represent the outward-pointing unit normal vectors. The cylinder is bounded by z = 1 and z = -1. The volume enclosed by the surface is labeled D.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>
+        The flux through the closed surface \(S\) can be calculated directly (without the Divergence Theorem) by summing the flux through each of its three component surfaces:
+        \[ \iint_S \vec{F} \cdot d\vec{S} = \iint_{S_1} \vec{F} \cdot d\vec{S} + \iint_{S_2} \vec{F} \cdot d\vec{S} + \iint_{S_3} \vec{F} \cdot d\vec{S} \]
+    </p>
+</div>
+
+<div class="theorem">
+    <h4>Divergence Theorem</h4>
+    <p>
+        Alternatively, applying the Divergence Theorem:
+        \[ \iint_S \vec{F} \cdot d\vec{S} = \iiint_D \text{div} \vec{F} \, dV \]
+        First, we find the divergence of the field \(\vec{F}\):
+        \[ \text{div} \vec{F} = \frac{\partial}{\partial x}\left(\frac{xy^2}{2}\right) + \frac{\partial}{\partial y}\left(\frac{y^3}{6}\right) + \frac{\partial}{\partial z}(zx^2) = \frac{y^2}{2} + \frac{y^2}{2} + x^2 = x^2 + y^2 \]
+        Substituting this into the volume integral:
+        \[ = \iiint_D (x^2 + y^2) \, dV \]
+    </p>
+</div>
+
+<div class="solution">
+    <p>
+        <strong>Bounds of \(D\):</strong> Using Cylindrical Coordinates
+        \[ dV = r \, dz \, dr \, d\theta \]
+        \[ -1 \le z \le 1, \quad x^2 + y^2 = r^2 \]
+        \[ 0 \le r \le 1 \]
+        \[ 0 \le \theta \le 2\pi \]
+    </p>
+
+    <p>
+        Evaluating the triple integral:
+        \[ = \int_0^{2\pi} \int_0^1 \int_{-1}^1 r^2 \cdot r \, dz \, dr \, d\theta \]
+        \[ = \int_0^{2\pi} \int_0^1 2r^3 \, dr \, d\theta \]
+        \[ = \int_0^{2\pi} \frac{1}{2} \, d\theta \]
+        \[ = \pi \]
+    </p>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h2>Divergence of a Curl</h2>
+
+<p>Let \( \vec{F} = \text{curl}(\vec{G}) \), and let \( S \) be a closed surface.</p>
+
+
+                    <div class="inline-diagram-container" style="width: 78%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-36-9.webp" loading="lazy" decoding="async" alt="A hand-drawn technical diagram on a white grid background depicting a mathematical or physical concept, possibly related to vector calculus. It features an irregular, green-shaded lobed region labeled with a teal capital letter 'D' in its lower-left section. The entire green area is tightly enclosed by a thin red boundary line, with a red capital letter 'S' positioned just above the top center of the shape. Three dark-red horizontal paths are drawn across the green region: the top and bottom paths are solid lines, while the middle path is composed of dashed segments. In the bottom right corner, the word 'Curl' is handwritten in black cursive, partially cropped. The diagram likely illustrates a domain or surface in the context of flux or circulation theorems." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn technical diagram on a white grid background depicting a mathematical or physical concept, possibly related to vector calculus. It features an irregular, green-shaded lobed region labeled with a teal capital letter 'D' in its lower-left section. The entire green area is tightly enclosed by a thin red boundary line, with a red capital letter 'S' positioned just above the top center of the shape. Three dark-red horizontal paths are drawn across the green region: the top and bottom paths are solid lines, while the middle path is composed of dashed segments. In the bottom right corner, the word 'Curl' is handwritten in black cursive, partially cropped. The diagram likely illustrates a domain or surface in the context of flux or circulation theorems.</span>
+                      </div>
+                    </div>
+                  
+
+<div class="example">
+  <p>What is \( \iint_S \vec{F} \cdot d\vec{S} \)?</p>
+
+  <div class="solution">
+    <p>Using the <strong>divergence thm</strong>:</p>
+    \[ \iint_S \vec{F} \cdot d\vec{S} = \iiint_D \text{div} \vec{F} \, dV = \iiint_D \text{div}(\text{curl} \vec{G}) \, dV \]
+  </div>
+</div>
+
+<div class="important">
+  \[ \text{div}(\text{curl} \vec{G}) = 0 \]
+</div>
+
+<div class="proof">
+  <p>To prove this identity, let \( \vec{G} = \langle f, g, h \rangle \). First, we calculate the curl of \( \vec{G} \):</p>
+
+  \[ \text{curl} \vec{G} = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \partial/\partial x &amp; \partial/\partial y &amp; \partial/\partial z \\ f &amp; g &amp; h \end{vmatrix} = \langle h_y - g_z, f_z - h_x, g_x - f_y \rangle \]
+
+  <p>Next, we find the divergence of the resulting vector field:</p>
+
+  \[ \text{div}(\text{curl} \vec{G}) = h_{yx} - g_{zx} + f_{zy} - h_{xy} + g_{xz} - f_{yz} = 0 \]
+
+  <p>The result is zero because, according to <strong>Clairaut's Theorem</strong>, the mixed partial derivatives are equal (e.g., \( h_{yx} = h_{xy} \)), causing the terms to cancel out in pairs.</p>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/17/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

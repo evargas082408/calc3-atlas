@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.8 The Divergence Theorem (part 2) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2037%20%2817.8-2%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 37 (17.8-2).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-8 border-b-2 border-slate-200 pb-2">17.8 The Divergence Theorem (part 2)</h1><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="text-xl text-center">\[ \iint_{S} \vec{F} \cdot d\vec{S} = \iiint_{D} \text{div} \vec{F} \, dV \]</p></div><p class="mb-6">\( D \): space enclosed by \( S \)</p><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2">assumed \( \vec{n} \) pointing outward</p><p>if \( \vec{n} \) is inward, then flip sign</p><div class="my-4 overflow-x-auto py-2 bg-slate-50 rounded-lg px-4 border border-slate-200">\[ -\iiint_{D} \text{div} \vec{F} \, dV \]</div></div><p class="mb-10 font-semibold">this is useful if the enclosed space has another hollow space</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A diagram showing a large blue cube with a smaller green cube nested inside it, representing a hollow volume.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-1.webp" loading="lazy" decoding="async" alt="A diagram showing a large blue cube with a smaller green cube nested inside it, representing a hollow volume." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A diagram showing a large blue cube with a smaller green cube nested inside it, representing a hollow volume.
+                  </figcaption>
+                </figure>
+              <p class="font-bold">\( D \): space/volume between cubes</p></div><div class="flex-1"><p class="mb-4">remove a smaller cube from inside the big cube</p><p class="mb-4">\( S \): surface bounding \( D \) is the six outer faces and the six inner faces (that bound the small cube)</p><ul class="list-none space-y-4 ml-4 mb-6"><li>\( S_1 \): the outside surface (blue cube)</li><li>\( S_2 \): the inside surface (green)</li></ul></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><p class="text-lg mb-4">normal vector, as usual, is outward pointing</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-start"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A diagram of a cube within a cube with red arrows showing normal vectors pointing out from the outer surface and into the inner cavity.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-2.webp" loading="lazy" decoding="async" alt="A diagram of a cube within a cube with red arrows showing normal vectors pointing out from the outer surface and into the inner cavity." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A diagram of a cube within a cube with red arrows showing normal vectors pointing out from the outer surface and into the inner cavity.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4">\( \rightarrow \) away from the enclosed volume</p><ul class="list-none space-y-2 ml-4 mb-6"><li>on outside, pointing away from volume \( \rightarrow \) out</li><li>on inside pointing away from volume \( \rightarrow \) in</li></ul><div class="notebox p-4 bg-slate-50 border border-slate-200 rounded-lg shadow-sm"><p class="text-center font-bold">between cubes</p></div></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">the flux integral:</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="text-xl text-center">\[ \iint_{S} \vec{F} \cdot d\vec{S} = \iint_{S} \vec{F} \cdot \vec{n} \, dS = \iint_{S_1} \vec{F} \cdot \vec{n} \, dS_1 - \iint_{S_2} \vec{F} \cdot \vec{n} \, dS_2 \]</p></div><p class="italic text-slate-700 ml-12 mb-10">due to inward normal on inside</p><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">the Divergence Theorem then gives</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="text-xl text-center">\[ \iiint_{D} \text{div} \vec{F} \, dV = \iint_{S} \vec{F} \cdot \vec{n} \, dS = \iint_{S_1} \vec{F} \cdot \vec{n} \, dS_1 - \iint_{S_2} \vec{F} \cdot \vec{n} \, dS_2 \]</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-800 bg-white font-sans"><section class="grid-layout"><div class="mb-6"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Divergence Theorem for Nested Regions</h1><p class="mb-4">Let us define the regions for a nested cube configuration:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\(D_1\): space inside big cube</li><li>\(D_2\): space inside small cube</li></ul><p class="mb-6">Apply Divergence Theorem again:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\iint_{S_1} \vec{F} \cdot \vec{n} dS_1 = \iiint_{D_1} \text{div } \vec{F} dV\]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\iint_{S_2} \vec{F} \cdot \vec{n} dS_2 = \iiint_{D_2} \text{div } \vec{F} dV\]</div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A diagram showing a small green cube nested inside a larger blue cube, illustrating regions D1 and D2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-3.webp" loading="lazy" decoding="async" alt="A diagram showing a small green cube nested inside a larger blue cube, illustrating regions D1 and D2." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A diagram showing a small green cube nested inside a larger blue cube, illustrating regions D1 and D2.
+                  </figcaption>
+                </figure>
+              </section><p class="mb-6">Plug these into the equation on previous page, we get:</p><div class="my-8 overflow-x-auto py-6 bg-slate-50 rounded-xl px-6 border-2 border-slate-400 shadow-md">\[\iint_{S} \vec{F} \cdot d\vec{S} = \iiint_{D_1} \text{div } \vec{F} dV - \iiint_{D_2} \text{div } \vec{F} dV\]</div><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>Flux of hollow volume = volume integral of \(\text{div } \vec{F}\) of outer volume \(-\) volume integral of \(\text{div } \vec{F}\) of inner volume</p></div></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-800 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight text-slate-900 mb-6">Example: Flux through a Spherical Shell</h1><div class="mb-6"><p class="text-xl font-bold mb-2">Example: \(\vec{F} = \langle x, y, z \rangle\)</p><p class="mb-4">\(D\): between spheres radii 2 and 1, both centered at origin. Normal is positive outward.</p></div><section class="grid-layout"><div class="mb-6"><p class="mb-4">\(D\): space between them</p><h2 class="text-2xl font-bold text-slate-900 mt-10 mb-4">Choices:</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\iint_{S} \vec{F} \cdot d\vec{S} = \iiint_{D} \text{div } \vec{F} dV\]</div><p class="ml-8 italic">\(\hookrightarrow\) set up bounds for the space between spheres: \(1 \le \rho \le 2\), etc.</p><p class="my-4 font-bold">or</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[\iint_{S} \vec{F} \cdot d\vec{S} = \iiint_{D_1} \text{div } \vec{F} dV - \iiint_{D_2} \text{div } \vec{F} dV\]</div><div class="flex justify-around text-sm text-slate-600 italic"><p>\(D_1\): big sphere</p><p>\(D_2\): small sphere</p></div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate graph showing two concentric spheres centered at the origin with radii 1 and 2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-4.webp" loading="lazy" decoding="async" alt="A 3D coordinate graph showing two concentric spheres centered at the origin with radii 1 and 2." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate graph showing two concentric spheres centered at the origin with radii 1 and 2.
+                  </figcaption>
+                </figure>
+              </section><div class="mt-10"><h2 class="text-2xl font-bold text-slate-900 mb-4">Let's try the first way first:</h2><div class="notebox p-6 bg-slate-50 border border-slate-200 rounded-xl shadow-sm inline-block"><p class="font-mono">\[1 \le \rho \le 2\]</p><p class="font-mono">\[0 \le \phi \le \pi\]</p><p class="font-mono">\[0 \le \theta \le 2\pi\]</p></div></div></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \text{div } \vec{F} = \vec{\nabla} \cdot \langle x, y, z \rangle = \frac{\partial x}{\partial x} + \frac{\partial y}{\partial y} + \frac{\partial z}{\partial z} = 3 \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \int_{0}^{2\pi} \int_{0}^{\pi} \int_{1}^{2} 3 \cdot \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \]</div><p class="mb-6 italic text-slate-700">Note: \( \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \) represents \( dV \).</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = 3 \int_{0}^{2\pi} \int_{0}^{\pi} \left. \frac{1}{3} \rho^3 \right|_{1}^{2} \sin \phi \, d\phi \, d\theta = \int_{0}^{2\pi} \int_{0}^{\pi} 7 \sin \phi \, d\phi \, d\theta \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = 14\pi \int_{0}^{\pi} \sin \phi \, d\phi = 14\pi \left. (-\cos \phi) \right|_{0}^{\pi} = \text{notebox: } 28\pi \]</div></section><section><h2 class="font-black tracking-tight text-slate-900 mt-10 mb-4">Alternative Method</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iiint_{D_1} \text{div } \vec{F} \, dV - \iiint_{D_2} \text{div } \vec{F} \, dV \quad \text{where } \text{div } \vec{F} = 3 \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = 3 \iiint_{D_1} dV - 3 \iiint_{D_2} dV = 3 \left( \frac{4}{3}\pi(2)^3 - \frac{4}{3}\pi(1)^3 \right) \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( \iiint_{D_1} dV \): volume of big sphere \( \rho = 2 \)</li><li>\( \iiint_{D_2} dV \): volume of small sphere \( \rho = 1 \)</li></ul><div class="notebox border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700">Result: \( 28\pi \)</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><h1 class="font-black tracking-tight text-slate-900 mt-10 mb-4">Example</h1><p class="mb-6">\( \vec{F} = \langle x^2, -y^2, z^2 \rangle \)</p><p class="mb-6">\( D \): space bounded by \( z = 6 - x - y \) and \( z = 3 - x - y \) in first octant</p><div class="grid-layout flex flex-wrap gap-8 items-start"><div class="flex-1"><h2 class="font-black tracking-tight text-slate-900 mt-10 mb-4">Bounds for \( D \)</h2><p class="mb-6">\( 3 - x - y \le z \le 6 - x - y \)</p><p class="mb-6">\( 0 \le z \le 6 - x - y \) (each with their own \( x, y \) bounds)</p><p class="mb-6 italic text-slate-700">Two integrals needed here, with bounds not simple to set up.</p></div><div class="flex-none">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D sketch of two triangular planes in the first octant, bounded by axes x, y, and z at intercepts 3 and 6.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-5.webp" loading="lazy" decoding="async" alt="3D sketch of two triangular planes in the first octant, bounded by axes x, y, and z at intercepts 3 and 6." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D sketch of two triangular planes in the first octant, bounded by axes x, y, and z at intercepts 3 and 6.
+                  </figcaption>
+                </figure>
+              
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D graph in the xy-plane showing two linear boundaries with intercepts at (3,0), (0,3) and (6,0), (0,6).">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-6.webp" loading="lazy" decoding="async" alt="2D graph in the xy-plane showing two linear boundaries with intercepts at (3,0), (0,3) and (6,0), (0,6)." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D graph in the xy-plane showing two linear boundaries with intercepts at (3,0), (0,3) and (6,0), (0,6).
+                  </figcaption>
+                </figure>
+              </div></div></section><section><h2 class="font-black tracking-tight text-slate-900 mt-10 mb-4">Alternative Method</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iiint_{D_1} \text{div } \vec{F} \, dV - \iiint_{D_2} \text{div } \vec{F} \, dV \]</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( D_1 \): volume enclosed by higher plane alone</li><li>\( D_2 \): volume enclosed by lower plane alone</li></ul></section></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><p class="mb-6 italic text-slate-700">the second way seems a little easier</p><div class="grid-layout"><section class="mb-10"><h2 class="font-black tracking-tight text-slate-900 text-2xl mb-4">Region \(D_1\):</h2><ul class="list-none space-y-2 ml-4 mb-6"><li>\(0 \le x \le 6\)</li><li>\(0 \le y \le 6 - x\)</li><li>\(0 \le z \le 6 - x - y\)</li></ul></section>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D coordinate graph showing a line y = 6 - x intersecting the x and y axes at 6.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-7.webp" loading="lazy" decoding="async" alt="A 2D coordinate graph showing a line y = 6 - x intersecting the x and y axes at 6." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D coordinate graph showing a line y = 6 - x intersecting the x and y axes at 6.
+                  </figcaption>
+                </figure>
+              </div><section class="mb-10"><h2 class="font-black tracking-tight text-slate-900 text-2xl mb-4">Region \(D_2\):</h2><ul class="list-none space-y-2 ml-4 mb-6"><li>\(0 \le x \le 3\)</li><li>\(0 \le y \le 3 - x\)</li><li>\(0 \le z \le 3 - x - y\)</li></ul></section><section class="mb-10"><p class="mb-6">\(\text{div } \vec{F} = 2x - 2y + 2z\)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p class="mb-2 text-sm text-slate-500 italic">minus because \(D_2\) is inner volume</p>\[ \underbrace{\int_{0}^{6} \int_{0}^{6-x} \int_{0}^{6-x-y} (2x - 2y + 2z) \, dz \, dy \, dx}_{D_1} - \underbrace{\int_{0}^{3} \int_{0}^{3-x} \int_{0}^{3-x-y} (2x - 2y + 2z) \, dz \, dy \, dx}_{D_2} \]</div><div class="flex items-center space-x-4"><p class="text-xl">\(= \dots =\)</p><div class="notebox border-2 border-slate-900 p-4 inline-block font-bold text-2xl">\(\frac{405}{4}\)</div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-800 bg-white max-w-4xl mx-auto"><section class="mb-10"><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iiint_{D} \text{div } \vec{F} \, dV \text{ requires } \vec{F} \text{ to be defined throughout } D \]</div><p class="mb-6">if not, then Div. Theorem cannot be used directly</p></section><section class="mb-10"><h2 class="font-black tracking-tight text-slate-900 text-2xl mb-4">Example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \vec{F} = \frac{\langle x, y, z \rangle}{\sqrt{x^2 + y^2 + z^2}} \]</div><p class="mb-6">\(S\): sphere radius 1, centered at origin</p><p class="mb-6">at origin, \(\vec{F}\) does not exist, so not \(\text{div } \vec{F}\), so can't use Div. Theorem directly</p></section><div class="grid-layout">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a large sphere D and a smaller inner sphere with radius epsilon.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-37-8.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a large sphere D and a smaller inner sphere with radius epsilon." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a large sphere D and a smaller inner sphere with radius epsilon.
+                  </figcaption>
+                </figure>
+              <section class="mb-10"><h3 class="font-black tracking-tight text-slate-900 text-xl mb-4">Work around:</h3><p class="mb-6">make another smaller sphere enclosing origin, then take the limit as its radius \(\to 0\)</p><p class="mb-6">radius = \(\epsilon\), then \(\lim_{\epsilon \to 0}\)</p><p class="mb-6">in \(D\), \(\vec{F}\) exists everywhere</p></section></div></article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 font-sans">
+  <section class="mb-8">
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ \text{div } \vec{F} = \frac{2}{\sqrt{x^2+y^2+z^2}} = \frac{2}{\rho} \text{ in spherical} \]
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="font-black tracking-tight text-slate-900 text-2xl mb-4">Region D:</h2>
+    <div class="pl-6 border-l-4 border-slate-200">
+      <p class="mb-2">\( \epsilon \leq \rho \leq 1 \)</p>
+      <p class="mb-2">\( 0 \leq \phi \leq \pi \)</p>
+      <p class="mb-6">\( 0 \leq \theta \leq 2\pi \)</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ \iiint_D \text{div } \vec{F} \, dV = \int_0^{2\pi} \int_0^\pi \int_\epsilon^1 \frac{2}{\rho} \cdot \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \]
+    </div>
+    <p class="italic text-slate-700 mb-6">Note: In the integral above, \( dV = \rho^2 \sin \phi \, d\rho \, d\phi \, d\theta \).</p>
+    
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ = \dots = 4\pi (1 - \epsilon^2) \]
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <p class="mb-4">
+      now \( \lim_{\epsilon \to 0} 4\pi (1 - \epsilon^2) = \)
+      <span class="inline-block border-2 border-slate-900 px-2 py-1 font-bold">\(4\pi\)</span>
+    </p>
+  </section>
+</article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

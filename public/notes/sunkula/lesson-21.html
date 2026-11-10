@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson19 (Transcription)</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid #3498db; 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #007bff;
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid #3498db;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson21.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <main>
+        
+            <section aria-labelledby="page-title-1">
+                <h3 id="page-title-1">Page 1</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-1.webp" loading="lazy" decoding="async" alt="Original handwritten page 1">
+                    <figcaption><strong>Original handwritten page 1</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Lesson 21: Triple integrals</h4>
+
+<div class="example">
+    <p><strong>Warmup:</strong> What is the area between \(y = x^2\) and \(y = 4\).</p>
+
+    <div class="visual-desc">
+        A diagram on a grid background depicts a shaded region \(D\) in a 2D Cartesian coordinate system. The region is bounded below by the parabola \(y = x^2\) and above by the horizontal line \(y = 4\). The parabola opens upward with its vertex at the origin \((0,0)\). Vertical dashed blue lines indicate the boundaries along the x-axis at \(x = -2\) and \(x = 2\). A vertical rectangular strip is drawn within the shaded region to represent a differential element of area; arrows point from the top of this strip to the line \(y = 4\) and from the bottom of the strip to the curve \(y = x^2\).
+    </div>
+
+    <div class="solution">
+        \[ = \int_{-2}^{2} (4 - x^2) \, dx \]
+
+        <p><strong>Observe!</strong> \[ 4 - x^2 = \int_{x^2}^{4} 1 \, dy \]</p>
+
+        \[ = \int_{-2}^{2} \int_{x^2}^{4} 1 \, dy \, dx \]
+
+        \[ = \iint_{D} 1 \, dA \]
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-2">
+                <h3 id="page-title-2">Page 2</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-2.webp" loading="lazy" decoding="async" alt="Original handwritten page 2">
+                    <figcaption><strong>Original handwritten page 2</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>What is the volume of the Region between \( z = x^2 + y^2 \) & \( z = 4 \)?</h4>
+
+<div class="visual-desc">
+    <strong>Visual Description:</strong>
+    <p>The page features two diagrams illustrating a multivariable calculus problem:</p>
+    <ul>
+        <li><strong>3D Coordinate System:</strong> Shows a paraboloid defined by the equation \( z = x^2 + y^2 \). The paraboloid opens upwards from the origin \((0,0,0)\). A horizontal plane, shown in blue and labeled \( z = 4 \), caps the paraboloid. The region enclosed between the paraboloid and the plane is labeled \( R \). A purple horizontal cross-sectional disk is drawn at an arbitrary height \( z \), labeled \( A(z) \), with a small vertical thickness indicated as \( \Delta z \).</li>
+        <li><strong>2D Coordinate System:</strong> Displays the projection of the cross-section onto the \( xy \)-plane. This projection is a shaded purple disk centered at the origin, labeled \( D \).</li>
+    </ul>
+</div>
+
+<div class="example">
+    <p><strong>Example Solution:</strong></p>
+    <div class="solution">
+        <p>To find the volume of the region \( R \), we set up the integral based on horizontal cross-sections:</p>
+        
+        \[ \text{Volume} = \int_{0}^{4} A(z) \, dz \]
+        
+        <p>In this expression, \( A(z) \) represents the <strong>Area of cross section</strong>, which can be defined as a <strong>Double integral</strong>:</p>
+        
+        \[ = \int_{0}^{4} \iint_{D} 1 \, dz \]
+        
+        <p>= <strong>Triple integral</strong>.</p>
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-3">
+                <h3 id="page-title-3">Page 3</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-3.webp" loading="lazy" decoding="async" alt="Original handwritten page 3">
+                    <figcaption><strong>Original handwritten page 3</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Volume and Mass of a 3d Domain D</h4>
+
+<div class="definition">
+    <p>\[ \text{Volume} = \iiint_{D} 1 \, dV \]</p>
+
+    <p>Suppose \(f(x, y, z)\) is the density of the domain</p>
+
+    <p>\[ \text{Mass} = \iiint_{D} f(x, y, z) \, dV \]</p>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-4">
+                <h3 id="page-title-4">Page 4</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-4.webp" loading="lazy" decoding="async" alt="Original handwritten page 4">
+                    <figcaption><strong>Original handwritten page 4</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Triple integral as Riemann Sum:</h4>
+
+<div class="definition">
+    <p>* \(f(x)\) on \([a, b]\)</p>
+    
+    \[ \int_{a}^{b} f(x) dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i) \Delta x \]
+
+    <div class="visual-desc">
+        <strong>Visual Description:</strong> A horizontal blue line segment represents the interval from point \(a\) on the left to point \(b\) on the right. A small section of the line is marked with a bracket. Accompanying blue text notes:
+        <ul>
+            <li>* Divide into small intervals of length \(\Delta x\)</li>
+            <li>* \(f(x_i)\) height at sample point</li>
+        </ul>
+    </div>
+</div>
+
+<div class="definition">
+    <p>* \(f(x, y)\) on \([a, b] \times [c, d]\)</p>
+    <p>Divide into small Rectangle of Area \(\Delta x \Delta y\)</p>
+
+    \[ \iint_{R} f(x, y) dA = \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j=1}^{m} \sum_{i=1}^{n} f(x_i, y_j) \Delta x \Delta y \]
+
+    <div class="visual-desc">
+        <strong>Visual Description:</strong> A large grey rectangle represents the region \(R\). Within the rectangle, a single small sub-rectangle is colored red and labeled with its dimensions: width \(\Delta x\) and height \(\Delta y\).
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-5">
+                <h3 id="page-title-5">Page 5</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-5.webp" loading="lazy" decoding="async" alt="Original handwritten page 5">
+                    <figcaption><strong>Original handwritten page 5</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Triple Integrals over Rectangular Boxes</h4>
+
+<div class="definition">
+    \[D = [a, b] \times [c, d] \times [e, f]\]
+    \[\iiint_{D} f(x, y, z) \, dV\]
+</div>
+
+<div class="visual-desc">
+    A three-dimensional rectangular prism represents the domain \(D\) drawn on a grid. The prism is partitioned into sub-boxes, with specific dimensions labeled:
+    <ul>
+        <li>The depth increment is labeled \(\Delta x\) in blue.</li>
+        <li>The width increment is labeled \(\Delta y\) in green.</li>
+        <li>The height increment is labeled \(\Delta z\) in purple.</li>
+        <li>A small representative sub-box in the interior of the prism is highlighted with a red outline.</li>
+    </ul>
+</div>
+
+<div class="important">
+    Divide the domain to small Boxes of volume
+    \[\Delta V = \Delta x \Delta y \Delta z\]
+</div>
+
+\[\lim_{l \to \infty} \lim_{m \to \infty} \lim_{n \to \infty} \sum_{k=1}^{l} \sum_{j=1}^{n} \sum_{i=1}^{m} f(x_i, y_j, z_k) \Delta x \Delta y \Delta z\]
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-6">
+                <h3 id="page-title-6">Page 6</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-6.webp" loading="lazy" decoding="async" alt="Original handwritten page 6">
+                    <figcaption><strong>Original handwritten page 6</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Triple integrals as iterated integrals</h4>
+
+<div class="example">
+    <strong>Example:</strong> \( B = [0,2] \times [0,1] \times [0,3] \), evaluate \( \iiint_B xyz^2 \, dV \)
+
+    <div class="visual-desc">
+        A 3D diagram shows a rectangular box in a right-handed Cartesian coordinate system. The vertical \( z \)-axis is labeled with a point at \( (0,0,3) \). The \( x \)-axis extends forward and to the left, labeled with a point at \( (2,0,0) \). The \( y \)-axis extends to the right, and the far corner of the box's base is labeled \( (2,1,0) \). A vertical purple line segment with endpoints marked by dots spans the height of the box, illustrating integration with respect to \( z \). The base of the box in the \( xy \)-plane is shaded with red diagonal hatch marks to represent the "shadow" of the region.
+    </div>
+
+    <div class="important">
+        Fix \( x,y \to \) integrate w.r.t \( z \) first then double integral on the shadow in \( xy \) plane
+    </div>
+
+    <p style="text-align: center;">\( 0 \le z \le 3 \)</p>
+
+    <strong><u>shadow:</u></strong>
+
+    <div class="visual-desc">
+        A 2D coordinate graph shows the "shadow" region \( R \) in the \( xy \)-plane. The region \( R \) is a rectangle shaded in light red, bounded by \( x=0 \) to \( x=2 \) on the horizontal axis and \( y=0 \) to \( y=1 \) on the vertical axis.
+    </div>
+
+    <div class="solution">
+        \[ \iiint_B xyz^2 \, dV = \iint_R \int_0^3 xyz^2 \, dz \, dA = \iint_R 9xy \, dA \]
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-7">
+                <h3 id="page-title-7">Page 7</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-7.webp" loading="lazy" decoding="async" alt="Original handwritten page 7">
+                    <figcaption><strong>Original handwritten page 7</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Shadows</h4>
+
+<div class="visual-desc">
+    An xy-coordinate plane graph displays a rectangular region labeled R. The region R is shaded in red and is bounded by the x-axis from 0 to 2 and the y-axis from 0 to 1. The horizontal axis is labeled x with a tick mark at 2, and the vertical axis is labeled y with a tick mark at 1.
+</div>
+
+<div class="example">
+    \[ \iint_{R} \int_{0}^{3} xyz^{2} \, dz \, dA = \iint_{R} 9xy \, dA \]
+
+    <div class="solution">
+        <p>Fix \(x\), integrate w.r.t \(y\) first on \(0 \le y \le 1\) then w.r.t \(x\) on \(0 \le x \le 2\)</p>
+        \[ = \int_{0}^{2} \int_{0}^{1} 9xy \, dy \, dx \]
+        \[ = \int_{0}^{2} \frac{9x}{2} \, dx = 9 \]
+    </div>
+
+    <div class="solution">
+        <p>Fix \(y\), integrate w.r.t \(x\) first then w.r.t \(y\)</p>
+        <p>\(0 \le x \le 2\)</p>
+        <p>\(0 \le y \le 1\)</p>
+        \[ \int_{0}^{1} \int_{0}^{2} 9xy \, dx \, dy \]
+        \[ = \int_{0}^{1} 18y \, dy \]
+        \[ = 9 \]
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-8">
+                <h3 id="page-title-8">Page 8</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-8.webp" loading="lazy" decoding="async" alt="Original handwritten page 8">
+                    <figcaption><strong>Original handwritten page 8</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Integration Order: Integrating with Respect to \(y\) First</h4>
+
+<p>Fix \(x\) and \(z\) first instead and integrate w.r.t. \(y\) and then on shadow in \(xz\) plane.</p>
+
+<div class="visual-desc">
+    <p><strong>3D Coordinate Plot:</strong> A rectangular prism is depicted in a three-dimensional \(xyz\) coordinate system. The vertices of the prism are shown with labels at \((0,0,3)\), \((2,0,0)\), and \((2,1,0)\). The face of the prism lying on the \(xz\)-plane is marked with red scribbled lines, and a green arrow points through the volume in the positive \(y\) direction, indicating the direction of integration. This highlighted face represents the "shadow" of the volume onto the \(xz\)-plane.</p>
+    
+    <p><strong>Shadow Plot (xz-plane):</strong> A 2D graph titled "Shadow:" illustrates the region \(R\) in the \(xz\)-plane. The region is a rectangle bounded by \(x=0\) to \(x=2\) on the horizontal axis and \(z=0\) to \(z=3\) on the vertical axis. The area is shaded light red and labeled \(R\).</p>
+</div>
+
+<div class="example">
+    <p><strong>Bounds for \(y\):</strong></p>
+    <p>\[0 \le y \le 1\]</p>
+
+    <div class="solution">
+        <p>The triple integral is set up by first integrating with respect to \(y\) over the interval \([0, 1]\), and then over the rectangular region \(R\) in the \(xz\)-plane:</p>
+        
+        \[ \iint_{R} \int_{0}^{1} xyz^2 \, dy \, dA \]
+
+        <p>Substituting the bounds for the region \(R\) (\(0 \le x \le 2\) and \(0 \le z \le 3\)), the iterated integral can be written in two ways:</p>
+
+        \[ = \int_{0}^{2} \int_{0}^{3} \int_{0}^{1} xyz^2 \, dy \, dz \, dx \]
+
+        \[ = \int_{0}^{3} \int_{0}^{2} \int_{0}^{1} xyz^2 \, dy \, dx \, dz \]
+    </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-9">
+                <h3 id="page-title-9">Page 9</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-9.webp" loading="lazy" decoding="async" alt="Original handwritten page 9">
+                    <figcaption><strong>Original handwritten page 9</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Triple Integrals: Integration Order</h4>
+
+<div class="important">
+    fix \(y\) &amp; \(z\) first and integrate w.r.t. \(x\) and then on shadow in \(yz\) plane
+</div>
+
+<div class="visual-desc">
+    <strong>3D Coordinate Plot:</strong>
+    A three-dimensional Cartesian coordinate system displays a rectangular prism. The axes are labeled \(x\), \(y\), and \(z\). The prism's base lies on the \(xy\)-plane with vertices labeled at \((2,0,0)\) and \((2,1,0)\). The face in the \(yz\)-plane is shaded gray. There is a red hatched region drawn on the front face of the box. A blue line segment with endpoints marked by blue dots spans from the \(z\)-axis diagonally across the volume toward the front-right edge.
+</div>
+
+<div class="visual-desc">
+    <strong>Shadow Region Diagram:</strong>
+    A 2D plot titled "Shadow:" illustrates the projection of the volume onto the \(yz\)-plane. A rectangular region \(R\) is shaded light red in the first quadrant. The vertical axis is labeled \(z\) with a tick mark at 3, and the horizontal axis is labeled \(y\) with a tick mark at 2.
+</div>
+
+<div class="solution">
+    <p>\(0 \le x \le 2\)</p>
+
+    \[ \iint\limits_{R} \int_{0}^{2} xy z^{2} \, dx \, dA \]
+
+    \[ = \int_{0}^{3} \int_{0}^{1} \int_{0}^{2} xy z^{2} \, dx \, dy \, dz \]
+
+    \[ = \int_{0}^{1} \int_{0}^{3} \int_{0}^{2} xy z^{2} \, dx \, dz \, dy \]
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-10">
+                <h3 id="page-title-10">Page 10</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-10.webp" loading="lazy" decoding="async" alt="Original handwritten page 10">
+                    <figcaption><strong>Original handwritten page 10</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <div class="example">
+  <h4><strong>Example:</strong> Find volume of solid under \(x+y+z=1\) in 1st octant.</h4>
+
+  <div class="visual-desc">
+    A 3D coordinate system graph illustrates a solid tetrahedron in the first octant bounded by the plane \(x+y+z=1\). The plane intersects the coordinate axes at points \((1,0,0)\), \((0,1,0)\), and \((0,0,1)\). The region on the \(xy\)-plane directly beneath the plane is shaded with red diagonal lines and labeled as the "shadow". A representative horizontal cross-section is shown in purple at a height \(z\), and the diagram indicates the bounds of integration from the \(xy\)-plane up to the boundary plane.
+  </div>
+
+  <div class="solution">
+    \[ \text{Volume} = \iiint_D 1 \, dV \]
+
+    <p>fix \(x,y\) so integrate w.r.t \(z\) first</p>
+    <p>
+      \(0 \le z \le \text{hitting plane } x+y+z=1\)<br />
+      \(0 \le z \le 1-x-y\)
+    </p>
+
+    <p>then Double integral on shadow in \(xy\)</p>
+
+    <div class="visual-desc">
+      A 2D graph titled "shadow" shows the projection of the solid onto the \(xy\)-plane, labeled region \(D\). The region is a triangle with vertices at the origin \((0,0)\), \((1,0)\) on the \(x\)-axis, and \((0,1)\) on the \(y\)-axis. The boundary line is \(y = 1 - x\). A vertical line segment is drawn at a general position \(x\) from the \(x\)-axis to the boundary line, representing the inner integration limits for \(y\).
+    </div>
+
+    \[ \iint_D \int_0^{1-x-y} 1 \, dz \, dA = \int_0^1 \int_0^{1-x} \int_0^{1-x-y} 1 \, dz \, dy \, dx = \int_0^1 \int_0^{1-x} 1-x-y \, dy \, dx \]
+    \[ = \int_0^1 (1-x)(1-x) - \frac{(1-x)^2}{2} \, dx \]
+    \[ = \int_0^1 \frac{(1-x)^2}{2} \, dx = \frac{1}{6} \]
+  </div>
+</div>
+                </div>
+                <hr>
+            </section>
+          
+            <section aria-labelledby="page-title-11">
+                <h3 id="page-title-11">Page 11</h3>
+                
+                <figure>
+                    <img src="img/lesson-21-11.webp" loading="lazy" decoding="async" alt="Original handwritten page 11">
+                    <figcaption><strong>Original handwritten page 11</strong></figcaption>
+                </figure>
+                
+                <div class="page-content">
+                    <h4>Another Way!</h4>
+
+<div class="visual-desc">
+    <strong>Visual Description:</strong> A 3D coordinate system showing a tetrahedron in the first octant. The vertices of the tetrahedron are located at \((1,0,0)\), \((0,1,0)\), and \((0,0,1)\). The slanted face is part of the plane defined by the equation \(x + y + z = 1\). A horizontal, purple-shaded cross-section is shown at an arbitrary height \(z\), labeled as \(A(z)\).
+</div>
+
+<div class="example">
+    \[ \text{Volume} = \iiint_D 1 \, dV \]
+    \[ = \int_0^1 A(z) \, dz \]
+</div>
+
+<div class="important">
+    compute this using double integrals.
+</div>
+
+<h5>Cross-Section: \(0 \le z \le 1\)</h5>
+
+<div class="visual-desc">
+    <strong>Visual Description:</strong> A 2D \(xy\)-plane diagram representing the cross-section at a fixed height \(z\). The cross-section is a right triangle with its vertices on the axes. The vertical leg on the \(y\)-axis has a length of \(1-z\), and the horizontal leg on the \(x\)-axis has a length of \(1-z\). The hypotenuse of the triangle is the line defined by the equation \(x + y = 1 - z\).
+</div>
+
+<div class="solution">
+    \[ A(z) = \frac{(1-z)^2}{2} = \int_0^{1-z} \int_0^{1-z-y} 1 \, dx \, dy \]
+</div>
+                </div>
+                
+            </section>
+          
+    </main>
+</body>
+</html>

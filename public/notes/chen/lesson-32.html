@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17.6 Surface Integrals (part 2) - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #CEB888;
+            --link-color: #B19B69;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 2rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            .sidebar-hidden.container {
+                padding: 0;
+                max-width: none;
+            }
+            .sidebar-hidden .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                margin: 0;
+            }
+            .sidebar-hidden article {
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 2rem 0 !important;
+                position: relative;
+                width: 100%;
+            }
+            .sidebar-hidden .math-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: block;
+                padding: 5rem;
+                background: #fafaf9;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-radius: 1.5rem;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                position: fixed;
+                right: 3rem !important;
+                top: 2rem !important;
+                z-index: 50;
+            }
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                left: 3rem;
+                top: 2rem;
+                margin: 0;
+                z-index: 10;
+            }
+            .sidebar-hidden .download-btn-wrapper a {
+                background: #CEB888;
+                color: #000;
+                border: 2px solid #000;
+                font-weight: 700;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+            .sidebar-hidden .download-btn-wrapper a:hover {
+                transform: translateY(-2px);
+                background: #e2cf9f;
+            }
+            .sidebar-hidden .download-btn-wrapper span {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .download-btn-wrapper a {
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .download-btn-wrapper a {
+                padding: 0.5rem 1rem;
+                font-size: 10px;
+            }
+            .sidebar-hidden .math-content {
+                padding: 1.5rem;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+            }
+            .sidebar-hidden .download-btn-wrapper,
+            .sidebar-hidden .page-badge {
+                position: absolute;
+                top: 0.5rem !important;
+            }
+            .sidebar-hidden .download-btn-wrapper {
+                right: 0.5rem !important;
+            }
+            .sidebar-hidden .page-badge {
+                left: 0.5rem !important;
+            }
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: #CEB888;
+            color: black;
+            border: 2px solid black;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: #B19B69;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 1.5rem;
+            display: flow-root;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            article {
+                padding: 3rem;
+            }
+            .sidebar-hidden article {
+                padding: 2rem 0;
+                width: 100%;
+            }
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
+        }
+
+        @media (min-width: 1280px) {
+            .math-content {
+                display: grid;
+                grid-template-columns: 1fr 25%;
+                gap: 0 2rem;
+                align-items: start;
+            }
+            .math-content > * {
+                grid-column: 1;
+            }
+            .math-content > figure {
+                grid-column: 2;
+                grid-row: span 50;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .math-content h1, .math-content h2, .math-content h3 {
+                grid-column: 1 / -1;
+                clear: both;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Math overflow safety */
+        mjx-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%2032%20%2817.6-2%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print download-btn-wrapper" style="position: absolute; top: 0; right: 1.5rem;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 32 (17.6-2).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0" title="Download original notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 21v-8H7v8" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 3v5h8" />
+                            </svg>
+                            <span>Download original notes</span>
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><h1 class="text-3xl font-black tracking-tight mb-8 border-b-2 border-slate-200 pb-2">17.6 Surface Integrals (part 2)</h1><section class="mb-10"><p class="mb-6">Last time:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center">\[ \iint_{S} g(x, y, z) \, dS = \iint_{S} g(u, v) |\vec{r}_u \times \vec{r}_v| \, dA \]</div><div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p>General formula, works in any coordinate system. Note: \( dA \) can be \( du \, dv \) or \( dv \, du \).</p></div></section><section class="mb-10"><p class="mb-6">Often we use Cartesian: \( u = x \), \( v = y \). The resulting formula is useful to know.</p><p class="mb-4">Surface \( S \): \( \vec{r}(u, v) = \vec{r}(x, y) = \langle x, y, f(x, y) \rangle \) (where \( z = f(x, y) \))</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6"><div class="space-y-2">\[ \vec{r}_u = \vec{r}_x = \langle 1, 0, f_x \rangle \]\[ \vec{r}_v = \vec{r}_y = \langle 0, 1, f_y \rangle \]</div><div class="space-y-2">\[ \vec{r}_u \times \vec{r}_v = \langle -f_x, -f_y, 1 \rangle \]\[ |\vec{r}_u \times \vec{r}_v| = \sqrt{1 + f_x^2 + f_y^2} \]</div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ dS = \sqrt{1 + f_x^2 + f_y^2} \, dy \, dx \quad \text{or} \quad dx \, dy \]</div><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2">\( \rightarrow \) area of a small patch of \( S \)</p><p>Notice similarity to length of curve \( L = \int_{a}^{b} \sqrt{1 + (\frac{dy}{dx})^2} \, dx \) if \( y = f(x) \)</p></div></section><section class="mb-10"><p class="mb-6">So, in Cartesian, the surface integral can be written as</p><div class="my-8 overflow-x-auto py-6 bg-slate-100 rounded-xl px-6 border-2 border-slate-900 shadow-md text-center">\[ \iint_{R} g(x, y, z) \sqrt{1 + f_x^2 + f_y^2} \, dA \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="p-8 font-sans text-slate-900 bg-white max-w-4xl mx-auto"><section class="mb-10"><h2 class="text-2xl font-black tracking-tight mb-6">Example</h2><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-start"><div class="space-y-4"><p class="font-bold">Evaluate:</p><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_{S} (x + y) \, dS \]</div><p>\( S \): \( z = 6 - 3x - 2y \) above the rectangle \( 0 \le x \le 1 \), \( 0 \le y \le 3/2 \)</p></div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 3D coordinate system showing a plane segment in the first octant with intercepts at z=6, x=2, and y=3.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-1.webp" loading="lazy" decoding="async" alt="3D coordinate system showing a plane segment in the first octant with intercepts at z=6, x=2, and y=3." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 3D coordinate system showing a plane segment in the first octant with intercepts at z=6, x=2, and y=3.
+                  </figcaption>
+                </figure>
+              </div></div></section><section class="mb-10"><p class="mb-4">Surface: \( z = f(x, y) = 6 - 3x - 2y \)</p><p class="mb-4">\( f_x = -3 \), \( f_y = -2 \)</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ dS = \sqrt{1 + f_x^2 + f_y^2} \, dA = \sqrt{14} \, dy \, dx \]</div><div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="space-y-6"><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \iint_{S} (x + y) \, dS = \int_{0}^{1} \int_{0}^{3/2} (x + y) \sqrt{14} \, dy \, dx \]</div><div class="my-4 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \dots = \frac{15\sqrt{14}}{8} \]</div></div><div class="flex flex-col items-center">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: 2D xy-plane showing a rectangular region bounded by x=1 and y=3/2 within a triangle bounded by y=3-3/2x.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-2.webp" loading="lazy" decoding="async" alt="2D xy-plane showing a rectangular region bounded by x=1 and y=3/2 within a triangle bounded by y=3-3/2x." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: 2D xy-plane showing a rectangular region bounded by x=1 and y=3/2 within a triangle bounded by y=3-3/2x.
+                  </figcaption>
+                </figure>
+              </div></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><h1 class="text-3xl font-black tracking-tight mb-6">Surface Area Example</h1><section class="mb-10"><div class="grid-layout"><div class="mb-6"><p class="text-lg mb-4"><strong>Example:</strong> Find the surface area of \( z^2 = x^2 + y^2 \) for \( 0 \le z \le 2 \).</p><p class="mb-4">We can rewrite the surface as a function of \( x \) and \( y \):</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ z = f(x,y) = \sqrt{x^2 + y^2} \]</div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a cone opening upwards from the origin, capped at z=2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a cone opening upwards from the origin, capped at z=2." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a cone opening upwards from the origin, capped at z=2.
+                  </figcaption>
+                </figure>
+              </div></section><section class="mb-10"><div class="grid-layout"><div class="mb-6"><h2 class="text-2xl font-bold mb-4">Projection onto xy-plane</h2><p class="mb-4">The projection of the cone \( z = \sqrt{x^2 + y^2} \) with \( z \le 2 \) onto the \( xy \)-plane is a disk of radius 2.</p><p class="mb-4">The boundaries are given by:</p><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( y = \sqrt{4 - x^2} \) (upper semi-circle)</li><li>\( y = -\sqrt{4 - x^2} \) (lower semi-circle)</li></ul><p class="mb-4">The region is defined by:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ -2 \le x \le 2 \quad \text{and} \quad -\sqrt{4 - x^2} \le y \le \sqrt{4 - x^2} \]</div></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D circle of radius 2 centered at the origin in the xy-plane, labeled with its upper and lower boundary equations.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-4.webp" loading="lazy" decoding="async" alt="A 2D circle of radius 2 centered at the origin in the xy-plane, labeled with its upper and lower boundary equations." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D circle of radius 2 centered at the origin in the xy-plane, labeled with its upper and lower boundary equations.
+                  </figcaption>
+                </figure>
+              </div></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Surface Area Differential</h2><p class="mb-4">The differential surface area element is:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ dS = \sqrt{1 + f_x^2 + f_y^2} \, dA \]</div><p class="mb-4">Calculating partial derivatives:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ f_x = \frac{x}{\sqrt{x^2 + y^2}} \quad f_y = \frac{y}{\sqrt{x^2 + y^2}} \]</div><p class="mb-4">Substituting into the formula:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ dS = \sqrt{1 + \frac{x^2}{(\sqrt{x^2 + y^2})^2} + \frac{y^2}{(\sqrt{x^2 + y^2})^2}} = \sqrt{\frac{2(x^2 + y^2)}{x^2 + y^2}} = \sqrt{2} \]</div><p class="mb-4">Thus,</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ dS = \sqrt{2} \, dy \, dx \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Surface Area Calculation</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \text{Surface area:} \int_{-2}^{2} \int_{-\sqrt{4-x^2}}^{\sqrt{4-x^2}} \sqrt{2} \, dy \, dx \]</div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ = \sqrt{2} \int_{-2}^{2} \int_{-\sqrt{4-x^2}}^{\sqrt{4-x^2}} dy \, dx \]</div><div class="grid-layout"><div class="border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700"><p class="mb-2"><strong>Geometric Interpretation:</strong></p><p class="mb-2">The double integral represents the area of a circle with radius 2.</p><p class="mb-2">\[ \text{Area} = \pi(2)^2 = 4\pi \]</p></div>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 2D circle of radius 2 in the xy-plane, illustrating the region of integration.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-5.webp" loading="lazy" decoding="async" alt="A 2D circle of radius 2 in the xy-plane, illustrating the region of integration." class="max-w-full h-auto" data-figure-id="fig_3">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 2D circle of radius 2 in the xy-plane, illustrating the region of integration.
+                  </figcaption>
+                </figure>
+              </div><p class="mb-4">Therefore,</p><div class="notebox p-4 bg-slate-100 border border-slate-300 rounded-lg inline-block font-bold">\[ = \sqrt{2} \cdot 4\pi = 4\sqrt{2}\pi \]</div></section><section class="mb-10"><h2 class="text-2xl font-bold mb-4">Alternative: Change to Polar Coordinates</h2><p class="mb-4">Using the fact that \( dA = r \, dr \, d\theta \) in polar coordinates:</p><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">\[ \sqrt{2} \int_{-2}^{2} \int_{-\sqrt{4-x^2}}^{\sqrt{4-x^2}} dy \, dx = \sqrt{2} \int_{0}^{2\pi} \int_{0}^{2} r \, dr \, d\theta \]</div><p class="mb-4">Evaluating this integral yields the same result:</p><div class="notebox p-4 bg-slate-100 border border-slate-300 rounded-lg inline-block font-bold">\[ = 4\sqrt{2}\pi \]</div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans">
+  <section>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ dS = \sqrt{1 + f_x^2 + f_y^2} \, dA \text{ is assumed to be in Cartesian} \]
+    </div>
+    <p class="mb-6">if we change to anything else, we need to manually adjust \( dA \)</p>
+    <p class="mb-6">but <span class="font-bold">\( dS = |\vec{r}_u \times \vec{r}_v| \, dA \) ALWAYS accounts for \( dA \) automatically</span></p>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">Example (same cone)</h2>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ z^2 = x^2 + y^2 \rightarrow z = \sqrt{x^2 + y^2} \rightarrow z = \sqrt{r^2} = r \]
+      \[ 0 \le z \le 2 \]
+    </div>
+    <p class="mb-6">now let's parametrize in cylindrical</p>
+
+    <div class="grid-layout">
+      <div>
+        
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A circle centered at the origin in the xy-plane with radius 2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-6.webp" loading="lazy" decoding="async" alt="A circle centered at the origin in the xy-plane with radius 2." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A circle centered at the origin in the xy-plane with radius 2.
+                  </figcaption>
+                </figure>
+              
+        <div class="my-4">
+          \[ 0 \le r \le 2 \]
+          \[ 0 \le \theta \le 2\pi \]
+          \[ \downarrow \]
+          \[ 0 \le u \le 2 \]
+          \[ 0 \le v \le 2\pi \]
+        </div>
+      </div>
+      <div class="pl-6">
+        <div class="my-4">
+          \[ u = r, \quad v = \theta \]
+          \[ x = r \cos \theta = u \cos v \]
+          \[ y = r \sin \theta = u \sin v \]
+          \[ z = z = r = u \]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ \vec{r}(u,v) = \langle u \cos v, u \sin v, u \rangle \]
+      \[ \vec{r}_u = \langle \cos v, \sin v, 1 \rangle \]
+      \[ \vec{r}_v = \langle -u \sin v, u \cos v, 0 \rangle \]
+      \[ \vec{r}_u \times \vec{r}_v = \langle -u \cos v, -u \sin v, u \rangle \]
+      \[ |\vec{r}_u \times \vec{r}_v| = \sqrt{2} \, u \]
+    </div>
+
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ dS = |\vec{r}_u \times \vec{r}_v| \, dA = \sqrt{2} \, u \, du \, dv \]
+    </div>
+
+    <div class="notebox border-l-4 border-slate-400 pl-6 my-8 italic text-slate-700">
+      <p>notice \( |\vec{r}_u \times \vec{r}_v| \) ALWAYS provides the "missing" piece in \( dA \) (e.g., \( r \, dr \, d\theta \))</p>
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans">
+  <section>
+    <p class="mb-6">we can calculate the average value of \( f(x,y,z) \) on surface \( S \)</p>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ f_{\text{avg}} = \frac{\iint_S f \, dS}{\iint_S dS} \]
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-black tracking-tight text-slate-900 mt-10 mb-4">physically meaning:</h2>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ \iint_S f \, dS = \text{mass if } f \text{ is density} \]
+    </div>
+    <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm">
+      \[ f_{\text{avg}} \underbrace{\iint_S dS}_{\text{Surface area}} = \text{mass with constant density } f_{\text{avg}} \text{ over the same surface} \]
+    </div>
+  </section>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><h1 class="text-3xl font-black tracking-tight mb-6">Example: Average Distance on a Surface</h1><p class="mb-6">Find the average distance of points on \( z = x^2 + y^2 \), \( 1 \le z \le 4 \) from the origin.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-center mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D paraboloid surface z = x squared plus y squared between z equals 1 and z equals 4.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-7.webp" loading="lazy" decoding="async" alt="A 3D paraboloid surface z = x squared plus y squared between z equals 1 and z equals 4." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D paraboloid surface z = x squared plus y squared between z equals 1 and z equals 4.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><p class="mb-4">\( d = \sqrt{x^2 + y^2 + z^2} \) distance from \( (0, 0, 0) \)</p><p class="italic text-slate-700">This is the function to average.</p></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Parametrization</h2><p class="mb-6">Coord. sys? Cylindrical is good.</p><div class="grid-layout flex flex-col md:flex-row gap-8 items-center mb-10"><div class="flex-1">
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: Top-down view of concentric circles in the xy-plane representing the bounds of the paraboloid.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-32-8.webp" loading="lazy" decoding="async" alt="Top-down view of concentric circles in the xy-plane representing the bounds of the paraboloid." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: Top-down view of concentric circles in the xy-plane representing the bounds of the paraboloid.
+                  </figcaption>
+                </figure>
+              </div><div class="flex-1"><ul class="list-none space-y-2"><li>At \( z = 4 \rightarrow x^2 + y^2 = 4 \rightarrow r^2 = 4 \rightarrow r = 2 \)</li><li>At \( z = 1 \rightarrow r = 1 \)</li></ul></div></div><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><div class="grid grid-cols-2 gap-4"><div><p>\( 1 \le r \le 2 \)</p><p>\( 0 \le \theta \le 2\pi \)</p></div><div><p>\( u = r \)</p><p>\( v = \theta \)</p></div></div><p class="mt-4">\( 1 \le u \le 2 \)</p><p>\( 0 \le v \le 2\pi \)</p><p class="mt-6 font-bold">\( \vec{r}(u, v) = \langle u \cos v, u \sin v, u^2 \rangle \)</p><p class="text-sm text-slate-600 mt-2">Note: \( z = x^2 + y^2 = r^2 = u^2 \)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="p-8 text-slate-900 bg-white font-sans"><section><h2 class="text-2xl font-black tracking-tight mb-4">Partial Derivatives and Surface Area Element</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm"><p>\( \vec{r}_u = \langle \cos v, \sin v, 2u \rangle \)</p><p>\( \vec{r}_v = \langle -u \sin v, u \cos v, 0 \rangle \)</p><p class="mt-4">\( |\vec{r}_u \times \vec{r}_v| = \dots = u \sqrt{1 + 4u^2} \)</p></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Average Value Formula</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-200 shadow-sm text-center"><p class="text-xl">\( f_{\text{avg}} = \frac{\iint_S f \, dS}{\iint_S dS} \)</p></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Calculations</h2><div class="space-y-6"><div class="p-6 bg-slate-50 rounded-xl border border-slate-200"><p class="mb-4">Numerator (Integral of distance):</p><p>\( \iint_S f \, dS = \int_0^{2\pi} \int_1^2 \sqrt{u^2 + u^4} \cdot u \sqrt{1 + 4u^2} \, du \, dv = \dots = 2\pi (15.21) \)</p><p class="text-sm text-slate-600 mt-2">Where \( f = d = \sqrt{x^2 + y^2 + z^2} = \sqrt{u^2 + u^4} \) and \( dS = u \sqrt{1 + 4u^2} \, du \, dv \)</p></div><div class="p-6 bg-slate-50 rounded-xl border border-slate-200"><p class="mb-4">Denominator (Surface Area):</p><p>\( \iint_S dS = \int_0^{2\pi} \int_1^2 u \sqrt{1 + 4u^2} \, du \, dv = \dots = 2\pi (4.91) \)</p></div></div><h2 class="text-2xl font-black tracking-tight mt-10 mb-4">Final Result</h2><div class="border-l-4 border-slate-900 pl-6 my-8 italic text-slate-700"><p class="text-xl">\( f_{\text{avg}} = \frac{2\pi (15.21)}{2\pi (4.91)} \approx 3.1 \)</p></div></section></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const container = document.querySelector('.container');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            container.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>

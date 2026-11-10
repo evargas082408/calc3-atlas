@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 31: Surface integrals - I \(17.6\) - Accessible Transcription</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                enableAssistiveMml: true
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" crossorigin="anonymous"></script>
+    <style>
+        
+    :root {
+        --primary-color: #0c0d0d;
+        --sidebar-bg: #0c0d0d;
+        --sidebar-text: #ecf0f1;
+        --sidebar-hover: #34495e;
+        --content-max-width: 1100px;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #212529;
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 160px;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        padding: 20px 10px;
+        z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--primary-color);
+    }
+
+    .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar nav li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar nav a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .sidebar nav a:hover {
+        background-color: var(--sidebar-hover);
+        transform: translateX(5px);
+    }
+
+    .sidebar nav a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .main-wrapper {
+        margin-left: 160px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        padding: 60px 40px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    .doc-header {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .download-original-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-original-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .doc-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            position: relative;
+            height: auto;
+            padding: 20px;
+        }
+        .main-wrapper {
+            margin-left: 0;
+        }
+        main {
+            padding: 30px 20px;
+        }
+    }
+    
+    h3 { 
+        color: #2c3e50; 
+        border-bottom: 3px solid var(--primary-color); 
+        padding-bottom: 8px;
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
+    h4 { 
+        color: #34495e; 
+        border-left: 4px solid var(--primary-color);
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 1.3em;
+    }
+    h5 { 
+        color: #5a6c7d; 
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    
+    .definition {
+        background-color: #e8f5e8;
+        padding: 15px;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #28a745;
+    }
+    
+    .theorem {
+        background-color: #fff3cd;
+        padding: 15px;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .example {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .important {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #17a2b8;
+    }
+
+    .side-by-side-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: start;
+    }
+
+    .side-by-side-image {
+        position: sticky;
+        top: 20px;
+    }
+
+    .side-by-side-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .side-by-side-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .side-by-side-image {
+            position: static;
+        }
+    }
+    
+    .warning {
+        background-color: #f8d7da;
+        padding: 15px;
+        border: 1px solid #dc3545;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .visual-desc {
+        background-color: #e9ecef;
+        padding: 12px;
+        border-left: 4px solid #6c757d;
+        font-style: italic;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .inline-diagram-container { margin: 40px 0; text-align: center; }
+    .inline-diagram-container img { display: block; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 100%; height: auto; }
+    .inline-diagram-caption { margin-top: 12px; font-size: 0.9em; color: #78716c; font-style: italic; font-weight: 500; }
+    
+    .steps {
+        background-color: #f1f3f4;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    .solution {
+        background-color: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+    
+    .page-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+
+    figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        border: 2px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 2px solid var(--primary-color);
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e9ecef;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Mahesh Sunkula's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson31.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <aside class="sidebar" role="complementary">
+        <h2>Table of Contents</h2>
+        <nav aria-label="Page navigation">
+            <ul>
+                
+                    <li><a href="#page-section-1">Page 1</a></li>
+                
+                    <li><a href="#page-section-2">Page 2</a></li>
+                
+                    <li><a href="#page-section-3">Page 3</a></li>
+                
+                    <li><a href="#page-section-4">Page 4</a></li>
+                
+                    <li><a href="#page-section-5">Page 5</a></li>
+                
+                    <li><a href="#page-section-6">Page 6</a></li>
+                
+                    <li><a href="#page-section-7">Page 7</a></li>
+                
+                    <li><a href="#page-section-8">Page 8</a></li>
+                
+                    <li><a href="#page-section-9">Page 9</a></li>
+                
+                    <li><a href="#page-section-10">Page 10</a></li>
+                
+                    <li><a href="#page-section-11">Page 11</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <main id="main-content" role="main">
+            <header class="doc-header">
+                <div style="flex: 1;">
+                    <h1 class="doc-title">Lesson 31: Surface integrals - I \(17.6\)</h1>
+                    <p style="color: #6c757d; margin-top: 10px;">Accessible transcription generated on 4/6/2026</p>
+                </div>
+                
+                <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~msunkula/MA261/Sp26/Lesson31.html" class="download-original-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Original Notes
+                </a>
+                
+            </header>
+
+            
+                <section id="page-section-1" aria-labelledby="page-title-1">
+                    <h3 id="page-title-1">Page 1</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Lesson 31: Surface integrals - I \(17.6\)</h4>
+
+<p><strong>Warmup:</strong> What is a surface?</p>
+
+<p>
+    
+                    <div class="inline-diagram-container" style="width: 61%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-1.webp" loading="lazy" decoding="async" alt="Conceptual diagram titled 'stack lines' showing five parallel blue line segments slanted diagonally upwards from left to right. It illustrates the idea that a surface can be visualized as a continuous stack of individual lines." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Conceptual diagram titled 'stack lines' showing five parallel blue line segments slanted diagonally upwards from left to right. It illustrates the idea that a surface can be visualized as a continuous stack of individual lines.</span>
+                      </div>
+                    </div>
+                  
+    
+    
+                    <div class="inline-diagram-container" style="width: 58%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-2.webp" loading="lazy" decoding="async" alt="Conceptual diagram titled 'stack curves' showing three parallel blue wavy curves stacked vertically. This represents the concept of a surface being formed by a continuous sequence of curves." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Conceptual diagram titled 'stack curves' showing three parallel blue wavy curves stacked vertically. This represents the concept of a surface being formed by a continuous sequence of curves.</span>
+                      </div>
+                    </div>
+                  
+</p>
+
+<p>stack lines &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack curves</p>
+
+<div class="example">
+    <p><strong>eg:</strong> plane, sphere, cone, paraboloid</p>
+    
+    
+                    <div class="inline-diagram-container" style="width: 92%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-3.webp" loading="lazy" decoding="async" alt="A collection of four hand-drawn sketches illustrating common mathematical surfaces. Top left: A plane represented as a tilted blue parallelogram with parallel hatching lines. Bottom left: A sphere shown as a circle with horizontal elliptical cross-sections (solid lines in front, dashed in back). Bottom center: An inverted cone with its vertex at the bottom and horizontal circular slices drawn inside. Bottom right: An upward-opening paraboloid (bowl shape) with horizontal circular cross-sections used to indicate its three-dimensional volume." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A collection of four hand-drawn sketches illustrating common mathematical surfaces. Top left: A plane represented as a tilted blue parallelogram with parallel hatching lines. Bottom left: A sphere shown as a circle with horizontal elliptical cross-sections (solid lines in front, dashed in back). Bottom center: An inverted cone with its vertex at the bottom and horizontal circular slices drawn inside. Bottom right: An upward-opening paraboloid (bowl shape) with horizontal circular cross-sections used to indicate its three-dimensional volume.</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-2" aria-labelledby="page-title-2">
+                    <h3 id="page-title-2">Page 2</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Curve</h4>
+<div class="definition" role="region" aria-labelledby="def-curve">
+    <strong id="def-curve">Definition:</strong> A <strong>curve</strong> is a 1D object.
+</div>
+
+<p>Representations of a curve:</p>
+
+<ol>
+    <li>
+        Graph of \(y = f(x)\)
+        <div class="example">
+            <strong>Example:</strong> \(y = x^2\)
+        </div>
+        <diagram-placeholder id="diagram-curve-1" alt="A coordinate plane showing a standard upward-opening parabola centered at the origin (0,0), representing the function y equals x squared."></diagram-placeholder>
+        <div class="visual-desc">
+            The diagram displays a standard Cartesian coordinate system with a smooth, symmetrical parabola opening upwards, vertex at the origin (0,0), representing the quadratic function \(y = x^2\).
+        </div>
+    </li>
+    <li>
+        Level curve of \(f(x,y)\)
+        <p>Function: \(z = f(x,y) = x^2 - y\)</p>
+        <p>Level set: \(z = 0 \implies y = x^2\), which is a parabola.</p>
+    </li>
+    <li>
+        Parametric Curves
+        <p>Representation: \(\vec{r}(t)\)</p>
+    </li>
+</ol>
+
+<h4>Surface</h4>
+<div class="definition" role="region" aria-labelledby="def-surface">
+    <strong id="def-surface">Definition:</strong> A <strong>surface</strong> is a 2D object.
+</div>
+
+<p>Representations of a surface:</p>
+
+<ol>
+    <li>
+        Graph of \(z = f(x,y)\)
+        <div class="example">
+            <strong>Example:</strong> \(z = x^2 + y^2\)
+        </div>
+        <diagram-placeholder id="diagram-surface-1" alt="A 3D perspective plot of a paraboloid, shaped like a bowl opening upwards with its vertex at the origin of a 3D coordinate system."></diagram-placeholder>
+        <div class="visual-desc">
+            The diagram shows a three-dimensional perspective plot of a circular paraboloid. The surface is centered at the origin (0,0,0) and opens upward along the positive z-axis, resembling a bowl.
+        </div>
+    </li>
+    <li>
+        Level surface of \(f(x,y,z)\)
+        <p>Function: \(w = f(x,y,z) = x^2 + y^2 - z\)</p>
+        <p>Level set: \(w = 0 \implies z = x^2 + y^2\), which is a paraboloid.</p>
+    </li>
+    <li>
+        Parametric Surfaces
+        <p>Representation: \(\vec{r}(u,v)\)</p>
+    </li>
+</ol>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-3" aria-labelledby="page-title-3">
+                    <h3 id="page-title-3">Page 3</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+    <!-- Left Column: Parametric Curves -->
+    <div style="flex: 1; min-width: 300px;">
+        <h4 style="color: brown;">Parametric Curves</h4>
+        
+        
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-4.webp" loading="lazy" decoding="async" alt="A conceptual diagram illustrating the mapping of a parametric curve from a 1D domain to 3D space. At the top, a horizontal line represents the parameter 't' axis, with a segment bounded by points 'a' and 'b'. Below this is a 3D Cartesian coordinate system with three axes. Three color-coded arrows (purple, green, and red) demonstrate the mapping from the 1D parameter space to 3D space: the purple arrow maps point 'a' to the starting point of a blue curve; the red arrow maps point 'b' to the ending point of the curve; and the green arrow maps an intermediate point 't' to a specific point on the curve labeled \vec{r}(t). This visualizes how a single parameter defines a path in space." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A conceptual diagram illustrating the mapping of a parametric curve from a 1D domain to 3D space. At the top, a horizontal line represents the parameter 't' axis, with a segment bounded by points 'a' and 'b'. Below this is a 3D Cartesian coordinate system with three axes. Three color-coded arrows (purple, green, and red) demonstrate the mapping from the 1D parameter space to 3D space: the purple arrow maps point 'a' to the starting point of a blue curve; the red arrow maps point 'b' to the ending point of the curve; and the green arrow maps an intermediate point 't' to a specific point on the curve labeled \vec{r}(t). This visualizes how a single parameter defines a path in space.</span>
+                      </div>
+                    </div>
+                  
+
+        <div class="definition">
+            \[\vec{r}(t) = \langle x(t), y(t), z(t) \rangle\]
+            \[a \leq t \leq b\]
+        </div>
+
+        <div class="definition">
+            \[\vec{r}'(t) = \langle x'(t), y'(t), z'(t) \rangle\]
+        </div>
+    </div>
+
+    <!-- Right Column: Parametric Surfaces -->
+    <div style="flex: 1; min-width: 300px; border-left: 1px solid #ccc; padding-left: 20px;">
+        <h4 style="color: brown;">Parametric Surfaces</h4>
+
+        
+                    <div class="inline-diagram-container" style="width: 61%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-5.webp" loading="lazy" decoding="async" alt="A conceptual diagram illustrating the mapping of a parametric surface from a 2D domain to 3D space. At the top, a 2D Cartesian plane with axes labeled 'u' and 'v' contains an irregular shaded region labeled 'R'. Below this is a 3D Cartesian coordinate system. Three color-coded arrows (purple, green, and red) map representative points from within the 2D region 'R' down to corresponding points on a blue shaded surface labeled 'S' in the 3D space. This visualizes the transformation of a 2D parameter area into a curved 3D surface where each point on the surface is determined by a unique pair of parameters (u, v)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A conceptual diagram illustrating the mapping of a parametric surface from a 2D domain to 3D space. At the top, a 2D Cartesian plane with axes labeled 'u' and 'v' contains an irregular shaded region labeled 'R'. Below this is a 3D Cartesian coordinate system. Three color-coded arrows (purple, green, and red) map representative points from within the 2D region 'R' down to corresponding points on a blue shaded surface labeled 'S' in the 3D space. This visualizes the transformation of a 2D parameter area into a curved 3D surface where each point on the surface is determined by a unique pair of parameters (u, v).</span>
+                      </div>
+                    </div>
+                  
+
+        <div class="definition">
+            \[\vec{r}(u, v) = \langle x(u, v), y(u, v), z(u, v) \rangle\]
+            <p>\(u, v\) lie in \(R\) in \(\mathbb{R}^2\)</p>
+            <div class="important" style="display: inline-block; margin-top: 0;">
+                bounds for \(u, v\)
+            </div>
+        </div>
+
+        <div class="definition">
+            \[\vec{r}_u = \langle x_u, y_u, z_u \rangle\]
+            \[\vec{r}_v = \langle x_v, y_v, z_v \rangle\]
+        </div>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-4" aria-labelledby="page-title-4">
+                    <h3 id="page-title-4">Page 4</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Parameterized Surface</h4>
+    <p>
+        \[\vec{r}(u,v) = \langle \cos u, \sin u, 2v \rangle, \quad 0 \le u \le \frac{3\pi}{2}, \quad 0 \le v \le 1.\]
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;">
+        <div style="flex: 1; min-width: 300px; padding: 10px;">
+            
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-6.webp" loading="lazy" decoding="async" alt="A graph in the uv-coordinate plane illustrating the parameter domain. The horizontal axis is labeled 'u' and the vertical axis is labeled 'v'. The domain is a rectangle bounded by u from 0 to 3π/2 and v from 0 to 1. The horizontal line at v=0 is highlighted in purple, the line at v=1 is highlighted in red, and an intermediate horizontal line at a generic value of v is highlighted in green." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A graph in the uv-coordinate plane illustrating the parameter domain. The horizontal axis is labeled 'u' and the vertical axis is labeled 'v'. The domain is a rectangle bounded by u from 0 to 3π/2 and v from 0 to 1. The horizontal line at v=0 is highlighted in purple, the line at v=1 is highlighted in red, and an intermediate horizontal line at a generic value of v is highlighted in green.</span>
+                      </div>
+                    </div>
+                  
+
+            <p>
+                \(v=0, \ 0 \le u \le \frac{3\pi}{2}\)<br>
+                \(\vec{r}(u,0) = \langle \cos u, \sin u, 0 \rangle\)
+            </p>
+            <p>
+                \(v=1, \ 0 \le u \le \frac{3\pi}{2}\)<br>
+                \(\vec{r}(u,1) = \langle \cos u, \sin u, 2 \rangle\)
+            </p>
+            <p>
+                fix \(v: 0 \le v \le 1\)<br>
+                \(\vec{r}(u, "v") = \langle \cos u, \sin u, "2v" \rangle\)
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 300px; padding: 10px;">
+            
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-7.webp" loading="lazy" decoding="async" alt="A 3D coordinate plot in xyz-space showing the surface defined by the parameterization. The resulting shape is a three-quarter cylinder with a radius of 1. It is shown as a vertical stack of arcs: a purple base arc in the xy-plane (z=0), a red top arc at height z=2, and a green arc at an intermediate height. The arcs span the angular range from 0 to 3π/2. Dashed lines represent the negative parts of the coordinate axes." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate plot in xyz-space showing the surface defined by the parameterization. The resulting shape is a three-quarter cylinder with a radius of 1. It is shown as a vertical stack of arcs: a purple base arc in the xy-plane (z=0), a red top arc at height z=2, and a green arc at an intermediate height. The arcs span the angular range from 0 to 3π/2. Dashed lines represent the negative parts of the coordinate axes.</span>
+                      </div>
+                    </div>
+                  
+
+            <p style="text-align: center;">
+                stack \(\frac{3}{4}\)th circles of radius 1 from \(z=0\) to \(z=2\)<br>
+                \[\downarrow\]<br>
+                \(\frac{3}{4}\)th cylinder of radius 1 height 2
+            </p>
+        </div>
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-5" aria-labelledby="page-title-5">
+                    <h3 id="page-title-5">Page 5</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Parametrizing a Graph \(z = f(x, y)\)</h4>
+
+<div class="example">
+    <strong>Recall:</strong> \(y = x^2\) from \((0, 0)\) to \((2, 4)\)
+    
+    
+                    <div class="inline-diagram-container" style="width: 46%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-8.webp" loading="lazy" decoding="async" alt="A hand-drawn graph showing a 2D Cartesian coordinate system with vertical y and horizontal x axes. A parabolic curve representing y = x^2 starts at the origin (0,0) and extends into the first quadrant. An arrow on the curve indicates the direction of motion as the parameter t increases from 0 toward 2, corresponding to the point (2, 4)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A hand-drawn graph showing a 2D Cartesian coordinate system with vertical y and horizontal x axes. A parabolic curve representing y = x^2 starts at the origin (0,0) and extends into the first quadrant. An arrow on the curve indicates the direction of motion as the parameter t increases from 0 toward 2, corresponding to the point (2, 4).</span>
+                      </div>
+                    </div>
+                  
+
+    parametrization \(\vec{r}(t) = \langle t, t^2 \rangle, 0 \le t \le 2\)
+    \[x = t, \quad y = x^2 = t^2\]
+</div>
+
+<div class="definition">
+    To parametrize a surface defined by the graph \(z = f(x, y)\):
+    \[z = f(x, y) \leadsto x = u, \quad y = v, \quad z = f(u, v)\]
+    
+    The vector-valued function is given by:
+    \[\vec{r}(u, v) = \langle u, v, f(u, v) \rangle\]
+    
+    <div class="important">
+        Additionally, define <strong>Bounds for \(u, v\)</strong> based on the <strong>Domain</strong> or a <strong>part of the domain of \(f\)</strong>.
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-6" aria-labelledby="page-title-6">
+                    <h3 id="page-title-6">Page 6</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Parametrizing a Paraboloid</h4>
+
+    
+                    <div class="inline-diagram-container" style="width: 55%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-9.webp" loading="lazy" decoding="async" alt="A 3D coordinate plot showing a paraboloid opening upwards from the origin. The surface is defined by the equation \(z = x^2 + y^2\). Horizontal dashed ellipses are drawn on the surface at various heights to indicate circular cross-sections, illustrating the shape of the surface in 3D space." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D coordinate plot showing a paraboloid opening upwards from the origin. The surface is defined by the equation \(z = x^2 + y^2\). Horizontal dashed ellipses are drawn on the surface at various heights to indicate circular cross-sections, illustrating the shape of the surface in 3D space.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>Consider the surface defined by the equation:</p>
+    \[z = x^2 + y^2\]
+
+    <p><strong>Parametrization:</strong></p>
+    <p>We can parameterize this surface using \(u\) and \(v\) as follows:</p>
+    \[x = u, \quad y = v, \quad z = u^2 + v^2\]
+    <p>This gives the vector-valued function:</p>
+    \[\vec{r}(u,v) = \langle u, v, u^2 + v^2 \rangle\]
+
+    <div class="important">
+        <p><strong>Bounds:</strong></p>
+        \[-\infty &lt; u &lt; \infty\]
+        \[-\infty &lt; v &lt; \infty\]
+    </div>
+
+    <p>What if we are only interested in the part of the surface between \(1 \le z \le 9\)?</p>
+    <p>Substituting our parametrization for \(z\), we get the condition:</p>
+    \[1 \le z = u^2 + v^2 \le 9\]
+
+    
+                    <div class="inline-diagram-container" style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-10.webp" loading="lazy" decoding="async" alt="A mapping diagram illustrating the relationship between the parameter domain and the resulting surface section. On the left, a 2D graph in the \(uv\)-plane shows an annular region (a ring) centered at the origin, shaded with blue diagonal lines and labeled \(R\). The boundaries of this region correspond to \(u^2 + v^2 = 1\) and \(u^2 + v^2 = 9\). On the right, a 3D graph shows the section of the paraboloid \(z = x^2 + y^2\) that lies between \(z=1\) and \(z=9\), also shaded with blue diagonal lines and labeled \(S\). A red curved arrow points from the region \(R\) in the \(uv\)-plane to the surface \(S\) in 3D space, demonstrating how the 2D region is mapped onto the 3D surface." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A mapping diagram illustrating the relationship between the parameter domain and the resulting surface section. On the left, a 2D graph in the \(uv\)-plane shows an annular region (a ring) centered at the origin, shaded with blue diagonal lines and labeled \(R\). The boundaries of this region correspond to \(u^2 + v^2 = 1\) and \(u^2 + v^2 = 9\). On the right, a 3D graph shows the section of the paraboloid \(z = x^2 + y^2\) that lies between \(z=1\) and \(z=9\), also shaded with blue diagonal lines and labeled \(S\). A red curved arrow points from the region \(R\) in the \(uv\)-plane to the surface \(S\) in 3D space, demonstrating how the 2D region is mapped onto the 3D surface.</span>
+                      </div>
+                    </div>
+                  
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-7" aria-labelledby="page-title-7">
+                    <h3 id="page-title-7">Page 7</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <h4>Example: Parameterizing a Plane</h4>
+    <p>Consider the equation of a plane:
+    \[4x + 3y + z = 12\]
+    We can solve for \(z\) to get:
+    \[z = 12 - 4x - 3y\]
+    The <strong>parameterization</strong> is then defined by:
+    \[\vec{r}(u,v) = \langle u, v, 12 - 4u - 3v \rangle\]
+    </p>
+
+    <p>For the <strong>entire plane</strong>, the bounds are:
+    \[-\infty &lt; u &lt; \infty\]
+    \[-\infty &lt; v &lt; \infty\]
+    </p>
+</div>
+
+<h4>Restricting the Surface</h4>
+<p>What if we want only the part of the plane in the <strong>1st Octant</strong>?</p>
+<p>In the first octant, the coordinates must satisfy:
+\[x \ge 0, \quad y \ge 0, \quad z \ge 0\]
+Translating these conditions into our parameters \(u\) and \(v\), we get:
+\[u \ge 0, \quad v \ge 0, \quad 12 - 4u - 3v \ge 0\]
+</p>
+
+
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-11.webp" loading="lazy" decoding="async" alt="A two-part diagram illustrating the mapping from parameter space to 3D space. On the left, there is a 2D coordinate system with axes u and v. A line segment is drawn between (3,0) on the u-axis and (0,4) on the v-axis, labeled with the equation 4u + 3v = 12. The triangular region bounded by the u-axis, v-axis, and this line is shaded with blue diagonal lines and labeled 'R'. On the right, there is a 3D coordinate system showing a triangular surface 'S' in the first octant. The vertices of this triangle are at (3,0,0) on the x-axis, (0,4,0) on the y-axis, and (0,0,12) on the z-axis. A large red arrow points from the shaded region R in the 2D plane to the surface S in the 3D space, representing the vector-valued function r(u,v)." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A two-part diagram illustrating the mapping from parameter space to 3D space. On the left, there is a 2D coordinate system with axes u and v. A line segment is drawn between (3,0) on the u-axis and (0,4) on the v-axis, labeled with the equation 4u + 3v = 12. The triangular region bounded by the u-axis, v-axis, and this line is shaded with blue diagonal lines and labeled 'R'. On the right, there is a 3D coordinate system showing a triangular surface 'S' in the first octant. The vertices of this triangle are at (3,0,0) on the x-axis, (0,4,0) on the y-axis, and (0,0,12) on the z-axis. A large red arrow points from the shaded region R in the 2D plane to the surface S in the 3D space, representing the vector-valued function r(u,v).</span>
+                      </div>
+                    </div>
+                  
+</diagram-placeholder>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-8" aria-labelledby="page-title-8">
+                    <h3 id="page-title-8">Page 8</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h3>Parametrization of a Sphere</h3>
+
+<div class="example">
+    <p><strong>Example:</strong> Parametrize a sphere of radius 2, centered at the origin.</p>
+
+    <p>The Cartesian equation for a sphere of radius 2 is:</p>
+    \[x^2 + y^2 + z^2 = 4\]
+
+    <p>Solving for \(z\), we can describe the surface in two parts:</p>
+    <ul>
+        <li><strong>Top:</strong> \(z = \sqrt{4 - x^2 - y^2}\)</li>
+        <li><strong>Bottom:</strong> \(z = -\sqrt{4 - x^2 - y^2}\)</li>
+    </ul>
+
+    <p>Alternatively, this surface is much simpler in <strong>spherical coordinates</strong>, where the radius \(\rho\) is constant:</p>
+    \[\rho = 2\]
+
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-12.webp" loading="lazy" decoding="async" alt="A 3D Cartesian coordinate system diagram illustrating the relationship between Cartesian (x, y, z) and spherical coordinates (rho, phi, theta). A vector of length rho extends from the origin to a point labeled (x, y, z). The angle phi is shown as the angle between the positive z-axis and the vector. The angle theta is shown in the xy-plane, measured from the positive x-axis to the projection of the vector onto that plane. Dashed lines illustrate the projection of the point onto the z-axis and the xy-plane to show the geometric components used in the conversion formulas." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A 3D Cartesian coordinate system diagram illustrating the relationship between Cartesian (x, y, z) and spherical coordinates (rho, phi, theta). A vector of length rho extends from the origin to a point labeled (x, y, z). The angle phi is shown as the angle between the positive z-axis and the vector. The angle theta is shown in the xy-plane, measured from the positive x-axis to the projection of the vector onto that plane. Dashed lines illustrate the projection of the point onto the z-axis and the xy-plane to show the geometric components used in the conversion formulas.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>The standard equations for converting from spherical to Cartesian coordinates are:</p>
+    \[x = \rho \sin \phi \cos \theta\]
+    \[y = \rho \sin \phi \sin \theta\]
+    \[z = \rho \cos \phi\]
+
+    <div class="solution">
+        <p>By substituting \(\rho = 2\), we obtain the vector parametrization of the sphere:</p>
+        \[\mathbf{r}(\phi, \theta) = \langle 2 \sin \phi \cos \theta, 2 \sin \phi \sin \theta, 2 \cos \phi \rangle\]
+        
+        <p>The bounds for the parameters to cover the entire sphere are:</p>
+        \[0 \le \theta \le 2\pi\]
+        \[0 \le \phi \le \pi\]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-9" aria-labelledby="page-title-9">
+                    <h3 id="page-title-9">Page 9</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h2>Surface integral of a function \(f(x,y,z)\)</h2>
+
+<p>The following notes describe the formulation of surface integrals, using the analogy of line integrals for context.</p>
+
+<section>
+    <h3>Review: Parameterization of Line Integrals</h3>
+
+    
+                    <div class="inline-diagram-container" style="width: 49%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-13.webp" loading="lazy" decoding="async" alt="Diagram illustrating the parameterization of a curve for a line integral. At the top, a horizontal line represents the parameter space with an interval marked by points 'a' and 'b'. A small red segment labeled 'dt' represents an infinitesimal change in the parameter 't'. A downward-pointing arrow labeled '\(\vec{r}(t)\)' shows the mapping from this interval to a blue curve 'C' in space. On the curve 'C', a corresponding red segment 'ds' represents the infinitesimal arc length." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram illustrating the parameterization of a curve for a line integral. At the top, a horizontal line represents the parameter space with an interval marked by points 'a' and 'b'. A small red segment labeled 'dt' represents an infinitesimal change in the parameter 't'. A downward-pointing arrow labeled '\(\vec{r}(t)\)' shows the mapping from this interval to a blue curve 'C' in space. On the curve 'C', a corresponding red segment 'ds' represents the infinitesimal arc length.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>For a line integral over a curve \(C\):</p>
+    \[ \int_C f \, ds \]
+
+    <p>The infinitesimal arc length \(ds\) is defined as:</p>
+    \[ ds = |\vec{r}'(t)| \, dt \]
+
+    <p>The integral over the curve is evaluated over the interval \([a, b]\) as:</p>
+    \[ \int_C f \, ds = \int_a^b f(\vec{r}(t)) |\vec{r}'(t)| \, dt \]
+
+    <p>In the case where the function \(f = 1\), the integral yields the total length of the curve:</p>
+    \[ \int_C 1 \, ds = \text{Arc length} \]
+</section>
+
+<hr>
+
+<article class="definition">
+    <h3>Definition: Surface Integral</h3>
+    
+    
+                    <div class="inline-diagram-container" style="width: 75%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-14.webp" loading="lazy" decoding="async" alt="Diagram illustrating the parameterization of a surface. On the left, a region 'R' is shaded in blue within a 2D coordinate system representing the \(uv\)-plane. A small red element inside 'R' is labeled 'dA'. An arrow labeled '\(\vec{r}(u,v)\)' points from this region to a blue curved surface 'S' in 3D space on the right. A corresponding small red element on surface 'S' is labeled 'dS', which is identified in text as the infinitesimal surface area." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">Diagram illustrating the parameterization of a surface. On the left, a region 'R' is shaded in blue within a 2D coordinate system representing the \(uv\)-plane. A small red element inside 'R' is labeled 'dA'. An arrow labeled '\(\vec{r}(u,v)\)' points from this region to a blue curved surface 'S' in 3D space on the right. A corresponding small red element on surface 'S' is labeled 'dS', which is identified in text as the infinitesimal surface area.</span>
+                      </div>
+                    </div>
+                  
+
+    <p>The surface integral of a function \(f\) over a surface \(S\) is expressed as:</p>
+    \[ \iint_S f \, dS \]
+
+    <p>In this expression, \(dS\) represents the <strong>infinitesimal area</strong> element, which is calculated using the magnitude of the cross product of the partial derivatives of the parameterization \(\vec{r}(u,v)\):</p>
+    \[ dS = |\vec{r}_u \times \vec{r}_v| \, dA \]
+
+    <div class="important">
+        <p><strong>General Formula:</strong> The formula for evaluating the surface integral over the parameter region \(R\) is:</p>
+        \[ \iint_S f \, dS = \iint_R f(\vec{r}(u,v)) |\vec{r}_u \times \vec{r}_v| \, dA \]
+    </div>
+
+    <p>When the function \(f = 1\), the integral represents the total area of the surface \(S\):</p>
+    \[ \iint_S 1 \, dS = \text{Surface Area} \]
+</article>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-10" aria-labelledby="page-title-10">
+                    <h3 id="page-title-10">Page 10</h3>
+                    
+                    
+                    <div class="page-content">
+                        <h4>Surface Area Example</h4>
+
+<div class="example">
+    <p>Find the area of the part of the plane \(4x + 3y + z = 12\) in the \(1^{\text{st}}\) octant.</p>
+
+    <div class="solution">
+        <p><strong>Solution:</strong></p>
+        \[\vec{r}(u, v) = \langle u, v, 12 - 4u - 3v \rangle\]
+        <p>where \(u, v\) are in \(R\).</p>
+
+        
+                    <div class="inline-diagram-container" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">
+                      <img src="img/lesson-31-15.webp" loading="lazy" decoding="async" alt="A technical diagram illustrating the parametrization mapping of a surface. On the left, there is a 2D graph of the region R in the uv-plane. It shows a right-angled triangle in the first quadrant shaded with blue diagonal lines. The vertices of the triangle are at the origin (0,0), on the u-axis at (3,0), and on the v-axis at (0,4). The hypotenuse is labeled with the equation 4u + 3v = 12. On the right, there is a 3D coordinate system showing the triangular surface S in the first octant of xyz-space. A red curved arrow labeled r(u,v) points from the region R in the uv-plane to the surface S in the 3D space, indicating the transformation between the parameter space and the physical surface." style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                      
+                      <div class="visual-desc" style="text-align: left; font-size: 0.9em; margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #6c757d; border-radius: 4px;">
+                        <strong style="display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; color: #4a5568;">Visual Description:</strong>
+                        <span style="color: #2d3748; line-height: 1.5;">A technical diagram illustrating the parametrization mapping of a surface. On the left, there is a 2D graph of the region R in the uv-plane. It shows a right-angled triangle in the first quadrant shaded with blue diagonal lines. The vertices of the triangle are at the origin (0,0), on the u-axis at (3,0), and on the v-axis at (0,4). The hypotenuse is labeled with the equation 4u + 3v = 12. On the right, there is a 3D coordinate system showing the triangular surface S in the first octant of xyz-space. A red curved arrow labeled r(u,v) points from the region R in the uv-plane to the surface S in the 3D space, indicating the transformation between the parameter space and the physical surface.</span>
+                      </div>
+                    </div>
+                  
+
+        \[\text{Area} = \iint_S 1 \, dS = \iint_R |\vec{r}_u \times \vec{r}_v| \, dA\]
+
+        <p>Calculating the partial derivatives and their cross product:</p>
+        \[\vec{r}_u = \langle 1, 0, -4 \rangle\]
+        \[\vec{r}_v = \langle 0, 1, -3 \rangle\]
+        
+        \[\vec{r}_u \times \vec{r}_v = \langle 4, 3, 1 \rangle, \quad |\vec{r}_u \times \vec{r}_v| = \sqrt{26}\]
+
+        <p>The integral becomes:</p>
+        \[\text{Area} = \iint_R \sqrt{26} \, dA = \sqrt{26} \iint_R 1 \, dA\]
+        \[\text{Area} = \sqrt{26} \times \text{Area of } R = 6\sqrt{26}.\]
+    </div>
+</div>
+                    </div>
+                    
+                    <hr style="margin: 60px 0; border: 0; border-top: 1px solid #eee;">
+                </section>
+              
+                <section id="page-section-11" aria-labelledby="page-title-11">
+                    <h3 id="page-title-11">Page 11</h3>
+                    
+                    
+                    <div class="page-content">
+                        <div class="example">
+    <p><strong>eg:</strong> find area of surface parametrized by
+    \[ \vec{r}(u,v) = \langle \cos u, \sin u, 2v \rangle, \quad 0 \le u \le \frac{3\pi}{2}, \quad 0 \le v \le 1 \]</p>
+</div>
+                    </div>
+                    
+                    
+                </section>
+              
+        </main>
+        
+        <footer style="text-align: center; padding: 20px; margin-top: auto; border-top: 1px solid #dee2e6; color: #6c757d; font-size: 0.8em; background: white;">
+            <p>Generated on 4/6/2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple scroll spy for the sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

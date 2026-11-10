@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.1 Vector-Valued Functions - Accessible Math Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = { 
+          tex: { 
+            inlineMath: [['\\(', '\\)']], 
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+          },
+          options: { renderActions: { addMenu: [0, '', ''] } }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #fdfdfd;
+            --ink: #1e293b;
+            --heading-color: #0f172a;
+            --accent: #4f46e5;
+            --link-color: #4338ca;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--ink); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.7;
+            font-size: 1.125rem;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .layout {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 6rem;
+                align-items: start;
+                padding-top: 4rem;
+                transition: all 0.3s ease;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            .layout.sidebar-hidden {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: none;
+            }
+            .sidebar {
+                position: sticky;
+                top: 4rem;
+                display: block !important;
+            }
+            .sidebar.hidden {
+                display: none !important;
+            }
+            .content-expanded {
+                max-width: none;
+                margin: 0;
+            }
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toggle-sidebar-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 50;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            transform: scale(1.1);
+            background: var(--link-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--accent);
+        }
+
+        article { 
+            margin-bottom: 4rem; 
+            position: relative; 
+            width: 100%; 
+            background: white;
+            padding: 0;
+            display: flow-root;
+        }
+
+        .math-content { 
+            color: var(--ink); 
+        }
+
+        .math-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge { 
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.35rem 0.85rem; 
+            background: #f1f5f9;
+            color: #475569; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .notebox { 
+            border-left: 4px solid var(--accent); 
+            padding: 1.5rem 2rem; 
+            margin: 2.5rem 0; 
+            background-color: #f8fafc; 
+            font-style: italic; 
+            color: #334155; 
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--heading-color);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent);
+            text-decoration-thickness: 2px;
+        }
+
+        figure {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            max-width: 100%;
+            min-width: 280px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        @media (min-width: 1280px) {
+            figure {
+                float: right;
+                width: 40%;
+                min-width: 320px;
+                max-width: 500px;
+                margin: 0.5rem 0 2rem 3rem;
+                shape-outside: inset(0);
+            }
+            /* Clear floats for headings to maintain structure */
+            h1, h2, h3, h4, h5, h6 {
+                clear: both;
+                padding-top: 1rem;
+            }
+        }
+
+        figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Accessibility: focus styles */
+        a:focus, button:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media print {
+            body { font-size: 12pt; }
+            .container { max-width: none; padding: 0; }
+            article { 
+                padding: 0; 
+                margin-bottom: 0; 
+                page-break-after: always; 
+            }
+            .page-badge { display: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body><div style="font:13px/1.4 system-ui,sans-serif;padding:8px 14px;background:#f4f1e8;color:#333;border-bottom:1px solid #ddd">Prof. Joseph Chen's notes, copied 2026-11-09 from <a href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson%205%20%2814.1%29-acc.html" target="_blank" rel="noopener">the original page</a>. All content belongs to its author.</div>
+    <button id="sidebar-toggle" class="no-print toggle-sidebar-btn" aria-label="Toggle navigation sidebar" aria-expanded="true" aria-controls="sidebar-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+    <div class="container">
+        <div id="main-layout" class="layout">
+            <nav id="sidebar-nav" class="sidebar no-print" aria-label="Document navigation">
+                <div class="sidebar-title">Contents</div>
+                <ul class="sidebar-nav">
+                    
+                    <li><a href="#page-1">Page 1</a></li>
+                    
+                    <li><a href="#page-2">Page 2</a></li>
+                    
+                    <li><a href="#page-3">Page 3</a></li>
+                    
+                    <li><a href="#page-4">Page 4</a></li>
+                    
+                    <li><a href="#page-5">Page 5</a></li>
+                    
+                    <li><a href="#page-6">Page 6</a></li>
+                    
+                    <li><a href="#page-7">Page 7</a></li>
+                    
+                    <li><a href="#page-8">Page 8</a></li>
+                    
+                    <li><a href="#page-9">Page 9</a></li>
+                    
+                    <li><a href="#page-10">Page 10</a></li>
+                    
+                </ul>
+            </nav>
+            <main class="content" style="padding-bottom: 12rem;">
+                
+                <article id="page-1" role="region" class="page-article">
+                    
+                    <div class="no-print" style="position: absolute; top: 0; right: 0;">
+                        <a target="_blank" rel="noopener" href="https://www.math.purdue.edu/~chenjk/MA26100S23/Lesson 5 (14.1).pdf" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#CFB991] text-black rounded-xl font-black text-[11px] hover:bg-[#B19B69] transition-all border-2 border-black no-underline tracking-widest shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download original notes
+                        </a>
+                    </div>
+                    <span class="page-badge">PAGE 1</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-4xl mt-10 mb-4">14.1 Vector-Valued Functions</h1>
+  <p class="mb-6">Scalar-valued functions: \(f(t) = t^2 + 3\)</p>
+  <p class="mb-6">Vector-valued functions: \(\vec{r}(t) = \langle \cos t, \sin t, 0 \rangle\)</p>
+  <p class="mb-6">You have seen an example already: equation of line \(\vec{r}(t) = \vec{r}_0 + t\vec{v}\)</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a line passing through a point r0 and extending in the direction of vector v.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-1.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a line passing through a point r0 and extending in the direction of vector v." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a line passing through a point r0 and extending in the direction of vector v.
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">Quick example: line through \(P(1, 2, 3)\) and \(Q(4, 5, 6)\)</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-2" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 2</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <p class="mb-6">\(\vec{r}_0 = \langle 1, 2, 3 \rangle\), \(\vec{v} = \vec{PQ} = \langle 3, 3, 3 \rangle\)</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[\vec{r}(t) = \langle 1, 2, 3 \rangle + t \langle 3, 3, 3 \rangle = \langle 1 + 3t, 2 + 3t, 3 + 3t \rangle\]
+  </div>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a line with points P at t=0 and Q at t=1, with arrows indicating the direction of increasing t.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-2.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a line with points P at t=0 and Q at t=1, with arrows indicating the direction of increasing t." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a line with points P at t=0 and Q at t=1, with arrows indicating the direction of increasing t.
+                  </figcaption>
+                </figure>
+              
+  <p class="mb-6">That is called the positive orientation.</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-3" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 3</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Example</h1>
+  <p class="mb-6">Consider the vector function:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t) = \langle \cos t, \sin t, 0 \rangle, \quad 0 \le t \le \pi/2 \]
+  </div>
+  <p class="mb-6">What is the graph?</p>
+  <p class="mb-6">Easy thing to do: find points with <span class="font-mono">x = cos t, y = sin t, z = 0</span> by choosing <span class="font-mono">t</span>, then connect them.</p>
+  <table class="table-auto border-collapse border border-slate-400 mb-6">
+    <thead>
+      <tr>
+        <th class="border border-slate-400 px-4 py-2">t</th>
+        <th class="border border-slate-400 px-4 py-2">x</th>
+        <th class="border border-slate-400 px-4 py-2">y</th>
+        <th class="border border-slate-400 px-4 py-2">z</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="border border-slate-400 px-4 py-2">0</td><td class="border border-slate-400 px-4 py-2">1</td><td class="border border-slate-400 px-4 py-2">0</td><td class="border border-slate-400 px-4 py-2">0</td></tr>
+      <tr><td class="border border-slate-400 px-4 py-2">\(\pi/6\)</td><td class="border border-slate-400 px-4 py-2">\(\sqrt{3}/2\)</td><td class="border border-slate-400 px-4 py-2">1/2</td><td class="border border-slate-400 px-4 py-2">0</td></tr>
+      <tr><td class="border border-slate-400 px-4 py-2">\(\pi/4\)</td><td class="border border-slate-400 px-4 py-2">\(\sqrt{2}/2\)</td><td class="border border-slate-400 px-4 py-2">\(\sqrt{2}/2\)</td><td class="border border-slate-400 px-4 py-2">0</td></tr>
+      <tr><td class="border border-slate-400 px-4 py-2">\(\pi/3\)</td><td class="border border-slate-400 px-4 py-2">1/2</td><td class="border border-slate-400 px-4 py-2">\(\sqrt{3}/2\)</td><td class="border border-slate-400 px-4 py-2">0</td></tr>
+      <tr><td class="border border-slate-400 px-4 py-2">\(\pi/2\)</td><td class="border border-slate-400 px-4 py-2">0</td><td class="border border-slate-400 px-4 py-2">1</td><td class="border border-slate-400 px-4 py-2">0</td></tr>
+    </tbody>
+  </table>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a circular arc in the xy-plane from (1,0,0) to (0,1,0) with points labeled by t.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-3.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a circular arc in the xy-plane from (1,0,0) to (0,1,0) with points labeled by t." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a circular arc in the xy-plane from (1,0,0) to (0,1,0) with points labeled by t.
+                  </figcaption>
+                </figure>
+              
+  <p class="mt-4 italic">Positive orientation is counterclockwise when viewed from above.</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-4" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 4</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Another way to visualize: make a connection to surface we know</h1>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t) = \langle \cos t, \sin t, 0 \rangle, \quad 0 \le t \le \pi/2 \]
+  </div>
+  <p class="mb-6">Relationship between <span class="font-mono">x, y, z</span>: <span class="font-mono">x = cos t, y = sin t, z = 0</span></p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    <p>Since <span class="font-mono">\cos^2 t + \sin^2 t = 1</span>, we have <span class="font-mono">x^2 + y^2 = 1</span>. In \(\mathbb{R}^3\) this is a cylinder.</p>
+  </div>
+  <p class="mb-6">So, <span class="font-mono">\vec{r}(t) = \langle \cos t, \sin t, 0 \rangle</span> is a curve on the cylinder <span class="font-mono">x^2 + y^2 = 1</span> where <span class="font-mono">z = 0</span>.</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D plot showing a cylinder centered on the z-axis with a highlighted arc on the base circle in the xy-plane.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-4.webp" loading="lazy" decoding="async" alt="A 3D plot showing a cylinder centered on the z-axis with a highlighted arc on the base circle in the xy-plane." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D plot showing a cylinder centered on the z-axis with a highlighted arc on the base circle in the xy-plane.
+                  </figcaption>
+                </figure>
+              
+</article>
+                    </div>
+                </article>
+
+                <article id="page-5" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 5</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Example</h1><p>\(\vec{r}(t) = \langle 0, \cos t, 2\sin t \rangle\), \(0 \le t \le \pi/2\)</p><p>\(x=0, y=\cos t, z=2\sin t\)</p><p>\(\cos^2 t + \sin^2 t = 1\)</p><p>\(\cos t = y, \sin t = \frac{1}{2}z \rightarrow y^2 + (\frac{1}{2}z)^2 = 1\)</p><div class="notebox border-2 border-green-600 p-4 my-4">\(y^2 + \frac{z^2}{4} = 1\)</div><p>In \(\mathbb{R}^3\) this is an elliptic cylinder.</p><p>\(\vec{r}(t)\) is a portion of that with \(x=0\).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a curve on the yz-plane representing a portion of an ellipse from t=0 to t=pi/2.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-5.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a curve on the yz-plane representing a portion of an ellipse from t=0 to t=pi/2." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a curve on the yz-plane representing a portion of an ellipse from t=0 to t=pi/2.
+                  </figcaption>
+                </figure>
+              <p>\(t=0: \vec{r}(0) = \langle 0, 1, 0 \rangle\)</p><p>\(t=\pi/2: \vec{r}(\pi/2) = \langle 0, 0, 2 \rangle\)</p></article>
+                    </div>
+                </article>
+
+                <article id="page-6" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 6</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Example</h1><p>\(\vec{r}(t) = \langle \cos t, \sin t, t \rangle\), \(0 \le t \le 2\pi\)</p><p>\(x=\cos t, y=\sin t, z=t\)</p><p>Overall shape is still \(x^2+y^2=1\) (\(z=t\) really doesn't directly fit in).</p><p>This curve is still on the cylinder \(x^2+y^2=1\) but with varying \(z\).</p>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a helical curve winding around a cylinder along the z-axis from t=0 to t=2pi.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-6.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a helical curve winding around a cylinder along the z-axis from t=0 to t=2pi." class="max-w-full h-auto" data-figure-id="fig_2">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a helical curve winding around a cylinder along the z-axis from t=0 to t=2pi.
+                  </figcaption>
+                </figure>
+              <p>\(\vec{r}(0) = \langle 1, 0, 0 \rangle\)</p><p>\(\vec{r}(\pi) = \langle -1, 0, \pi \rangle\)</p><p>\(\vec{r}(2\pi) = \langle 1, 0, 2\pi \rangle\)</p><p>Like a spiraling staircase.</p></article>
+                    </div>
+                </article>
+
+                <article id="page-7" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 7</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Example</h1>
+  <p>Given the vector function:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ \vec{r}(t) = \langle t \cos t, t, t \sin t \rangle, \quad 0 \le t \le 2\pi \]
+  </div>
+  <p>We have the components:</p>
+  <ul class="list-disc list-inside space-y-2 ml-4 mb-6">
+    <li>\( x = t \cos t \)</li>
+    <li>\( y = t \)</li>
+    <li>\( z = t \sin t \)</li>
+  </ul>
+  <p>Remember the identity: \( \cos^2 t + \sin^2 t = 1 \).</p>
+  <p>Notice that:</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ x^2 + z^2 = t^2 \cos^2 t + t^2 \sin^2 t = t^2 (\cos^2 t + \sin^2 t) \]
+    \[ x^2 + z^2 = t^2 \]
+  </div>
+  <p>Since \( y = t \), we have:</p>
+  <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700">
+    \[ x^2 + z^2 = y^2 \]
+  </div>
+  <p>In \( \mathbb{R}^3 \), this is a cone. The curve lies on the cone, moving toward positive \( y \).</p>
+  
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A 3D coordinate system showing a cone opening along the y-axis with a spiral curve winding around it.">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-7.webp" loading="lazy" decoding="async" alt="A 3D coordinate system showing a cone opening along the y-axis with a spiral curve winding around it." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A 3D coordinate system showing a cone opening along the y-axis with a spiral curve winding around it.
+                  </figcaption>
+                </figure>
+              
+</article>
+                    </div>
+                </article>
+
+                <article id="page-8" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 8</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900">
+  <h1 class="font-black tracking-tight text-slate-900 text-3xl mb-6">Intersection Analysis</h1>
+  <p>Does \( \vec{r}(t) = \langle t \cos t, t, t \sin t \rangle \) for \( 0 \le t \le 2\pi \) intersect the plane \( x - z = 0 \)?</p>
+  <p>For an intersection, the coordinates must be the same. If they intersect, then at some \( t \), the components must satisfy \( x - z = 0 \).</p>
+  <div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">
+    \[ x = t \cos t, \quad z = t \sin t \]
+    \[ x - z = 0 \implies t \cos t - t \sin t = 0 \]
+    \[ t(\cos t - \sin t) = 0 \]
+  </div>
+  <p>This implies either \( t = 0 \) or \( \cos t = \sin t \).</p>
+  <p>Solving \( \cos t = \sin t \) gives \( t = \frac{\pi}{4} \) and \( t = \frac{5\pi}{4} \).</p>
+  <p>Therefore, they intersect at \( t = 0, \frac{\pi}{4}, \frac{5\pi}{4} \).</p>
+</article>
+                    </div>
+                </article>
+
+                <article id="page-9" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 9</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Domain of a Vector-Valued Function</h1><p class="mb-6">The domain of a vector-valued function is the intersection of the domains of all components, which is where ALL components are defined.</p><section class="mt-10 mb-4"><h2>Example</h2><div class="my-8 overflow-x-auto py-4 bg-slate-50 rounded-xl px-6 border border-slate-100 shadow-sm">\[ \vec{r}(t) = \langle \sqrt{1-t^2}, \sqrt{t}, \frac{1}{\sqrt{5-t}} \rangle \]
+</div><ul class="list-disc list-inside space-y-2 ml-4 mb-6"><li>\( \sqrt{1-t^2} \) defined on \( [-1, 1] \)</li><li>\( \sqrt{t} \) defined on \( [0, \infty) \)</li><li>\( \frac{1}{\sqrt{5-t}} \) defined on \( (-\infty, 5) \)</li></ul>
+                <figure class="my-8 p-6 bg-slate-50 rounded-2xl border border-slate-100 group/fig" role="group" aria-label="Visual figure: A number line diagram showing the intersection of three intervals: [-1, 1], [0, infinity), and (-infinity, 5), resulting in [0, 1].">
+                  <div class="relative overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white flex justify-center">
+                    <img src="img/lesson-05-8.webp" loading="lazy" decoding="async" alt="A number line diagram showing the intersection of three intervals: [-1, 1], [0, infinity), and (-infinity, 5), resulting in [0, 1]." class="max-w-full h-auto" data-figure-id="fig_1">
+                    
+                  </div>
+                  <figcaption class="mt-4 text-sm text-slate-700 font-sans text-center italic leading-relaxed" aria-hidden="true">
+                    Figure: A number line diagram showing the intersection of three intervals: [-1, 1], [0, infinity), and (-infinity, 5), resulting in [0, 1].
+                  </figcaption>
+                </figure>
+              <div class="notebox border-l-4 border-indigo-500 pl-6 my-8 italic text-slate-700"><p>Intersection is \( [0, 1] \)</p><p>This is the domain of \( \vec{r}(t) \)</p></div></section></article>
+                    </div>
+                </article>
+
+                <article id="page-10" role="region" class="page-article">
+                    
+                    <span class="page-badge">PAGE 10</span>
+                    <div class="math-content">
+                        <article class="font-sans text-slate-900"><h1>Course Reflection Submission</h1><p class="mb-6">Please submit your reflections by using the CourseMIRROR App.</p><p class="mb-6">If you are having a problem with CourseMIRROR, please send an email to coursemirror.development@gmail.com.</p></article>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const layout = document.getElementById('main-layout');
+        const sidebar = document.getElementById('sidebar-nav');
+        const articles = document.querySelectorAll('.page-article');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = sidebar.classList.toggle('hidden');
+            layout.classList.toggle('sidebar-hidden');
+            toggleBtn.setAttribute('aria-expanded', !isHidden);
+            
+            articles.forEach(article => {
+                if (isHidden) {
+                    article.classList.add('content-expanded');
+                } else {
+                    article.classList.remove('content-expanded');
+                }
+            });
+        });
+
+        function checkMobile() {
+            if (window.innerWidth < 1024) {
+                toggleBtn.style.display = 'none';
+            } else {
+                toggleBtn.style.display = 'flex';
+            }
+        }
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+    </script>
+</body>
+</html>
