@@ -42,11 +42,10 @@ export const lessonById = (id) => LESSONS.find((l) => l.id === Number(id));
 
 export { BOILER, REVIEWS };
 
-// The two plans disagree on the date (Oct 20 plan: Wed Nov 18 8pm; Nov 8 guide: Thu Nov 19).
-// Default to the newer guide; the student can change it in Settings.
-export const EXAM_DEFAULT = { name: 'Exam 2', iso: '2026-11-19T20:00:00-05:00', lessons: [17, 31] };
+// Exam 2: Wednesday Nov 18, 8 to 9 pm Eastern (confirmed by the student). Changeable in Settings.
+export const EXAM_DEFAULT = { name: 'Exam 2', iso: '2026-11-18T20:00:00-05:00', lessons: [17, 31] };
 
-// From the Nov 8 study guide's 11-day plan.
+// From the Nov 8 study guide's plan, moved up a day for the Nov 18 exam.
 export const PLAN = [
   { date: '2026-11-08', lessons: [17, 18], task: 'Lagrange and rectangle problems.' },
   { date: '2026-11-09', lessons: [19], task: 'Redo every reverse-order example by hand, with sketches.' },
@@ -57,9 +56,8 @@ export const PLAN = [
   { date: '2026-11-14', lessons: [25, 26], task: 'Curl, div, gradients, scalar line integrals.' },
   { date: '2026-11-15', lessons: [27, 28], task: 'Work, flux, potentials, the Fundamental Theorem.' },
   { date: '2026-11-16', lessons: [29], task: "Green's theorem both forms, then a timed mock." },
-  { date: '2026-11-17', lessons: [], task: 'Grade the mock. One line per miss. Redo those topics.' },
-  { date: '2026-11-18', lessons: [], task: 'Timed mock, then write your one-page sheet from memory. Sleep.' },
-  { date: '2026-11-19', lessons: [], task: 'Light review only: formula sheet, unit circle, Jacobians. Exam.' },
+  { date: '2026-11-17', lessons: [], task: 'Grade the mock and redo every miss. Write your one-page sheet from memory. Sleep.' },
+  { date: '2026-11-18', lessons: [], task: 'Light review only: formula sheet, unit circle, Jacobians. Exam 8 to 9 pm.' },
 ];
 
 // Shared mistake ids every lesson can point at.

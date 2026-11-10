@@ -20,7 +20,7 @@ export default function settings(host) {
           <h2>Exam</h2>
           <div class="field"><label for="ename">Name</label><input id="ename" name="examName" value="${escapeHTML(s.examName ?? EXAM_DEFAULT.name)}"></div>
           <div class="field"><label for="edate">Date and time</label><input id="edate" name="examISO" type="datetime-local" value="${toLocalInput(s.examISO ?? EXAM_DEFAULT.iso)}"></div>
-          <p class="empty">Your two study documents disagree: the Oct 20 plan says Wednesday Nov 18, the Nov 8 guide says Thursday Nov 19 at 8 pm. The default follows the newer guide. Check Brightspace and fix it here.</p>
+          <p class="empty">Exam 2 is Wednesday, November 18, 8 to 9 pm. Change it here if that moves.</p>
         </section>
         <section class="panel">
           <h2>Look</h2>
