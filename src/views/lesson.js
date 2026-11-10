@@ -93,13 +93,23 @@ export default function lesson(host, { parts, params }) {
   };
   let syncPause = 0;
   if (C.scene) {
-    viewer = sceneViewer(host.querySelector('.viewer'), C.scene, { labHref: labLayers.length ? labHref(labLayers) : null, onStep: markSection });
+    // In full screen the lesson text sits beside the model: a copy of the section this step teaches.
+    const sectionFor = (i) => {
+      const el = stepSections[i] && host.querySelector(`#s-${CSS.escape(stepSections[i])}`);
+      if (!el) return null;
+      const copy = el.cloneNode(true);
+      copy.removeAttribute('id');
+      copy.querySelectorAll('button').forEach((b) => b.remove());
+      return `<p class="eyebrow">In the lesson</p>${copy.outerHTML}`;
+    };
+    viewer = sceneViewer(host.querySelector('.viewer'), C.scene, { labHref: labLayers.length ? labHref(labLayers) : null, onStep: markSection, sectionFor });
     explainCtx = { lessonId: id, viewer, stepSections };
     setExplainContext(explainCtx);
     host.querySelector('[data-act=tour]').onclick = () => {
       if (tab !== 'learn') host.querySelector('[data-tab=learn]').click();
+      if (store.get().settings.tourFullscreen) viewer.enterFull();
       viewer.playTour(true);
-      if (!wide()) viewer.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!wide() && !viewer.full) viewer.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
   }
 

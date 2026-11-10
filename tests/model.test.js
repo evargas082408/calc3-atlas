@@ -218,5 +218,6 @@ describe('store', () => {
     expect(store.get().settings.colormap).toBe('inferno');
     expect(JSON.parse(localStorage.getItem('ma261-atlas-v1')).settings.colormap).toBe('inferno');
     expect(store.get().settings.model).toBe('claude-opus-5-5');
+    expect(store.get().settings.tourFullscreen).toBe(false);
   });
 });

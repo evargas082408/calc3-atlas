@@ -25,6 +25,7 @@ export default function settings(host) {
         <section class="panel">
           <h2>Look</h2>
           <div class="field"><label for="theme">Theme</label><select id="theme" name="theme">${[['auto', 'Follow the system'], ['light', 'Day map'], ['dark', 'Night map']].map(([v, l]) => `<option value="${v}" ${s.theme === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+          <div class="field"><label class="check"><input type="checkbox" name="tourFullscreen" ${s.tourFullscreen ? 'checked' : ''}>Teach me opens the 3D model full screen</label><p class="muted" style="margin:4px 0 0;font-size:0.85rem">You can also press F, or the corner button on any model, to go full screen and back.</p></div>
           <div class="field"><label>Surface colormap</label><div style="display:grid;gap:6px">${COLORMAPS.map((c) => `<label style="display:flex;gap:10px;align-items:center;font-weight:500"><input type="radio" name="colormap" value="${c}" ${s.colormap === c ? 'checked' : ''}><span style="width:120px;height:12px;border-radius:2px;background:${gradientCSS(c)}"></span>${c}</label>`).join('')}</div></div>
         </section>
         <section class="panel">
@@ -54,6 +55,7 @@ export default function settings(host) {
       st.settings.examISO = date ? new Date(date).toISOString() : null;
       st.settings.theme = f.get('theme');
       st.settings.colormap = f.get('colormap') ?? st.settings.colormap;
+      st.settings.tourFullscreen = f.get('tourFullscreen') === 'on';
       st.settings.apiKey = f.get('apiKey').trim();
       st.settings.model = f.get('model');
     });

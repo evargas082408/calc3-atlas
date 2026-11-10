@@ -325,6 +325,38 @@ section[data-hl-section] > h3 { position: relative; display: flex; align-items: 
 .caption p:last-child { margin-bottom: 0; }
 .viewer-tools { display: flex; gap: 6px; position: absolute; right: 10px; top: 10px; z-index: 2; }
 .viewer-tools .btn { background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(4px); }
+label.check { display: flex; gap: 10px; align-items: center; font-weight: 500; }
+
+/* ---------- full-screen model: the model on the left, the step and its lesson text on the right ---------- */
+.viewer-lesson { display: none; }
+html.viewer-full { overflow: hidden; }
+.viewer-frame.full {
+  position: fixed; inset: 0; z-index: 80; border: 0; border-radius: 0; box-shadow: none;
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(320px, 30vw, 460px);
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+}
+.viewer-frame.full > * { grid-column: 2; border-left: 1px solid var(--hair); }
+.viewer-frame.full > .viewer-canvas { grid-column: 1; grid-row: 1 / -1; height: auto; border-left: 0; }
+.viewer-frame.full > .viewer-steps { grid-row: 1; border-top: 0; flex-direction: column; align-items: stretch; }
+.viewer-frame.full > .tour-bar { grid-row: 2; }
+.viewer-frame.full > .caption { grid-row: 3; font-size: 1.02rem; color: var(--ink); }
+.viewer-frame.full > .viewer-note { grid-row: 4; }
+.viewer-frame.full > .viewer-lesson:not([hidden]) { grid-row: 5; display: block; overflow: auto; padding: 14px 18px 18px; border-top: 1px solid var(--hair); font-size: 0.92rem; color: var(--ink-2); }
+.viewer-frame.full > .viewer-hint { grid-row: 6; padding-top: 10px; border-top: 1px solid var(--hair); }
+.full-keys { display: none; }
+.viewer-frame.full .full-keys { display: inline; }
+@media (hover: none) { .viewer-frame.full .full-keys { display: none; } }
+.viewer-lesson .eyebrow { margin: 0 0 6px; }
+.viewer-lesson section h3 { margin-top: 0; font-size: 1rem; }
+.viewer-lesson .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.viewer-frame.full .viewer-tools .btn[data-act=full] { color: var(--water); }
+@media (max-width: 760px) {
+  /* phones: the model on top, the rest scrolls underneath */
+  .viewer-frame.full { display: flex; flex-direction: column; overflow-y: auto; }
+  .viewer-frame.full > * { border-left: 0; flex: none; }
+  .viewer-frame.full > .viewer-lesson:not([hidden]) { overflow: visible; }
+  .viewer-frame.full > .viewer-canvas { flex: none; height: 56vh; height: 56dvh; position: sticky; top: 0; z-index: 3; }
+}
 .probe-readout { position: absolute; left: 12px; bottom: 10px; z-index: 2; font: 500 0.76rem/1.3 var(--mono); color: var(--ink-2); background: color-mix(in srgb, var(--paper) 85%, transparent); padding: 3px 8px; border-radius: 6px; pointer-events: none; }
 
 .plot3d { position: relative; width: 100%; height: 100%; touch-action: none; }

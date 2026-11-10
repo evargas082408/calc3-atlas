@@ -125,8 +125,10 @@ export function openExplain(req, rect, anchorEl) {
       ${req.sectionId ? `<div class="xp-foot"><span class="muted">Save it:</span><button class="btn sm" data-c="work">${icon('flag')}Needs work</button><button class="btn sm" data-c="key">${icon('bookmark')}Key idea</button></div>` : ''}
     </div>`);
   pop.dataset.text = req.text ?? '';
-  document.body.appendChild(pop);
-  place(pop, rect, anchorEl);
+  // A full-screen model hides everything outside it, so the panel opens inside it.
+  const full = document.querySelector('.viewer-frame.full');
+  (full ?? document.body).appendChild(pop);
+  place(pop, rect, anchorEl, full);
 
   pop.querySelector('[data-act=close]').onclick = closeExplain;
   pop.querySelector('[data-act=show]')?.addEventListener('click', () => {
@@ -176,9 +178,18 @@ export function openExplain(req, rect, anchorEl) {
 }
 
 // Under the selection, kept inside the column it came from so the 3D model beside it stays visible.
-function place(el, rect, anchorEl) {
+function place(el, rect, anchorEl, full = null) {
   if (matchMedia('(max-width: 760px)').matches) {
     el.classList.add('sheet');
+    return;
+  }
+  if (full) {
+    el.style.position = 'fixed';
+    el.style.width = `${Math.min(460, window.innerWidth - 32)}px`;
+    el.style.left = `${Math.max(16, Math.min(rect.left, window.innerWidth - 476))}px`;
+    // below the selection if it fits, otherwise as low as it can sit without leaving the screen
+    const height = el.getBoundingClientRect().height;
+    el.style.top = `${Math.max(16, Math.min(rect.bottom + 10, window.innerHeight - height - 16))}px`;
     return;
   }
   const col = anchorEl?.closest('.tab-body, .viewer, .lab-side, .lab-stage, .page, .xp')?.getBoundingClientRect() ?? document.body.getBoundingClientRect();

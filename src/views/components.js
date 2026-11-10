@@ -103,6 +103,7 @@ export function sceneViewer(host, scene, opts = {}) {
         <div class="viewer-tools">
           ${teachable ? `<button class="btn sm" data-act="build" title="Watch ${escapeHTML(teachable.src)} get built piece by piece">${icon('play')}Build it</button>` : ''}
           <button class="btn icon sm" data-act="reset" title="Reset view (or double-click)">${icon('reset')}</button>
+          <button class="btn icon sm" data-act="full" title="Full screen (F)" aria-pressed="false">${icon('expand')}</button>
           ${opts.labHref ? `<a class="btn sm" href="${opts.labHref}" title="Open in the 3D Lab">${icon('lab')}Lab</a>` : ''}
         </div>
         <div class="probe-readout" hidden></div>
@@ -114,7 +115,8 @@ export function sceneViewer(host, scene, opts = {}) {
       <div class="tour-bar" aria-hidden="true"><i></i></div>
       <div class="viewer-note" hidden></div>
       <div class="caption" aria-live="polite"></div>
-      <p class="viewer-hint">Click the model to explain any point. Drag to turn it.</p>
+      <div class="viewer-lesson" hidden></div>
+      <p class="viewer-hint">Click the model to explain any point. Drag to turn it.<span class="full-keys"> Space pauses, ← and → change step, Esc leaves full screen.</span></p>
     </div>`);
   host.appendChild(wrap);
   const canvasHost = wrap.querySelector('.viewer-canvas');
@@ -156,6 +158,7 @@ export function sceneViewer(host, scene, opts = {}) {
       plot.camera.position.copy(plot.w(...steps[current].camera));
       plot.dirty = true;
     }
+    paintLesson();
     opts.onStep?.(current);
   };
 
@@ -273,6 +276,54 @@ export function sceneViewer(host, scene, opts = {}) {
   wrap.querySelector('[data-act=build]')?.addEventListener('click', () => startBuild(teachable.c, teachable.src));
   wrap.querySelector('[data-act=reset]').onclick = () => plot.resetCamera();
 
+  // ---- full screen: the model fills the screen, with the step, its caption and the lesson text beside it ----
+  const fullBtn = wrap.querySelector('[data-act=full]');
+  const lessonPane = wrap.querySelector('.viewer-lesson');
+  const isFull = () => wrap.classList.contains('full');
+  function paintLesson() {
+    const html = isFull() ? opts.sectionFor?.(current) : null;
+    lessonPane.hidden = !html;
+    if (html) {
+      lessonPane.innerHTML = html;
+      lessonPane.scrollTop = 0;
+    }
+  }
+  const setFull = (on) => {
+    wrap.classList.toggle('full', on);
+    document.documentElement.classList.toggle('viewer-full', on);
+    fullBtn.innerHTML = icon(on ? 'shrink' : 'expand');
+    fullBtn.title = on ? 'Exit full screen (Esc)' : 'Full screen (F)';
+    fullBtn.setAttribute('aria-pressed', String(on));
+    paintLesson();
+  };
+  const enterFull = () => {
+    if (isFull()) return;
+    setFull(true);
+    // Where the Fullscreen API is missing (iPhone), the CSS alone still fills the window.
+    wrap.requestFullscreen?.()?.catch?.(() => {});
+  };
+  const exitFull = () => {
+    if (!isFull()) return;
+    if (document.fullscreenElement === wrap) document.exitFullscreen().catch(() => {});
+    setFull(false);
+  };
+  fullBtn.onclick = () => (isFull() ? exitFull() : enterFull());
+  const onFullChange = () => { if (!document.fullscreenElement && isFull()) setFull(false); };
+  const onKey = (e) => {
+    if (!wrap.isConnected || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.target.closest?.('input, textarea, select, [contenteditable], .xp, .palette')) return;
+    if (e.key === 'f' || e.key === 'F') { e.preventDefault(); isFull() ? exitFull() : enterFull(); return; }
+    if (!isFull()) return;
+    if (e.key === 'Escape') exitFull();
+    else if (e.key === ' ' && !e.target.closest?.('button')) { e.preventDefault(); tourBtn.click(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const i = current + (e.key === 'ArrowRight' ? 1 : -1);
+      if (i >= 0 && i < steps.length) row.querySelector(`[data-i="${i}"]`).click();
+    } else return;
+  };
+  document.addEventListener('fullscreenchange', onFullChange);
+  document.addEventListener('keydown', onKey);
+
   go(0);
   if (import.meta.env?.DEV) window.__viewer = { plot, explainPoint };
   const onTheme = () => { if (builder) endBuild(); build(); go(current); };
@@ -283,12 +334,18 @@ export function sceneViewer(host, scene, opts = {}) {
     go(i) { if (builder) endBuild(); if (tour.playing) beginStep(i); else go(i); },
     playTour,
     stopTour,
+    enterFull,
+    exitFull,
+    get full() { return isFull(); },
     // Draw any typed expression on this model with the Teach animatic (used by the explain panel).
     teach: startBuild,
     get current() { return current; },
     el: wrap,
     dispose() {
       window.removeEventListener('themechange', onTheme);
+      document.removeEventListener('fullscreenchange', onFullChange);
+      document.removeEventListener('keydown', onKey);
+      exitFull();
       plot.frameHooks.delete(hook);
       builder?.dispose();
       plot.dispose();
