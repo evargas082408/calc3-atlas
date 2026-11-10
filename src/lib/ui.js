@@ -12,6 +12,8 @@ const P = {
   ask: '<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/>',
   search: '<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/>',
   play: '<circle cx="12" cy="12" r="8.5"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/>',
+  pause: '<circle cx="12" cy="12" r="8.5"/><path d="M10 9v6M14 9v6"/>',
+  explain: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.3 2.4c-.6.3-.9.8-.9 1.4v.6"/><circle cx="12" cy="16.6" r="0.6" fill="currentColor"/>',
   notes: '<path d="M5 4h14v16H5z"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/>',
   external: '<path d="M13 4.5h6.5V11M19.5 4.5 11 13M17 14v5.5H4.5V7H10"/>',
   x: '<path d="m6 6 12 12M18 6 6 18"/>',

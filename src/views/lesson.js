@@ -4,6 +4,9 @@ import { store, masteryOf, mistakeTally, toggleBookmark, isBookmarked } from '..
 import { icon, dots, escapeHTML, toast } from '../lib/ui.js';
 import { problemCard, sceneViewer } from './components.js';
 import { applyHighlights } from './highlight.js';
+import { setExplainContext, clearExplainContext } from './explain.js';
+import { mapStepsToSections } from '../lib/explainer.js';
+import { lecturePanel } from './media.js';
 
 export const labHref = (layers) => `#/lab?s=${encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(layers)))))}`;
 
@@ -23,6 +26,10 @@ export default function lesson(host, { parts, params }) {
   const boiler = boilerFor(L);
   let tab = params.tab ?? 'learn';
   let viewer = null;
+  let observer = null;
+  let explainCtx = null;
+  const stepSections = C?.scene ? mapStepsToSections(C.scene.steps ?? [], C.sections ?? []) : [];
+  const wide = () => matchMedia('(min-width: 1041px)').matches; // the model sits beside the text
 
   const labLayers = C?.lab ?? (C?.scene?.layers?.filter((x) => ['surface', 'curve', 'vectorField', 'paramSurface', 'implicit'].includes(x.kind)).slice(0, 3).map((x) => ({ ...x, id: undefined })) ?? []);
 
@@ -38,8 +45,8 @@ export default function lesson(host, { parts, params }) {
         <div class="title-row"><span class="n">${id}</span><h1>${escapeHTML(L.title)}</h1></div>
         ${L.blurb ? `<p class="blurb">${mdInline(L.blurb)}</p>` : ''}
         <div class="lesson-actions">
-          <a class="btn" href="${L.video}" target="_blank" rel="noopener">${icon('play')}Lecture recording</a>
-          <a class="btn" href="${L.notes}" target="_blank" rel="noopener">${icon('notes')}Lecture notes</a>
+          <button class="btn" data-act="watch">${icon('play')}Watch the lecture</button>
+          ${C?.scene ? `<button class="btn primary" data-act="tour">${icon('play')}Teach me on the 3D model</button>` : ''}
           ${labLayers.length ? `<a class="btn" href="${labHref(labLayers)}">${icon('lab')}Open in 3D Lab</a>` : ''}
           <button class="btn" data-act="bm" aria-pressed="${isBookmarked('lesson', id, 'lesson')}">${icon(isBookmarked('lesson', id, 'lesson') ? 'bookmarkOn' : 'bookmark')}Bookmark</button>
           ${boiler.map((b) => `<a class="btn quiet sm" href="https://www.boilerexams.com/courses/MA26100/topics/${encodeURIComponent(b.name)}" target="_blank" rel="noopener" title="${b.q} past exam questions; class accuracy ${Math.round(b.acc * 100)}%">${icon('external')}${escapeHTML(b.name)} · ${Math.round(b.acc * 100)}%</a>`).join('')}
@@ -48,6 +55,7 @@ export default function lesson(host, { parts, params }) {
       ${C ? `
       <div class="tabs" role="tablist">
         <button role="tab" data-tab="learn">Learn</button>
+        <button role="tab" data-tab="lecture">Lecture video</button>
         <button role="tab" data-tab="mistakes">Common mistakes${yours.length ? `<span class="count">${yours.reduce((a, b) => a + b.count, 0)}</span>` : ''}</button>
         <button role="tab" data-tab="practice">Practice <span class="muted">${C.problems?.length ?? 0}</span></button>
         <button role="tab" data-tab="notes">My notes</button>
@@ -71,22 +79,44 @@ export default function lesson(host, { parts, params }) {
   };
   if (!C) return;
 
+  // The section the model is showing gets a marker; during the tour the text follows the model.
+  const markSection = (i) => {
+    const sid = stepSections[i];
+    host.querySelectorAll('section.on-model').forEach((el) => el.classList.remove('on-model'));
+    const el = sid && host.querySelector(`#s-${CSS.escape(sid)}`);
+    if (!el) return;
+    el.classList.add('on-model');
+    if (viewer?.el.classList.contains('touring') && wide()) {
+      const r = el.getBoundingClientRect();
+      if (r.top < 120 || r.top > window.innerHeight * 0.6) { syncPause = Date.now() + 1500; el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    }
+  };
+  let syncPause = 0;
   if (C.scene) {
-    viewer = sceneViewer(host.querySelector('.viewer'), C.scene, { labHref: labLayers.length ? labHref(labLayers) : null });
+    viewer = sceneViewer(host.querySelector('.viewer'), C.scene, { labHref: labLayers.length ? labHref(labLayers) : null, onStep: markSection });
+    explainCtx = { lessonId: id, viewer, stepSections };
+    setExplainContext(explainCtx);
+    host.querySelector('[data-act=tour]').onclick = () => {
+      if (tab !== 'learn') host.querySelector('[data-tab=learn]').click();
+      viewer.playTour(true);
+      if (!wide()) viewer.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
   }
 
   const body = host.querySelector('.tab-body');
   const renderTab = () => {
+    observer?.disconnect();
     host.querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === tab)));
+    host.querySelector('.lesson-wrap')?.classList.toggle('lecture-mode', tab === 'lecture');
     if (tab === 'learn') {
       body.innerHTML = `<div class="prose">
         ${C.sections.map((s) => `<section id="s-${s.id}" data-hl-section="${s.id}" data-lesson="${id}" data-title="${escapeHTML(s.title)}">
-          <h3>${mdInline(s.title)} <button class="btn icon sm quiet mark" data-sec="${s.id}" aria-pressed="${isBookmarked('section', id, s.id)}" title="Bookmark this section">${icon(isBookmarked('section', id, s.id) ? 'bookmarkOn' : 'bookmark')}</button></h3>
+          <h3>${mdInline(s.title)} <button class="btn icon sm quiet mark" data-sec="${s.id}" aria-pressed="${isBookmarked('section', id, s.id)}" title="Bookmark this section">${icon(isBookmarked('section', id, s.id) ? 'bookmarkOn' : 'bookmark')}</button>${stepSections.includes(s.id) ? `<button class="btn sm quiet see-model" data-see="${s.id}" title="Show this on the 3D model">${icon('lab')}See it in 3D</button>` : ''}</h3>
           ${md(s.body)}
         </section>`).join('')}
         ${C.formulas?.length ? `<div class="formula-card"><h4>Formula card</h4><dl>${C.formulas.map((f) => `<dt>${mdInline(f.label)}</dt><dd>${tex(f.tex, false)}</dd>`).join('')}</dl></div>` : ''}
         ${C.hook ? `<p class="hook">${mdInline(C.hook)}</p>` : ''}
-        <p class="empty hint">Tip: select any sentence to get an explanation of it, or to mark it as needing work. Marks appear under Saved.</p>
+        <p class="empty hint">Select any text or click any formula to have it explained. Press <strong>Teach me</strong> under the model to walk through this lesson in 3D, or click the model to explain a point.</p>
       </div>`;
       body.querySelectorAll('.mark').forEach((b) => (b.onclick = () => {
         const sec = C.sections.find((s) => s.id === b.dataset.sec);
@@ -96,7 +126,27 @@ export default function lesson(host, { parts, params }) {
         toast(on ? 'Section bookmarked' : 'Bookmark removed');
       }));
       applyHighlights(body);
+      body.querySelectorAll('[data-see]').forEach((b) => (b.onclick = () => {
+        viewer?.go(stepSections.indexOf(b.dataset.see));
+        if (!wide()) viewer?.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }));
+      // Reading along: as a section reaches the upper part of the screen, the model shows its step.
+      observer?.disconnect();
+      if (viewer && 'IntersectionObserver' in window) {
+        observer = new IntersectionObserver((entries) => {
+          if (!wide() || Date.now() < syncPause || viewer.el.classList.contains('touring') || viewer.el.classList.contains('building')) return;
+          const hit = entries.find((en) => en.isIntersecting);
+          const sid = hit?.target.dataset.hlSection;
+          const k = stepSections.indexOf(sid);
+          if (k >= 0 && stepSections[viewer.current] !== sid) viewer.go(k);
+        }, { rootMargin: '-30% 0px -60% 0px' });
+        body.querySelectorAll('section[data-hl-section]').forEach((el) => observer.observe(el));
+      }
+      if (viewer) markSection(viewer.current);
       if (params.sec) body.querySelector(`#s-${CSS.escape(params.sec)}`)?.scrollIntoView({ behavior: 'smooth' });
+    } else if (tab === 'lecture') {
+      body.innerHTML = '<div class="lecture-host"></div>';
+      lecturePanel(body.querySelector('.lecture-host'), L);
     } else if (tab === 'mistakes') {
       body.innerHTML = `<div class="prose">
         <p class="muted">The mistakes that cost the most points on this lesson. If you have made one yourself, it says how many times.</p>
@@ -125,6 +175,10 @@ export default function lesson(host, { parts, params }) {
       ta.oninput = () => { store.update((s) => (s.notes[id] = ta.value)); paint(); };
     }
   };
+  host.querySelector('[data-act=watch]').onclick = () => {
+    host.querySelector('[data-tab=lecture]')?.click();
+    host.querySelector('.tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   host.querySelectorAll('[data-tab]').forEach((b) => (b.onclick = () => {
     tab = b.dataset.tab;
     history.replaceState(null, '', `#/lesson/${id}?tab=${tab}`);
@@ -132,5 +186,5 @@ export default function lesson(host, { parts, params }) {
   }));
   renderTab();
 
-  return { dispose: () => viewer?.dispose() };
+  return { dispose: () => { observer?.disconnect(); clearExplainContext(explainCtx); viewer?.dispose(); } };
 }

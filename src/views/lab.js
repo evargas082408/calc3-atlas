@@ -1,6 +1,6 @@
 import { Plot3D } from '../three/engine.js';
 import { COLORMAPS, gradientCSS } from '../three/colormaps.js';
-import { md, tex } from '../lib/md.js';
+import { md, mdInline, tex } from '../lib/md.js';
 import { toTex, fmt } from '../lib/expr.js';
 import { store, toggleBookmark } from '../lib/store.js';
 import { icon, escapeHTML, toast } from '../lib/ui.js';
@@ -8,6 +8,8 @@ import { COLORS, PRESETS, newId, analyzeEntry, entryToLayers, encodeEntries, dec
 import { insightFor } from '../teach/insight.js';
 import { runTeach } from '../teach/run.js';
 import { lessonById } from '../content/course.js';
+import { pointInfo } from '../teach/pointinfo.js';
+import { drawPointOverlay } from './components.js';
 
 const TYPE_LABEL = {
   graph2d: 'y = f(x)', surface: 'surface', curve: 'curve r(t)', field: 'vector field', implicit: 'implicit surface',
@@ -66,7 +68,23 @@ export default function lab(host, { params: q }) {
       probe.hidden = false;
       probe.textContent = `(${fmt(p.x, 2)}, ${fmt(p.y, 2)}, ${fmt(p.z, 2)})`;
     },
+    onPick: (p) => { if (!player) explainPoint(p); },
   });
+
+  // Click the model: explain that point in the insight panel.
+  const explainPoint = (p) => {
+    if (!p) return;
+    const specs = plot.spec?.layers ?? [];
+    let layer = p.layer ? specs.find((l) => l.id === p.layer) : null;
+    if (!layer || p.floor) layer = specs.find((l) => l.kind === 'vectorField' && plot.layers.get(l.id)?.visible) ?? layer;
+    const info = pointInfo(layer, p, plot.R);
+    if (!info) return;
+    drawPointOverlay(plot, info.overlay);
+    insightEl.hidden = false;
+    insightEl.innerHTML = `<h4>${mdInline(info.title)}</h4>${info.lines.map((l) => `<p>${mdInline(l)}</p>`).join('')}
+      <p class="actions"><button class="btn sm" data-act="back">${icon('x')}Clear point</button>${info.lessons.map((id) => { const l = lessonById(id); return l ? `<a class="chip" href="#/lesson/${id}">L${id} ${escapeHTML(l.title)}</a>` : ''; }).join('')}</p>`;
+    insightEl.querySelector('[data-act=back]').onclick = () => { plot.clearOverlay(); renderInsight(); };
+  };
 
   // ---- parameters ----
   const syncSliders = () => {

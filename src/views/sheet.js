@@ -18,7 +18,7 @@ export default function sheet(host, { params }) {
           </div>
         </div>
         <div class="sheet">
-          ${list.map((L) => `<div class="formula-card"><h4><a href="#/lesson/${L.id}">L${L.id} · ${escapeHTML(L.title)}</a></h4><dl>${L.content.formulas.map((f) => `<dt>${mdInline(f.label)}</dt><dd>${tex(f.tex, false)}</dd>`).join('')}</dl></div>`).join('')}
+          ${list.map((L) => `<div class="formula-card" data-lesson="${L.id}"><h4><a href="#/lesson/${L.id}">L${L.id} · ${escapeHTML(L.title)}</a></h4><dl>${L.content.formulas.map((f) => `<dt>${mdInline(f.label)}</dt><dd>${tex(f.tex, false)}</dd>`).join('')}</dl></div>`).join('')}
         </div>
       </div>`;
     host.querySelectorAll('[data-exam]').forEach((b) => (b.onclick = () => { exam = Number(b.dataset.exam); history.replaceState(null, '', `#/sheet?exam=${exam}`); render(); }));

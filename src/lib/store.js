@@ -8,7 +8,7 @@ const blank = () => ({
   notes: {},         // lessonId -> markdown string
   visited: {},       // lessonId -> { at, steps: number }
   confidence: {},    // lessonId -> 1..4 self rating
-  settings: { examISO: null, examName: null, apiKey: '', model: 'claude-opus-5-5', theme: 'auto', colormap: 'terrain' },
+  settings: { examISO: null, examName: null, apiKey: '', model: 'claude-opus-5-5', theme: 'auto', colormap: 'terrain', lectureSource: 'sunkula' },
 });
 
 let state = load();

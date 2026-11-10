@@ -6,7 +6,10 @@ A study site for Purdue's MA 261 (Multivariate Calculus), Spring 2026, built aro
 
 ## What's in it
 
-- **Lessons 1–37.** Each lesson has the main ideas, a 3D picture you can rotate, a formula card, the common mistakes, and exam-style problems. Links go to the lecture recording and the instructor's notes.
+- **Lessons 1–37.** Each lesson has the main ideas, a 3D model you can rotate, a formula card, the common mistakes, and exam-style problems.
+- **Taught on the 3D model.** **Teach me** walks through the lesson on its model step by step, highlighting the matching part of the text as it goes. While you read, the model follows along. **Build it** animates the lesson's main surface, curve or field piece by piece. Click any point on a model to get its height, slopes, gradient and tangent plane (or a field's value, divergence and spin there).
+- **Select anything to have it explained.** Select text or click a formula and an explanation opens right under it: what each symbol and term means, where it is taught, the mistakes to watch for, your own history with that lesson, and a button that shows it on the 3D model.
+- **Lecture videos on the page.** Each lesson has a Lecture video tab that plays Prof. Sunkula's Spring 2026 recording or Prof. Chen's Spring 2023 lecture from [Chenflix](https://drjchen1.github.io/chenflix/courses/ma-26100-s23.html), plus Chen's review sessions. Both professors' notes are linked; they open in a new tab because Purdue's math server doesn't let other sites show them inside a page.
 - **3D Lab.** Type an expression like `z = x^2 - y^2`, `<cos t, sin t, t/4>`, or `F = <-y, x>`. Surfaces, curves, vector fields, parametric and implicit surfaces all work. Letters other than x, y, z, t, u, v become sliders. Press **Teach me this** to watch the graph get built step by step, with an explanation for each piece.
 - **Ask.** Type math to get it drawn and explained, or a question like "why is the Jacobian r?" to jump to the right lesson sections, formulas and common mistakes. You can also add your own Claude API key in Settings to get a written answer.
 - **Practice.** 267 multiple-choice problems. A wrong answer tells you what probably went wrong, shows the right step, and gives the full solution. Modes: Exam 2 mix, weak lessons, redo misses, one lesson, Exam 1 mix, final.
@@ -31,7 +34,7 @@ Needs Node 20 or newer.
 ```bash
 npm install
 npm run dev      # http://localhost:5261
-npm test         # 563 tests: math engine, Teach animations, lesson content
+npm test         # 585 tests: math engine, Teach animations, lesson content, explanations
 npm run build    # static site in dist/
 ```
 
@@ -54,4 +57,4 @@ The tests check the math, not just the code: points the Teach animation draws ar
 
 ## Credits
 
-Lecture structure, recordings and notes are from Prof. Sunkula's MA 261 Spring 2026 course page. Topic accuracy numbers come from BoilerExams. This is an unofficial study tool, not affiliated with Purdue.
+Lecture structure, recordings and notes are from Prof. Sunkula's MA 261 Spring 2026 course page. The second set of lectures is Prof. Joseph Chen's, listed on Chenflix. Videos stream from Purdue MediaSpace (Kaltura); nothing is copied into this repo. Topic accuracy numbers come from BoilerExams. This is an unofficial study tool, not affiliated with Purdue.

@@ -140,6 +140,14 @@ export class Plot3D {
     this.renderer.domElement.addEventListener('pointermove', (e) => this.onPointer(e));
     this.renderer.domElement.addEventListener('pointerleave', () => this.opts.onProbe?.(null));
     this.renderer.domElement.addEventListener('dblclick', () => this.resetCamera());
+    // A click is a press and release that barely moved; anything longer is an orbit drag.
+    this.renderer.domElement.addEventListener('pointerdown', (e) => { this.pressAt = { x: e.clientX, y: e.clientY, t: performance.now() }; });
+    this.renderer.domElement.addEventListener('pointerup', (e) => {
+      const d = this.pressAt;
+      this.pressAt = null;
+      if (!d || !this.opts.onPick || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 5 || performance.now() - d.t > 600) return;
+      this.opts.onPick(this.pick(e));
+    });
     this.resize();
     this.loop();
   }
@@ -1069,6 +1077,23 @@ export class Plot3D {
   }
 
   // ---- probing ----
+  // What is under the pointer: a surface hit, else the floor z = 0 inside the box, else null.
+  pick(e) {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    this.pointer.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+    this.camera.updateMatrixWorld(); // the camera may have moved since the last frame was drawn
+    this.raycaster.setFromCamera(this.pointer, this.camera);
+    const hits = this.raycaster.intersectObjects(this.probes.filter((m) => m.parent?.parent?.visible !== false && m.visible), false);
+    if (hits.length) {
+      const p = hits[0].point;
+      return { x: p.x, y: p.y, z: (p.z - this.zMid) / this.zs + this.zMid, layer: hits[0].object.parent?.parent?.userData.layerId ?? null };
+    }
+    const floor = new THREE.Plane(new THREE.Vector3(0, 0, 1), -this.w(0, 0, 0).z);
+    const q = this.raycaster.ray.intersectPlane(floor, new THREE.Vector3());
+    if (q && Math.abs(q.x) <= this.R * 1.02 && Math.abs(q.y) <= this.R * 1.02) return { x: q.x, y: q.y, z: 0, layer: null, floor: true };
+    return null;
+  }
+
   onPointer(e) {
     if (!this.opts.onProbe) return;
     const rect = this.renderer.domElement.getBoundingClientRect();

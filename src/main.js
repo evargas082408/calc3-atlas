@@ -3,7 +3,7 @@ import { store, mistakeTally } from './lib/store.js';
 import { icon, $, $$, escapeHTML } from './lib/ui.js';
 import { LESSONS } from './content/course.js';
 import { looksLikeMath } from './lib/search.js';
-import { mountHighlighter } from './views/highlight.js';
+import { mountExplain, closeExplain } from './views/explain.js';
 
 const ROUTES = {
   home: () => import('./views/home.js'),
@@ -140,6 +140,7 @@ async function route() {
   const active = name === 'lesson' ? 'lessons' : name;
   $$('.nav-links a, .nav-drawer a').forEach((a) => (a.dataset.route === active ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));
   const host = $('#main');
+  closeExplain();
   current?.dispose?.();
   host.innerHTML = '<div class="page"><div class="skeleton"></div></div>';
   try {
@@ -161,4 +162,4 @@ counts();
 store.subscribe(counts);
 window.addEventListener('hashchange', route);
 route();
-mountHighlighter();
+mountExplain();
